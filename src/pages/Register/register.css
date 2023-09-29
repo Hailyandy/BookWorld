@@ -1,0 +1,42 @@
+.register_container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: rgba(23, 193, 181, 0.2);
+}
+
+.form {
+    padding: 48px 0 110px 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ant-input::placeholder {
+    color: white;
+}
+
+.form_title {
+    display: flex;
+    align-items: center;
+}
+
+.form_title h1 {
+    font-weight: 400;
+    font-size: 60px;
+    color: rgba(34, 73, 87, 1);
+    margin-left: 33px;
+}
+
+.form_register {}
+
+.form_register h1 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.form_register p {
+    margin-bottom: 12px;
+}
