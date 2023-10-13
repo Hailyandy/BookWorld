@@ -1,12 +1,12 @@
 import "./fristhome.css"
 import React, { useState } from 'react';
-import { Button, Radio, Space, Divider } from 'antd';
+import { Button } from 'antd';
 import imgApp from '../assets/imgs/App Store.png'
 import imgPlay from '../assets/imgs/Google Play.png'
 
 
 const FristHome = () => {
-    const [size, setSize] = useState('large');    return ( 
+    return ( 
         <div className="home-container">
             <div className="content">
             <h1>Xin chào bạn đến với Book World</h1>
@@ -14,11 +14,11 @@ const FristHome = () => {
             
             <Button style={{
                             backgroundColor: "#00c0a6",
-                            width: "191px",
+                            width: "250px",
                             height: "64px",
                             fontSize: "20px",
                         }}
-            type="primary" shape="round"  size={size}>
+            type="primary" shape="round"  >
             Đăng ký
           </Button>
           <div class = "app_connect">

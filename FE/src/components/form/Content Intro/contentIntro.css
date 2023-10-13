@@ -1,0 +1,37 @@
+/* Body Post */
+
+.body-post{
+    padding: 0 50px 0 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.body-post .bookjacket-intro{
+    display: flex;
+    flex-direction: column;
+}
+
+.body-post .book-content-intro {
+    margin-left: 30px;
+}
+
+.body-post .book-content-intro .title {
+    margin: 0;
+    font-weight: 400;
+    color: #569DEA;
+}
+
+.body-post .book-content-intro .author{
+    margin: 0;
+    font-weight: 400;
+    color: #AAAAAA;
+    font-style: italic;
+}
+
+.body-post .book-content-intro .content-intro {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #AAAAAA;
+    font-style: italic;
+}

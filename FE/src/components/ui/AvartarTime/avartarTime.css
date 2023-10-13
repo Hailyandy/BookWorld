@@ -1,6 +1,5 @@
 .avartarTime{
-    /* background-color:pink; */
-    width: 160px;
+    width: 200px;
     height: 70px;
     display: flex;
     flex-direction: row;
