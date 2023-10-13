@@ -1,9 +1,13 @@
- import { render } from "@testing-library/react"
 import "./navbar.css"
-
  const Navbar = () => {
-    render(
+    return (
         <>
+         <div class = "navbar">
+            <a class = "home" href="">Trang chủ</a>
+            <a class = "books" href="">Tất cả sách</a>
+            <a class = "book-market" href="">Chợ sách</a>
+            <a class = "anonymous-book" href="">Sách ẩn danh</a>
+         </div>
         </>
     )
  }

@@ -1,0 +1,23 @@
+.avartarTime{
+    /* background-color:pink; */
+    width: 160px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+}
+
+.avartarTime .name-time {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.avartarTime .name-time .name {
+    margin: 0;
+    font-weight: 700;
+}
+
+.avartarTime .name-time .time {
+    margin: 0;
+    font-size: 13px;
+}

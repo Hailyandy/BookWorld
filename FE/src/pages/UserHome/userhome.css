@@ -1,3 +1,55 @@
 .user-home-container {
-    background-color: yellow;
+    /* background-color: yellow; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 100px 0 100px;
 }
+
+/* List Book */
+
+.list-book {
+    background-color: #eeeeee;
+    padding: 5px 30px 0 0px;
+    border-radius: 10px;
+}
+
+.reading-book .reading-book-title,
+.suggestion-book .suggestion-book-title,
+.book-friend .book-rating .rating-tilte{
+    font-size: 15px;
+    text-align: center;
+}
+
+.reading-book .reading-book-list,
+.suggestion-book .suggestion-book-list,
+.book-friend .book-rating .book-rating-list,
+.book-friend .friend .friend-list{
+    list-style: none;
+}
+
+.reading-book .reading-book-list .reading-book-item,
+.suggestion-book .suggestion-book-list .suggestion-book-item,
+.book-friend .book-rating .book-rating-item{
+    margin-top: 20px;
+}
+
+
+/* Book rank and friend */
+
+.book-friend {
+
+}
+
+.book-friend .friend .friend-title {
+    font-size: 15px;
+    margin-left: 30px;
+}
+
+.book-friend .friend .friend-item {
+    margin-top: 5px;
+}
+
+
+
+ 

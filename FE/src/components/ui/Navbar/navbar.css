@@ -1,0 +1,15 @@
+.navbar{
+    background-color:#e7faf9;
+    padding :10px 0px 10px 150px;
+}
+
+.navbar a{
+    margin-left: 50px;
+    text-decoration: none;
+    color: gray;
+    font-weight: 700;
+}
+
+.navbar a :hover {
+    color: black;
+}
