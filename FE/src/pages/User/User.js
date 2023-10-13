@@ -7,17 +7,17 @@ import { Form, Select, Button, Input } from 'antd';
 
 function User() {
     return (
-        <div className='register_container'>
+        <div className='user_container'>
             <img src={img1} alt="img1" />
-            <div className='form'>
+            <div className='user_form'>
                 <div className="form_title">
                     <img src={img2} alt="img2" />
-                    <h1>LIB SHARE</h1>
+                    <h1>BOOK WORLD</h1>
                 </div>
-                <div className='form_register'>
+                <div className='form_user'>
                     <h1>Thông tin người dùng</h1>
 
-                    <Form style={{ display: 'flex', flexDirection: "column" }}>
+                    <Form style={{ display: 'flex', flexDirection: "column", marginLeft: "80px" }}>
                         <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "#224957" }} placeholder="Họ và tên" />
                         <div style={{ width: '300px', display: "flex", justifyContent: "space-between", marginBottom: '33px' }}>
                             <Select
@@ -30,7 +30,21 @@ function User() {
                             />
                         </div>
                         <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "#224957" }} placeholder="Số điện thoại" />
-                        <Button style={{ width: '300px', height: '54px', marginBottom: '36px' }} >Ghi nhận</Button>
+                        <Button style={{
+                            borderRadius: "10px",
+                            background: "linear-gradient(180deg, rgba(67, 216, 205, 0.90) 0%, rgba(22, 38, 37, 0.00) 100%)",
+                            width: "300px",
+                            height: "64px",
+                        }}>
+                            <span style={{
+                                color: "#224957",
+
+                                fontFamily: "'Poppins', sans-serif",
+                                fontSize: "18px",
+                                fontStyle: "normal",
+                                fontWeight: 700,
+                                lineHeight: "normal"
+                            }}>Ghi nhận</span></Button>
                     </Form>
                 </div>
             </div>

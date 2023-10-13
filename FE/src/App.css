@@ -1,9 +1,11 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
   height: 100vh;
   width: 100vw;
 }
-
+:root {
+  --background-color: #ffffff;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -12,7 +14,6 @@
 .rectangle {
   width: auto;
   cursor: pointer;
-
 }
 
 .center-horizontal {

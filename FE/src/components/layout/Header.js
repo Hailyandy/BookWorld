@@ -10,7 +10,8 @@ const HeaderLayout = () => {
             display: 'flex',
             alignItems: 'center',
             backgroundColor: "#bcf4f4",
-            height: "80px"
+            height: "80px",
+  
         }}
 
     >
