@@ -1,9 +1,11 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
   height: 100vh;
   width: 100vw;
 }
-
+:root {
+  --background-color: #ffffff;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -12,7 +14,6 @@
 .rectangle {
   width: auto;
   cursor: pointer;
-
 }
 
 .center-horizontal {
@@ -36,4 +37,18 @@
   background: url("/public/assets/biggerBook.png") no-repeat -141px -87px;
   width: 568px;
   height: 632px;
+}
+
+.bookjacket-image {
+  background: url("./pages/assets/imgs/Rectangle\ 672.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100px;
+  height: 70px;
+}
+
+.avatar-image {
+  background: url("../public/assets/Ellipse\ 4.png");
+  background-size: 100% 100%;
+  width: 45px;
+  height: 45px;
 }

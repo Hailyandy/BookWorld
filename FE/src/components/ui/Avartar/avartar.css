@@ -1,0 +1,11 @@
+.avartar {
+    width: 200px;
+    height: 46px;
+    display: flex;
+    flex-direction: row;
+}
+
+.avartar .name {
+    margin: 9px;
+    font-weight: 600;
+}

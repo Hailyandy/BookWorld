@@ -1,0 +1,27 @@
+.review-post{
+    margin-top: 10px;
+    width: 600px;
+    height: 400px;
+    /* background-color: green; */
+}
+
+/* Heading Post */
+
+.review-post .heading-post {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.review-post .heading-post .status-title {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.review-post .heading-post .list-star {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+}
+
+
