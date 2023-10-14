@@ -1,5 +1,5 @@
 import React from 'react'
-import img1 from "../assets/imgs/zyro-image 1.png" 
+import img1 from "../assets/imgs/zyro-image 1.png"
 import img2 from "../assets/imgs/images1.png"
 import "./register.css"
 import { Form, Button, Input, Space, Typography } from 'antd';

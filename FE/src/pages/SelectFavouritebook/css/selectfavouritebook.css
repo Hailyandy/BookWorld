@@ -3,30 +3,29 @@
 
 .ant-checkbox-inner {
     border-radius: 5px;
-    background: #224957 !important;
+    background: var(--text-color-main) !important;
 }
 
-.homebody-containerFather {
+.selectFavouritebook-containerFather {
     background-color: rgb(209, 246, 243);
-    height: calc(100% - 80px);
     max-width: 100%;
-
+    height: 100%;
 }
 
-.homebody-container {
+.selectFavouritebook-container {
     display: flex;
     background-color: rgb(209, 246, 243);
     padding: 2rem 0px 2rem 0px;
 
 }
 
-.homebody-container--itemLeft {
+.selectFavouritebook-container--itemLeft {
     padding-right: 50px;
     flex: 1
 }
 
-.home-container-itemRightHeader--title {
-    color: #224957;
+.selectFavouritebook-container-itemRightHeader--title {
+    color: var(--text-color-main);
     text-align: center;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 60px;
@@ -36,18 +35,18 @@
     width: 64%
 }
 
-.homebody-container--itemRight {
+.selectFavouritebook-container--itemRight {
     flex: 2
 }
 
-.home-container-itemRightHeader--message {
+.selectFavouritebook-container-itemRightHeader--message {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 143px;
 }
 
-.home-container-itemRightHeader--fontstyle {
+.selectFavouritebook-container-itemRightHeader--fontstyle {
     color: #000;
     font-family: 'Poppins', sans-serif;
     font-style: normal;
@@ -56,20 +55,20 @@
     white-space: normal;
 }
 
-.home-container-itemRightHeaderMessage--title {
+.selectFavouritebook-container-itemRightHeaderMessage--title {
     width: 80%;
     font-size: 24px;
     padding-bottom: 1rem !important;
 }
 
-.home-container-itemRightHeaderMessage--description {
+.selectFavouritebook-container-itemRightHeaderMessage--description {
     width: 80%;
     font-size: 14px;
 }
 
-.homebody-containerItemRight--body {}
+.selectFavouritebook-containerItemRight--body {}
 
-.homebody-containerItemRightBody--selection {
+.selectFavouritebook-containerItemRightBody--selection {
     padding-top: 2rem;
     padding-bottom: 2rem;
 }

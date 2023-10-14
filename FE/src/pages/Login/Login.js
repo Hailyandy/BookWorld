@@ -1,5 +1,5 @@
 import React from 'react'
-import img1 from "../assets/imgs/zyro-image 1.png" 
+import img1 from "../assets/imgs/zyro-image 1.png"
 import img2 from "../assets/imgs/images1.png"
 import "./login.css"
 import { Form, Button, Input, Space, Typography } from 'antd';
@@ -24,8 +24,8 @@ function Login() {
                     <h1>Đăng nhập</h1>
 
                     <Form style={{ display: 'flex', flexDirection: "column" }}>
-                        <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "#224957" }} placeholder="Tài khoản" />
-                        <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "#224957" }} placeholder="Mật khẩu" />
+                        <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "var(--text-color-main)" }} placeholder="Tài khoản" />
+                        <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "var(--text-color-main)" }} placeholder="Mật khẩu" />
                         <div style={{ width: '300px', display: "flex", justifyContent: "space-between", marginBottom: '26px' }}>
                             <Checkbox onChange={onChange}>Nhớ mật khẩu</Checkbox>
                             <Text>Quên mật khẩu ?</Text>

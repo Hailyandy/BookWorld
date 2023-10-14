@@ -1,11 +1,7 @@
-:root {
-    --layout_header--bgColor: "#bcf4f4"
-}
-
 .layout-header {
     display: 'flex';
     align-items: 'center';
-    background-color: var(--layout_header--bgColor);
+    background-color: var(--background-color);
     padding: 7.5px 5px 8.5px 5px;
     justify-content: center;
     align-items: center;
