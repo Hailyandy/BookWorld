@@ -3,7 +3,7 @@ import img1 from "../assets/imgs/zyro-image 1.png"
 import img2 from "../assets/imgs/images1.png"
 import "./register.css"
 import { Form, Button, Input, Space, Typography } from 'antd';
-
+import { Link } from 'react-router-dom'
 const { Text } = Typography;
 
 function Register() {
@@ -40,7 +40,7 @@ function Register() {
                     </Form>
                     <Space direction="horizontal" style={{ width: '300px', display: "flex", justifyContent: "space-between" }}>
                         <Text type="secondary">Bạn đã có tài khoản ?</Text>
-                        <Text type="success">Đăng nhập ngay</Text>
+                        <Text type="success"> <Link to="/login"> Đăng nhập</Link></Text>
                     </Space>
                 </div>
             </div>

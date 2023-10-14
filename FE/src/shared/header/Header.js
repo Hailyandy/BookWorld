@@ -92,7 +92,10 @@ const HeaderLayout = (props) => {
                 borderRadius: "8px",
                 border: "1px solid #111",
                 color: "rgba(17, 17, 17, 1)"
-            }}>Đăng nhập</Button>
+
+            }}
+                onClick={() => { window.location = "/login"; }}
+            >Đăng nhập</Button>
         </>)
     }
 

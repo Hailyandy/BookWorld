@@ -12,11 +12,7 @@ html {
   height: 100%;
 }
 
-:root {
-  --text-color: #ffffff;
-  --background-color: #bcf4f4;
-  --text-color-main: #224957;
-}
+
 
 #root,
 .App {

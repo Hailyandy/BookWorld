@@ -4,7 +4,7 @@ import img2 from "../assets/imgs/images1.png"
 import "./login.css"
 import { Form, Button, Input, Space, Typography } from 'antd';
 import { Checkbox } from 'antd';
-
+import { Link } from 'react-router-dom'
 const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
 };
@@ -14,7 +14,7 @@ const { Text } = Typography;
 function Login() {
     return (
         <div className='login_container'>
-            <img  src={img1} alt="img1" />
+            <img src={img1} alt="img1" />
             <div className='login_form'>
                 <div className="form_title">
                     <img src={img2} alt="img2" />
@@ -48,7 +48,9 @@ function Login() {
                     </Form>
                     <Space direction="horizontal" style={{ width: '300px', display: "flex", justifyContent: "space-between" }}>
                         <Text type="secondary">Bạn chưa có tài khoản ?</Text>
-                        <Text type="success">Đăng ký ngay</Text>
+                        <Text type="success">
+                            <Link to="/register"> Đăng ký ngay</Link>
+                        </Text>
                     </Space>
                 </div>
             </div>

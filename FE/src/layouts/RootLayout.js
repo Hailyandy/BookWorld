@@ -9,8 +9,8 @@ import './css/rootlayout.css'
 const breadcrumbNameMap = {
     '/authors': 'Danh sách tác giả',
     '/select-fav-book': 'Chọn sách',
-    '/apps/2': 'Application2',
-    '/apps/1/detail': 'Detail',
+    '/register': 'Đăng ký',
+    '/login': 'Đăng nhập',
     '/apps/2/detail': 'Detail',
 };
 export default function RootLayout() {
@@ -39,11 +39,11 @@ export default function RootLayout() {
         <div className="root-layout" >
             <Header headerType={BSHAREnum.headerType.not_sign_in}></Header>
 
-            <div className="center-horizontal" style={{ height: '5%', backgroundColor: '#F6F6F6' }} >
+            <div className="center-horizontal" style={{ height: '5%', backgroundColor: '#F6F6F6', padding: '0rem 0px 0rem 5rem ' }} >
 
                 <Breadcrumb items={breadcrumbItems} />
             </div>
-            <main style={{ height: '85%', backgroundColor: '#30edd8' }}>
+            <main style={{ height: '85%' }}>
                 <Outlet />
             </main>
         </div>

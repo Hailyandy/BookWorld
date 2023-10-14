@@ -12,7 +12,11 @@
 }
 
 :root {
-  --background-color: #ffffff;
+
+  --text-color: #ffffff;
+  --background-color: #bcf4f4;
+  --text-color-main: #224957;
+  --background-color-main-tag: '#30edd8'
 }
 
 .App-logo {

@@ -17,10 +17,34 @@ import AuthorsLayout from 'layouts/AuthorsLayout';
 import AuthorInfor from 'pages/Author/AuthorInformation';
 import AuthorsError from 'pages/Author/AuthorsError';
 import Authors from 'pages/Author/Authors';
+
+import LoginPage from './pages/Login/index';
+import RegisterPage from "./pages/Register/index"
+import UserPage from './pages/User/index'
+import UserHomePage from 'pages/UserHome';
+import HomePage from 'pages/Home/Home';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
+      <Route index element={<HomePage />} />
       <Route path="select-fav-book" element={<SelectFavouritebook />} />
+      <Route path="login" element={<LoginPage />} />
+      <Route path="register" element={<RegisterPage />} />
+      <Route path="users"  >
+        <Route
+          index
+          element={<UserHomePage />}
+        // loader={authorsLoader}
+        // errorElement={<AuthorsError />}
+        />
+        <Route
+          path="fill-infor"
+          element={<UserPage />}
+        // loader={authorDetailsLoader}
+        />
+      </Route >
+
       <Route path="authors" element={<AuthorsLayout />} errorElement={<AuthorsError />}>
         <Route
           index
@@ -35,7 +59,7 @@ const router = createBrowserRouter(
         />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
-    </Route>
+    </Route >
 
   )
 )
