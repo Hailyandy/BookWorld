@@ -1,7 +1,7 @@
 import './css/authorInfor.css';
 import { Checkbox, Row, Col, Button, Input, Card, Image, Typography } from 'antd';
 import { useLoaderData, useParams } from 'react-router-dom'
-import TheAuthorBookItem from 'components/author/TheAuthorBookItem';
+import TheAuthorBookItem from '~/components/author/TheAuthorBookItem';
 const { TextArea } = Input;
 const { Text, Title } = Typography;
 const onChange = (e) => {

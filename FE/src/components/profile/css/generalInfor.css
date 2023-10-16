@@ -1,34 +1,36 @@
-@import url('BookWorld/FE/src/pages/UserHome/userhome.css');
+    @import url('../../../pages/UserHome/userhome.css');
+    /* @import url('/FE/src/pages/UserHome/userhome.css'); */
 
-.description-containner1 {
-    display: flex;
-    padding-top: 1%;
-    width: 100%;
-    height: 80%;
-    font-size: 30px !important;
-}
+    .description-containner1 {
+        display: flex;
+        padding-top: 1%;
+        width: 100%;
+        height: 80%;
+        font-size: 30px !important;
+    }
 
-.ant-image {
-    display: inline-block;
+    .ant-image {
+        display: inline-block;
+        width: 30%;
+    }
 
-    width: 30%;
+    .image {
+        height: auto !important;
+        width: 100%;
+        object-fit: fill;
+    }
 
-}
+    .hero-infor {
+        padding-bottom: 10px;
+    }
 
-.image {
-    height: auto !important;
-    width: 100%;
-    object-fit: fill;
-}
+    .edit-button {}
 
-.hero-infor {
-    padding-bottom: 10px;
+    .author-book-list {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-}
-
-.edit-button {}
-
-.author-book-list {
-    display: flex;
-    flex-wrap: wrap;
-}
+    .profile-footer--list {
+        padding-left: 30%;
+    }

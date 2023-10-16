@@ -2,8 +2,8 @@ import React from 'react';
 import { Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar } from 'antd';
 import { DownOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 import "../css/header.css"
-import BSHAREnum from 'helper/BSHAREenum';
-import BSHAREresource from 'helper/BSHAREresource';
+import BSHAREnum from "~/helper/BSHAREenum"
+import BSHAREresource from '~/helper/BSHAREresource';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -158,7 +158,6 @@ const HeaderLayout = (props) => {
             backgroundColor: "var(--background-color)",
             height: "10%",
         }}
-
     >
         {headerbody}
         {/* <Breadcrumb

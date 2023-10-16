@@ -5,27 +5,30 @@ import User from './pages/User/User';
 import Register from "./pages/Register/Register"
 
 import HeaderLayout from './shared/header/Header';
-import { SelectFavouritebook, AuthorInformationPage, NotFoundPage } from './pages';
+import { SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile } from './pages';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider
 } from 'react-router-dom'
-import RootLayout from 'layouts/RootLayout';
-import AuthorsLayout from 'layouts/AuthorsLayout';
-import AuthorInfor from 'pages/Author/AuthorInformation';
-import AuthorsError from 'pages/Author/AuthorsError';
-import Authors from 'pages/Author/Authors';
+import RootLayout from './layouts/RootLayout';
+import AuthorsLayout from './layouts/AuthorsLayout';
+import AuthorInfor from './pages/Author/AuthorInformation';
+import AuthorsError from './pages/Author/AuthorsError';
+import Authors from './pages/Author/Authors';
 
 import LoginPage from './pages/Login/index';
 import RegisterPage from "./pages/Register/index"
 import UserPage from './pages/User/index'
-import UserHomePage from 'pages/UserHome';
-import HomePage from 'pages/Home/Home';
+import UserHomePage from './pages/UserHome';
+import HomePage from './pages/Home/Home';
+import { Button, Divider, notification, Space } from 'antd';
+import { ConfigContext } from './context/GlobalContext';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+    //Sửa lại để test component tí ấy mà
     <Route path="/" element={<RootLayout />}>
       <Route index element={<HomePage />} />
       <Route path="select-fav-book" element={<SelectFavouritebook />} />
@@ -63,17 +66,40 @@ const router = createBrowserRouter(
 
   )
 )
+function NotificationHandler() {
+  const [api, contextHolder] = notification.useNotification();
+  //'topLeft', 'topRight', 'bottomLeft'
+  const openNotification = (placement, message) => {
+    api.info({
+      message: `Notification ${placement}`,
+      description:
+        message,
+      placement,
+    });
+  };
+  return {
+    contextHolder, openNotification
+  }
+}
+
 function App() {
+  var notificationHandler = NotificationHandler()
   return (
-    <div class="App">
-      {/* <Register /> */}
-      {/* <Login /> */}
-      {/* <User /> */}
-      {/* <SelectFavouritebook /> */}
-      {/* <AuthorInformationPage /> */}
-      <RouterProvider router={router} />
-    </div>
+
+    <ConfigContext.Provider value={notificationHandler.openNotification}>
+      <div class="App">
+        {notificationHandler.contextHolder}
+
+        {/* <Register /> */}
+        {/* <Login /> */}
+        {/* <User /> */}
+        {/* <SelectFavouritebook /> */}
+        {/* <AuthorInformationPage /> */}
+        <RouterProvider router={router} />
+      </div>
+    </ConfigContext.Provider>
+
   );
 }
 
-export default App;
+export { App, NotificationHandler };

@@ -1,19 +1,30 @@
 import { Outlet, NavLink, useLocation, Link, Route, Routes } from "react-router-dom"
 // import Breadcrumbs from "../components/Breadcrumbs"
-import { Header } from "shared"
-import { useEffect, useState } from "react"
+import { Header } from "~/shared"
+import { useEffect, useState, useContext } from "react"
 import { Alert, Breadcrumb } from 'antd';
-import tokenService from "services/token.service"
-import BSHAREnum from "helper/BSHAREenum"
+import tokenService from "~/services/token.service"
+import BSHAREnum from "~/helper/BSHAREenum"
 import './css/rootlayout.css'
+import { ConfigContext } from "~/context/GlobalContext";
+import { BookService } from "~/services/book.service";
+import { NotificationHandler } from "~/App";
 const breadcrumbNameMap = {
     '/authors': 'Danh sách tác giả',
     '/select-fav-book': 'Chọn sách',
     '/register': 'Đăng ký',
     '/login': 'Đăng nhập',
-    '/apps/2/detail': 'Detail',
+    '/users': 'Người dùng',
+    '/users/fill-infor': 'Nhập thông tin'
 };
+
+
+
 export default function RootLayout() {
+    const config = useContext(ConfigContext);
+
+    // let a = new BookService()
+    // console.log(a.endPoint)
     const [isSignIn, setIsSignIn] = useState(tokenService.getUser())
     const [headerType, setHeaderType] = useState(BSHAREnum.headerType.not_sign_in)
     useEffect(() => {
@@ -38,9 +49,8 @@ export default function RootLayout() {
     return (
         <div className="root-layout" >
             <Header headerType={BSHAREnum.headerType.not_sign_in}></Header>
-
+            {/* <span onClick={() => config('topLeft', 'aaa')}>click me</span> */}
             <div className="center-horizontal" style={{ height: '5%', backgroundColor: '#F6F6F6', padding: '0rem 0px 0rem 5rem ' }} >
-
                 <Breadcrumb items={breadcrumbItems} />
             </div>
             <main style={{ height: '85%' }}>

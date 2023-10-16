@@ -1,15 +1,14 @@
 import './css/generalInfor.css';
 import { Checkbox, Row, Col, Button, Input, Card, Image, Typography } from 'antd';
 import { useLoaderData, useParams } from 'react-router-dom'
-import TheAuthorBookItem from 'components/author/TheAuthorBookItem';
+import TheAuthorBookItem from '~/components/author/TheAuthorBookItem';
+import Avartar from "~/components/ui/Avartar/Avartar";
+import ReviewPost from "~/components/form/Review Post/ReviewPost";
 const { TextArea } = Input;
 const { Text, Title } = Typography;
-const onChange = (e) => {
-    console.log(e);
-};
-const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4',
-    'Option 5', 'Option 6', 'Option 7', 'Option 8',
-    'Option 9', 'Option 10', 'Option 11', 'Option 12'];
+
+//author profile và user profile dùng chung, khác nhau ở list item truyền vào, check role trước
+//khi render
 const GeneralProfile = () => {
     const { id } = useParams()
     const career = useLoaderData()
@@ -53,18 +52,43 @@ const GeneralProfile = () => {
                         <p>{authorDetail.typeCompose}</p>
                         <p>{authorDetail.authorDescription}</p>
                     </Card>
+                    <div className="book-friend">
+
+                        <div className="friend">
+                            <h2 class="friend-title">Bạn bè</h2>
+                            <ul class="friend-list">
+                                <li class="friend-item">
+                                    <Avartar></Avartar>
+                                </li>
+                                <li class="friend-item">
+                                    <Avartar></Avartar>
+                                </li>
+                                <li class="friend-item">
+                                    <Avartar></Avartar>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </Card>
-            <Title level={3}>Sách của Xuân Bách</Title>
-            <div className='line-drawing'></div>
-            <div class="author-book-list">
-                <TheAuthorBookItem />
-                <TheAuthorBookItem />
-                <TheAuthorBookItem />
-                <TheAuthorBookItem />
-                <TheAuthorBookItem />
-                <TheAuthorBookItem />
-                <TheAuthorBookItem />
+            <div className="profile-footer--list">
+                <Title level={3}>Sách của Xuân Bách</Title>
+                <div className='line-drawing'></div>
+                <div class="author-book-list">
+                    {/* <TheAuthorBookItem />
+                    <TheAuthorBookItem />
+                    <TheAuthorBookItem />
+                    <TheAuthorBookItem />
+                    <TheAuthorBookItem />
+                    <TheAuthorBookItem />
+                    <TheAuthorBookItem /> */}
+                    <ReviewPost />
+                    <ReviewPost />
+                    <ReviewPost />
+                    <ReviewPost />
+                    <ReviewPost />
+                </div>
             </div>
         </div>
     );

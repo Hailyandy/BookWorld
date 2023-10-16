@@ -1,6 +1,6 @@
 import Header from "../../shared/header/Header"
 import SelectFavouritebook from "./SelectFavouritebook";
-import BSHAREnum from "helper/BSHAREenum";
+import BSHAREnum from "~/helper/BSHAREenum"
 const SelectFavouritebookPage = () => {
     return (
         <>
