@@ -1,11 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&family=Poppins&display=swap');
+
 .App {
   /* text-align: center; */
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh;
+  width: 100vw; */
 }
+
 :root {
   --background-color: #ffffff;
 }
+
+:root {
+
+  --text-color: #ffffff;
+  --background-color: #bcf4f4;
+  --text-color-main: #224957;
+  --background-color-main-tag: '#30edd8'
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -14,6 +27,10 @@
 .rectangle {
   width: auto;
   cursor: pointer;
+}
+
+.rectangle-48-48 {
+  height: 48px;
 }
 
 .center-horizontal {
@@ -29,14 +46,29 @@
 .sprite-logo {
   background: url("/public/assets/book.png") no-repeat 0 0;
   width: 143px;
-  height: 115px;
+  height: 100px;
   transform: scale(0.5);
 }
 
 .sprite-bigger_book {
   background: url("/public/assets/biggerBook.png") no-repeat -141px -87px;
   width: 568px;
-  height: 632px;
+  height: 500px;
+
+}
+
+.bookjacket-image {
+  background: url("./pages/assets/imgs/Rectangle\ 672.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100px;
+  height: 70px;
+}
+
+.avatar-image {
+  background: url("../public/assets/Ellipse\ 4.png");
+  background-size: 100% 100%;
+  width: 45px;
+  height: 45px;
 }
 
 .bookjacket-image {

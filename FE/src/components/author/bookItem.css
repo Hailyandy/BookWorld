@@ -1,0 +1,19 @@
+.bookItem-container {
+    display: flex;
+    /* justify-content: center; */
+}
+
+.bookItem-container-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.line-drawing {
+    width: 100%;
+    border-radius: 2px;
+    background-color: black;
+    height: 1px;
+}

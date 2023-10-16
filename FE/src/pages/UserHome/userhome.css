@@ -16,7 +16,7 @@
 
 .reading-book .reading-book-title,
 .suggestion-book .suggestion-book-title,
-.book-friend .book-rating .rating-tilte{
+.book-friend .book-rating .rating-tilte {
     font-size: 15px;
     text-align: center;
 }
@@ -24,22 +24,20 @@
 .reading-book .reading-book-list,
 .suggestion-book .suggestion-book-list,
 .book-friend .book-rating .book-rating-list,
-.book-friend .friend .friend-list{
+.book-friend .friend .friend-list {
     list-style: none;
 }
 
 .reading-book .reading-book-list .reading-book-item,
 .suggestion-book .suggestion-book-list .suggestion-book-item,
-.book-friend .book-rating .book-rating-item{
+.book-friend .book-rating .book-rating-item {
     margin-top: 20px;
 }
 
 
 /* Book rank and friend */
 
-.book-friend {
-
-}
+.book-friend {}
 
 .book-friend .friend .friend-title {
     font-size: 15px;
@@ -49,7 +47,3 @@
 .book-friend .friend .friend-item {
     margin-top: 5px;
 }
-
-
-
- 
