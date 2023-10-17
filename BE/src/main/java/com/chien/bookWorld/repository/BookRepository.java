@@ -15,4 +15,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
   @Query(value = "SELECT book.* FROM (book JOIN user ON book.user_id = user.id) JOIN book_genre ON book.id = book_genre.book_id WHERE (book.name LIKE :name OR user.name LIKE :name) AND book_genre.genre_id = :genreId ORDER BY user.name, book.name", nativeQuery = true)
   List<Book> findByTitleOrAuthorAndGenre(@Param("name") String name, @Param("genreId") Long genreId);
+
+  @Query(nativeQuery = true, value = "SELECT * FROM book ORDER BY scoring DESC LIMIT 50")
+  List<Book> findTopBook();
 }

@@ -31,24 +31,36 @@ public class BookController {
   public ResponseEntity<Book> create(@RequestBody Book bookCategories) {
     return ResponseEntity.status(200).body(bookService.create(bookCategories));
   }
+
   @Operation(summary = "Find by title or author")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}/{genreId}")
-  public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name, @PathVariable Long genreId) {
+  public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name,
+      @PathVariable Long genreId) {
     return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId));
   }
 
-//  @Operation(summary = "Update book")
-//  @PreAuthorize("hasRole('LIBRARIAN')")
-//  @PutMapping
-//  public ResponseEntity<SuccessResponse> updateBook(@RequestBody @Validated BookCategoriesUpdateDto bookCategoriesUpdateDto) {
-//    return ResponseEntity.status(200).body(bookCategoriesService.update(bookCategoriesUpdateDto));
-//  }
-//
-//  @Operation(summary = "Delete book")
-//  @PreAuthorize("hasRole('LIBRARIAN')")
-//  @DeleteMapping("/{id:[0-9]{1,32}}")
-//  public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id) {
-//    return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
-//  }
+  // @Operation(summary = "Update book")
+  // @PreAuthorize("hasRole('LIBRARIAN')")
+  // @PutMapping
+  // public ResponseEntity<SuccessResponse> updateBook(@RequestBody @Validated
+  // BookCategoriesUpdateDto bookCategoriesUpdateDto) {
+  // return
+  // ResponseEntity.status(200).body(bookCategoriesService.update(bookCategoriesUpdateDto));
+  // }
+  //
+  // @Operation(summary = "Delete book")
+  // @PreAuthorize("hasRole('LIBRARIAN')")
+  // @DeleteMapping("/{id:[0-9]{1,32}}")
+  // public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id)
+  // {
+  // return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
+  // }
+
+  @GetMapping("/top")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
+  public ResponseEntity<SuccessResponse> findTopBook() {
+    return ResponseEntity.status(200).body(bookService.findTopBook());
+  }
+
 }

@@ -26,9 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Book {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +39,7 @@ public class Book {
   private String introducing;
   private String urlPoster;
   private String urlPdf;
+  private Float scoring;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
