@@ -1,5 +1,7 @@
 package com.chien.bookWorld.service.impl;
 
+import com.chien.bookWorld.dto.BookDto;
+import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
@@ -62,13 +64,20 @@ public class BookServiceImpl implements BookService {
     User user = userRepository.findByUsername(userDetails.getUsername())
         .orElseThrow(
             () -> new UsernameNotFoundException(
-                "User not found with username: " + userDetails.getUsername() + "!"));
-    List<Book> bookList = bookRepository.findByTitleOrAuthor(
-        "%" + name + "%").stream().map(book -> mapper.map(book, Book.class)).collect(
-        Collectors.toList());
+                "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
+    List<BookDto> bookList = bookRepository.findByTitleOrAuthor(
+        "%" + name + "%").stream().map(book -> {
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setAuthorName(book.getUser().getName());
+      bookDto.setGenres(
+          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+              Collectors.toList()));
+      return bookDto;
+    }).collect(Collectors.toList());
     if (bookList.isEmpty()) {
       throw new AppException(404, 44,
-          "Book not found with title or author name contain '" + name + "'!");
+          "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name + "'!");
     }
     return new SuccessResponse(bookList);
   }
@@ -80,12 +89,21 @@ public class BookServiceImpl implements BookService {
     User user = userRepository.findByUsername(userDetails.getUsername())
         .orElseThrow(
             () -> new UsernameNotFoundException(
-                "User not found with username: " + userDetails.getUsername() + "!"));
-    List<Book> bookList = bookRepository.findByTitleOrAuthorAndGenre(
-        "%" + name + "%", genreId);
+                "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
+    List<BookDto> bookList = bookRepository.findByTitleOrAuthorAndGenre(
+        "%" + name + "%", genreId).stream().map(book -> {
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setAuthorName(book.getUser().getName());
+      bookDto.setGenres(
+          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+              Collectors.toList()));
+      return bookDto;
+    }).collect(Collectors.toList());
     if (bookList.isEmpty()) {
       throw new AppException(404, 44,
-          "Book not found with title or author name contain '" + name + "'!");
+          "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name
+              + "' và có id thể loại là '" + genreId + "'!");
     }
     return new SuccessResponse(bookList);
   }

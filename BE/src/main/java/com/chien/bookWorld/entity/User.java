@@ -42,7 +42,8 @@ public class User {
   private String nativePlace;
   private String introducing;
   private String totalBook;
-  private Boolean enabled = true;
+  private String verificationCode;
+  private Boolean enabled = false;
 
   public User(String userName, String password) {
     this.userName = userName;
@@ -53,6 +54,13 @@ public class User {
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
 
+  @ManyToMany
+  @JoinTable(name = "likes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
+  private Set<Post> posts;
+
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Book> books;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<BookBasket> bookBaskets;
 }

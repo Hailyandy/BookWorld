@@ -29,39 +29,16 @@ import lombok.ToString;
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id")
-public class Book {
+public class Pdf {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String name;
-  private Long numberPages;
-  private Long publisher;
-  private LocalDateTime publishDate;
-  private String introducing;
-  private String urlPoster;
-  private Long scoring;
+  private String urlPdf;
 
   @ManyToOne
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "book_id")
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
-  private User user;
-
-  @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-  private Set<BookBasket> bookBaskets;
-
-  @ManyToMany
-  @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-  private Set<Genre> genres;
-
-  public Book(Book book) {
-    this.name = book.getName();
-    this.numberPages = book.getNumberPages();
-    this.publisher = book.getPublisher();
-    this.publishDate = book.getPublishDate();
-    this.introducing = book.getIntroducing();
-    this.urlPoster = book.getUrlPoster();
-    this.user = book.getUser();
-  }
+  private Book book;
 }

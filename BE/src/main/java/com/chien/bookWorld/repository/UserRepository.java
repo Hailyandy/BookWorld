@@ -30,4 +30,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query(value = "UPDATE user SET enabled = :enabled WHERE id IN :ids", nativeQuery = true)
   Optional<Integer> updateEnabledById(@Param("ids") Collection<Long> ids,
       @Param("enabled") Boolean enabled);
+
+  @Modifying
+  @Transactional
+  @Query(value = "UPDATE user SET verification_code = :verificationCode WHERE BINARY(user_name) = BINARY(:userName)", nativeQuery = true)
+  Integer updateVerificationCodeByUserName(@Param("userName") String userName,
+      @Param("verificationCode") String verificationCode);
 }

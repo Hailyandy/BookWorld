@@ -10,7 +10,7 @@ public interface GeneralService<D, C, U> {
 
   SuccessResponse findAll();
 
-  SuccessResponse update(U u);
+  Object update(U u);
 
   Map<String, Object> delete(Long id);
 }

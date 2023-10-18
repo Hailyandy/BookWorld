@@ -33,6 +33,13 @@ public class BookController {
   }
   @Operation(summary = "Find by title or author")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
+  @GetMapping("/{name}")
+  public ResponseEntity<SuccessResponse> findByTitleOrAuthor(@PathVariable String name) {
+    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthor(name));
+  }
+
+  @Operation(summary = "Find by title or author and genre")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}/{genreId}")
   public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name, @PathVariable Long genreId) {
     return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId));
