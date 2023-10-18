@@ -14,7 +14,7 @@ public class BookDto {
 
   private String name;
   private Long numberPages;
-  private Long publisher;
+  private String publisher;
   private LocalDateTime publishDate;
   private String introducing;
   private String urlPoster;

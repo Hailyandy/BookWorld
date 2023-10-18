@@ -105,22 +105,23 @@ public class AuthServiceImpl implements AuthService {
 
     if (strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-          .orElseThrow(() -> new RuntimeException("Lỗi: Không tìm thấy vai trò người dùng!"));
+          .orElseThrow(() -> new AppException(500, 51, "Lỗi: Không tìm thấy vai trò người dùng!"));
       roles.add(userRole);
     } else {
       strRoles.forEach(role -> {
         if ("author".equals(role)) {
           Role libRole = roleRepository.findByName(ERole.ROLE_AUTHOR)
-              .orElseThrow(() -> new RuntimeException("Lỗi: Không tìm thấy vai trò tác giả!"));
+              .orElseThrow(() -> new AppException(500, 51, "Lỗi: Không tìm thấy vai trò tác giả!"));
           roles.add(libRole);
         } else if ("admin".equals(role)) {
           Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
               .orElseThrow(
-                  () -> new RuntimeException("Lỗi: Không tìm thấy vai trò quản trị viên!"));
+                  () -> new AppException(500, 51, "Lỗi: Không tìm thấy vai trò quản trị viên!"));
           roles.add(userRole);
         } else {
           Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-              .orElseThrow(() -> new RuntimeException("Lỗi: Không tìm thấy vai trò người dùng!"));
+              .orElseThrow(
+                  () -> new AppException(500, 51, "Lỗi: Không tìm thấy vai trò người dùng!"));
           roles.add(userRole);
         }
       });
@@ -178,11 +179,11 @@ public class AuthServiceImpl implements AuthService {
             : "Tài khoản đã được đăng ký thành công! Vui lòng đợi quản trị viên phê duyệt tài khoản của bạn!");
         return body;
       } else {
-        throw new AppException(400, 40,
+        throw new AppException(401, 1,
             "Mã OTP không phải là '" + otpVerificationDto.getOtp() + "'!");
       }
     }
-    throw new AppException(400, 40,
+    throw new AppException(400, 3,
         "OTP '" + otpVerificationDto.getOtp()
             + "' của bạn đã hết hạn hoặc không tồn tại! Vui lòng tạo lại OTP!");
   }

@@ -1,8 +1,10 @@
 package com.chien.bookWorld.entity;
 
+import com.chien.bookWorld.dto.BookCreationDto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,8 +38,9 @@ public class Book {
 
   private String name;
   private Long numberPages;
-  private Long publisher;
+  private String publisher;
   private LocalDateTime publishDate;
+  @Column(name = "introducing", length = 65535)
   private String introducing;
   private String urlPoster;
   private Long scoring;
@@ -55,13 +58,12 @@ public class Book {
   @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
   private Set<Genre> genres;
 
-  public Book(Book book) {
-    this.name = book.getName();
-    this.numberPages = book.getNumberPages();
-    this.publisher = book.getPublisher();
-    this.publishDate = book.getPublishDate();
-    this.introducing = book.getIntroducing();
-    this.urlPoster = book.getUrlPoster();
-    this.user = book.getUser();
+  public Book(BookCreationDto bookCreationDto) {
+    this.name = bookCreationDto.getName();
+    this.numberPages = bookCreationDto.getNumberPages();
+    this.publisher = bookCreationDto.getPublisher();
+    this.publishDate = bookCreationDto.getPublishDate();
+    this.introducing = bookCreationDto.getIntroducing();
+    this.urlPoster = bookCreationDto.getUrlPoster();
   }
 }
