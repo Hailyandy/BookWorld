@@ -1,0 +1,9 @@
+.layout-header {
+    display: 'flex';
+    align-items: 'center';
+    background-color: var(--background-color);
+    padding: 7.5px 5px 8.5px 5px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}

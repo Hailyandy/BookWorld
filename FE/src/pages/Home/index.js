@@ -1,11 +1,10 @@
-import HeaderLayout from "../../components/layout/Header"
-import HomeBody from "./HomeBody";
 
-const HomePage = () => {
+import Home from "./Home";
+
+const FristHomePage = () => {
     return (
         <>
-            <HeaderLayout />
-            <HomeBody />
+            <Home />
         </>)
 }
-export default HomePage;
+export default FristHomePage;
