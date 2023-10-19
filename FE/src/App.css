@@ -16,7 +16,8 @@
   --text-color: #ffffff;
   --background-color: #bcf4f4;
   --text-color-main: #224957;
-  --background-color-main-tag: '#30edd8'
+  --background-color-main-tag: '#30edd8';
+  --button-default-background-color: #43D8CD
 }
 
 .App-logo {
@@ -39,6 +40,7 @@
 }
 
 .center-vertical {
+
   display: flex;
   justify-content: center;
 }
