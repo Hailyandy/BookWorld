@@ -4,16 +4,19 @@ import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
+import com.chien.bookWorld.entity.Genre;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
+import com.chien.bookWorld.repository.BookBasketRepository;
 import com.chien.bookWorld.repository.BookRepository;
 import com.chien.bookWorld.repository.GenreRepository;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,8 @@ public class BookServiceImpl implements BookService {
 
   @Autowired
   private BookRepository bookRepository;
+  @Autowired
+  private BookBasketRepository bookBasketRepository;
   @Autowired
   private UserRepository userRepository;
   @Autowired
@@ -122,6 +127,29 @@ public class BookServiceImpl implements BookService {
       throw new AppException(404, 44,
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name
               + "' và có id thể loại là '" + genreId + "'!");
+    }
+    return new SuccessResponse(bookList);
+  }
+
+  @Override
+  public SuccessResponse bookRecommendations() {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+        .getAuthentication().getPrincipal();
+    Collection<Long> genreIds = bookBasketRepository.findTheIDOfFavoriteGenre(userDetails.getId())
+        .orElse(genreRepository.findAll().stream().map(Genre::getId).collect(Collectors.toList()));
+    List<BookDto> bookList = bookRepository.findSuitableBooks(userDetails.getId(), genreIds)
+        .stream().map(book -> {
+          BookDto bookDto = mapper.map(book, BookDto.class);
+          bookDto.setAuthorId(book.getUser().getId());
+          bookDto.setAuthorName(book.getUser().getName());
+          bookDto.setGenres(
+              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+                  Collectors.toList()));
+          return bookDto;
+        }).collect(Collectors.toList());
+    if (bookList.isEmpty()) {
+      throw new AppException(404, 44,
+          "Không có sách gợi ý phù hơp!");
     }
     return new SuccessResponse(bookList);
   }

@@ -59,6 +59,12 @@ public class User {
   private Set<Post> posts;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<Likes> likes;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<Comment> comments;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Book> books;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

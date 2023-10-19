@@ -9,4 +9,5 @@ public interface BookService extends
     GeneralService<BookDto, BookCreationDto, Book> {
   SuccessResponse findByTitleOrAuthor(String name);
   SuccessResponse findByTitleOrAuthorAndGenre(String name, Long genreId);
+  SuccessResponse bookRecommendations();
 }

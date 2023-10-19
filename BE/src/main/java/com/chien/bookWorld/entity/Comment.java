@@ -1,9 +1,7 @@
 package com.chien.bookWorld.entity;
 
-import com.chien.bookWorld.dto.PostCreationDto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -11,20 +9,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToMany;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,42 +28,28 @@ import org.hibernate.annotations.UpdateTimestamp;
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id")
-public class Post {
+public class Comment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "book_id")
-  private Book book;
-
-  @ManyToOne
-  @JoinColumn(name = "pdf_id")
-  private Pdf pdf;
-
-  @ManyToOne
+  @MapsId("userId")
   @JoinColumn(name = "user_id")
   private User user;
 
-  private Long scoring;
+  @ManyToOne
+  @MapsId("postId")
+  @JoinColumn(name = "post_id")
+  private Post post;
+
   @Column(name = "introducing", length = 65535)
   private String content;
-  private Long totalLike;
-  private Long totalComment;
   @CreationTimestamp(source = SourceType.DB)
   private Instant createdOn;
   @UpdateTimestamp(source = SourceType.DB)
   private Instant lastUpdatedOn;
-
-  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-  private Set<Likes> likes;
-
-  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-  private Set<Comment> comments;
-
-  public Post(PostCreationDto postCreationDto) {
-    this.scoring = postCreationDto.getScoring();
-    this.content = postCreationDto.getContent();
-  }
+  private Double commentScoring;
+  private Long parentId;
 }

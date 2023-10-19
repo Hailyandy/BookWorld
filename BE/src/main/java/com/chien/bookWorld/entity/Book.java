@@ -43,7 +43,7 @@ public class Book {
   @Column(name = "introducing", length = 65535)
   private String introducing;
   private String urlPoster;
-  private Long scoring;
+  private Double scoring;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
