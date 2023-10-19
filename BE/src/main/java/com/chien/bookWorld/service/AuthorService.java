@@ -12,4 +12,5 @@ public interface AuthorService extends
         GeneralService<AuthorDto, UserCreationDto, UserUpdateDto>,
         UserDetailsService {
     SuccessResponse findByName(String name);
+
 }

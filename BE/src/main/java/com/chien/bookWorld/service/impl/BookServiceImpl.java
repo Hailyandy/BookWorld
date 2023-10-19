@@ -129,7 +129,7 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  @Scheduled(fixedRate = 30 * 1000)
+  @Scheduled(fixedRate = 30 * 60 * 1000)
   public void updateBookScoring() {
     logger.info("test 30s");
     List<Object[]> averageScorings = postRepository.findAverageScoring();

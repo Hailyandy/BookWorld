@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.Map;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +28,7 @@ public class AuthController {
 
   @Operation(summary = "Signin")
   @PostMapping("/signin")
-  @JsonPropertyOrder(value = {"code", "message", "data"})
+  @JsonPropertyOrder(value = { "code", "message", "data" })
   public ResponseEntity<SuccessResponse> authenticateUser(
       @Valid @RequestBody LoginRequest loginRequest) {
     return ResponseEntity.ok(authService.authenticateUser(loginRequest));

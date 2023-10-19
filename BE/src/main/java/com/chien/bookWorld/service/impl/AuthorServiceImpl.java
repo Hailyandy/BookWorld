@@ -55,7 +55,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public SuccessResponse findById(Long id) {
-        logger.info("find by id");
+
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
             throw new AppException(404, 44, "Error: Does not exist! User not found!");

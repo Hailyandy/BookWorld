@@ -18,6 +18,10 @@ public class UserDto {
   private String phone;
 
   private String birthDate;
+
+  private String urlAvatar;
+
   private String address;
+
   private Boolean enabled;
 }

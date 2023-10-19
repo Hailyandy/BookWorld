@@ -14,5 +14,5 @@ public class AuthorDto {
     private String phone;
     private String nativePlace;
     private String introducing;
-    private String totalBook;
+    private Integer totalBook;
 }

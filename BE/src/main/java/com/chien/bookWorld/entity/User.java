@@ -25,9 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
   @Id
@@ -41,7 +39,7 @@ public class User {
   private String phone;
   private String nativePlace;
   private String introducing;
-  private String totalBook;
+  private Integer totalBook;
   private Boolean enabled = true;
 
   public User(String userName, String password) {
@@ -55,4 +53,5 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Book> books;
+
 }
