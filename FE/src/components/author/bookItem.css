@@ -1,12 +1,14 @@
 .bookItem-container {
     display: flex;
+
     /* justify-content: center; */
 }
 
 .bookItem-container-right {
     display: flex;
+    padding-left: 1rem;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex: 1;
 }
@@ -16,4 +18,13 @@
     border-radius: 2px;
     background-color: black;
     height: 1px;
+}
+
+.author-comment-name {
+    font-size: 16px;
+}
+
+.review-information {
+    opacity: 50%;
+    margin-left: 1rem
 }

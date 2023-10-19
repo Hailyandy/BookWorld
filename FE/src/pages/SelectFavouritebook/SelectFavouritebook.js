@@ -19,7 +19,7 @@ const SelectFavouritebook = () => {
                     <div class="rectangle center-horizontal">
                         <span class="sprite-logo" style={{ transform: "scale(1)" }}> </span>
                     </div>
-                    <span className="selectFavouritebook-container-itemRightHeader--title">Book World</span>
+                    <h3 className="selectFavouritebook-container-itemRightHeader--title">Book World</h3>
                 </div>
                 <div className="selectFavouritebook-container-itemRightHeader--message">
                     <p className='selectFavouritebook-container-itemRightHeader--fontstyle selectFavouritebook-container-itemRightHeaderMessage--title'>Chọn thể loại sách yêu thích của bạn</p>
@@ -91,13 +91,14 @@ const SelectFavouritebook = () => {
 
 
                 </div>
-                <Row justify="center">
-                    <Col span={24} >
+                <Row justify="center" align="middle">
+                    <Col span={8} >
                         <Button style={{
                             borderRadius: "10px",
                             background: "linear-gradient(180deg, rgba(67, 216, 205, 0.90) 0%, rgba(22, 38, 37, 0.00) 100%)",
                             width: "191px",
                             height: "64px",
+
                         }}>
                             <span style={{
                                 color: "var(--text-color-main)",
@@ -106,7 +107,8 @@ const SelectFavouritebook = () => {
                                 fontSize: "18px",
                                 fontStyle: "normal",
                                 fontWeight: 700,
-                                lineHeight: "normal"
+                                lineHeight: "normal",
+
                             }}>Tiếp tục</span></Button>
                     </Col>
                 </Row>

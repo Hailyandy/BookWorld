@@ -1,1 +1,42 @@
 /* @import url('../src/components/form/Content Intro/contentIntro.css'); */
+.book-detail-containner {
+    display: flex;
+
+
+}
+
+.book-detail-containner--left {
+    display: flex;
+    flex: 1 1;
+    right: 0px;
+    justify-content: flex-end;
+}
+
+.bookjacket-intro--sticky {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 200px;
+}
+
+.book-detail-containner--center {
+    flex: 2;
+
+}
+
+.book-detail-containner--right {}
+
+.avg-book-rating {
+    color: #000;
+    font-family: 'Inknut Antiqua';
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 3rem;
+}
+
+h3 {
+    font-weight: 500;
+}

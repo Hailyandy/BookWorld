@@ -20,7 +20,6 @@
 }
 
 .selectFavouritebook-container--itemLeft {
-    padding-right: 50px;
     flex: 1
 }
 
@@ -32,7 +31,8 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    width: 64%
+    width: 64%;
+    margin-bottom: 0px;
 }
 
 .selectFavouritebook-container--itemRight {

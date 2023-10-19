@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { BookService } from "~/services/book.service";
+import BookService from "~/services/book.service";
 const initialState = [];
 
 export const createTutorial = createAsyncThunk(
