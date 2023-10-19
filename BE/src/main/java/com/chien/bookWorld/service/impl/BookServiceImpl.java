@@ -12,23 +12,30 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.BookBasketRepository;
 import com.chien.bookWorld.repository.BookRepository;
 import com.chien.bookWorld.repository.GenreRepository;
+import com.chien.bookWorld.repository.PostRepository;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookService;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
+@Component
 public class BookServiceImpl implements BookService {
+
+  private static final Logger logger = Logger.getLogger(BookServiceImpl.class.getName());
 
   @Autowired
   private BookRepository bookRepository;
@@ -36,6 +43,10 @@ public class BookServiceImpl implements BookService {
   private BookBasketRepository bookBasketRepository;
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private PostRepository postRepository;
+
   @Autowired
   private GenreRepository genreRepository;
   @Autowired
@@ -179,4 +190,36 @@ public class BookServiceImpl implements BookService {
     body.put("message", "Successfully deleted!");
     return body;
   }
+
+  @Override
+  @Scheduled(fixedRate = 30 * 60 * 1000)
+  public void updateBookScoring() {
+    logger.info("test 30s");
+    List<Object[]> averageScorings = postRepository.findAverageScoring();
+    for (Object[] row : averageScorings) {
+      Long bookId = (Long) row[0];
+
+      BigDecimal bigDecimalValue = (BigDecimal) row[1];
+      Double averageScoring = bigDecimalValue.doubleValue();
+
+      if (bookId != null) {
+        Book book = bookRepository.findById(bookId).orElse(null);
+        if (book != null) {
+          book.setScoring(averageScoring);
+          bookRepository.save(book);
+        }
+      }
+    }
+  }
+
+  @Override
+  public SuccessResponse findTopBook() {
+    List<Book> books = bookRepository.findTopBook();
+    if (books.isEmpty()) {
+      throw new AppException(404, 44, "Error: Does not exist! No book has been created yet!");
+    } else {
+      return new SuccessResponse(books);
+    }
+  }
+
 }

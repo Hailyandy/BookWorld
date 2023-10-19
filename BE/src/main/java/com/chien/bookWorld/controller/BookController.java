@@ -25,14 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/book")
 @SecurityRequirement(name = "javainuseapi")
 public class BookController {
+
   @Autowired
   private BookService bookService;
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
-  public ResponseEntity<SuccessResponse> create(@RequestBody @Validated BookCreationDto bookCreationDto) {
-    return ResponseEntity.status(200).body(new SuccessResponse(bookService.create(bookCreationDto)));
+  public ResponseEntity<SuccessResponse> create(
+      @RequestBody @Validated BookCreationDto bookCreationDto) {
+    return ResponseEntity.status(200)
+        .body(new SuccessResponse(bookService.create(bookCreationDto)));
   }
+
   @Operation(summary = "Find by title or author")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}")
@@ -43,7 +47,8 @@ public class BookController {
   @Operation(summary = "Find by title or author and genre")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}/{genreId}")
-  public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name, @PathVariable Long genreId) {
+  public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name,
+      @PathVariable Long genreId) {
     return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId));
   }
 
@@ -67,4 +72,11 @@ public class BookController {
 //  public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id) {
 //    return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
 //  }
+
+  @GetMapping("/top")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
+  public ResponseEntity<SuccessResponse> findTopBook() {
+    return ResponseEntity.status(200).body(bookService.findTopBook());
+  }
+
 }
