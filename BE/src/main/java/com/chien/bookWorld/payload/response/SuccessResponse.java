@@ -10,7 +10,7 @@ import lombok.Setter;
 public class SuccessResponse {
 
   private Long code = 0L;
-  private String message = "Success!";
+  private String message = "Thành công!";
   private Object data;
 
   public SuccessResponse(Object data) {

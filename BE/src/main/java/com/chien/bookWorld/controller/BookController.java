@@ -1,5 +1,7 @@
 package com.chien.bookWorld.controller;
 
+import com.chien.bookWorld.dto.BookCreationDto;
+import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.service.BookService;
@@ -28,10 +30,17 @@ public class BookController {
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
-  public ResponseEntity<Book> create(@RequestBody Book bookCategories) {
-    return ResponseEntity.status(200).body(bookService.create(bookCategories));
+  public ResponseEntity<SuccessResponse> create(@RequestBody @Validated BookCreationDto bookCreationDto) {
+    return ResponseEntity.status(200).body(new SuccessResponse(bookService.create(bookCreationDto)));
   }
   @Operation(summary = "Find by title or author")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
+  @GetMapping("/{name}")
+  public ResponseEntity<SuccessResponse> findByTitleOrAuthor(@PathVariable String name) {
+    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthor(name));
+  }
+
+  @Operation(summary = "Find by title or author and genre")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}/{genreId}")
   public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name, @PathVariable Long genreId) {

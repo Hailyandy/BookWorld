@@ -18,11 +18,11 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
   public ResponseEntity<Map<String, Object>> handleHttpRequestMethodNotSupportedException(
       HttpRequestMethodNotSupportedException e) {
-    System.out.println("Syntax error: " + e.getMessage());
+    System.out.println("Lỗi cú pháp: " + e.getMessage());
 
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 7);
-    body.put("message", "Syntax error in the URL!");
+    body.put("message", "Lỗi cú pháp trên URL!");
     return ResponseEntity.status(400)
         .contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)).body(body);
   }
@@ -30,11 +30,11 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({BadCredentialsException.class})
   public ResponseEntity<Map<String, Object>> handleBadCredentialsException(
       BadCredentialsException e) {
-    System.out.println("Credentials error: " + e.getMessage());
+    System.out.println("Lỗi thông tin xác thực: " + e.getMessage());
 
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 1);
-    body.put("message", "Incorrect password!");
+    body.put("message", "Sai mật khẩu!");
     return ResponseEntity.status(401)
         .contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)).body(body);
   }
@@ -42,30 +42,30 @@ public class GlobalExceptionHandler {
   @ExceptionHandler({HttpMessageNotReadableException.class})
   public ResponseEntity<Map<String, Object>> handleHttpMessageNotReadableException(
       HttpMessageNotReadableException e) {
-    System.out.println("Body format error: " + e.getMessage());
+    System.out.println("Lỗi định dạng body: " + e.getMessage());
 
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 99);
     body.put("message",
-        "The body must be in the format of a JSON object with all required parameters!");
+        "Body phải ở định dạng của một đối tượng JSON với tất cả các tham số bắt buộc!");
     return ResponseEntity.status(400)
         .contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)).body(body);
   }
 
   @ExceptionHandler({AccessDeniedException.class})
   public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException e) {
-    System.out.println("Forbidden error: " + e.getMessage());
+    System.out.println("Lỗi bị cấm: " + e.getMessage());
 
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 43);
-    body.put("message", "Your account does not have permission to use this API!");
+    body.put("message", "Tài khoản của bạn không có quyền sử dụng API này!");
     return ResponseEntity.status(403)
         .contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)).body(body);
   }
 
   @ExceptionHandler({AppException.class})
   public ResponseEntity<Map<String, Object>> handleAppException(AppException e) {
-    System.out.println("App error: " + e.getMessage());
+    System.out.println("Lỗi trong ứng dụng: " + e.getMessage());
 
     final Map<String, Object> body = new HashMap<>();
     body.put("code", e.getCode());
@@ -80,23 +80,23 @@ public class GlobalExceptionHandler {
     if (e.getBindingResult().hasErrors()) {
       errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
       System.out.println(
-          "Bind error: " + errorMessage);
+          "Lỗi định dạng: " + errorMessage);
     }
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 2);
-    body.put("message", "The parameter is not in the correct format! " + errorMessage);
+    body.put("message", "Tham số không đúng định dạng! " + errorMessage);
     return ResponseEntity.status(400)
         .contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)).body(body);
   }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Map<String, Object>> handleUnwantedException(Exception e) {
-    System.out.println("Unwanted error: " + e.getMessage());
+    System.out.println("Lỗi không mong muốn: " + e.getMessage());
     e.printStackTrace();
 
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 50);
-    body.put("message", "System error! " + e.getMessage());
+    body.put("message", "Lỗi hệ thống!");
     return ResponseEntity.status(500)
         .contentType(MediaType.parseMediaType(MediaType.APPLICATION_JSON_VALUE)).body(body);
   }
