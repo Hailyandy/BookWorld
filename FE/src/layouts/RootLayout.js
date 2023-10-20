@@ -23,13 +23,17 @@ const breadcrumbNameMap = {
 
 export default function RootLayout() {
     const config = useContext(ConfigContext);
-
     // let a = new BookService()
     // console.log(a.endPoint)
+    const [reload, setReload] = useState(0);
+
+    const reloadApp = () => setReload(prev => prev + 1);
     const [isSignIn, setIsSignIn] = useState(tokenService.getUser())
     const [headerType, setHeaderType] = useState(BSHAREnum.headerType.not_sign_in)
     useEffect(() => {
         console.log(isSignIn)
+        reloadApp()
+        config()
     }, [isSignIn])
 
     const location = useLocation();

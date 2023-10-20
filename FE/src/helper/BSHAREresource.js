@@ -1,20 +1,18 @@
 const BSHAREresource = {
-    notification_class: {
+    notification_message: {
         success: {
-            iconClass1: 'success',
-            iconClass2: 'fa-check'
+            login: 'Đăng nhập thành công',
+            register: 'Đăng ký thành công',
+
         },
         info: {
-            iconClass1: 'info',
-            iconClass2: 'fa-info'
+
         },
         warning: {
-            iconClass1: 'warning',
-            iconClass2: 'fa-exclamation'
+
         },
         danger: {
-            iconClass1: 'danger',
-            iconClass2: 'fa-exclamation'
+
         }
     },
 
@@ -31,9 +29,6 @@ const BSHAREresource = {
             delete_multiple_exception: '02 tài sản đã chọn không thể xóa. Vui lòng kiểm tra lại tài sản trước khi xóa',
         },
     },
-
-
-
     notification_content: {
         popup_form: {
             error_noti: "Có lỗi này",
