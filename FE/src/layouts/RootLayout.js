@@ -10,6 +10,7 @@ import { ConfigContext } from "~/context/GlobalContext";
 import { BookService } from "~/services/book.service";
 import { NotificationHandler } from "~/App";
 const breadcrumbNameMap = {
+    '/book-market' : 'Chợ sách',
     '/authors': 'Danh sách tác giả',
     '/select-fav-book': 'Chọn sách',
     '/register': 'Đăng ký',
