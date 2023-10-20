@@ -1,27 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const { user } = useSelector((state) => state.global);
-
+const ProtectedRoute = ({ Component, ...rest }) => {
+    const { user } = JSON.parse(localStorage.getItem('loginInfors'));
+    // if (user && !user.isAdmin) return <Component {...props} />;
     return (
         <Route
             {...rest}
-            render={(props) => {
-                if (user && !user.isAdmin) return <Component {...props} />;
-
-                return (
-                    <Redirect
-                        to={{
-                            pathname: '/account/login',
-                            state: {
-                                from: props.location,
-                            },
-                        }}
-                    />
-                );
-            }}
+            component={<Component />}
         />
     );
 };

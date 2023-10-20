@@ -16,6 +16,7 @@
     "customize-cra": "^1.0.0",
     "dayjs": "^1.11.10",
     "moment": "^2.29.4",
+    "notyf": "^3.10.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-app-rewired": "^2.2.1",

@@ -14,6 +14,7 @@
 :root {
 
   --text-color: #ffffff;
+  --ant-input-password-icon-color: #ffffff;
   --background-color: #bcf4f4;
   --text-color-main: #224957;
   --background-color-main-tag: '#30edd8';
@@ -43,6 +44,21 @@
 
   display: flex;
   justify-content: center;
+}
+
+.style-input {
+  width: 300px;
+  height: 45px;
+  background-color: var(--text-color-main) !important
+}
+
+.style-input,
+#basic_password {
+  color: var(--text-color);
+}
+
+.ant-input-password-icon {
+  color: var(--ant-input-password-icon-color) !important;
 }
 
 .sprite-logo {

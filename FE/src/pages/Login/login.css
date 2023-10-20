@@ -46,3 +46,13 @@
 .form_login p {
     margin-bottom: 12px;
 }
+
+input {
+    background-color: red;
+}
+
+
+
+#basic_password {
+    background-color: var(--text-color-main) !important
+}
