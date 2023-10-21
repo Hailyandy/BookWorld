@@ -18,7 +18,7 @@ public class BookDto {
   private LocalDateTime publishDate;
   private String introducing;
   private String urlPoster;
-  private Long scoring;
+  private Double scoring;
   private Long authorId;
   private String authorName;
   private Collection<GenreDto> genres;

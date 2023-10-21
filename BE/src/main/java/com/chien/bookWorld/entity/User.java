@@ -25,9 +25,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
   @Id
@@ -41,9 +39,9 @@ public class User {
   private String phone;
   private String nativePlace;
   private String introducing;
-  private String totalBook;
   private String verificationCode;
   private Boolean enabled = false;
+  private Integer totalBook;
 
   public User(String userName, String password) {
     this.userName = userName;
@@ -57,6 +55,12 @@ public class User {
   @ManyToMany
   @JoinTable(name = "likes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
   private Set<Post> posts;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<Likes> likes;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<Comment> comments;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Book> books;

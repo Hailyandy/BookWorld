@@ -1,27 +1,26 @@
 package com.chien.bookWorld.entity;
 
+import com.chien.bookWorld.dto.PostCreationDto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @NoArgsConstructor
@@ -50,11 +49,23 @@ public class Post {
   private User user;
 
   private Long scoring;
+  @Column(name = "introducing", length = 65535)
   private String content;
   private Long totalLike;
   private Long totalComment;
-  private LocalDateTime timestamp;
+  @CreationTimestamp(source = SourceType.DB)
+  private Instant createdOn;
+  @UpdateTimestamp(source = SourceType.DB)
+  private Instant lastUpdatedOn;
 
-  @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
-  private Set<User> users;
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+  private Set<Likes> likes;
+
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+  private Set<Comment> comments;
+
+  public Post(PostCreationDto postCreationDto) {
+    this.scoring = postCreationDto.getScoring();
+    this.content = postCreationDto.getContent();
+  }
 }

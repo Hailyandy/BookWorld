@@ -7,6 +7,14 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 
 public interface BookService extends
     GeneralService<BookDto, BookCreationDto, Book> {
+
   SuccessResponse findByTitleOrAuthor(String name);
+
   SuccessResponse findByTitleOrAuthorAndGenre(String name, Long genreId);
+
+  SuccessResponse bookRecommendations();
+
+  void updateBookScoring();
+
+  SuccessResponse findTopBook();
 }

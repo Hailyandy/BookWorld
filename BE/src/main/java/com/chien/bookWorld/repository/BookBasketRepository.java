@@ -12,6 +12,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookBasketRepository extends JpaRepository<BookBasket, Long> {
+
+  @Query(value = "select genre_id from book_basket join book_genre on book_basket.book_id = book_genre.book_id where book_basket.user_id = :userId group by genre_id", nativeQuery = true)
+  Optional<Collection<Long>> findTheIDOfFavoriteGenre(@Param("userId") Long userId);
+
   @Modifying
   @Transactional
   @Query(value = "INSERT INTO book_basket VALUES(:bookId, :userId, :status)", nativeQuery = true)
