@@ -47,3 +47,10 @@
 .form_register h1 {
     text-align: center;
 }
+
+.ant-select-selector,
+.ant-select-selection-placeholder,
+.ant-select-arrow {
+    background-color: var(--text-color-main) !important;
+    color: var(--text-color) !important;
+}

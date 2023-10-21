@@ -1,17 +1,56 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import img1 from "../assets/imgs/zyro-image 1.png"
 import img2 from "../assets/imgs/images1.png"
 import "./login.css"
 import { Form, Button, Input, Space, Typography } from 'antd';
 import { Checkbox } from 'antd';
-import { Link } from 'react-router-dom'
-const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
-};
+import { Link, Navigate, redirect, useNavigate } from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { login } from '~/slices/user';
+import { ConfigContext } from "~/context/GlobalContext";
+import tokenService from '~/services/token.service';
+import notyf from '~/helper/notifyDisplay';
+import BSHAREresource from '~/helper/BSHAREresource';
+// import authService from '~/services/auth.service';
 
 const { Text } = Typography;
-
+const InputPassword = Input.Password
 function Login() {
+    const config = useContext(ConfigContext);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [form] = Form.useForm();
+    const [isRememberme, setIsRememerme] = useState(false)
+    const userRemember = tokenService.getCredentials()
+    const onChange = (e) => {
+        console.log(`checked = ${e.target.checked}`);
+        setIsRememerme(e.target.checked)
+    };
+    const onFinish = (values) => {
+        console.log('Success:', values);
+        console.log(form.getFieldsValue())
+        let { username, password } = values
+        if (isRememberme) {
+            tokenService.setCredential(values)
+        }
+        dispatch(login({ username, password }))
+            .unwrap()
+            .then(async data => {
+                console.log(data)
+                tokenService.setUser(data)
+                // notyf.success(BSHAREresource.notification_message.success.login)
+                await config()
+                navigate('/users', { replace: true });
+                return;
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
     return (
         <div className='login_container'>
             <img src={img1} alt="img1" />
@@ -23,19 +62,73 @@ function Login() {
                 <div className='form_login'>
                     <h1>Đăng nhập</h1>
 
-                    <Form style={{ display: 'flex', flexDirection: "column" }}>
-                        <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "var(--text-color-main)" }} placeholder="Tài khoản" />
-                        <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "var(--text-color-main)" }} placeholder="Mật khẩu" />
-                        <div style={{ width: '300px', display: "flex", justifyContent: "space-between", marginBottom: '26px' }}>
+                    <Form form={form} style={{ display: 'flex', flexDirection: "column" }} onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="on"
+                        labelCol={{
+                            span: 0,
+                        }}
+                        wrapperCol={{
+                            span: 16,
+                        }}
+                        name="basic"
+                        initialValues={{
+                            remember: true,
+                            username: userRemember?.username,
+                            password: userRemember?.password
+                        }}
+                    >
+
+                        <Form.Item
+
+                            name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Hãy nhập tên đăng nhập!',
+                                },
+                            ]}
+
+                        >
+                            <Input className='style-input' placeholder="Tài khoản" />
+                        </Form.Item>
+                        <Form.Item
+
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Hãy nhập mật khẩu!',
+                                },
+                            ]}
+                        >
+                            <InputPassword className='style-input' placeholder="Mật khẩu" />
+                        </Form.Item>
+
+
+                        <Form.Item
+                            name="remember"
+                            valuePropName="checked"
+                            wrapperCol={{
+                                offset: 0,
+                                span: 16,
+                            }}
+                        >
                             <Checkbox onChange={onChange}>Nhớ mật khẩu</Checkbox>
-                            <Text>Quên mật khẩu ?</Text>
-                        </div>
-                        <Button style={{
-                            borderRadius: "10px",
-                            background: "linear-gradient(180deg, rgba(67, 216, 205, 0.90) 0%, rgba(22, 38, 37, 0.00) 100%)",
-                            width: "300px",
-                            height: "64px",
-                        }}>
+                        </Form.Item>
+
+
+                        <Button
+
+                            htmlType="submit"
+                            style={{
+                                borderRadius: "10px",
+                                background: "linear-gradient(180deg, rgba(67, 216, 205, 0.90) 0%, rgba(22, 38, 37, 0.00) 100%)",
+                                width: "300px",
+                                height: "64px",
+
+                            }}
+                        >
                             <span style={{
                                 color: "#224957",
 
@@ -46,6 +139,7 @@ function Login() {
                                 lineHeight: "normal"
                             }}>Đăng nhập</span></Button>
                     </Form>
+
                     <Space direction="horizontal" style={{ width: '300px', display: "flex", justifyContent: "space-between" }}>
                         <Text type="secondary">Bạn chưa có tài khoản ?</Text>
                         <Text type="success">
@@ -54,7 +148,7 @@ function Login() {
                     </Space>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

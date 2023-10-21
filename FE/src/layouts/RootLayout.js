@@ -8,27 +8,34 @@ import BSHAREnum from "~/helper/BSHAREenum"
 import './css/rootlayout.css'
 import { ConfigContext } from "~/context/GlobalContext";
 import { BookService } from "~/services/book.service";
-import { NotificationHandler } from "~/App";
 const breadcrumbNameMap = {
+    '/book-market': 'Chợ sách',
     '/authors': 'Danh sách tác giả',
     '/select-fav-book': 'Chọn sách',
     '/register': 'Đăng ký',
     '/login': 'Đăng nhập',
     '/users': 'Người dùng',
-    '/users/fill-infor': 'Nhập thông tin'
+    '/users/fill-infor': 'Nhập thông tin',
+    '/search': 'Tìm kiếm',
+    '/otp-confirmation': 'Xác nhận OTP',
+
 };
 
 
 
 export default function RootLayout() {
     const config = useContext(ConfigContext);
-
     // let a = new BookService()
     // console.log(a.endPoint)
+    const [reload, setReload] = useState(0);
+
+    const reloadApp = () => setReload(prev => prev + 1);
     const [isSignIn, setIsSignIn] = useState(tokenService.getUser())
     const [headerType, setHeaderType] = useState(BSHAREnum.headerType.not_sign_in)
     useEffect(() => {
         console.log(isSignIn)
+        reloadApp()
+        config()
     }, [isSignIn])
 
     const location = useLocation();
