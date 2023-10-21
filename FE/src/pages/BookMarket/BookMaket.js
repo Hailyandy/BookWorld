@@ -126,7 +126,7 @@ const BookMarketPage = () => {
                             borderRadius: "10px",
                             background: "var(--button-default-background-color)",
                         }}>
-                            Submit
+                            Đăng bán
                         </Button>
                     </Form.Item>
                 </Form>

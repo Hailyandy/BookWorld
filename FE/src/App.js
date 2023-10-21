@@ -1,6 +1,6 @@
 
 import './App.css';
-import { SearchPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from './pages';
+import { HomePage, OtpCode, SearchPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from './pages';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -18,33 +18,15 @@ import LoginPage from './pages/Login/index';
 import RegisterPage from "./pages/Register/index"
 import UserPage from './pages/User/index'
 import UserHomePage from './pages/UserHome';
-import HomePage from './pages/Home/Home';
 import { Button, Divider, notification, Space } from 'antd';
 import ModelReviewPost from './components/Model/TheModelReviewPost';
 import { ConfigContext } from './context/GlobalContext';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import tokenService from './services/token.service';
+
 import { useState } from 'react';
-
-
-function NotificationHandler() {
-  const [api, contextHolder] = notification.useNotification();
-  //'topLeft', 'topRight', 'bottomLeft'
-  const openNotification = (placement, message) => {
-    api.info({
-      message: `Notification ${placement}`,
-      description:
-        message,
-      placement,
-    });
-  };
-  return {
-    contextHolder, openNotification
-  }
-}
-
 function App() {
-  var notificationHandler = NotificationHandler()
+
   const [reload, setReload] = useState(0);
   const userRoleArray = tokenService.getRoleUser()
   console.log(userRoleArray)
@@ -57,6 +39,7 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="search" element={<SearchPage />} />
+        <Route path="otp-confirmation/:username" element={<OtpCode />} />
         {
           tokenService.getRoleUser()?.length > 0 && (<Route path="users" element={<GeneralLayout />}>
             <Route
@@ -155,7 +138,6 @@ function App() {
 
     <ConfigContext.Provider value={reloadApp}>
       <div class="App">
-        {notificationHandler.contextHolder}
 
         {/* <Register /> */}
         {/* <Login /> */}
@@ -169,4 +151,4 @@ function App() {
   );
 }
 
-export { App, NotificationHandler };
+export { App };

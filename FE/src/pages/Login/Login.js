@@ -38,7 +38,7 @@ function Login() {
             .then(async data => {
                 console.log(data)
                 tokenService.setUser(data)
-                notyf.success(BSHAREresource.notification_message.success.login)
+                // notyf.success(BSHAREresource.notification_message.success.login)
                 await config()
                 navigate('/users', { replace: true });
                 return;

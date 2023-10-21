@@ -8,7 +8,7 @@ import LoginPage from '~/pages/Login/index';
 import RegisterPage from "~/pages/Register/index"
 import UserPage from '~/pages/User/index'
 import UserHomePage from '~/pages/UserHome';
-import HomePage from '~/pages/Home/Home';
+import HomePage from '~/pages/Home';
 import ModelReviewPost from '~/components/Model/TheModelReviewPost';
 export {
     RootLayout,

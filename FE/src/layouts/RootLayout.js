@@ -8,15 +8,17 @@ import BSHAREnum from "~/helper/BSHAREenum"
 import './css/rootlayout.css'
 import { ConfigContext } from "~/context/GlobalContext";
 import { BookService } from "~/services/book.service";
-import { NotificationHandler } from "~/App";
 const breadcrumbNameMap = {
-    '/book-market' : 'Chợ sách',
+    '/book-market': 'Chợ sách',
     '/authors': 'Danh sách tác giả',
     '/select-fav-book': 'Chọn sách',
     '/register': 'Đăng ký',
     '/login': 'Đăng nhập',
     '/users': 'Người dùng',
-    '/users/fill-infor': 'Nhập thông tin'
+    '/users/fill-infor': 'Nhập thông tin',
+    '/search': 'Tìm kiếm',
+    '/otp-confirmation': 'Xác nhận OTP',
+
 };
 
 

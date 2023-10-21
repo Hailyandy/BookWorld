@@ -2,17 +2,22 @@ import axios from "axios";
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css'; // for React, Vue and Svelte
 import BSHAREresource from "~/helper/BSHAREresource";
+import tokenService from "./token.service";
 const notyf = new Notyf({
   position: {
     x: 'right',
-    y: 'top',
+    y: 'bottom',
   },
 });
-export const axiosInstance = axios.create({
+console.log(tokenService.getLocalAccessToken())
+let axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api/",
   // headers: {
-  //   "Content-Type": "application/json",
+  //   'Content-Type': "application/json",
+  //   'Authorization': `aaas`,
+  //   'Access-Control-Allow-Origin': "*"
   // },
+
 });
 
 axiosInstance.interceptors.request.use(config => {
@@ -34,14 +39,14 @@ export const getAPI = async (endpoint, param, config = {}) => {
     endpoint = `${endpoint}/${param}`
   }
   try {
-    const response = await axiosInstance.get(endpoint, config)
+    const response = await axios.get("http://localhost:8080/api/book/a", { headers: { 'Access-Control-Allow-Origin': '*', 'Accept': '*/*', 'Content-Type': 'application/json' } })
     // loading.hideLoading()
     if (response.status === 200) {
       // Lấy dữ liệu thành công
       return response.data
     } else if (response.status === 201) {
       // Post dữ liệu thành công
-      notyf.success('Đẩy dữ liệu lên server thành công')
+      // notyf.success('Đẩy dữ liệu lên server thành công')
       return response.data
     }
     // return handleAPISuccess(response)
@@ -54,6 +59,15 @@ export const getAPI = async (endpoint, param, config = {}) => {
 export const postAPI = async (endpoint, config = {}) => {
   try {
     const response = await axiosInstance.post(endpoint, config)
+    axiosInstance = axios.create({
+      baseURL: "http://localhost:8080/api/",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${tokenService.getLocalAccessToken()}`,
+        "Access-Control-Allow-Origin": "*"
+      },
+
+    });
     return handleAPISuccess(response)
   } catch (error) {
     handleAPIError(error)
@@ -100,7 +114,7 @@ const handleAPISuccess = (res) => {
     return res.data
   } else if (res.status === 201) {
     // Post dữ liệu thành công
-    notyf.success(BSHAREresource.notification_content.error_status_code.code_201)
+    notyf.success(res.data.message)
     return res.data
   }
 }
@@ -121,28 +135,34 @@ const handleServerError = (error) => {
   if (error.status === 400) {
 
     // Lỗi từ client – dữ liệu đầu vào không hợp lệ.
-    notyf.error(BSHAREresource.notification_content.error_status_code.code_400)
+    // notyf.error(BSHAREresource.notification_content.error_status_code.code_400)
+    notyf.error(`${BSHAREresource.notification_content.error_status_code.code_400}<br />` + `${error.data.message}`)
   } else if (error.status === 401) {
 
     //Lỗi từ client - hông tin xác thực không hợp lệ
-    notyf.error(BSHAREresource.notification_content.error_status_code.code_401)
+    // notyf.error(BSHAREresource.notification_content.error_status_code.code_401)
+    notyf.error(`${BSHAREresource.notification_content.error_status_code.code_401}<br />` + `${error.data.message}`)
   } else if (error.status === 403) {
 
     //Không tin xác thực không hợp lệ
-    notyf.error(BSHAREresource.notification_content.error_status_code.code_403)
+    // notyf.error(BSHAREresource.notification_content.error_status_code.code_403)
+    notyf.error(`${BSHAREresource.notification_content.error_status_code.code_403}<br />` + `${error.data.message}`)
   }
   else if (error.status === 404) {
 
     //Không tìm thấy địa chỉ hoặc tài nguyên
-    notyf.error(BSHAREresource.notification_content.error_status_code.code_404)
+    // notyf.error(BSHAREresource.notification_content.error_status_code.code_404)
+    notyf.error(`${BSHAREresource.notification_content.error_status_code.code_404}<br />` + `${error.data.message}`)
   }
   else if (error.status === 500) {
 
     //Lỗi từ back-end.
-    notyf.error(BSHAREresource.notification_content.error_status_code.code_500)
+    // notyf.error(BSHAREresource.notification_content.error_status_code.code_500)
+    notyf.error(`${BSHAREresource.notification_content.error_status_code.code_500}<br />` + `${error.data.message}`)
   } else {
 
     //Có lỗi từ máy chủ!'
-    notyf.error(BSHAREresource.notification_content.error_status_code.server_error)
+    // notyf.error(BSHAREresource.notification_content.error_status_code.server_error)
+    notyf.error(`${BSHAREresource.notification_content.error_status_code.server_error}<br />` + `${error.data.message}`)
   }
 }

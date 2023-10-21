@@ -6,6 +6,8 @@ import BookDetailPage from "./BookDetail/BookDetail";
 import BookMarketPage from "./BookMarket/BookMaket";
 import SearchPage from "./Search/SearchPage";
 import MyBookshelf from "./MyBookshelf/MyBookshelf";
+import OtpCode from "./OtpCode/OptCode";
+import HomePage from "./Home";
 export {
     SelectFavouritebook,
     AuthorInformationPage,
@@ -14,5 +16,7 @@ export {
     BookDetailPage,
     BookMarketPage,
     SearchPage,
-    MyBookshelf
+    MyBookshelf,
+    OtpCode,
+    HomePage
 }

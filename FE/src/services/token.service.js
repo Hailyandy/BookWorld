@@ -6,7 +6,7 @@ class TokenService {
 
   getLocalAccessToken() {
     const user = JSON.parse(localStorage.getItem("user"));
-    return user?.accessToken;
+    return `Bearer ${user?.token}`;
   }
 
   getRoleUser() {

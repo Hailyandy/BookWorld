@@ -5,9 +5,15 @@ const initialState = [];
 
 export const login = createAsyncThunk(
     "users/login",
-    async ({ username, password }) => {
-        const res = await userService.login({ username, password });
-        return res.data;
+    async ({ username, password }, { rejectWithValue }) => {
+        try {
+            const res = await userService.login({ username, password });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            return rejectWithValue(err.response.data)
+        }
     }
 );
 export const register = createAsyncThunk(
@@ -25,6 +31,37 @@ export const register = createAsyncThunk(
 
     }
 );
+
+export const sendOtpConfirmation = createAsyncThunk(
+    "users/otpconfirmation",
+    async ({ username, otp }, { rejectWithValue }) => {
+
+        try {
+            const res = await userService.confirmEmailByOtp({ username, otp });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const resendOtpConfirmation = createAsyncThunk(
+    "users/resendotpconfirmation",
+    async ({ username }, { rejectWithValue }) => {
+
+        try {
+            const res = await userService.resendOtp({ username });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -33,6 +70,9 @@ const userSlice = createSlice({
             console.log(action.payload)
         },
         [register.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [sendOtpConfirmation.fulfilled]: (state, action) => {
             console.log(action.payload)
         },
     },

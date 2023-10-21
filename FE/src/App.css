@@ -40,6 +40,10 @@
   align-items: center;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .center-vertical {
 
   display: flex;

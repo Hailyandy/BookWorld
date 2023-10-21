@@ -1,10 +1,10 @@
 
 import Home from "./Home";
 
-const FristHomePage = () => {
+const HomePage = () => {
     return (
         <>
             <Home />
         </>)
 }
-export default FristHomePage;
+export default HomePage;

@@ -4,13 +4,30 @@ import { DownOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
 import "../css/header.css"
 import BSHAREnum from "~/helper/BSHAREenum"
 import BSHAREresource from '~/helper/BSHAREresource';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { searchBookByNameOrAuthor } from '~/slices/book';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
 //props == BSHAREnum.headerType, vào đọc file enum để biết truyền prop gì vào đây
 const HeaderLayout = (props) => {
-    const onSearch = (value, _e, info) => console.log(info?.source, value);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const onSearch = (value, _e, info) => {
+        console.log(value)
+        dispatch(searchBookByNameOrAuthor({ name: value }))
+            .unwrap()
+            .then(async data => {
+                // notyf.success(BSHAREresource.notification_message.success.login)
+                console.log(data)
+                return;
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
     const handleButtonClick = (e) => {
         message.info('Click on left button.');
         console.log('click left button', e);

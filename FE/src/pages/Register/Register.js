@@ -24,8 +24,7 @@ function Register() {
         dispatch(register({ username, password, roles: [roles] }))
             .unwrap()
             .then(data => {
-
-                navigate('/login', { replace: true });
+                navigate(`/otp-confirmation/${username}`, { replace: true });
                 return;
             })
             .catch(e => {

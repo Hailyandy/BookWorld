@@ -3,6 +3,7 @@ const BSHAREresource = {
         success: {
             login: 'Đăng nhập thành công',
             register: 'Đăng ký thành công',
+            otp: 'Xác nhận mã thành công'
 
         },
         info: {
