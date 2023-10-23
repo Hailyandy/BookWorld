@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -218,7 +219,9 @@ public class BookServiceImpl implements BookService {
     if (books.isEmpty()) {
       throw new AppException(404, 44, "Error: Does not exist! No book has been created yet!");
     } else {
-      return new SuccessResponse(books);
+      return new SuccessResponse(books.stream()
+          .map(book -> mapper.map(book, BookDto.class)).collect(
+              Collectors.toList()));
     }
   }
 
