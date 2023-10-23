@@ -7,7 +7,6 @@
 .search-page-body {
     position: absolute;
     width: 60%;
-    top: 35%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0%);
 }

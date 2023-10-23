@@ -27,6 +27,9 @@ const BSHAREnum = Object.freeze({
         user: Symbol('ROLE_USER'),
         author: Symbol('ROLE_AUTHOR'),
         admin: Symbol('ROLE_ADMIN')
+    }),
+    dropdown_user_menu_key: Object.freeze({
+        logout: 'logout'
     })
 })
 

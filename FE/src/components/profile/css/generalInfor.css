@@ -10,8 +10,8 @@
     }
 
     .ant-image {
-        display: inline-block;
-        width: 30%;
+        display: block;
+
     }
 
     .image {

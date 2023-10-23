@@ -1,5 +1,5 @@
 
-import { SearchPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from '~/pages'
+import { SearchBookPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from '~/pages'
 import {
     RootLayout,
     AuthorsLayout,
@@ -9,7 +9,7 @@ import {
     Authors,
     LoginPage,
     RegisterPage,
-    UserPage,
+    UserDeclareInformationPage,
     UserHomePage,
     HomePage,
     ModelReviewPost,
@@ -23,7 +23,7 @@ const routes = {
         },
         {
             path: 'fill-infor',
-            element: <UserPage />
+            element: <UserDeclareInformationPage />
         },
         {
             path: 'profile',

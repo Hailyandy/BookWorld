@@ -21,9 +21,7 @@
     margin-right: 50px;
 }
 
-.ant-input::placeholder {
-    color: white;
-}
+
 
 .form_title {
     display: flex;
@@ -46,12 +44,6 @@
 .form_login p {
     margin-bottom: 12px;
 }
-
-input {
-    background-color: red;
-}
-
-
 
 #basic_password {
     background-color: var(--text-color-main) !important

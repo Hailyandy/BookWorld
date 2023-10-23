@@ -1,30 +1,26 @@
 
 import './App.css';
-import { HomePage, OtpCode, SearchPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from './pages';
+import { Button, Divider, notification, Space } from 'antd';
+import { ConfigContext } from './context/GlobalContext';
+import tokenService from './services/token.service';
+import { useState } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider
 } from 'react-router-dom'
-import routes from './components/route/routes';
-import RootLayout from './layouts/RootLayout';
-import AuthorsLayout from './layouts/AuthorsLayout';
-import GeneralLayout from './layouts/AuthorsLayout';
-import AuthorInfor from './pages/Author/AuthorInformation';
-import AuthorsError from './pages/Author/AuthorsError';
-import Authors from './pages/Author/Authors';
-import LoginPage from './pages/Login/index';
-import RegisterPage from "./pages/Register/index"
-import UserPage from './pages/User/index'
-import UserHomePage from './pages/UserHome';
-import { Button, Divider, notification, Space } from 'antd';
-import ModelReviewPost from './components/Model/TheModelReviewPost';
-import { ConfigContext } from './context/GlobalContext';
-import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
-import tokenService from './services/token.service';
+import {
+  FriendRequestSearchPeoplePage,
+  UserDeclareInformationPage,
+  UserHomePage, RegisterPage, LoginPage, AuthorsError, HomePage, OtpCode, SearchBookPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf
+} from './pages';
+import { ProtectedRoute, ModelReviewPost, TheAutofillItem, RootLayout, AuthorsLayout, GeneralLayout } from './components';
 
-import { useState } from 'react';
+//page mẫu, gọi api luôn khi chạy vào route này, cần tham khảo nên để import ra ngoài
+import Authors from './pages/Author/Authors';
+
+
 function App() {
 
   const [reload, setReload] = useState(0);
@@ -36,9 +32,10 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<HomePage />} />
         <Route path="select-fav-book" element={<SelectFavouritebook />} />
+        <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route path="search" element={<SearchPage />} />
+        <Route path="search-book" element={<SearchBookPage />} />
         <Route path="otp-confirmation/:username" element={<OtpCode />} />
         {
           tokenService.getRoleUser()?.length > 0 && (<Route path="users" element={<GeneralLayout />}>
@@ -50,17 +47,12 @@ function App() {
             />
             <Route
               path="fill-infor"
-              element={<UserPage />}
+              element={<UserDeclareInformationPage />}
             // loader={authorDetailsLoader}
             />
             <Route
               path="profile"
               element={<GeneralProfile />}
-            // loader={authorDetailsLoader}
-            />
-            <Route
-              path="my-bookshelf/:id"
-              element={<MyBookshelf />}
             // loader={authorDetailsLoader}
             />
             <Route
@@ -84,15 +76,10 @@ function App() {
                 element={<ModelReviewPost />}
               // loader={authorDetailsLoader}
               />
-              <Route
-                path="profile"
-                element={<GeneralProfile />}
-              // loader={authorDetailsLoader}
-              />
             </Route>
           </Route >)
         }
-        <Route path="books"  >
+        <Route path="books">
           <Route
             index
             element={<UserHomePage />}
@@ -137,7 +124,7 @@ function App() {
   return (
 
     <ConfigContext.Provider value={reloadApp}>
-      <div class="App">
+      <div id='app'>
 
         {/* <Register /> */}
         {/* <Login /> */}
@@ -146,6 +133,9 @@ function App() {
         {/* <AuthorInformationPage /> */}
         {/* <RouterProvider router={router} /> */}
         <RouterProvider router={router} />
+        <div id="loading" class="loading">
+          Loading&#8230;
+        </div>
       </div>
     </ConfigContext.Provider>
   );

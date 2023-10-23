@@ -1,0 +1,7 @@
+.friend-req-search-pple-containner {
+
+    width: 1200px;
+    padding-top: 2rem;
+    margin-left: calc((100% - 1200px)/2);
+    margin-right: calc((100% - 1200px)/2);
+}

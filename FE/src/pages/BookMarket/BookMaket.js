@@ -5,7 +5,7 @@ import ImgCrop from 'antd-img-crop';
 import "./bookmarket.css"
 const layout = {
     labelCol: {
-        span: 4,
+        span: 6,
     },
     wrapperCol: {
         span: 12,
@@ -69,9 +69,9 @@ const BookMarketPage = () => {
 
             </div>
             <div className="bookmarket--itemRight">
-                <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                <Form className="bordered-form" {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
                     <Row span={24} >
-                        <Col offset={2} span={12} >
+                        <Col span={24} >
                             <h2>Thêm thông tin về cuốn sách của bạn</h2>
                         </Col>
                     </Row>
@@ -119,7 +119,7 @@ const BookMarketPage = () => {
                     <Form.Item
                         wrapperCol={{
                             ...layout.wrapperCol,
-                            offset: 14,
+                            offset: 12,
                         }}
                     >
                         <Button type="primary" htmlType="submit" style={{

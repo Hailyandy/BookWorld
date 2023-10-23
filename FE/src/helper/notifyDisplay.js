@@ -6,4 +6,17 @@ const notyf = new Notyf({
     },
 });
 
+
+export const showSpinner = () => {
+    var loadingDiv = document.getElementById('loading');
+    console.log(loadingDiv)
+    loadingDiv.style.visibility = 'visible';
+}
+
+export const hideSpinner = () => {
+    var loadingDiv = document.getElementById('loading');
+    console.log(loadingDiv)
+    loadingDiv.style.visibility = 'hidden';
+
+}
 export default notyf
