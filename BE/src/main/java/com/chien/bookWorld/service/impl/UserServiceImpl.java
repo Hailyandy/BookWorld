@@ -3,6 +3,7 @@ package com.chien.bookWorld.service.impl;
 import com.chien.bookWorld.dto.UserCreationDto;
 import com.chien.bookWorld.dto.UserDto;
 import com.chien.bookWorld.dto.UserUpdateDto;
+import com.chien.bookWorld.entity.Role;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
@@ -113,10 +114,10 @@ public class UserServiceImpl implements UserService {
       }
     }
 
-//    fromDB.setEmail(userUpdateDto.getEmail());
+    // fromDB.setEmail(userUpdateDto.getEmail());
     fromDB.setName(userUpdateDto.getName());
     fromDB.setPhone(userUpdateDto.getPhone());
-//    fromDB.setAddress(userUpdateDto.getAddress());
+    // fromDB.setAddress(userUpdateDto.getAddress());
     return new SuccessResponse(mapper.map(userRepository.save(fromDB), UserDto.class));
   }
 
@@ -227,5 +228,16 @@ public class UserServiceImpl implements UserService {
             () -> new UsernameNotFoundException("User Not Found with username: " + username));
 
     return UserDetailsImpl.build(user);
+  }
+
+  @Override
+  public SuccessResponse findByUsersByName(String name) {
+    List<User> users = userRepository.findByNameAndNotRoleAdmin("xuan");
+    if (users.isEmpty()) {
+      throw new AppException(404, 44, "Error: Does not exist! User not found!");
+    } else {
+      return new SuccessResponse(users.stream()
+          .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList()));
+    }
   }
 }

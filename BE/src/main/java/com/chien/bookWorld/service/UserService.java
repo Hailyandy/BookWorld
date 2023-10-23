@@ -14,7 +14,12 @@ public interface UserService extends
   SuccessResponse findByName(String name);
 
   SuccessResponse findByPhone(String phone);
+
   SuccessResponse findByEnabled(Boolean enabled);
+
   Map<String, Object> acceptAccount(Collection<Long> ids);
+
   Map<String, Object> rejectAccount(Collection<Long> ids);
+
+  SuccessResponse findByUsersByName(String name);
 }

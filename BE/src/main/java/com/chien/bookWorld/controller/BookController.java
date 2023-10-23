@@ -53,24 +53,33 @@ public class BookController {
     return ResponseEntity.status(200).body(bookService.bookRecommendations());
   }
 
-//  @Operation(summary = "Update book")
-//  @PreAuthorize("hasRole('LIBRARIAN')")
-//  @PutMapping
-//  public ResponseEntity<SuccessResponse> updateBook(@RequestBody @Validated BookCategoriesUpdateDto bookCategoriesUpdateDto) {
-//    return ResponseEntity.status(200).body(bookCategoriesService.update(bookCategoriesUpdateDto));
-//  }
-//
-//  @Operation(summary = "Delete book")
-//  @PreAuthorize("hasRole('LIBRARIAN')")
-//  @DeleteMapping("/{id:[0-9]{1,32}}")
-//  public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id) {
-//    return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
-//  }
+  // @Operation(summary = "Update book")
+  // @PreAuthorize("hasRole('LIBRARIAN')")
+  // @PutMapping
+  // public ResponseEntity<SuccessResponse> updateBook(@RequestBody @Validated
+  // BookCategoriesUpdateDto bookCategoriesUpdateDto) {
+  // return
+  // ResponseEntity.status(200).body(bookCategoriesService.update(bookCategoriesUpdateDto));
+  // }
+  //
+  // @Operation(summary = "Delete book")
+  // @PreAuthorize("hasRole('LIBRARIAN')")
+  // @DeleteMapping("/{id:[0-9]{1,32}}")
+  // public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id)
+  // {
+  // return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
+  // }
 
   @GetMapping("/top")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   public ResponseEntity<SuccessResponse> findTopBook() {
     return ResponseEntity.status(200).body(bookService.findTopBook());
+  }
+
+  @GetMapping("/search/{id}")
+  @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
+  public ResponseEntity<SuccessResponse> getBookById(@PathVariable Long id) {
+    return ResponseEntity.status(200).body(bookService.findById(id));
   }
 
 }
