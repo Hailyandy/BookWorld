@@ -78,7 +78,7 @@ public class BookServiceImpl implements BookService {
     if (book == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     } else {
-      return new SuccessResponse(book);
+      return new SuccessResponse(mapper.map(book, BookDto.class));
     }
   }
 
@@ -101,14 +101,14 @@ public class BookServiceImpl implements BookService {
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     List<BookDto> bookList = bookRepository.findByTitleOrAuthor(
         "%" + name + "%").stream().map(book -> {
-      BookDto bookDto = mapper.map(book, BookDto.class);
-      bookDto.setAuthorId(book.getUser().getId());
-      bookDto.setAuthorName(book.getUser().getName());
-      bookDto.setGenres(
-          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-              Collectors.toList()));
-      return bookDto;
-    }).collect(Collectors.toList());
+          BookDto bookDto = mapper.map(book, BookDto.class);
+          bookDto.setAuthorId(book.getUser().getId());
+          bookDto.setAuthorName(book.getUser().getName());
+          bookDto.setGenres(
+              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+                  Collectors.toList()));
+          return bookDto;
+        }).collect(Collectors.toList());
     if (bookList.isEmpty()) {
       throw new AppException(404, 44,
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name + "'!");
@@ -126,14 +126,14 @@ public class BookServiceImpl implements BookService {
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     List<BookDto> bookList = bookRepository.findByTitleOrAuthorAndGenre(
         "%" + name + "%", genreId).stream().map(book -> {
-      BookDto bookDto = mapper.map(book, BookDto.class);
-      bookDto.setAuthorId(book.getUser().getId());
-      bookDto.setAuthorName(book.getUser().getName());
-      bookDto.setGenres(
-          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-              Collectors.toList()));
-      return bookDto;
-    }).collect(Collectors.toList());
+          BookDto bookDto = mapper.map(book, BookDto.class);
+          bookDto.setAuthorId(book.getUser().getId());
+          bookDto.setAuthorName(book.getUser().getName());
+          bookDto.setGenres(
+              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+                  Collectors.toList()));
+          return bookDto;
+        }).collect(Collectors.toList());
     if (bookList.isEmpty()) {
       throw new AppException(404, 44,
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name
