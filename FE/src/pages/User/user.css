@@ -15,18 +15,16 @@
 }
 
 
-.ant-input::placeholder {
-    color: white;
-}
+
 
 .form_title {
     display: flex;
     align-items: center;
 }
 
-.form_title h1 { 
-    font-size: 60px;      
-    color: rgba(34, 73, 87, 1); 
+.form_title h1 {
+    font-size: 60px;
+    color: rgba(34, 73, 87, 1);
     margin-left: 33px;
 }
 

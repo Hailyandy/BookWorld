@@ -1,14 +1,20 @@
-import { customRef } from 'vue'
 
-export const useDebounce = (callback, delay) => {
+/**
+ * hàm callback nhận vào arg dạng array chứa text search
+ * @param {*} callback
+ * @param {*} delay
+ * @returns
+ */
+export const debounce = (callback, delay) => {
 
   let timeout = null
 
-  return (() => {
+  return (...args) => {
+    console.log(args[0])
     clearTimeout(timeout)
 
     timeout = setTimeout(() => {
-      callback()
+      callback(args[0])
     }, delay)
-  })
+  }
 }

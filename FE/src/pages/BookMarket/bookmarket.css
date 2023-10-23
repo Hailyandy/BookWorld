@@ -10,7 +10,7 @@
     width: 70%;
     display: flex;
     flex-direction: column;
-
+    padding-top: 10%;
 }
 
 /* Header search */
@@ -39,6 +39,11 @@
 
 h2 {
     margin: 20px;
+}
+
+.bookmarket--itemRight h2 {
+    margin: 20px;
+    margin-top: 0px;
 }
 
 .body-search-book .author-category .author-list {
@@ -75,4 +80,13 @@ h2 {
 
 .footer {
     margin: 10px auto;
+}
+
+
+.bookmarket--itemLeft {
+    padding-right: 2rem;
+}
+
+.bookmarket--container {
+    padding-top: 50px
 }

@@ -1,10 +1,10 @@
 
 import User from "./User";
 
-const UserPage = () => {
+const UserDeclareInformationPage = () => {
     return (
         <>
             <User />
         </>)
 }
-export default UserPage;
+export default UserDeclareInformationPage;

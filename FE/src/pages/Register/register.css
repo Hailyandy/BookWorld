@@ -21,9 +21,6 @@
     align-items: center;
 }
 
-.ant-input::placeholder {
-    color: white;
-}
 
 .register-form .form_title {
     height: 40px;

@@ -1,64 +1,108 @@
-import React from 'react';
-import { Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar } from 'antd';
-import { DownOutlined, UserOutlined, HomeOutlined } from '@ant-design/icons';
+import React, { useState, useCallback } from 'react';
+import TheAutofillItem from '~/components/autoFill/TheAutoFillitem'
+import { Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar, AutoComplete, Result } from 'antd';
+import { DownOutlined, UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import "../css/header.css"
 import BSHAREnum from "~/helper/BSHAREenum"
 import BSHAREresource from '~/helper/BSHAREresource';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { searchBookByNameOrAuthor } from '~/slices/book';
+import { logout } from '~/slices/user';
+import tokenService from '~/services/token.service';
+import { debounce } from '~/helper/debounce';
+import { NotFoundPage } from '~/pages';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
+
 //props == BSHAREnum.headerType, vào đọc file enum để biết truyền prop gì vào đây
+
 const HeaderLayout = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [options, setOptions] = useState([]);
+    const [resultSearch, setResultSearch] = useState([])
 
-    const onSearch = (value, _e, info) => {
-        console.log(value)
-        dispatch(searchBookByNameOrAuthor({ name: value }))
+    /**
+     * useCallback memoizes functions to avoid unnecessary re-renders and improve performance.
+     */
+    const debouncedSearch = useCallback(debounce((searchTextReturnFromDebounceHelper) => {
+        console.log(searchTextReturnFromDebounceHelper)
+        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper }))
             .unwrap()
             .then(async data => {
                 // notyf.success(BSHAREresource.notification_message.success.login)
-                console.log(data)
+                // console.log(data)
+                // setResultSearch(data)
+                setOptions(data.map((resultItem) => {
+                    return {
+                        value: resultItem.id,
+                        label: (
+                            <TheAutofillItem bookCover={resultItem.urlPoster} bookName={resultItem.name} bookAuthor={resultItem.authorName} />
+                        ),
+                    }
+                }))
                 return;
             })
             .catch(e => {
                 console.log(e);
-            });
+                setOptions([
+                    {
+                        value: '',
+                        label: (
+                            <NotFoundPage />
+                        )
+                    }
+                ])
+            })
+    }, 1000), []);
+
+    const onSearch = (value, _e, info) => {
+        console.log(value)
+
+        debouncedSearch(value)
+        // setOptions(value ? searchResult(value) : []);
+
+    };
+    const changeInputSearch = (e) => {
+        console.log(e)
+    }
+
+    const onSelectSearchItem = (value) => {
+        console.log('onSelect', value);
+        navigate(`/books/${value}`, { replace: true });
     };
     const handleButtonClick = (e) => {
         message.info('Click on left button.');
         console.log('click left button', e);
     };
     const handleMenuClick = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
+        switch (e.key) {
+            case BSHAREnum.dropdown_user_menu_key.logout:
+                dispatch(logout)
+
+                /**
+                 * reload Rootlayout content, truyền function SetIsSignIn để update state rootlayout
+                 */
+                props.reloadRootLayout(false)
+
+                /**
+                * Xoá khỏi local storage user
+                */
+                tokenService.removeUser()
+
+                navigate(`/login`, { replace: true });
+                break;
+            default:
+                console.log(e.key)
+        }
     };
     const items = [
         {
-            label: '1st menu item',
-            key: '1',
-            icon: <UserOutlined />,
-        },
-        {
-            label: '2nd menu item',
-            key: '2',
-            icon: <UserOutlined />,
-        },
-        {
-            label: '3rd menu item',
-            key: '3',
-            icon: <UserOutlined />,
-            danger: true,
-        },
-        {
-            label: '4rd menu item',
-            key: '4',
-            icon: <UserOutlined />,
-            danger: true,
-            disabled: true,
+            label: 'Đăng xuất',
+            key: `${BSHAREnum.dropdown_user_menu_key.logout}`,
+            icon: <LogoutOutlined />,
         },
     ];
     const menuProps = {
@@ -94,20 +138,28 @@ const HeaderLayout = (props) => {
                     };
                 })}
             />
-            <Search
-                placeholder="Tìm kiếm"
-                onSearch={onSearch}
-                enterButton='Search'
+            <AutoComplete
+                popupMatchSelectWidth={'auto'}
+                allowClear
                 style={{
                     borderRadius: "16px",
                     backgroundColor: "var(--background-color)",
                     width: "40%",
                     padding: "0px 2rem",
+                    width: 500,
                 }}
-            />
+                options={options}
+                onSelect={onSelectSearchItem}
+                onSearch={onSearch}
+                onChange={changeInputSearch}
+
+                size="large"
+            >
+                <Input.Search size="large" placeholder="input here" enterButton />
+            </AutoComplete>
             <Button ghost style={{
                 borderRadius: "8px",
-                border: "1px solid #111",
+                border: "var(--border-bottom-divider)",
                 color: "rgba(17, 17, 17, 1)"
 
             }}
@@ -121,17 +173,24 @@ const HeaderLayout = (props) => {
             <div class="rectangle center-horizontal rectangle-48-48">
                 <span class="sprite-logo"> </span>
             </div>
-            <Search
-                placeholder="Tìm kiếm"
-                onSearch={onSearch}
-                enterButton='Search'
+            <AutoComplete
+                popupMatchSelectWidth={'auto'}
+                allowClear
                 style={{
                     borderRadius: "16px",
                     backgroundColor: "var(--background-color)",
                     width: "40%",
                     padding: "0px 2rem",
+                    width: 500,
                 }}
-            />
+                options={options}
+                onSelect={onSelectSearchItem}
+                onSearch={onSearch}
+                onChange={changeInputSearch}
+                size="large"
+            >
+                <Input.Search size="large" placeholder="input here" enterButton />
+            </AutoComplete>
             <Menu
                 style={{
                     minWidth: 200, flex: "auto", backgroundColor: "var(--background-color)", color: "rgba(102, 102, 102, 0.80)",
@@ -177,25 +236,6 @@ const HeaderLayout = (props) => {
         }}
     >
         {headerbody}
-        {/* <Breadcrumb
-            items={[
-                {
-                    title: 'Ant Design',
-                },
-                {
-                    title: <a href="">Component</a>,
-                },
-                {
-                    title: <a href="">General</a>,
-                    menu: {
-                        items: BSHAREresource.menuItems.authorPageBreadcumMenuItem,
-                    },
-                },
-                {
-                    title: 'Button',
-                },
-            ]}
-        /> */}
     </Header >
 }
 

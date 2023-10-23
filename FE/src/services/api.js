@@ -3,6 +3,8 @@ import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css'; // for React, Vue and Svelte
 import BSHAREresource from "~/helper/BSHAREresource";
 import tokenService from "./token.service";
+import { showSpinner, hideSpinner } from "~/helper/notifyDisplay";
+
 const notyf = new Notyf({
   position: {
     x: 'right',
@@ -10,26 +12,21 @@ const notyf = new Notyf({
   },
 });
 console.log(tokenService.getLocalAccessToken())
-let axiosInstance = axios.create({
+export let axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api/",
-  // headers: {
-  //   'Content-Type': "application/json",
-  //   'Authorization': `aaas`,
-  //   'Access-Control-Allow-Origin': "*"
-  // },
+  headers: { 'Authorization': `${tokenService.getLocalAccessToken()}`, 'Access-Control-Allow-Origin': '*', 'Accept': '*/*', 'Content-Type': 'application/json' }
 
 });
 
 axiosInstance.interceptors.request.use(config => {
   // Show loading overlay
-  // loading.showLoading()
-
+  showSpinner()
   return config
 })
 
 axiosInstance.interceptors.response.use(response => {
   // Hide loading overlay
-  // loading.hideLoading()
+  hideSpinner()
   return response
 })
 
@@ -39,7 +36,16 @@ export const getAPI = async (endpoint, param, config = {}) => {
     endpoint = `${endpoint}/${param}`
   }
   try {
-    const response = await axios.get("http://localhost:8080/api/book/a", { headers: { 'Access-Control-Allow-Origin': '*', 'Accept': '*/*', 'Content-Type': 'application/json' } })
+    axiosInstance = axios.create({
+      baseURL: "http://localhost:8080/api/",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${tokenService.getLocalAccessToken()}`,
+        "Access-Control-Allow-Origin": "*"
+      },
+
+    });
+    const response = await axiosInstance.get(endpoint)
     // loading.hideLoading()
     if (response.status === 200) {
       // Lấy dữ liệu thành công
@@ -58,7 +64,6 @@ export const getAPI = async (endpoint, param, config = {}) => {
 
 export const postAPI = async (endpoint, config = {}) => {
   try {
-    const response = await axiosInstance.post(endpoint, config)
     axiosInstance = axios.create({
       baseURL: "http://localhost:8080/api/",
       headers: {
@@ -68,6 +73,8 @@ export const postAPI = async (endpoint, config = {}) => {
       },
 
     });
+    const response = await axiosInstance.post(endpoint, config)
+
     return handleAPISuccess(response)
   } catch (error) {
     handleAPIError(error)

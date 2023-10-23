@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import userService from "~/services/user.service";
-const initialState = [];
+import tokenService from "~/services/token.service";
+const initialState = tokenService.getUser() ? tokenService.getUser() : {};
 
 export const login = createAsyncThunk(
     "users/login",
@@ -65,9 +66,18 @@ export const resendOtpConfirmation = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState,
+    reducers: {
+        // add your non-async reducers here
+        logout: (state) => {
+            tokenService.removeUser()
+            state.userInfo = ''
+        },
+
+    },
     extraReducers: {
         [login.fulfilled]: (state, action) => {
-            console.log(action.payload)
+
+            state.userInfo = action.payload
         },
         [register.fulfilled]: (state, action) => {
             console.log(action.payload)
@@ -77,6 +87,6 @@ const userSlice = createSlice({
         },
     },
 });
-
 const { reducer } = userSlice;
+export const { logout } = userSlice.actions;
 export default reducer;
