@@ -140,7 +140,7 @@ public class FriendServiceImpl implements FriendService {
                 FriendshipStatus.PENDING);
 
         if (friendRequests.isEmpty()) {
-            throw new AppException(404, 44, "Error: Does not exist! No friend request has been created yet!");
+            return new SuccessResponse(new ArrayList<User>());
         }
 
         List<User> requestSenders = new ArrayList<>();
@@ -150,7 +150,7 @@ public class FriendServiceImpl implements FriendService {
         }
 
         if (requestSenders.isEmpty()) {
-            throw new AppException(404, 44, "Error: Does not exist! No friend request has been created yet!");
+            return new SuccessResponse(new ArrayList<User>());
         }
         return new SuccessResponse(requestSenders.stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(
@@ -179,7 +179,7 @@ public class FriendServiceImpl implements FriendService {
                 FriendshipStatus.ACCEPTED, userId, userId);
 
         if (friendRequests.isEmpty()) {
-            throw new AppException(404, 44, "Error: Does not exist! No friend request has been created yet!");
+            return new SuccessResponse(new ArrayList<>());
         }
 
         List<User> listFriend = new ArrayList<>();
@@ -189,7 +189,7 @@ public class FriendServiceImpl implements FriendService {
         }
 
         if (listFriend.isEmpty()) {
-            throw new AppException(404, 44, "Error: Does not exist! No friend request has been created yet!");
+            return new SuccessResponse(new ArrayList<>());
         }
 
         return new SuccessResponse(listFriend.stream()

@@ -1,5 +1,6 @@
 package com.chien.bookWorld.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class GenreServiceImpl implements GenreService {
     public SuccessResponse findAll() {
         List<Genre> genres = genreRepository.findAll();
         if (genres.isEmpty()) {
-            throw new AppException(404, 44, "Error: Does not exist! No genre has been created yet!");
+            return new SuccessResponse(new ArrayList<>());
         } else {
             return new SuccessResponse(
                     genres.stream()

@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/search")
     public ResponseEntity<SuccessResponse> searchUserByName(@RequestParam String name) {
-        return ResponseEntity.status(200).body(userService.findByName(name));
+        return ResponseEntity.status(200).body(userService.findByUsersByName(name));
     }
 
 }

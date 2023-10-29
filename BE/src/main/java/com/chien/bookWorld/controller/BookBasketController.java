@@ -23,17 +23,21 @@ public class BookBasketController {
   @Autowired
   private BookBasketService bookBasketService;
 
-//  @PreAuthorize("hasRole('ADMIN')")
-//  @PostMapping
-//  public ResponseEntity<Book> create(@RequestBody Book bookCategories) {
-//    return ResponseEntity.status(200).body(bookService.create(bookCategories));
-//  }
-//  @Operation(summary = "Find by title or author")
-//  @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
-//  @GetMapping("/{name}/{genreId}")
-//  public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name, @PathVariable Long genreId) {
-//    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId));
-//  }
+  // @PreAuthorize("hasRole('ADMIN')")
+  // @PostMapping
+  // public ResponseEntity<Book> create(@RequestBody Book bookCategories) {
+  // return ResponseEntity.status(200).body(bookService.create(bookCategories));
+  // }
+  // @Operation(summary = "Find by title or author")
+  // @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
+  // @GetMapping("/{name}/{genreId}")
+  // public ResponseEntity<SuccessResponse>
+  // findByTitleOrAuthorAndGenre(@PathVariable String name, @PathVariable Long
+  // genreId) {
+  // return
+  // ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name,
+  // genreId));
+  // }
 
   @Operation(summary = "Theo dõi sách")
   @PreAuthorize("hasRole('USER')")
@@ -41,11 +45,18 @@ public class BookBasketController {
   public ResponseEntity<Object> updateBook(@RequestBody @Validated BookBasketUpdateDto bookBasketUpdateDto) {
     return ResponseEntity.status(200).body(bookBasketService.update(bookBasketUpdateDto));
   }
-//
-//  @Operation(summary = "Delete book")
-//  @PreAuthorize("hasRole('LIBRARIAN')")
-//  @DeleteMapping("/{id:[0-9]{1,32}}")
-//  public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id) {
-//    return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
-//  }
+  //
+  // @Operation(summary = "Delete book")
+  // @PreAuthorize("hasRole('LIBRARIAN')")
+  // @DeleteMapping("/{id:[0-9]{1,32}}")
+  // public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id)
+  // {
+  // return ResponseEntity.status(200).body(bookCategoriesService.delete(id));
+  // }
+
+  @GetMapping
+  public ResponseEntity<SuccessResponse> getBookOfBasketByUser() {
+    return ResponseEntity.status(200).body(bookBasketService.findAll());
+  }
+
 }
