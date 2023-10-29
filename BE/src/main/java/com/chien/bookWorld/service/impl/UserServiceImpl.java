@@ -12,6 +12,7 @@ import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.UserService;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -232,9 +233,11 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public SuccessResponse findByUsersByName(String name) {
-    List<User> users = userRepository.findByNameAndNotRoleAdmin("xuan");
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+        .getAuthentication().getPrincipal();
+    List<User> users = userRepository.findByNameAndNotRoleAdmin("%" + name + "%", userDetails.getId());
     if (users.isEmpty()) {
-      throw new AppException(404, 44, "Error: Does not exist! User not found!");
+      return new SuccessResponse(new ArrayList<User>());
     } else {
       return new SuccessResponse(users.stream()
           .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList()));

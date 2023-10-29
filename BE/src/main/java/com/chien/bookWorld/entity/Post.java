@@ -1,6 +1,7 @@
 package com.chien.bookWorld.entity;
 
 import com.chien.bookWorld.dto.PostCreationDto;
+import com.chien.bookWorld.dto.PostStatus;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
@@ -27,9 +28,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Post {
 
   @Id

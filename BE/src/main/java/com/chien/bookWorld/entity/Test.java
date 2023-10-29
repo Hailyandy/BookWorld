@@ -1,8 +1,7 @@
 package com.chien.bookWorld.entity;
 
-import java.sql.Timestamp;
+import java.util.List;
 
-import com.chien.bookWorld.dto.ReportCreationDto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -12,40 +11,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Entity
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Report {
-
+public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String reason;
-    private ReportStatus status;
-    private String description;
-    private Timestamp timestamp;
+    private Long ordinalNumber;
+    private String question;
+    private String answer1;
+    private String answer2;
+    private String answer3;
+    private String answer4;
+
+    private String correctAnswer;
 
     @ManyToOne
-    @JoinColumn(name = "pdf_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Pdf pdf;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private User user;
-
+    @JoinColumn(name = "quick_id")
+    private QuickTest quickTest;
 }
