@@ -14,10 +14,11 @@
 
     }
 
-    .image {
+    .image-ant {
         height: auto !important;
         width: 100%;
         object-fit: fill;
+        position: sticky;
     }
 
     .hero-infor {

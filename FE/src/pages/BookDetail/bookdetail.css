@@ -1,8 +1,7 @@
 /* @import url('../src/components/form/Content Intro/contentIntro.css'); */
 .book-detail-containner {
     display: flex;
-
-
+    margin-top: var(--margin-top-scroll-page);
 }
 
 .book-detail-containner--left {
@@ -39,4 +38,12 @@
 
 h3 {
     font-weight: 500;
+}
+
+.book-review {
+    margin-top: 100px;
+}
+
+.book-review h1 {
+    font-size: xx-large;
 }

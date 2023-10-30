@@ -35,7 +35,9 @@ const GeneralProfile = () => {
                     <BackButton />
                 </div> */}
                 <div className="description-containner1">
-                    <Image className="image" src={authorDetail.images} />
+                    <div>
+                        <Image className="image-ant" src={authorDetail.images} />
+                    </div>
 
                     <Card
                         title={<h1>{authorDetail.authorName}</h1>}

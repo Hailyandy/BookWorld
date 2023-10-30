@@ -59,6 +59,10 @@ class AuthService extends BaseService {
         return data
     }
 
+    async getUserByName({ name }) {
+        var data = await getAPI(`users/search/${name}`)
+        return data
+    }
 }
 
 export default new AuthService()

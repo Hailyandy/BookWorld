@@ -5,8 +5,12 @@ import moment from "moment";
 import StarRatings from "react-star-ratings";
 import { AudioOutlined, FilterOutlined } from '@ant-design/icons';
 import CommentItem from '~/components/comment/commentItem/CommentItem';
+import { useLoaderData } from "react-router-dom"
+import { formatToDate } from '~/helper/format';
 const { Search } = Input;
 const BookDetailPage = () => {
+    const bookDetail = useLoaderData()
+    console.log(bookDetail)
     const bookItem = {
         star: 10,
         numReviews: 2,
@@ -78,29 +82,33 @@ const BookDetailPage = () => {
             </div>
             <div className="book-detail-containner--center">
                 <div class="book-content-intro">
-                    <h1 class="title">Hôm nay tôi thất tình</h1>
-                    <h2 class="author">Hạ Vũ</h2>
+                    <h1 class="title">{bookDetail.name}</h1>
+                    <h2 class="author">{bookDetail.authorName}</h2>
                     <div className="star-rating-book">
                         <StarRatings
                             rating={
-                                bookItem.numReviews > 0
-                                    ? bookItem.star / bookItem.numReviews
-                                    : 0
+                                0
                             }
                             starDimension="16px"
                             starSpacing="4px"
                             starRatedColor="rgb(230, 67, 47)"
                         />
-                        <span class="avg-book-rating">4.0</span>
+                        <span class="avg-book-rating">{
+                            bookDetail.scoring > 0
+                                ? bookDetail.star / bookDetail.numReviews
+                                : 0
+                        }</span>
                     </div>
-                    <h3>Nhà xuất bản: {bookItem.publisher} </h3>
-                    <h3>{bookItem.pageTotal} trang</h3>
-                    <h3>Xuất bản: {bookItem.publishDate} </h3>
-                    <h3>Thể loại: {bookItem.typeBook} </h3>
+                    <h3>Nhà xuất bản: {bookDetail.publisher} </h3>
+                    <h3>{bookDetail.numberPages} trang</h3>
+                    <h3>Xuất bản: {formatToDate(bookDetail.publishDate, "dd/MM/yyyy")} </h3>
+                    <h3>Thể loại: {bookDetail.genres.map(genreObject => {
+                        return genreObject.name
+                    }).join(', ')} </h3>
                     <p class="content-intro">industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lore</p>
                 </div>
                 <section className="book-review">
-                    <h2>Các đánh giá về sách</h2>
+                    <h1>Các đánh giá về sách</h1>
                     <Row
                         style={{ marginBottom: '2rem' }}>
                         <Col span={8}>

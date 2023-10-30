@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import TheAutofillItem from '~/components/autoFill/TheAutoFillitem'
-import { Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar, AutoComplete, Result } from 'antd';
+import { Badge, Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar, AutoComplete, Result } from 'antd';
 import { DownOutlined, UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import "../css/header.css"
 import BSHAREnum from "~/helper/BSHAREenum"
@@ -12,6 +12,7 @@ import { logout } from '~/slices/user';
 import tokenService from '~/services/token.service';
 import { debounce } from '~/helper/debounce';
 import { NotFoundPage } from '~/pages';
+import { useSelector } from 'react-redux';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -21,8 +22,19 @@ const { Header, Content, Footer } = Layout;
 const HeaderLayout = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userStateFormSlice = useSelector(state => state.users);
+    console.log(userStateFormSlice.friendReqList)
     const [options, setOptions] = useState([]);
     const [resultSearch, setResultSearch] = useState([])
+
+    /**
+     * search 1 lần khi muốn hiển thị ra một đống kết quả
+     * @param {*} e - value ô search hiện tại
+     */
+    const searchWhenClickSearchButton = (e) => {
+        navigate(`search-result/search-book/${e}`, { replace: true });
+    }
+
 
     /**
      * useCallback memoizes functions to avoid unnecessary re-renders and improve performance.
@@ -58,6 +70,12 @@ const HeaderLayout = (props) => {
             })
     }, 1000), []);
 
+    /**
+     * Search liên tục khi nhập value vào ô input
+     * @param {*} value - value ô input khi mà autocomplete thay đổi giá trị
+     * @param {*} _e không biết
+     * @param {*} info không biết
+     */
     const onSearch = (value, _e, info) => {
         console.log(value)
 
@@ -77,21 +95,20 @@ const HeaderLayout = (props) => {
         message.info('Click on left button.');
         console.log('click left button', e);
     };
-    const handleMenuClick = (e) => {
+    const handleMenuClick = async (e) => {
         switch (e.key) {
             case BSHAREnum.dropdown_user_menu_key.logout:
-                dispatch(logout)
-
-                /**
-                 * reload Rootlayout content, truyền function SetIsSignIn để update state rootlayout
-                 */
-                props.reloadRootLayout(false)
+                dispatch(logout())
 
                 /**
                 * Xoá khỏi local storage user
                 */
                 tokenService.removeUser()
 
+                /**
+                 * reload Rootlayout content, truyền function SetIsSignIn để update state rootlayout
+                 */
+                props.reloadRootLayout(false)
                 navigate(`/login`, { replace: true });
                 break;
             default:
@@ -189,7 +206,7 @@ const HeaderLayout = (props) => {
                 onChange={changeInputSearch}
                 size="large"
             >
-                <Input.Search size="large" placeholder="input here" enterButton />
+                <Input.Search size="large" placeholder="input here" enterButton onSearch={searchWhenClickSearchButton} />
             </AutoComplete>
             <Menu
                 style={{
@@ -212,19 +229,37 @@ const HeaderLayout = (props) => {
                     };
                 })}
             />
-            <Dropdown menu={menuProps}>
-                <Button shape="round" icon={<Avatar style={{
-                    backgroundColor: 'white',
-                    color: 'var(--text-color-main)'
-                }} size="small" icon={<UserOutlined />} />} style={{
-                    backgroundColor: 'var(--text-color-main)',
-                    color: 'var(--text-color)',
-                    height: '36px'
-                }} >
-                    Button
-                    <DownOutlined />
-                </Button>
-            </Dropdown>
+            <Space direction='horizontal' size={12}>
+
+                <Button
+                    type="text"
+                    shape="circle"
+
+                    style={{ padding: '0px' }}
+                    icon={
+                        <Badge count={userStateFormSlice.friendReqList.length}>
+                            <Avatar shape="circle" icon={<UserOutlined />} />
+                        </Badge>}
+                    onClick={() => {
+                        navigate(`friend-req-search-people`, { replace: true });
+                    }}
+
+                />
+                <Dropdown menu={menuProps}>
+                    <Button shape="round" icon={<Avatar style={{
+                        backgroundColor: 'white',
+                        color: 'var(--text-color-main)'
+                    }} size="small" icon={<UserOutlined />} />} style={{
+                        backgroundColor: 'var(--text-color-main)',
+                        color: 'var(--text-color)',
+                        height: '36px'
+                    }} >
+                        Button
+                        <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </Space>
+
         </>)
     }
     return <Header

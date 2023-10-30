@@ -1,0 +1,12 @@
+.search-page-containner {
+    width: 100%;
+    position: relative;
+    height: 100%;
+}
+
+.search-page-body {
+    position: absolute;
+    width: 60%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}

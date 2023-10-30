@@ -12,6 +12,8 @@ import HomePage from '~/pages/Home';
 import ModelReviewPost from '~/components/Model/TheModelReviewPost';
 import TheAutofillItem from './autoFill/TheAutoFillitem';
 import ProtectedRoute from './protectedRoute/ProtectedRoute';
+import SearchResultLayout from '~/layouts/SearchResultLayout';
+import TheUserItem from './author/TheUserItem';
 export {
     RootLayout,
     AuthorsLayout,
@@ -24,5 +26,5 @@ export {
     UserDeclareInformationPage,
     UserHomePage,
     HomePage,
-    ModelReviewPost, TheAutofillItem, ProtectedRoute
+    ModelReviewPost, TheAutofillItem, ProtectedRoute, SearchResultLayout, TheUserItem
 }

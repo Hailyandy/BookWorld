@@ -3,10 +3,11 @@ import { AudioOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { Input, Space, Radio, Pagination, AutoComplete } from 'antd';
 import TheAuthorBookItem from "~/components/author/TheAuthorBookItem";
+import TheUserItem from "~/components/author/TheUserItem"
 import "~/components/author/bookItem.css";
 import { useLoaderData } from "react-router-dom";
 import { mapToClass } from "~/helper/mappingToClass";
-import { BookEntity } from "~/entity/bookEntity";
+import { UserEntity } from "~/entity/userEntity";
 const { Search } = Input;
 const suffix = (
     <AudioOutlined
@@ -18,10 +19,10 @@ const suffix = (
 );
 const plainOptions = ['All', 'Tác giả', 'Tiêu đề'];
 const onSearch = (value, _e, info) => console.log(info?.source, value);
-const SearchBookPage = () => {
+const SearchUserPage = () => {
     const [value1, setValue1] = useState('All');
-    const bookSearchList = mapToClass(useLoaderData(), BookEntity)
-    console.log(bookSearchList)
+    const userSearchList = mapToClass(useLoaderData(), UserEntity)
+    console.log(userSearchList)
     const onChange1 = ({ target: { value } }) => {
         console.log('radio1 checked', value);
         setValue1(value);
@@ -39,8 +40,8 @@ const SearchBookPage = () => {
             <Radio.Group options={plainOptions} onChange={onChange1} value={value1} />
 
             {
-                bookSearchList.map((bookSearchListItem) => {
-                    return <TheAuthorBookItem bookItem={bookSearchListItem} />
+                userSearchList.map((userSearchListItem) => {
+                    return <TheUserItem userItem={userSearchListItem} />
                 })
             }
 
@@ -50,4 +51,4 @@ const SearchBookPage = () => {
     )
 
 }
-export default SearchBookPage
+export default SearchUserPage

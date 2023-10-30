@@ -1,4 +1,14 @@
-.bookItem-container {
+.bookItem-container,
+.userItem-container {
     display: flex;
     column-gap: 2rem;
+}
+
+.bookItem-container-right,
+.userItem-container-right {
+    /* max-width: 500px; */
+}
+
+.user-item--button-containner {
+    /* position: relative; */
 }

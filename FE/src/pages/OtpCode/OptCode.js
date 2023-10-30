@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, InputSpace, Space, Input } from 'antd';
 import { useDispatch } from "react-redux";
 import tokenService from '~/services/token.service';
 import notyf from '~/helper/notifyDisplay';
-import { sendOtpConfirmation, resendOtpConfirmation } from '~/slices/user';
+import { sendOtpConfirmationAsync, resendOtpConfirmationAsync } from '~/slices/user';
 import { Link, Navigate, redirect, useNavigate } from 'react-router-dom'
 import { useLoaderData, useParams } from 'react-router-dom'
 import BSHAREresource from '~/helper/BSHAREresource';
@@ -21,7 +21,7 @@ const OtpCode = () => {
     const onFinish = (values) => {
         let { otp } = values
         console.log(otp)
-        dispatch(sendOtpConfirmation({ otp, username }))
+        dispatch(sendOtpConfirmationAsync({ otp, username }))
             .unwrap()
             .then(async data => {
 
@@ -43,7 +43,7 @@ const OtpCode = () => {
 
     const resendOtpVerification = () => {
 
-        dispatch(resendOtpConfirmation({ username }))
+        dispatch(resendOtpConfirmationAsync({ username }))
             .unwrap()
             .then(async data => {
                 // navigate('/login', { replace: true });
