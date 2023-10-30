@@ -26,6 +26,7 @@ export class BaseService {
         var data = await putAPI(enp, data)
     }
 
+
     /**
      * Sử dụng để gửi lời mời kết bạn, role user, role author
      * @param {*} { receiverId }
@@ -43,7 +44,8 @@ export class BaseService {
      * @returns
      */
     async getListFriendRequest() {
-        var data = await getAPI('friend/request', { receiverId })
+        var data = await getAPI('friend/request')
+        console.log(data)
         return data
     }
 
@@ -64,7 +66,7 @@ export class BaseService {
      */
 
     async rejectFriendReq({ senderId }) {
-        var data = await putAPI('friend/unfriend', { senderId })
+        var data = await putAPI('friend/reject', { senderId })
         return data
     }
 

@@ -13,7 +13,9 @@
   --background-color-main-tag: '#30edd8';
   --button-default-background-color: #43D8CD;
   --border-bottom-divider: 1px solid #111;
-  --height-autofill-item: 50px
+  --height-autofill-item: 50px;
+
+  --margin-top-scroll-page: 25px;
 }
 
 .App-logo {

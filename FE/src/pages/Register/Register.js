@@ -5,7 +5,7 @@ import "./register.css"
 import { Form, Button, Input, Space, Typography, Select } from 'antd';
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
-import { register } from '~/slices/user';
+import { registerAsync } from '~/slices/user';
 import notyf from '~/helper/notifyDisplay';
 import BSHAREresource from '~/helper/BSHAREresource';
 const { Text } = Typography;
@@ -21,7 +21,7 @@ function Register() {
         console.log(form.getFieldsValue())
         let { username, password, roles } = values
         // console.log({ username, password, roles: [roles] })
-        dispatch(register({ username, password, roles: [roles] }))
+        dispatch(registerAsync({ username, password, roles: [roles] }))
             .unwrap()
             .then(data => {
                 navigate(`/otp-confirmation/${username}`, { replace: true });

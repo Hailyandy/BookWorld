@@ -2,8 +2,8 @@ import React from 'react'
 import img1 from "../assets/imgs/zyro-image 1.png"
 import img2 from "../assets/imgs/images1.png"
 import "./user.css"
-import { Form, Select, Button, Input } from 'antd';
-
+import { Form, Select, Button, Input, Space } from 'antd';
+const { Option } = Select;
 
 function User() {
     return (
@@ -19,15 +19,20 @@ function User() {
 
                     <Form style={{ display: 'flex', flexDirection: "column", marginLeft: "80px" }}>
                         <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "#224957" }} placeholder="Họ và tên" />
-                        <div style={{ width: '300px', display: "flex", justifyContent: "space-between", marginBottom: '33px' }}>
-                            <Select
-                                defaultValue="--Giới tính--"
-                                style={{ width: '135px', height: '45px' }}
-                            />
-                            <Select
-                                style={{ width: '135px', height: '45px' }}
-                                defaultValue="--Ngày sinh--"
-                            />
+                        <div style={{ width: '300px', marginBottom: '33px' }}>
+                            <Space direction="horizontal" style={{ width: '300px', columnGap: '32px' }}  >
+                                <Select allowClear placeholder="--Giới tính--" className='style-input' style={{ width: '100%' }}>
+                                    <Option value="author">Tác giả</Option>
+                                    <Option value="admin">Admin</Option>
+                                    <Option value="user">Người dùng</Option>
+                                </Select>
+
+                                <Select allowClear placeholder="--Ngày sinh--" className='style-input' style={{ width: '100%' }}>
+                                    <Option value="author">Tác giả</Option>
+                                    <Option value="admin">Admin</Option>
+                                    <Option value="user">Người dùng</Option>
+                                </Select>
+                            </Space>
                         </div>
                         <Input style={{ width: '300px', height: '45px', marginBottom: '33px', background: "#224957" }} placeholder="Số điện thoại" />
                         <Button style={{

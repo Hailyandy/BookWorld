@@ -2,13 +2,15 @@ import { Outlet, NavLink, useLocation, Link, Route, Routes } from "react-router-
 // import Breadcrumbs from "../components/Breadcrumbs"
 import { Header } from "~/shared"
 import { useEffect, useState, useContext } from "react"
-import { Alert, Breadcrumb } from 'antd';
+import { Breadcrumb, Layout, Space, Card, List, Avatar, Button, Input, Tooltip, AutoComplete } from 'antd';
 import tokenService from "~/services/token.service"
 import BSHAREnum from "~/helper/BSHAREenum"
 import './css/rootlayout.css'
 import { ConfigContext } from "~/context/GlobalContext";
 import { BookService } from "~/services/book.service";
 import { useSelector } from 'react-redux';
+import { getListFriendRequest } from "~/slices/user";
+import { useDispatch } from 'react-redux';
 const breadcrumbNameMap = {
     '/book-market': 'Chợ sách',
     '/authors': 'Danh sách tác giả',
@@ -34,7 +36,6 @@ const breadcrumbNameMap = {
 };
 
 export default function RootLayout() {
-    const config = useContext(ConfigContext);
     const userStateFormSlice = useSelector(state => state.users);
     console.log(userStateFormSlice)
     // let a = new BookService()
@@ -43,16 +44,16 @@ export default function RootLayout() {
     const reloadRootLayout = () => setReload(prev => prev + 1);
     const [isSignIn, setIsSignIn] = useState(false)
     const [headerType, setHeaderType] = useState(BSHAREnum.headerType.not_sign_in)
+
     useEffect(() => {
         console.log(isSignIn)
-        if (Object.keys(userStateFormSlice).length !== 0) {
+        if (userStateFormSlice.userInfo) {
             console.log('user sign in already')
-            console.log(userStateFormSlice)
             setIsSignIn(true)
         }
         reloadRootLayout()
-        config()
-    }, [userStateFormSlice])
+        // config()
+    }, [userStateFormSlice.userInfo, userStateFormSlice.friendReqList])
 
     const location = useLocation();
     const pathSnippets = location.pathname.split('/').filter((i) => i);

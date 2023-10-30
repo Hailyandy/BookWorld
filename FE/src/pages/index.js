@@ -13,8 +13,10 @@ import LoginPage from "./Login";
 import RegisterPage from "./Register";
 import UserDeclareInformationPage from "./User";
 import UserHomePage from "./UserHome";
+import SearchUserPage from "./Search/SearchUserPage";
 import FriendRequestSearchPeoplePage from "./FriendRequestSearchPeople/FriendRequestSearchPeople";
 export {
+    SearchUserPage,
     SelectFavouritebook,
     AuthorInformationPage,
     NotFoundPage,

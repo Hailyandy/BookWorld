@@ -6,7 +6,7 @@ import { Form, Button, Input, Space, Typography } from 'antd';
 import { Checkbox } from 'antd';
 import { Link, Navigate, redirect, useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
-import { login } from '~/slices/user';
+import { loginAsync, getListFriendRequest } from '~/slices/user';
 import { ConfigContext } from "~/context/GlobalContext";
 import tokenService from '~/services/token.service';
 import notyf from '~/helper/notifyDisplay';
@@ -33,12 +33,21 @@ function Login() {
         if (isRememberme) {
             tokenService.setCredential(values)
         }
-        dispatch(login({ username, password }))
+        dispatch(loginAsync({ username, password }))
             .unwrap()
             .then(async data => {
                 console.log(data)
                 tokenService.setUser(data)
-                // notyf.success(BSHAREresource.notification_message.success.login)
+                dispatch(getListFriendRequest('not param'))
+                    .unwrap()
+                    .then(async data => {
+                        console.log('get all friend req success')
+
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        console.log('get all friend req erroer')
+                    })
                 await config()
                 navigate('/users', { replace: true });
                 return;

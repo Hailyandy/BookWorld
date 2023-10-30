@@ -8,6 +8,8 @@ import { BookEntity } from '~/entity/bookEntity';
 import { formatToDate } from '~/helper/format';
 import { useDispatch } from 'react-redux';
 import { followBookAndUpdateStatusAsync } from '~/slices/book';
+import './bookItem.css'
+import { addFriend } from '~/slices/user';
 const { Text } = Typography;
 const cardStyle = {
     width: '100%',
@@ -25,7 +27,7 @@ const imgStyle = {
     width: 100,
     height: 100,
 };
-const bookItem = {
+const userItem = {
     star: 10,
     numReviews: 2
 }
@@ -53,14 +55,11 @@ const items = [
  * @param {*} props - BookEntity
  * @returns
  */
-const TheAuthorBookItem = ({ bookItem, typeItem }) => {
+const TheUserItem = ({ userItem }) => {
     const dispatch = useDispatch()
-    const handleMenuClick = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
-        var bookId = bookItem.id
-        var status = e.key
-        dispatch(followBookAndUpdateStatusAsync({ bookId, status }))
+    const handleMenuClickAddAFriend = (receiverId) => {
+        console.log('click', receiverId);
+        dispatch(addFriend({ receiverId }))
             .unwrap()
             .then(async data => {
                 // navigate('/login', { replace: true });
@@ -72,9 +71,20 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                 // notyf.error(e.message)
             });
     };
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
+
+    const handleMenuClickFollowPeople = (e) => {
+        console.log('click', e);
+        // dispatch(followBookAndUpdateStatusAsync({ bookId, status }))
+        //     .unwrap()
+        //     .then(async data => {
+        //         // navigate('/login', { replace: true });
+        //         console.log(data)
+        //         return;
+        //     })
+        //     .catch(e => {
+        //         console.log(e)
+        //         // notyf.error(e.message)
+        //     });
     };
     return (
         <Card
@@ -84,62 +94,42 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                 overflow: 'hidden',
             }}
         >
-            <div class="bookItem-container">
+            <div class="userItem-container">
                 <img
                     alt="avatar"
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    src={userItem.urlAvatar}
                     style={imgStyle}
                 />
                 <div
-                    className='bookItem-container-right'
+                    className='userItem-container-right'
                 >
                     <Space direction='vertical'>
                         <Text strong>
-                            {bookItem.name}
+                            {userItem.name}
                         </Text>
                         <Text >
-                            by {bookItem.authorName}
+                            {userItem.birthDate}
                         </Text>
-                        <div>
-                            {/*
-                            <Text style={{ fontSize: "13px" }} strong>
-                                {bookItem.numReviews > 0
-                                    ? (bookItem.star / bookItem.numReviews).toFixed(1)
-                                    : (0.01).toFixed(1)}
-                                /5.0
-                            </Text> */}
-                            <Space>
-                                <StarRatings
-                                    rating={
-                                        bookItem.scoring
-                                    }
-                                    starDimension="12px"
-                                    starSpacing="4px"
-                                    starRatedColor="rgb(230, 67, 47)"
-                                />
-                                <span className='review-information'>4.47 avg rating — 9,555,274 ratings — published {formatToDate(bookItem.publishDate)}</span>
-                            </Space>
-                        </div>
-
                     </Space>
-
-                    {
-                        typeItem != BSHAREnum.modelReviewPostType.without_dropdown_button &&
-                        <Dropdown menu={menuProps}>
-                            <Button size='large' style={{ marginTop: '8px', backgroundColor: 'var(--button-default-background-color)', color: 'white', position: 'absolute', right: '0px' }}>
+                    <div className="user-item--button-containner" style={{ position: 'absolute', right: '0px', top: '0px' }} >
+                        <Space direction='vertical' >
+                            <Button onClick={() => { handleMenuClickAddAFriend(userItem.id) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
                                 <Space>
-                                    Chưa đọc
-                                    <DownOutlined />
+                                    Kết bạn
                                 </Space>
                             </Button>
-                        </Dropdown>
-                    }
+                            <Button onClick={() => { handleMenuClickFollowPeople(userItem.id) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
+                                <Space>
+                                    Theo dõi
+                                </Space>
+                            </Button>
+                        </Space>
 
-
+                    </div>
                 </div>
             </div>
         </Card>
     )
 
-};
-export default TheAuthorBookItem;
+}
+export default TheUserItem;

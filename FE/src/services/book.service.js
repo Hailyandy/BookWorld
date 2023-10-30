@@ -8,6 +8,16 @@ class BookService extends BaseService {
   }
 
   /**
+   * API sử dụng để lấy  danh sách thể loại
+   * @returns
+   */
+  async getAllGenresBook() {
+    var data = await getAPI(`book/genres`)
+    return data
+  }
+
+
+  /**
    *
    * @param {*} name string
    * @returns
@@ -35,9 +45,10 @@ class BookService extends BaseService {
    * @returns none
    */
   async followBookAndUpdateStatus({ bookId, status }) {
-    var data = await getAPI('/api/bookBasket', { bookId, status })
+    var data = await putAPI('/bookBasket', { bookId, status })
     return data
   }
+
 }
 
 export default new BookService()

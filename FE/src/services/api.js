@@ -57,8 +57,8 @@ export const getAPI = async (endpoint, param, config = {}) => {
     }
     // return handleAPISuccess(response)
   } catch (error) {
-    handleAPIError(error)
-    throw error
+    const handleAPIErrordata = handleAPIError(error)
+    return handleAPIErrordata
   }
 }
 
@@ -107,8 +107,8 @@ export const deleteManyAPI = async (endpoint, config) => {
     const response = await axiosInstance.delete(`${endpoint}`, config)
     return handleAPISuccess(response)
   } catch (error) {
-    handleAPIError(error)
-    throw error
+    return handleAPIError(error)
+
   }
 }
 
@@ -130,7 +130,8 @@ const handleAPIError = (error) => {
   // Handle error
   if (error.response) {
     // Lỗi từ API
-    handleServerError(error.response)
+    var handleErrorCodedata = handleServerError(error.response)
+    return handleErrorCodedata
   } else {
     // Lỗi mạng, request không gửi được
     notyf.error(BSHAREresource.notification_content.error_status_code.network_error)
@@ -156,10 +157,12 @@ const handleServerError = (error) => {
     notyf.error(`${BSHAREresource.notification_content.error_status_code.code_403}<br />` + `${error.data.message}`)
   }
   else if (error.status === 404) {
-
+    console.log('file api.js loi 404')
+    console.log(error)
     //Không tìm thấy địa chỉ hoặc tài nguyên
     // notyf.error(BSHAREresource.notification_content.error_status_code.code_404)
     notyf.error(`${BSHAREresource.notification_content.error_status_code.code_404}<br />` + `${error.data.message}`)
+    return { data: [] }
   }
   else if (error.status === 500) {
 
