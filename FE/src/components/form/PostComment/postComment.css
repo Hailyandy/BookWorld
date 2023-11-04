@@ -1,0 +1,35 @@
+.post-comment{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.content-comment{
+    padding: 7px;
+    margin-left: 7px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+}
+
+h4{
+    margin: 0;
+    padding: 0;
+}
+
+.content-comment p {
+    margin: 0;
+    padding-left: 10px;
+    font-size: 1rem;
+}
+
+
+
+.footer-comment {
+    align-self: center;
+}
+.footer-comment p {
+    gap: 15px;
+    margin: 0;
+    padding-left: 10px;
+    font-size: 0.7rem;
+}

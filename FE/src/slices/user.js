@@ -62,6 +62,23 @@ export const resendOtpConfirmation = createAsyncThunk(
         }
     }
 );
+
+
+// user information
+export const inforUser = createAsyncThunk(
+    "users/inforParticipation",
+    async ({ username, dateOfBirth, sex, phoneNumber, role }, { rejectWithValue }) => {
+        try {
+            const res = await userService.inforUser({ username, dateOfBirth, sex, phoneNumber, role});
+            return res.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+
+
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -75,6 +92,9 @@ const userSlice = createSlice({
         [sendOtpConfirmation.fulfilled]: (state, action) => {
             console.log(action.payload)
         },
+        [inforUser.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        }
     },
 });
 

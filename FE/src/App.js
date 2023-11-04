@@ -24,6 +24,7 @@ import { ConfigContext } from './context/GlobalContext';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import tokenService from './services/token.service';
 
+
 import { useState } from 'react';
 function App() {
 
@@ -40,6 +41,12 @@ function App() {
         <Route path="register" element={<RegisterPage />} />
         <Route path="search" element={<SearchPage />} />
         <Route path="otp-confirmation/:username" element={<OtpCode />} />
+        <Route
+              path= "usehome"
+              element={<UserHomePage />}
+            // loader={authorsLoader}
+            // errorElement={<AuthorsError />}
+            />
         {
           tokenService.getRoleUser()?.length > 0 && (<Route path="users" element={<GeneralLayout />}>
             <Route

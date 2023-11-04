@@ -95,3 +95,6 @@ const GeneralProfile = () => {
 
 }
 export default GeneralProfile
+
+
+

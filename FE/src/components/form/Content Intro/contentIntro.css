@@ -6,6 +6,7 @@
     flex-direction: row;
 }
 
+
 .body-post .bookjacket-intro{
     display: flex;
     flex-direction: column;
@@ -35,3 +36,4 @@
     color: #AAAAAA;
     font-style: italic;
 }
+

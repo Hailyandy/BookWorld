@@ -23,6 +23,10 @@ class AuthService extends BaseService {
         var data = await putAPI('auth/otpVerification', { username, otp })
         return data
     }
+    async infor({ username, dateOfBirth, sex, phoneNumber, role }) {
+        var data = await putAPI('auth/inforUser', { username, dateOfBirth, sex, phoneNumber, role })
+        return data
+    }
 }
 
 export default new AuthService()
