@@ -1,7 +1,7 @@
 package com.chien.bookWorld.service.impl;
 
 import com.chien.bookWorld.dto.BookBasketUpdateDto;
-import com.chien.bookWorld.dto.BookBastketDto;
+import com.chien.bookWorld.dto.BookBasketDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.DtoMap.BookBasketDtoMap;
 import com.chien.bookWorld.entity.Book;
@@ -16,13 +16,14 @@ import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookBasketService;
 import com.chien.bookWorld.service.BookService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.PropertyMapper.Source;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -49,11 +50,14 @@ public class BookBasketServiceImpl implements BookBasketService {
     List<BookBasket> bookBasketList = bookBasketRepository.findBookBasketByUser(userDetails.getId());
 
     if (bookBasketList.isEmpty()) {
-      return new SuccessResponse(new ArrayList<>());
+      return new SuccessResponse(null);
     } else {
-      mapper.addMappings(new BookBasketDtoMap());
+      TypeMap<BookBasket, BookBasketDto> typeMap = mapper.getTypeMap(BookBasket.class, BookBasketDto.class);
+      if (typeMap == null) {
+        mapper.addMappings(new BookBasketDtoMap());
+      }
       return new SuccessResponse(bookBasketList.stream()
-          .map(book -> mapper.map(book, BookBastketDto.class)).collect(
+          .map(book -> mapper.map(book, BookBasketDto.class)).collect(
               Collectors.toList()));
     }
   }

@@ -31,4 +31,7 @@ public interface BookBasketRepository extends JpaRepository<BookBasket, Long> {
 
         @Query(nativeQuery = true, value = "SELECT * FROM book_basket WHERE user_id = :userId")
         List<BookBasket> findBookBasketByUser(@Param("userId") Long userId);
+
+        @Query(nativeQuery = true, value = "SELECT * FROM book_basket WHERE user_id = :userId AND book_id = :bookId")
+        BookBasket findByUserAndBook(@Param("userId") Long userId, @Param("bookId") Long bookId);
 }

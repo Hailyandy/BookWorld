@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BookBastketDto {
+public class BookBasketDto {
     private BookBasketKey id;
     private String bookName;
     private String status;
