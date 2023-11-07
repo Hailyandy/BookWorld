@@ -17,7 +17,7 @@ public class UserUpdateDto {
   @NotEmpty(message = "Thiếu tên!")
   private String name;
 
-  @NotEmpty(message = "Thiếu tên!")
+  @NotEmpty(message = "Thiếu avatar!")
   private String urlAvatar;
 
   @Email(message = "Email không hợp lệ!")
