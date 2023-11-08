@@ -7,6 +7,7 @@ import "~/components/author/bookItem.css";
 import { useLoaderData } from "react-router-dom";
 import { mapToClass } from "~/helper/mappingToClass";
 import { BookEntity } from "~/entity/bookEntity";
+import { useNavigate } from "react-router-dom";
 const { Search } = Input;
 const suffix = (
     <AudioOutlined
@@ -17,26 +18,32 @@ const suffix = (
     />
 );
 const plainOptions = ['All', 'Tác giả', 'Tiêu đề'];
-const onSearch = (value, _e, info) => console.log(info?.source, value);
+
 const SearchBookPage = () => {
     const [value1, setValue1] = useState('All');
+    const navigate = useNavigate()
     const bookSearchList = mapToClass(useLoaderData(), BookEntity)
     console.log(bookSearchList)
     const onChange1 = ({ target: { value } }) => {
         console.log('radio1 checked', value);
         setValue1(value);
     };
+
+    const onSearch = (value, _e, info) => {
+        console.log(info?.source, value);
+        navigate(`/search-result/search-book/${value}`, { replace: true });
+    }
     return (
         <>
             <Search
-                placeholder="input search text"
+                placeholder="Tìm kiếm sách"
                 allowClear
-                enterButton="Search"
+                enterButton="Tìm kiếm"
 
                 width={300}
                 onSearch={onSearch}
             />
-            <Radio.Group options={plainOptions} onChange={onChange1} value={value1} />
+            {/* <Radio.Group options={plainOptions} onChange={onChange1} value={value1} /> */}
 
             {
                 bookSearchList.map((bookSearchListItem) => {
@@ -45,7 +52,7 @@ const SearchBookPage = () => {
             }
 
 
-            <Pagination defaultCurrent={6} total={500} style={{ marginTop: '2rem', marginBottom: '2rem', right: '0px', position: 'absolute' }} />
+            <Pagination defaultCurrent={6} total={500} className="search-pagination" />
         </>
     )
 

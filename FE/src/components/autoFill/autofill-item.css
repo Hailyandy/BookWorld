@@ -1,6 +1,7 @@
 .autofill-containner {
     width: 100%;
-    padding: 1rem;
+    /* padding: 12px; */
+    margin: 12px;
     border-bottom: var(--border-bottom-divider);
     height: var(--height-autofill-item);
 }

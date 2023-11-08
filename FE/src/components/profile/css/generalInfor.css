@@ -1,6 +1,12 @@
     @import url('../../../pages/UserHome/userhome.css');
     /* @import url('/FE/src/pages/UserHome/userhome.css'); */
 
+
+    .general-profile--containner {
+        margin: auto;
+        width: 75%;
+    }
+
     .description-containner1 {
         display: flex;
         padding-top: 1%;
@@ -10,8 +16,9 @@
     }
 
     .ant-image {
-        display: block;
-
+        /* display: block; */
+        position: sticky;
+        top: 0;
     }
 
     .image-ant {
@@ -19,6 +26,7 @@
         width: 100%;
         object-fit: fill;
         position: sticky;
+        border-radius: 8px;
     }
 
     .hero-infor {
@@ -33,5 +41,25 @@
     }
 
     .profile-footer--list {
-        padding-left: 30%;
+        padding-top: 2rem;
+        padding-left: 35%;
+        background-color: var(--background-color-white);
+        padding-right: 1rem;
+    }
+
+    .description-containner1 .friend {
+        position: sticky;
+        top: 0;
+    }
+
+    .description-containner1 .book-friend {}
+
+    .description-containner1 .friend-list {
+        padding-left: 1rem;
+
+    }
+
+    .description-containner1 .friend-title {
+        border-bottom: var(--border-bottom-divider);
+        margin: 8px;
     }

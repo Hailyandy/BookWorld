@@ -6,10 +6,15 @@
     flex-direction: row;
 }
 
-
 .body-post .bookjacket-intro {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 0px;
+}
+
+.bookjacket-intro {
+    height: fit-content;
 }
 
 .body-post .book-content-intro {

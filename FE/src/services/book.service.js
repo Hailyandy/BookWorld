@@ -40,7 +40,7 @@ class BookService extends BaseService {
 
 
   /**
-   * Bearer token
+   * Theo doi sach
    * @param {*} param0
    * @returns none
    */

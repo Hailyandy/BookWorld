@@ -15,7 +15,13 @@ import UserDeclareInformationPage from "./User";
 import UserHomePage from "./UserHome";
 import SearchUserPage from "./Search/SearchUserPage";
 import FriendRequestSearchPeoplePage from "./FriendRequestSearchPeople/FriendRequestSearchPeople";
+import SearchFriendPage from "./Search/SearchFriendPage";
+import BookRankPage from "./BookRankPage";
+import AnonymousUser from "./AnonymousUsers/AnonymousUser";
+import BookMarket from "./BookMarket/BookMarketCreateItem";
 export {
+    BookMarket,
+    AnonymousUser,
     SearchUserPage,
     SelectFavouritebook,
     AuthorInformationPage,
@@ -32,5 +38,7 @@ export {
     RegisterPage,
     UserDeclareInformationPage,
     UserHomePage,
-    FriendRequestSearchPeoplePage
+    FriendRequestSearchPeoplePage,
+    SearchFriendPage,
+    BookRankPage
 }

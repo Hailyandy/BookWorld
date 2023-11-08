@@ -95,7 +95,7 @@ export const putAPI = async (endpoint, config = {}) => {
 //Xóa 1 bản ghi
 export const deleteAPI = async (endpoint, id) => {
   try {
-    const response = await axiosInstance.delete(`${endpoint}/${id}`)
+    const response = await axiosInstance.delete(`${endpoint}`, { data: id })
     return handleAPISuccess(response)
   } catch (error) {
     handleAPIError(error)

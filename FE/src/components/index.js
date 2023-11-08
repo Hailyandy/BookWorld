@@ -14,6 +14,7 @@ import TheAutofillItem from './autoFill/TheAutoFillitem';
 import ProtectedRoute from './protectedRoute/ProtectedRoute';
 import SearchResultLayout from '~/layouts/SearchResultLayout';
 import TheUserItem from './author/TheUserItem';
+import CustomUpload from './customUpload/customUpload';
 export {
     RootLayout,
     AuthorsLayout,
@@ -26,5 +27,10 @@ export {
     UserDeclareInformationPage,
     UserHomePage,
     HomePage,
-    ModelReviewPost, TheAutofillItem, ProtectedRoute, SearchResultLayout, TheUserItem
+    ModelReviewPost,
+    TheAutofillItem,
+    ProtectedRoute,
+    SearchResultLayout,
+    TheUserItem,
+    CustomUpload
 }

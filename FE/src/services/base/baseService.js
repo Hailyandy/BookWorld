@@ -76,7 +76,7 @@ export class BaseService {
      * @returns { "code": 0, "message": "Friend delete!" }
      */
     async unfriend({ senderId }) {
-        var data = await putAPI('friend/unfriend', { senderId })
+        var data = await deleteAPI('friend/unfriend', { senderId })
         return data
     }
 
