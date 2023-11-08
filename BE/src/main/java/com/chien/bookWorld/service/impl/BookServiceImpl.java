@@ -4,6 +4,7 @@ import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
+import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.Genre;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
@@ -17,6 +18,7 @@ import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -75,11 +77,17 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public SuccessResponse findById(Long id) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+        .getAuthentication().getPrincipal();
     Book book = bookRepository.findById(id).orElse(null);
     if (book == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     } else {
-      return new SuccessResponse(mapper.map(book, BookDto.class));
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), id);
+      bookDto.setStatusWithUser(bookBasket.getStatus());
+
+      return new SuccessResponse(bookDto);
     }
   }
 

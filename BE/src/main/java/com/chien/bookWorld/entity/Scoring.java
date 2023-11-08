@@ -1,6 +1,6 @@
 package com.chien.bookWorld.entity;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -15,24 +15,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Entity
 @Setter
+@Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Test {
+public class Scoring {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long ordinalNumber;
-    private String question;
-    private String answer1;
-    private String answer2;
-    private String answer3;
-    private String answer4;
-
-    private String correctAnswer;
+    private Integer score;
+    private Timestamp timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "quick_id")
-    private QuickTest quickTest;
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -1,13 +1,17 @@
 package com.chien.bookWorld.service.impl;
 
+import com.chien.bookWorld.dto.UserAndFriendshipDto;
 import com.chien.bookWorld.dto.UserCreationDto;
 import com.chien.bookWorld.dto.UserDto;
 import com.chien.bookWorld.dto.UserUpdateDto;
+import com.chien.bookWorld.entity.Friendship;
+import com.chien.bookWorld.entity.FriendshipStatus;
 import com.chien.bookWorld.entity.Role;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
+import com.chien.bookWorld.repository.FriendshipRepository;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.UserService;
 import jakarta.transaction.Transactional;
@@ -32,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private FriendshipRepository friendshipRepository;
   @Autowired
   private ModelMapper mapper;
 
@@ -236,11 +243,36 @@ public class UserServiceImpl implements UserService {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     List<User> users = userRepository.findByNameAndNotRoleAdmin("%" + name + "%", userDetails.getId());
+
     if (users.isEmpty()) {
       return new SuccessResponse(new ArrayList<User>());
     } else {
-      return new SuccessResponse(users.stream()
-          .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList()));
+      List<UserAndFriendshipDto> userDtos = new ArrayList<>();
+      for (User user : users) {
+        UserAndFriendshipDto userDto = mapper.map(user, UserAndFriendshipDto.class);
+
+        Friendship friendship = friendshipRepository.findBySenderIdAndReceiverId(userDetails.getId(), user.getId());
+        if (friendship == null) {
+          Friendship friendshipReceiver = friendshipRepository.findBySenderIdAndReceiverId(user.getId(),
+              userDetails.getId());
+          if (friendshipReceiver != null) {
+            if (friendshipReceiver.getStatus() == FriendshipStatus.PENDING) {
+              userDto.setFriendship(FriendshipStatus.ACCEPT.toString());
+            } else {
+              userDto.setFriendship(friendshipReceiver.getStatus().toString());
+            }
+
+          } else {
+            userDto.setFriendship("null");
+          }
+        } else {
+          userDto.setFriendship(friendship.getStatus().toString());
+        }
+
+        userDtos.add(userDto);
+      }
+      ;
+      return new SuccessResponse(userDtos);
     }
   }
 }

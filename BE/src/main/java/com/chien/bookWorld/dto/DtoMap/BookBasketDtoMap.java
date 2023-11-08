@@ -2,10 +2,10 @@ package com.chien.bookWorld.dto.DtoMap;
 
 import org.modelmapper.PropertyMap;
 
-import com.chien.bookWorld.dto.BookBastketDto;
+import com.chien.bookWorld.dto.BookBasketDto;
 import com.chien.bookWorld.entity.BookBasket;
 
-public class BookBasketDtoMap extends PropertyMap<BookBasket, BookBastketDto> {
+public class BookBasketDtoMap extends PropertyMap<BookBasket, BookBasketDto> {
 
     @Override
     protected void configure() {
