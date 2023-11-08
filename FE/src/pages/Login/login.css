@@ -1,7 +1,7 @@
 .login_container {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: var(--height-containner-main);
     width: 100%;
     background-color: rgba(23, 193, 181, 0.2);
 }

@@ -1,8 +1,9 @@
-.review-post{
+.review-post {
     margin-top: 10px;
-    width: 600px;
-    height: 400px;
-    /* background-color: green; */
+    border: 2px solid #ccc !important;
+    padding: 0.01em 16px;
+    border-radius: 16px;
+
 }
 
 /* Heading Post */
@@ -24,4 +25,20 @@
     gap: 5px;
 }
 
+.bold-divider {
+    margin: 0;
+    padding: 0;
+    border-top: 1.8px solid black;
+    /* Điều chỉnh độ đậm bằng cách thay đổi độ rộng và màu sắc */
+}
 
+.footer .commenting {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.footer .commenting .avartar-commenting {
+    width: 200px;
+    height: 46px;
+}

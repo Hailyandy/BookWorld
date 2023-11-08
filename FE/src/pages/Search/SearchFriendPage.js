@@ -8,8 +8,8 @@ import "~/components/author/bookItem.css";
 import { useLoaderData } from "react-router-dom";
 import { mapToClass } from "~/helper/mappingToClass";
 import { UserEntity } from "~/entity/userEntity";
-import { useNavigate } from "react-router-dom";
 import BSHAREnum from "~/helper/BSHAREenum";
+import { useNavigate } from "react-router-dom";
 const { Search } = Input;
 const suffix = (
     <AudioOutlined
@@ -21,15 +21,16 @@ const suffix = (
 );
 const plainOptions = ['All', 'Tác giả', 'Tiêu đề'];
 
-const SearchUserPage = () => {
-    const [value1, setValue1] = useState('All');
+const SearchFriendPage = () => {
     const navigate = useNavigate()
-    const userSearchList = mapToClass(useLoaderData(), UserEntity)
-    console.log(userSearchList)
+    const [value1, setValue1] = useState('All');
+    const friendSearchList = mapToClass(useLoaderData(), UserEntity)
+    console.log(friendSearchList)
     const onChange1 = ({ target: { value } }) => {
         console.log('radio1 checked', value);
         setValue1(value);
     };
+
     const onSearch = (value, _e, info) => {
         console.log(info?.source, value);
         navigate(`/search-result/search-user/${value}`, { replace: true });
@@ -37,9 +38,9 @@ const SearchUserPage = () => {
     return (
         <>
             <Search
-                placeholder="Tìm kiếm người dùng"
+                placeholder="Tìm kiếm bạn bè"
                 allowClear
-                enterButton="Tim kiếm"
+                enterButton="Tìm kiếm"
 
                 width={300}
                 onSearch={onSearch}
@@ -47,8 +48,8 @@ const SearchUserPage = () => {
 
 
             {
-                userSearchList.map((userSearchListItem) => {
-                    return <TheUserItem userItem={userSearchListItem} type={BSHAREnum.the_user_item.friend_req} />
+                friendSearchList.map((friendSearchListItem) => {
+                    return <TheUserItem userItem={friendSearchListItem} type={BSHAREnum.the_user_item.friend_list} />
                 })
             }
 
@@ -58,4 +59,4 @@ const SearchUserPage = () => {
     )
 
 }
-export default SearchUserPage
+export default SearchFriendPage

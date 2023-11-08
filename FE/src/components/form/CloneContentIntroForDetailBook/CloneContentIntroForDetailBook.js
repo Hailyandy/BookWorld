@@ -2,7 +2,7 @@ import "./contentIntro.css"
 import { DownloadOutlined } from '@ant-design/icons';
 import { Button, Radio, Space, Divider, } from 'antd';
 
-const ContentIntro = () => {
+const CloneContentIntro = () => {
     return (
         <div class="body-post">
             <div class="bookjacket-intro">
@@ -36,4 +36,4 @@ const ContentIntro = () => {
 }
 
 
-export default ContentIntro
+export default CloneContentIntro

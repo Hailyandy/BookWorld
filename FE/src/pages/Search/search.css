@@ -1,4 +1,4 @@
-.search-page-containner {
+/* .search-page-containner {
     width: 100%;
     position: relative;
     height: 100%;
@@ -9,4 +9,9 @@
     width: 60%;
     left: 50%;
     transform: translate(-50%, 0%);
+} */
+.search-pagination {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    right: 0px
 }

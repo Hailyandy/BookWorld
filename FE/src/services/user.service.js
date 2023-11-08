@@ -1,7 +1,7 @@
 import { getAPI, postAPI, putAPI } from "./api";
 import { BaseService } from "./base/baseService";
 const endPoint = 'endpoint'
-class AuthService extends BaseService {
+class UserService extends BaseService {
     constructor() {
         super(endPoint);
     }
@@ -24,8 +24,6 @@ class AuthService extends BaseService {
         return data
     }
 
-
-
     /**
      *
      * @param {*} ObjectRating -
@@ -37,7 +35,7 @@ class AuthService extends BaseService {
      * @returns message from BE
      */
     async rateBookOrUploadFile(ObjectRating) {
-        var data = await putAPI('auth/post', ObjectRating)
+        var data = await postAPI('post', ObjectRating)
         return data
     }
 
@@ -60,9 +58,19 @@ class AuthService extends BaseService {
     }
 
     async getUserByName({ name }) {
-        var data = await getAPI(`users/search/${name}`)
+        var data = await getAPI(`users/search?name=${name}`)
+        return data
+    }
+
+    /**
+     * API sử dụng lấy tất cả các sách trong mybook
+     * @param {*}
+     * @returns
+     */
+    async getAllMyBook() {
+        var data = await getAPI(`bookBasket`)
         return data
     }
 }
 
-export default new AuthService()
+export default new UserService()

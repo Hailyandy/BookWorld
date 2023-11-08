@@ -29,8 +29,17 @@ const BSHAREnum = Object.freeze({
         admin: Symbol('ROLE_ADMIN')
     }),
     dropdown_user_menu_key: Object.freeze({
-        logout: 'logout'
-    })
+        logout: 'logout',
+        friendList: 'friendList',
+        personalProfile: 'personalProfile'
+    }),
+    the_user_item: Object.freeze({
+        friend_req: 'friendReq',
+        friend_list: 'friendList'
+    }),
+    localHost: {
+        url: 'http://localhost:3000/'
+    }
 })
 
 export default BSHAREnum

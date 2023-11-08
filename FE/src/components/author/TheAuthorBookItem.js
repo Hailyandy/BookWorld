@@ -11,12 +11,12 @@ import { followBookAndUpdateStatusAsync } from '~/slices/book';
 const { Text } = Typography;
 const cardStyle = {
     width: '100%',
-    margin: 10,
+    margin: '10px 0px',
     border: '1px solid #ccc',
     borderTop: 'none',
     borderLeft: 'none',
     borderRight: 'none',
-    borderRadius: '0px',
+    borderRadius: '3px',
     padding: '10px 0px 10px 0px'
 };
 
@@ -93,7 +93,7 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                 <div
                     className='bookItem-container-right'
                 >
-                    <Space direction='vertical'>
+                    <Space direction='vertical' size={12}>
                         <Text strong>
                             {bookItem.name}
                         </Text>
@@ -111,7 +111,7 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                             <Space>
                                 <StarRatings
                                     rating={
-                                        bookItem.scoring
+                                        bookItem.scoring ? bookItem.scoring : 0
                                     }
                                     starDimension="12px"
                                     starSpacing="4px"
@@ -126,7 +126,7 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                     {
                         typeItem != BSHAREnum.modelReviewPostType.without_dropdown_button &&
                         <Dropdown menu={menuProps}>
-                            <Button size='large' style={{ marginTop: '8px', backgroundColor: 'var(--button-default-background-color)', color: 'white', position: 'absolute', right: '0px' }}>
+                            <Button size='large' style={{ marginTop: '8px', backgroundColor: 'var(--button-default-background-color)', color: 'white', position: 'absolute', right: '10px' }}>
                                 <Space>
                                     Chưa đọc
                                     <DownOutlined />

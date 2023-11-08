@@ -1,12 +1,24 @@
 .search-page-containner {
     width: 100%;
-    position: relative;
-    height: 100%;
+    /* position: relative; */
+    /* height: 100%; */
+
+
 }
 
 .search-page-body {
-    position: absolute;
-    width: 60%;
+    /* position: absolute; */
+    /*;
     left: 50%;
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%); */
+    padding: 0px 2rem;
+    width: 60%;
+    margin: 0px auto;
+
+    /* padding-bottom: 0px; */
+}
+
+.search-page-body h2 {
+    margin-top: 0px;
+    margin-bottom: 10px;
 }

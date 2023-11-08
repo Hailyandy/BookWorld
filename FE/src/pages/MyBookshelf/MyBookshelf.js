@@ -1,7 +1,83 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useLoaderData, Link } from 'react-router-dom';
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme, Switch, Table, Tooltip } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Switch, Table, Tooltip, Space } from 'antd';
+import BSHAREnum from '~/helper/BSHAREenum';
+import { useNavigate } from 'react-router-dom';
 const { Header, Content, Footer, Sider } = Layout;
+const columnsub =
+    [
+        {
+            title: 'Ảnh bìa',
+            width: 100,
+            dataIndex: 'urlBook',
+            key: 'urlBook',
+            fixed: 'left',
+        },
+        {
+            title: 'Tiêu đề',
+            width: 100,
+            dataIndex: 'bookName',
+            key: 'bookName',
+            fixed: 'left',
+        },
+        {
+            title: 'authorName',
+            dataIndex: 'authorName',
+            key: 'authorName',
+            width: 150,
+        },
+        {
+            title: <Tooltip title="Trung bình xếp hạng">
+                <span>TB xếp hạng</span>
+            </Tooltip>,
+            dataIndex: 'scoring',
+            key: 'scoring',
+            width: 150,
+        },
+        {
+            title: 'Bài đánh giá',
+            dataIndex: 'review_post',
+            key: 'review_post',
+            width: 150,
+            ellipsis: true,
+        },
+        // {
+        //     title: 'Ngày đọc',
+        //     dataIndex: 'name',
+        //     key: '5',
+        //     width: 150,
+        // },
+        // {
+        //     title: 'Ngày thêm vào',
+        //     dataIndex: 'name',
+        //     key: '6',
+        //     width: 150,
+        // },
+        {
+            title: 'Đánhg giá',
+            key: 'operation',
+            fixed: 'right',
+            width: 100,
+            render: (text, record, index) => {
+                console.log(record)
+                return (
+                    <>
+                        <Space direction='horizontal' >
+                            <span onClick={() => {
+                                window.location.replace(`${BSHAREnum.localHost.url}users/review/edit/${record.bookId}`)
+
+                            }}>
+                                Chỉnh sửa
+                            </span>
+                            <span >
+                                Xem bài
+                            </span>
+                        </Space>
+                    </>)
+            },
+        },
+    ];
 
 const bookshelf = ['Muốn đọc', 'Đang đọc', 'Đã đọc', 'custom tên giá']
 const slideMenuItem = [{
@@ -16,68 +92,7 @@ const slideMenuItem = [{
         };
     }),
 }]
-const columns = [
-    {
-        title: 'Bìa',
-        width: 100,
-        dataIndex: 'name',
-        key: 'name',
-        fixed: 'left',
-    },
-    {
-        title: 'Tiêu đề',
-        width: 100,
-        dataIndex: 'age',
-        key: 'age',
-        fixed: 'left',
-    },
-    {
-        title: 'Tác giả',
-        dataIndex: 'name',
-        key: '1',
-        width: 150,
-    },
-    {
-        title: <Tooltip title="Trung bình xếp hạng">
-            <span>TB xếp hạng</span>
-        </Tooltip>,
-        dataIndex: 'name',
-        key: '2',
-        width: 150,
-    },
-    {
-        title: 'Xếp hạng',
-        dataIndex: 'name',
-        key: '3',
-        width: 150,
-    },
-    {
-        title: 'Bài đánh giá',
-        dataIndex: 'address',
-        key: '4',
-        width: 150,
-        ellipsis: true,
-    },
-    {
-        title: 'Ngày đọc',
-        dataIndex: 'name',
-        key: '5',
-        width: 150,
-    },
-    {
-        title: 'Ngày thêm vào',
-        dataIndex: 'name',
-        key: '6',
-        width: 150,
-    },
-    {
-        title: 'Action',
-        key: 'operation',
-        fixed: 'right',
-        width: 100,
-        render: () => <a>edit</a>,
-    },
-];
+
 const data = [];
 for (let i = 0; i < 100; i++) {
     data.push({
@@ -104,10 +119,98 @@ const MyBookshelf = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    const MyBookshelf = useLoaderData()
+    const navigate = useNavigate()
+    const [isNavigate, setIsnavigate] = useState('')
+    const columns = useMemo(() => {
+        return [
+            {
+                title: 'Ảnh bìa',
+                width: 100,
+                dataIndex: 'urlBook',
+                key: 'urlBook',
+                fixed: 'left',
+            },
+            {
+                title: 'Tiêu đề',
+                width: 100,
+                dataIndex: 'bookName',
+                key: 'bookName',
+                fixed: 'left',
+            },
+            {
+                title: 'authorName',
+                dataIndex: 'authorName',
+                key: 'authorName',
+                width: 150,
+            },
+            {
+                title: <Tooltip title="Trung bình xếp hạng">
+                    <span>TB xếp hạng</span>
+                </Tooltip>,
+                dataIndex: 'scoring',
+                key: 'scoring',
+                width: 150,
+            },
+            {
+                title: 'Bài đánh giá',
+                dataIndex: 'review_post',
+                key: 'review_post',
+                width: 150,
+                ellipsis: true,
+            },
+            // {
+            //     title: 'Ngày đọc',
+            //     dataIndex: 'name',
+            //     key: '5',
+            //     width: 150,
+            // },
+            // {
+            //     title: 'Ngày thêm vào',
+            //     dataIndex: 'name',
+            //     key: '6',
+            //     width: 150,
+            // },
+            {
+                title: 'Đánhg giá',
+                key: 'operation',
+                fixed: 'right',
+                width: 100,
+                render: (text, record, index) => {
+                    console.log(record)
+                    return (
+                        <>
+                            <Space direction='horizontal' >
+                                <span onClick={() => {
+                                    // navigate(`../review/edit/${record.bookId}`);
+                                    setIsnavigate(record.bookId)
+                                }}>
+                                    Chỉnh sửa
+                                </span>
+                                <span >
+                                    Xem bài
+                                </span>
+                            </Space>
+                        </>)
+                },
+            },
+        ];
+    }, []);
+    useEffect(() => {
+        console.log('navigate')
+        if (typeof window !== 'undefined') {
+            if (isNavigate != '') {
+            }
+        }
+        // return () => { navigate(`../users/review/edit/${isNavigate}`, { replace: true }); }
+    }, [isNavigate])
+
+
     return (
         <Layout
             style={{
-
+                paddingTop: '50px',
+                paddingLeft: '24px',
                 background: colorBgContainer,
             }}
         >
@@ -134,8 +237,8 @@ const MyBookshelf = () => {
                 }}
             >
                 <Table
-                    columns={columns}
-                    dataSource={data}
+                    columns={columnsub}
+                    dataSource={MyBookshelf}
                     scroll={{
                         x: 1500,
                     }}

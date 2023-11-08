@@ -7,3 +7,13 @@
     align-items: center;
     flex-shrink: 0;
 }
+
+.button-dropdown {
+    background-color: var(--text-color-main);
+    color: white !important;
+    height: 36px
+}
+
+.button-dropdown .ant-typography {
+    color: white !important;
+}

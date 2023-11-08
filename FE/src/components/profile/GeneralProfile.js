@@ -1,5 +1,5 @@
 import './css/generalInfor.css';
-import { Checkbox, Row, Col, Button, Input, Card, Image, Typography } from 'antd';
+import { Checkbox, Row, Col, Button, Input, Card, Image, Typography, Space } from 'antd';
 import { useLoaderData, useParams } from 'react-router-dom'
 import TheAuthorBookItem from '~/components/author/TheAuthorBookItem';
 import Avartar from "~/components/ui/Avartar/Avartar";
@@ -13,6 +13,7 @@ const GeneralProfile = () => {
     const { id } = useParams()
     const career = useLoaderData()
     let authorDetail = {
+        content: 'hello world',
         images: 'https://t3.ftcdn.net/jpg/03/13/42/46/360_F_313424630_Uja1TnjdFhdz0bdbFnhMRuBTSIw25TWQ.jpg',
         authorName: 'Xuân Bách',
         bornPlace: 'Phú thọ',
@@ -29,7 +30,7 @@ const GeneralProfile = () => {
         authorDescription: 'Korman wrote his first book, , when he was 12 years old, for a coach who suddenly found himself teaching 7th grade English. He later took that episode and created a book out of it, as well, in "The Sixth Grade Nickname Game", wherein Mr. Huge was based on that 7th grade teacher.Korman moved to New York City, where he studied film and film writing. While in New York, he met his future wife; they now live in Long Island with their three children.He has published more than 50 books.',
     }
     return (
-        <div>
+        <div className='general-profile--containner'>
             <Card>
                 {/* <div>
                     <BackButton />
@@ -44,18 +45,18 @@ const GeneralProfile = () => {
                         bordered={false}
                         style={{ width: "70%" }}
                     >
-                        <p>
-                            <Text code strong>
+                        <Space direction='vertical' size={16}>
+                            <Text strong>
                                 {authorDetail.bornPlace}
                             </Text>
-                        </p>
-                        <p>{authorDetail.content}</p>
-                        <Text strong>{authorDetail.dateOfBirth}</Text>
-                        <p>{authorDetail.typeCompose}</p>
-                        <p>{authorDetail.authorDescription}</p>
+                            <Text>{authorDetail.content}</Text>
+                            <Text >{authorDetail.dateOfBirth}</Text>
+                            <Text>{authorDetail.typeCompose}</Text>
+                            <Text>{authorDetail.authorDescription}</Text    >
+                        </Space>
+
                     </Card>
                     <div className="book-friend">
-
                         <div className="friend">
                             <h2 class="friend-title">Bạn bè</h2>
                             <ul class="friend-list">
@@ -75,7 +76,7 @@ const GeneralProfile = () => {
                 </div>
             </Card>
             <div className="profile-footer--list">
-                <Title level={3}>Sách của Xuân Bách</Title>
+                <Title level={3}>Bài đăng của Xuân Bách</Title>
                 <div className='line-drawing'></div>
                 <div class="author-book-list">
                     {/* <TheAuthorBookItem />
@@ -86,10 +87,10 @@ const GeneralProfile = () => {
                     <TheAuthorBookItem />
                     <TheAuthorBookItem /> */}
                     <ReviewPost />
+                    {/* <ReviewPost />
                     <ReviewPost />
                     <ReviewPost />
-                    <ReviewPost />
-                    <ReviewPost />
+                    <ReviewPost /> */}
                 </div>
             </div>
         </div>

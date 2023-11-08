@@ -1,3 +1,5 @@
+import BSHAREnum from "./BSHAREenum"
+import { Link } from 'react-router-dom';
 const BSHAREresource = {
     notification_message: {
         success: {
@@ -69,33 +71,51 @@ const BSHAREresource = {
             }
         ],
 
-        authorPageBreadcumMenuItem: [
+        signInHeaderMenuItem: [
             {
-                key: '1',
-                label: (
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-                        General
-                    </a>
-                ),
+                key: 'community',
+                label: 'Cộng đồng'
             },
             {
-                key: '2',
-                label: (
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-                        Layout
-                    </a>
-                ),
-            },
-            {
-                key: '3',
-                label: (
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-                        Navigation
-                    </a>
-                ),
-            },
+                key: 'book_store',
+                label: 'Sách',
+                children: [
+                    {
+                        key: 'book_warehouse',
+                        label: (
+                            <Link to={`${BSHAREnum.localHost.url}users/my-bookshelf`}>
+                                Kho sách
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'book_favourite',
+                        label: (
+                            <Link to={`${BSHAREnum.localHost.url}books/book-rank`}>
+                                Sách yêu thích
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'book_hidden',
+                        label: (
+                            <Link to={`${BSHAREnum.localHost.url}books/hidden-book`}>
+                                Sách ẩn danh
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'book_market',
+                        label: (
+                            <Link to={`${BSHAREnum.localHost.url}books/market`}>
+                                Chợ sách
+                            </Link>
+                        ),
+                    }
+                ],
+            }
         ],
-        selectFavouriteMenuItem: [
+        notSignInHeaderMenuItem: [
             {
                 key: 'homePage',
                 label: 'Trang chủ'
