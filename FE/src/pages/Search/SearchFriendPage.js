@@ -49,7 +49,7 @@ const SearchFriendPage = () => {
 
             {
                 friendSearchList.map((friendSearchListItem) => {
-                    return <TheUserItem userItem={friendSearchListItem} type={BSHAREnum.the_user_item.friend_list} />
+                    return <TheUserItem userItem={friendSearchListItem} type={friendSearchListItem.friendship} />
                 })
             }
 

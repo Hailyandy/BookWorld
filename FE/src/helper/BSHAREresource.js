@@ -111,7 +111,16 @@ const BSHAREresource = {
                                 Chợ sách
                             </Link>
                         ),
-                    }
+                    },
+                    // {
+                    //     key: 'book_rank',
+                    //     label: (
+                    //         <Link to={`${BSHAREnum.localHost.url}books/book-rank`}>
+                    //             Sách nổi bật
+                    //         </Link>
+                    //     ),
+                    // }
+
                 ],
             }
         ],

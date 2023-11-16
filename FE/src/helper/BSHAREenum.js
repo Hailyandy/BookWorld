@@ -39,7 +39,31 @@ const BSHAREnum = Object.freeze({
     }),
     localHost: {
         url: 'http://localhost:3000/'
-    }
+    },
+    /**
+     * null : Không có gì
+        PENDING: Đang gửi yêu cầu kb
+        ACCEPTED: Bạn bè
+        ACCEPT: Chấp nhận lời mời kết bạn
+     */
+    friendship: Object.freeze({
+        PENDING: 'PENDING',
+        ACCEPTED: 'ACCEPTED',
+        ACCEPT: 'ACCEPT'
+    }),
+    updateFriendshipAction: Object.freeze({
+        add_friend: 'AddFriend',
+        un_friend: 'UnFriend',
+        accept_friend_req: 'AcceptFriendRequest',
+        reject_friend_req: 'RejectFriendRequest',
+        cancel_add_friend: 'CancelFriendRequest',
+        follow_people: 'FollowPeople'
+    }),
+    bookStatusWithUser: Object.freeze({
+        read: 'READ',
+        want_to_read: 'WANT_TO_READ',
+        reading: 'READING',
+    })
 })
 
 export default BSHAREnum

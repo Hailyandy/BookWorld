@@ -242,12 +242,10 @@ const userSlice = createSlice({
     reducers: {
         // add your non-async reducers here
         logout: (state) => {
-
             tokenService.removeUser()
             state.userInfo = ''
             state.friendReqList = []
         },
-
     },
     extraReducers: {
         [loginAsync.fulfilled]: (state, action) => {
@@ -266,8 +264,7 @@ const userSlice = createSlice({
         },
         [getListFriendRequest.fulfilled]: (state, action) => {
             console.log(action.payload)
-            state.friendReqList = action.payload
-
+            state.friendReqList = action.payload ? action.payload : []
         },
         [acceptFriendReq.fulfilled]: (state, action) => {
             console.log(state.friendReqList)

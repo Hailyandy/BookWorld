@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Flex, Typography, Dropdown, message, Space, Tooltip } from 'antd';
+import { Button, Card, Flex, Typography, Dropdown, message, Space, Tooltip, Select } from 'antd';
 import StarRatings from "react-star-ratings";
 import { DownOutlined, UserOutlined, HomeOutlined, BulbOutlined, SmileOutlined, FrownOutlined, MehOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ import { BookEntity } from '~/entity/bookEntity';
 import { formatToDate } from '~/helper/format';
 import { useDispatch } from 'react-redux';
 import { followBookAndUpdateStatusAsync } from '~/slices/book';
+import { useNavigate } from 'react-router-dom';
 const { Text } = Typography;
 const cardStyle = {
     width: '100%',
@@ -29,7 +30,7 @@ const bookItem = {
     star: 10,
     numReviews: 2
 }
-const items = [
+let items = [
     {
         label: 'Muốn đọc',
         key: 'Muốn đọc',
@@ -55,15 +56,34 @@ const items = [
  */
 const TheAuthorBookItem = ({ bookItem, typeItem }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleMenuClick = (e) => {
         message.info('Click on menu item.');
-        console.log('click', e);
-        var bookId = bookItem.id
-        var status = e.key
-        dispatch(followBookAndUpdateStatusAsync({ bookId, status }))
+        console.log(`selected ${e}`);
+        // console.log('click', e);
+        // var bookId = bookItem.id
+        // var status = e.key
+        // dispatch(followBookAndUpdateStatusAsync({ bookId, status }))
+        //     .unwrap()
+        //     .then(async data => {
+        //         // navigate('/login', { replace: true });
+        //         console.log(data)
+        //         return;
+        //     })
+        //     .catch(e => {
+        //         console.log(e)
+        //         // notyf.error(e.message)
+        //     });
+    };
+    const menuProps = {
+        items,
+        onClick: handleMenuClick,
+    };
+    const handelClickUpdatePeopleFriendship = (actionDispatch, id) => {
+        dispatch(actionDispatch(id))
             .unwrap()
             .then(async data => {
-                // navigate('/login', { replace: true });
+                navigate(`${window.location.pathname}`, { replace: true });
                 console.log(data)
                 return;
             })
@@ -71,11 +91,27 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                 console.log(e)
                 // notyf.error(e.message)
             });
-    };
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
-    };
+    }
+    const renderActionButtonBasedOnFriendship = (bookItem) => {
+        switch (bookItem.statusWithUser) {
+            case BSHAREnum.bookStatusWithUser.read:
+                return <>
+                </>
+                break;
+            case BSHAREnum.bookStatusWithUser.want_to_read:
+                return <>
+                </>
+                break;
+            case BSHAREnum.bookStatusWithUser.reading:
+                return <>
+                </>
+                break;
+            default:
+                return <>
+                </>
+        }
+
+    }
     return (
         <Card
             style={cardStyle}
@@ -125,17 +161,25 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
 
                     {
                         typeItem != BSHAREnum.modelReviewPostType.without_dropdown_button &&
-                        <Dropdown menu={menuProps}>
-                            <Button size='large' style={{ marginTop: '8px', backgroundColor: 'var(--button-default-background-color)', color: 'white', position: 'absolute', right: '10px' }}>
-                                <Space>
-                                    Chưa đọc
-                                    <DownOutlined />
-                                </Space>
-                            </Button>
-                        </Dropdown>
+                        // <Dropdown menu={menuProps}>
+                        //     <Button size='large' style={{ marginTop: '8px', backgroundColor: 'var(--button-default-background-color)', color: 'white', position: 'absolute', right: '10px' }}>
+                        //         <Space>
+                        //             Chưa đọc
+                        //             <DownOutlined />
+                        //         </Space>
+                        //     </Button>
+                        // </Dropdown>
+                        // <Dropdown menu={menuProps} />
+
+                        <Select
+                            defaultValue="lucy"
+                            style={{
+                                width: 120,
+                            }}
+                            onChange={handleMenuClick}
+                            options={items}
+                        />
                     }
-
-
                 </div>
             </div>
         </Card>
