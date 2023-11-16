@@ -114,8 +114,10 @@ public class BookServiceImpl implements BookService {
     List<BookDto> bookList = bookRepository.findByTitleOrAuthor(
         "%" + name + "%", pageable).stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
+          BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
+          bookDto.setStatusWithUser(bookBasket.getStatus());
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
@@ -138,9 +140,11 @@ public class BookServiceImpl implements BookService {
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     List<BookDto> bookList = bookRepository.findByTitleOrAuthorAndGenre(
         "%" + name + "%", genreId, pageable).stream().map(book -> {
+          BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
+          bookDto.setStatusWithUser(bookBasket.getStatus());
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
