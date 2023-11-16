@@ -6,6 +6,7 @@ import tokenService from './services/token.service';
 import { useState, } from 'react';
 import {
   createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider
@@ -30,7 +31,7 @@ function App() {
   const dispatch = useDispatch()
   const userRoleArray = tokenService.getRoleUser()
   // console.log(userRoleArray)
-  const router = createBrowserRouter(
+  const router = createHashRouter(
     createRoutesFromElements(
       //Sửa lại để test component tí ấy mà
       <Route path="/" element={<RootLayout />}>
