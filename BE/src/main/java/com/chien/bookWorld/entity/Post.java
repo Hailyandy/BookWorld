@@ -13,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -52,6 +54,7 @@ public class Post {
   private String content;
   private Long totalLike;
   private Long totalComment;
+  private Timestamp timestamp;
   @CreationTimestamp(source = SourceType.DB)
   private Instant createdOn;
   @UpdateTimestamp(source = SourceType.DB)

@@ -24,6 +24,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.PropertyMapper.Source;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -44,10 +46,10 @@ public class BookBasketServiceImpl implements BookBasketService {
   }
 
   @Override
-  public SuccessResponse findAll() {
+  public SuccessResponse findAll(Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
-    List<BookBasket> bookBasketList = bookBasketRepository.findBookBasketByUser(userDetails.getId());
+    Page<BookBasket> bookBasketList = bookBasketRepository.findBookBasketByUser(userDetails.getId(), pageable);
 
     if (bookBasketList.isEmpty()) {
       return new SuccessResponse(null);
@@ -93,6 +95,12 @@ public class BookBasketServiceImpl implements BookBasketService {
 
   @Override
   public Map<String, Object> delete(Long id) {
+    return null;
+  }
+
+  @Override
+  public SuccessResponse findAll() {
+    // TODO Auto-generated method stub
     return null;
   }
 }
