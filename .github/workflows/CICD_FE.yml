@@ -37,6 +37,7 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         start: npm start
+        working-directory: FE
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
