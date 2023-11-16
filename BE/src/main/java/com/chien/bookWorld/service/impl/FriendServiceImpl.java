@@ -247,10 +247,10 @@ public class FriendServiceImpl implements FriendService {
             throw new AppException(403, 43, "Forbidden! You can only accept yourself as a friend.");
         }
 
-        Friendship friendship = rFriendshipRepository.findBySenderIdAndReceiverIdAndStatus(senderId,
-                userDetails.getId(), FriendshipStatus.ACCEPTED);
-        Friendship friendship2 = rFriendshipRepository.findBySenderIdAndReceiverIdAndStatus(userDetails.getId(),
-                senderId, FriendshipStatus.ACCEPTED);
+        Friendship friendship = rFriendshipRepository.findBySenderIdAndReceiverId(senderId,
+                userDetails.getId());
+        Friendship friendship2 = rFriendshipRepository.findBySenderIdAndReceiverId(userDetails.getId(),
+                senderId);
 
         if (friendship == null && friendship2 == null) {
             throw new AppException(404, 44, "Error: Does not exist! No friend request has been created yet!");

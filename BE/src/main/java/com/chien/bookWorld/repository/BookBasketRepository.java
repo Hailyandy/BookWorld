@@ -5,6 +5,9 @@ import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,7 +33,7 @@ public interface BookBasketRepository extends JpaRepository<BookBasket, Long> {
                         @Param("status") String status);
 
         @Query(nativeQuery = true, value = "SELECT * FROM book_basket WHERE user_id = :userId")
-        List<BookBasket> findBookBasketByUser(@Param("userId") Long userId);
+        Page<BookBasket> findBookBasketByUser(@Param("userId") Long userId, Pageable pageable);
 
         @Query(nativeQuery = true, value = "SELECT * FROM book_basket WHERE user_id = :userId AND book_id = :bookId")
         BookBasket findByUserAndBook(@Param("userId") Long userId, @Param("bookId") Long bookId);

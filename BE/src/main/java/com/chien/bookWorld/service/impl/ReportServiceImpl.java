@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -78,8 +80,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public SuccessResponse findAll() {
-        List<Report> reports = reportRepository.findAll();
+    public SuccessResponse findAll(Pageable pageable) {
+        Page<Report> reports = reportRepository.findAll(pageable);
         if (reports.isEmpty()) {
             new SuccessResponse(null);
         }
@@ -120,6 +122,12 @@ public class ReportServiceImpl implements ReportService {
         body.put("code", 0);
         body.put("message", "Xử lý thành công!");
         return body;
+    }
+
+    @Override
+    public SuccessResponse findAll() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

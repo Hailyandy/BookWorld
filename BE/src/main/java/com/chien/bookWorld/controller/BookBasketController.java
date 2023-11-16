@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.Map;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -55,8 +56,8 @@ public class BookBasketController {
   // }
 
   @GetMapping
-  public ResponseEntity<SuccessResponse> getBookOfBasketByUser() {
-    return ResponseEntity.status(200).body(bookBasketService.findAll());
+  public ResponseEntity<SuccessResponse> getBookOfBasketByUser(Pageable pageable) {
+    return ResponseEntity.status(200).body(bookBasketService.findAll(pageable));
   }
 
 }
