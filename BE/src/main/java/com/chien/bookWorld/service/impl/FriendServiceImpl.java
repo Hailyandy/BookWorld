@@ -1,6 +1,5 @@
 package com.chien.bookWorld.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,17 +139,17 @@ public class FriendServiceImpl implements FriendService {
                 FriendshipStatus.PENDING);
 
         if (friendRequests.isEmpty()) {
-            return new SuccessResponse(new ArrayList<User>());
+            return new SuccessResponse(null);
         }
 
-        List<User> requestSenders = new ArrayList<>();
+        List<User> requestSenders = null;
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             requestSenders.add(sender);
         }
 
         if (requestSenders.isEmpty()) {
-            return new SuccessResponse(new ArrayList<User>());
+            return new SuccessResponse(null);
         }
         return new SuccessResponse(requestSenders.stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(
@@ -179,17 +178,17 @@ public class FriendServiceImpl implements FriendService {
                 FriendshipStatus.ACCEPTED, userId, userId);
 
         if (friendRequests.isEmpty()) {
-            return new SuccessResponse(new ArrayList<>());
+            return new SuccessResponse(null);
         }
 
-        List<User> listFriend = new ArrayList<>();
+        List<User> listFriend = null;
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             listFriend.add(sender);
         }
 
         if (listFriend.isEmpty()) {
-            return new SuccessResponse(new ArrayList<>());
+            return new SuccessResponse(null);
         }
 
         return new SuccessResponse(listFriend.stream()
@@ -248,10 +247,10 @@ public class FriendServiceImpl implements FriendService {
             throw new AppException(403, 43, "Forbidden! You can only accept yourself as a friend.");
         }
 
-        Friendship friendship = rFriendshipRepository.findBySenderIdAndReceiverIdAndStatus(senderId,
-                userDetails.getId(), FriendshipStatus.ACCEPTED);
-        Friendship friendship2 = rFriendshipRepository.findBySenderIdAndReceiverIdAndStatus(userDetails.getId(),
-                senderId, FriendshipStatus.ACCEPTED);
+        Friendship friendship = rFriendshipRepository.findBySenderIdAndReceiverId(senderId,
+                userDetails.getId());
+        Friendship friendship2 = rFriendshipRepository.findBySenderIdAndReceiverId(userDetails.getId(),
+                senderId);
 
         if (friendship == null && friendship2 == null) {
             throw new AppException(404, 44, "Error: Does not exist! No friend request has been created yet!");

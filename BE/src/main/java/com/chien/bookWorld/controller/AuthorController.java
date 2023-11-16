@@ -3,6 +3,7 @@ package com.chien.bookWorld.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.AuthorService;
 import com.chien.bookWorld.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {

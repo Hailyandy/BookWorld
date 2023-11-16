@@ -3,9 +3,9 @@ package com.chien.bookWorld.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.chien.bookWorld.entity.QuickTest;
+import com.chien.bookWorld.entity.Scoring;
 
 @Repository
-public interface QuickTestRepository extends JpaRepository<QuickTest, Long> {
+public interface ScoringRepository extends JpaRepository<Scoring, Long> {
 
 }

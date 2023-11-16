@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -34,23 +36,23 @@ public class BookController {
   @Operation(summary = "Find by title or author")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}")
-  public ResponseEntity<SuccessResponse> findByTitleOrAuthor(@PathVariable String name) {
-    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthor(name));
+  public ResponseEntity<SuccessResponse> findByTitleOrAuthor(@PathVariable String name, Pageable pageable) {
+    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthor(name, pageable));
   }
 
   @Operation(summary = "Find by title or author and genre")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}/{genreId}")
   public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name,
-      @PathVariable Long genreId) {
-    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId));
+      @PathVariable Long genreId, Pageable pageable) {
+    return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId, pageable));
   }
 
   @Operation(summary = "Gợi ý sách")
   @PreAuthorize("hasRole('USER')")
   @GetMapping
-  public ResponseEntity<SuccessResponse> bookRecommendations() {
-    return ResponseEntity.status(200).body(bookService.bookRecommendations());
+  public ResponseEntity<SuccessResponse> bookRecommendations(Pageable pageable) {
+    return ResponseEntity.status(200).body(bookService.bookRecommendations(pageable));
   }
 
   // @Operation(summary = "Update book")
@@ -80,6 +82,12 @@ public class BookController {
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   public ResponseEntity<SuccessResponse> getBookById(@PathVariable Long id) {
     return ResponseEntity.status(200).body(bookService.findById(id));
+  }
+
+  @GetMapping("/all")
+  public ResponseEntity<SuccessResponse> getAll(
+      Pageable pageable) {
+    return ResponseEntity.status(200).body(bookService.getBookList(pageable));
   }
 
 }

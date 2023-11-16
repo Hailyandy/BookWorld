@@ -1,7 +1,6 @@
 package com.chien.bookWorld.service.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,15 +8,21 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.chien.bookWorld.dto.BookBasketDto;
 import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.dto.ReportCreationDto;
 import com.chien.bookWorld.dto.ReportDto;
 import com.chien.bookWorld.dto.ReportDtoMap;
+import com.chien.bookWorld.dto.DtoMap.BookBasketDtoMap;
 import com.chien.bookWorld.entity.Book;
+import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.Report;
 import com.chien.bookWorld.entity.ReportStatus;
 import com.chien.bookWorld.entity.UserDetailsImpl;
@@ -75,12 +80,16 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public SuccessResponse findAll() {
-        List<Report> reports = reportRepository.findAll();
+    public SuccessResponse findAll(Pageable pageable) {
+        Page<Report> reports = reportRepository.findAll(pageable);
         if (reports.isEmpty()) {
-            new SuccessResponse(new ArrayList<>());
+            new SuccessResponse(null);
         }
-        mapper.addMappings(new ReportDtoMap());
+
+        TypeMap<Report, ReportDto> typeMap = mapper.getTypeMap(Report.class, ReportDto.class);
+        if (typeMap == null) {
+            mapper.addMappings(new ReportDtoMap());
+        }
         return new SuccessResponse(reports.stream()
                 .map(a -> mapper.map(a, ReportDto.class)).collect(
                         Collectors.toList()));
@@ -113,6 +122,12 @@ public class ReportServiceImpl implements ReportService {
         body.put("code", 0);
         body.put("message", "Xử lý thành công!");
         return body;
+    }
+
+    @Override
+    public SuccessResponse findAll() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -4,6 +4,7 @@ import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
+import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.Genre;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
@@ -17,6 +18,7 @@ import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,9 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -75,11 +80,17 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public SuccessResponse findById(Long id) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+        .getAuthentication().getPrincipal();
     Book book = bookRepository.findById(id).orElse(null);
     if (book == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     } else {
-      return new SuccessResponse(mapper.map(book, BookDto.class));
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), id);
+      bookDto.setStatusWithUser(bookBasket.getStatus());
+
+      return new SuccessResponse(bookDto);
     }
   }
 
@@ -93,7 +104,7 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse findByTitleOrAuthor(String name) {
+  public SuccessResponse findByTitleOrAuthor(String name, Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     User user = userRepository.findByUsername(userDetails.getUsername())
@@ -101,7 +112,7 @@ public class BookServiceImpl implements BookService {
             () -> new AppException(404, 44,
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     List<BookDto> bookList = bookRepository.findByTitleOrAuthor(
-        "%" + name + "%").stream().map(book -> {
+        "%" + name + "%", pageable).stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
@@ -118,7 +129,7 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse findByTitleOrAuthorAndGenre(String name, Long genreId) {
+  public SuccessResponse findByTitleOrAuthorAndGenre(String name, Long genreId, Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     User user = userRepository.findByUsername(userDetails.getUsername())
@@ -126,7 +137,7 @@ public class BookServiceImpl implements BookService {
             () -> new AppException(404, 44,
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     List<BookDto> bookList = bookRepository.findByTitleOrAuthorAndGenre(
-        "%" + name + "%", genreId).stream().map(book -> {
+        "%" + name + "%", genreId, pageable).stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
@@ -144,12 +155,12 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse bookRecommendations() {
+  public SuccessResponse bookRecommendations(Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     Collection<Long> genreIds = bookBasketRepository.findTheIDOfFavoriteGenre(userDetails.getId())
         .orElse(genreRepository.findAll().stream().map(Genre::getId).collect(Collectors.toList()));
-    List<BookDto> bookList = bookRepository.findSuitableBooks(userDetails.getId(), genreIds)
+    List<BookDto> bookList = bookRepository.findSuitableBooks(userDetails.getId(), genreIds, pageable)
         .stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
@@ -225,4 +236,17 @@ public class BookServiceImpl implements BookService {
     }
   }
 
+  @Override
+  public SuccessResponse getBookList(Pageable pageable) {
+    // TODO Auto-generated method stub
+    Page<Book> books = bookRepository.findAll(pageable);
+    logger.info(pageable.toString());
+    if (books.isEmpty()) {
+      throw new AppException(404, 44, "Error: Does not exist! No book has been created yet!");
+    } else {
+      return new SuccessResponse(books.stream()
+          .map(book -> mapper.map(book, BookDto.class)).collect(
+              Collectors.toList()));
+    }
+  }
 }

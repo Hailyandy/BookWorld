@@ -1,6 +1,6 @@
 import "./contentIntro.css"
 import { DownloadOutlined } from '@ant-design/icons';
-import { Button, Radio, Space, Divider } from 'antd';
+import { Button, Radio, Space, Divider, } from 'antd';
 
 const ContentIntro = () => {
     return (

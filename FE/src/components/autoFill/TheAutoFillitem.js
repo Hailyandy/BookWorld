@@ -12,10 +12,11 @@ const TheAutofillItem = (props) => {
     return (
         <div className="autofill-containner">
             <Row gutter={16}>
-                <Col flex="1 "> <Image
-                    style={{ objectFit: 'fill ', height: 'var(--height-autofill-item)' }}
-                    src={`${props.bookCover}`}
-                /></Col>
+                <Col flex="1 ">
+                    <Image
+                        style={{ objectFit: 'fill ', height: 'var(--height-autofill-item)' }}
+                        src={`${props.bookCover}`}
+                    /></Col>
                 <Col flex="4">
                     <Space direction='vertical'>
                         <Text style={{ width: '100px' }} ellipsis={true} strong>{props.bookName}</Text>

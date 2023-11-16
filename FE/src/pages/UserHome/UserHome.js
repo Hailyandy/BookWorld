@@ -79,7 +79,11 @@ const UserHome = () => {
             </Space>
           </a>
         </Dropdown>
-        <ReviewPost />
+        <div class="list-post">
+          <ReviewPost />
+          <ReviewPost />
+          <ReviewPost />
+        </div>
       </div>
 
       {/* Book rank and friend */}
@@ -115,6 +119,7 @@ const UserHome = () => {
           </ul>
         </div>
       </div>
+
     </div>
   )
 

@@ -1,12 +1,13 @@
 /* Body Post */
 
-.body-post{
+.body-post {
     padding: 0 50px 0 50px;
     display: flex;
     flex-direction: row;
 }
 
-.body-post .bookjacket-intro{
+
+.body-post .bookjacket-intro {
     display: flex;
     flex-direction: column;
 }
@@ -21,7 +22,7 @@
     color: #569DEA;
 }
 
-.body-post .book-content-intro .author{
+.body-post .book-content-intro .author {
     margin: 0;
     font-weight: 400;
     color: #AAAAAA;

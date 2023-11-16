@@ -1,14 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import TheAutofillItem from '~/components/autoFill/TheAutoFillitem'
-import { Badge, Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar, AutoComplete, Result } from 'antd';
-import { DownOutlined, UserOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Badge, Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar, AutoComplete, Result, Typography } from 'antd';
+import { DownOutlined, UserOutlined, HomeOutlined, LogoutOutlined, TeamOutlined } from '@ant-design/icons';
 import "../css/header.css"
 import BSHAREnum from "~/helper/BSHAREenum"
 import BSHAREresource from '~/helper/BSHAREresource';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { searchBookByNameOrAuthor } from '~/slices/book';
-import { logout } from '~/slices/user';
+import { logout, getListFriend } from '~/slices/user';
 import tokenService from '~/services/token.service';
 import { debounce } from '~/helper/debounce';
 import { NotFoundPage } from '~/pages';
@@ -17,6 +17,7 @@ const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
 
+const { Paragraph, Text } = Typography;
 //props == BSHAREnum.headerType, vào đọc file enum để biết truyền prop gì vào đây
 
 const HeaderLayout = (props) => {
@@ -25,7 +26,7 @@ const HeaderLayout = (props) => {
     const userStateFormSlice = useSelector(state => state.users);
     console.log(userStateFormSlice.friendReqList)
     const [options, setOptions] = useState([]);
-    const [resultSearch, setResultSearch] = useState([])
+
 
     /**
      * search 1 lần khi muốn hiển thị ra một đống kết quả
@@ -109,7 +110,15 @@ const HeaderLayout = (props) => {
                  * reload Rootlayout content, truyền function SetIsSignIn để update state rootlayout
                  */
                 props.reloadRootLayout(false)
+
                 navigate(`/login`, { replace: true });
+                break;
+            case BSHAREnum.dropdown_user_menu_key.friendList:
+                navigate(`/search-result/search-friend`, { replace: true });
+                break;
+
+            case BSHAREnum.dropdown_user_menu_key.personalProfile:
+                navigate(`users/profile`, { replace: true });
                 break;
             default:
                 console.log(e.key)
@@ -120,6 +129,16 @@ const HeaderLayout = (props) => {
             label: 'Đăng xuất',
             key: `${BSHAREnum.dropdown_user_menu_key.logout}`,
             icon: <LogoutOutlined />,
+        },
+        {
+            label: 'Danh sách bạn bè',
+            key: `${BSHAREnum.dropdown_user_menu_key.friendList}`,
+            icon: <TeamOutlined />,
+        },
+        {
+            label: 'Thông tin cá nhân',
+            key: `${BSHAREnum.dropdown_user_menu_key.personalProfile}`,
+            icon: <UserOutlined />,
         },
     ];
     const menuProps = {
@@ -147,13 +166,7 @@ const HeaderLayout = (props) => {
 
                 mode="horizontal"
                 defaultSelectedKeys={['2']}
-                items={BSHAREresource.menuItems.selectFavouriteMenuItem.map((item, index) => {
-                    const key = item.key;
-                    return {
-                        key,
-                        label: `${item.label}`,
-                    };
-                })}
+                items={BSHAREresource.menuItems.notSignInHeaderMenuItem}
             />
             <AutoComplete
                 popupMatchSelectWidth={'auto'}
@@ -197,7 +210,7 @@ const HeaderLayout = (props) => {
                     borderRadius: "16px",
                     backgroundColor: "var(--background-color)",
                     width: "40%",
-                    padding: "0px 2rem",
+                    padding: "0rem  2rem",
                     width: 500,
                 }}
                 options={options}
@@ -221,13 +234,7 @@ const HeaderLayout = (props) => {
 
                 mode="horizontal"
                 defaultSelectedKeys={['2']}
-                items={BSHAREresource.menuItems.authorPageMenuItem.map((item, index) => {
-                    const key = item.key;
-                    return {
-                        key,
-                        label: `${item.label}`,
-                    };
-                })}
+                items={BSHAREresource.menuItems.signInHeaderMenuItem}
             />
             <Space direction='horizontal' size={12}>
 
@@ -249,12 +256,21 @@ const HeaderLayout = (props) => {
                     <Button shape="round" icon={<Avatar style={{
                         backgroundColor: 'white',
                         color: 'var(--text-color-main)'
-                    }} size="small" icon={<UserOutlined />} />} style={{
-                        backgroundColor: 'var(--text-color-main)',
-                        color: 'var(--text-color)',
-                        height: '36px'
-                    }} >
-                        Button
+                    }} size="small" icon={<UserOutlined />} />} className='button-dropdown'>
+
+
+                        <Text
+                            style={{
+                                width: 50
+                            }}
+                            ellipsis={
+                                {
+                                    tooltip: userStateFormSlice.userInfo.username,
+                                }
+                            }
+                        >
+                            {userStateFormSlice.userInfo.username}
+                        </Text>
                         <DownOutlined />
                     </Button>
                 </Dropdown>

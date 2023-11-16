@@ -22,4 +22,5 @@ public class BookDto {
   private Long authorId;
   private String authorName;
   private Collection<GenreDto> genres;
+  private String statusWithUser;
 }

@@ -4,6 +4,7 @@ import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.dto.PostCreationDto;
+import com.chien.bookWorld.dto.PostDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.entity.Post;
 import com.chien.bookWorld.entity.User;
@@ -17,12 +18,15 @@ import com.chien.bookWorld.repository.PostRepository;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookService;
 import com.chien.bookWorld.service.PostService;
+
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +60,8 @@ public class PostServiceImpl implements PostService {
     post.setUser(userRepository.findById(userDetails.getId())
         .orElseThrow(() -> new AppException(404, 44,
             "Không tìm thấy tài khoản với id '" + userDetails.getId() + "'!")));
+
+    post.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
     if (postCreationDto.getBookId() != null && postCreationDto.getPdfId() == null) {
       post.setBook(bookRepository.findById(postCreationDto.getBookId())
@@ -118,5 +124,24 @@ public class PostServiceImpl implements PostService {
     body.put("code", 0);
     body.put("message", "Successfully deleted!");
     return body;
+  }
+
+  @Override
+  public SuccessResponse getPostBySate(String state, Pageable pageable) {
+    // TODO Auto-generated method stub
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+        .getAuthentication().getPrincipal();
+    List<Post> posts = null;
+    if (state == null) {
+      posts = postRepository.findAllByOrderByTimestampDesc(pageable);
+    } else if (state == "FRIEND") {
+      posts = postRepository.getPostByFriend(userDetails.getId(), pageable);
+    }
+    if (posts.isEmpty()) {
+      return new SuccessResponse(null);
+    }
+    return new SuccessResponse(posts.stream()
+        .map(user -> mapper.map(user, PostDto.class)).collect(
+            Collectors.toList()));
   }
 }

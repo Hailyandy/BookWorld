@@ -1,5 +1,7 @@
-export class UserEntity {
-    constructor({ id, username, name, email, phone, birthDate, urlAvatar, address, enabled }) {
+import { BaseEntity } from "./base/baseEntity";
+export class UserEntity extends BaseEntity {
+    constructor({ friendship, id, username, name, email, phone, birthDate, urlAvatar, address, enabled }) {
+        super();
         this.id = id;
         this.username = username;
         this.name = name;
@@ -9,5 +11,6 @@ export class UserEntity {
         this.urlAvatar = urlAvatar;
         this.address = address;
         this.enabled = enabled;
+        this.friendship = friendship;
     }
 }

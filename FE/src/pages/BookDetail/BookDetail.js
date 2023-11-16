@@ -1,13 +1,29 @@
 import './bookdetail.css'
 import ContentIntro from '~/components/form/Content Intro/ContentIntro'
-import { Button, Input, Space, Row, Col, Rate, Avatar, Tooltip, List } from 'antd'
+import { message, Button, Input, Space, Row, Col, Rate, Avatar, Tooltip, List, Upload } from 'antd'
 import moment from "moment";
 import StarRatings from "react-star-ratings";
 import { AudioOutlined, FilterOutlined } from '@ant-design/icons';
 import CommentItem from '~/components/comment/commentItem/CommentItem';
 import { useLoaderData } from "react-router-dom"
 import { formatToDate } from '~/helper/format';
+import { uploadFileFirebase } from '~/helper/firebaseUploadFile';
+import { CustomUpload } from '~/components';
 const { Search } = Input;
+const propsUploadButton = {
+    name: 'file',
+    onChange(info) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+            uploadFileFirebase(info.file.originFileObj)
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
 const BookDetailPage = () => {
     const bookDetail = useLoaderData()
     console.log(bookDetail)
@@ -63,19 +79,23 @@ const BookDetailPage = () => {
             <div className="book-detail-containner--left">
                 <div class="body-post">
                     <div class="bookjacket-intro">
-                        <span style={{
+                        {/* <span style={{
                             width: "120px",
                             height: "120px"
                         }}
-                            class="bookjacket-image"></span>
-
-                        <Button style={{
-                            backgroundColor: "var(--button-default-background-color)",
-                            marginTop: "20px"
-                        }}
-                            type="primary" shape="round"  >
-                            Tạo câu hỏi
-                        </Button>
+                            class="bookjacket-image"></span> */}
+                        <Avatar shape='square' size={200} src={bookDetail.urlPoster} alt="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg" />
+                        <Space direction='vertical'  >
+                            <Button style={{
+                                backgroundColor: "var(--button-default-background-color)",
+                                marginTop: "20px",
+                                width: '100%'
+                            }}
+                                type="primary" shape="round"  >
+                                Tạo câu hỏi
+                            </Button>
+                            <CustomUpload />
+                        </Space>
                     </div>
 
                 </div>

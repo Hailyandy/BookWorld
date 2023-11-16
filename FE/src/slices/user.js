@@ -82,6 +82,23 @@ export const getListFriendRequest = createAsyncThunk(
     }
 );
 
+export const getListFriend = createAsyncThunk(
+    "users/getListFriend",
+    async (param, { rejectWithValue }) => {
+
+        try {
+            const res = await userService.getListFriend();
+            console.log(res)
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
 export const searchUserByName = createAsyncThunk(
     "users/searchUserByName",
     async ({ name }, { rejectWithValue }) => {
@@ -103,6 +120,21 @@ export const addFriend = createAsyncThunk(
     async ({ receiverId }, { rejectWithValue }) => {
         try {
             const res = await userService.addFriend({ receiverId });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const unFriend = createAsyncThunk(
+    "users/unFriend",
+    async ({ senderId }, { rejectWithValue }) => {
+        try {
+            const res = await userService.unfriend({ senderId });
             return res.data;
         } catch (err) {
             // Use `err.response.data` as `action.payload` for a `rejected` action,
@@ -143,6 +175,21 @@ export const rejectFriendReq = createAsyncThunk(
     }
 );
 
+
+export const getAllMyBook = createAsyncThunk(
+    "users/allMyBook",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await userService.getAllMyBook();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
 // export const followPeople = createAsyncThunk(
 //     "users/followFriend",
 //     async ({ name }, { rejectWithValue }) => {
@@ -159,18 +206,46 @@ export const rejectFriendReq = createAsyncThunk(
 //     }
 // );
 
+export const rateBookOrUploadFileAsync = createAsyncThunk(
+    "users/allMyBook",
+    async ({ bookId, scoring, content }, { rejectWithValue }) => {
+        try {
+            const res = await userService.rateBookOrUploadFile({ bookId, scoring, content });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const get50TopBookAsync = createAsyncThunk(
+    "users/allMyBook",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await userService.get50TopBook();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
         // add your non-async reducers here
         logout: (state) => {
-
             tokenService.removeUser()
             state.userInfo = ''
             state.friendReqList = []
         },
-
     },
     extraReducers: {
         [loginAsync.fulfilled]: (state, action) => {
@@ -189,14 +264,26 @@ const userSlice = createSlice({
         },
         [getListFriendRequest.fulfilled]: (state, action) => {
             console.log(action.payload)
-            state.friendReqList = action.payload
-
+            state.friendReqList = action.payload ? action.payload : []
         },
         [acceptFriendReq.fulfilled]: (state, action) => {
             console.log(state.friendReqList)
         },
         [rejectFriendReq.fulfilled]: (state, action) => {
             console.log(state.friendReqList)
+        },
+        [getListFriend.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [getAllMyBook.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+
+        [rateBookOrUploadFileAsync.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [get50TopBookAsync.fulfilled]: (state, action) => {
+            console.log(action.payload)
         },
     },
 });

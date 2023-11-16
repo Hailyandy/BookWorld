@@ -5,7 +5,7 @@
 
 
 :root {
-  --background-color: #ffffff;
+  --background-color-white: #ffffff;
   --text-color: #ffffff;
   --ant-input-password-icon-color: #ffffff;
   --background-color: #bcf4f4;
@@ -13,9 +13,10 @@
   --background-color-main-tag: '#30edd8';
   --button-default-background-color: #43D8CD;
   --border-bottom-divider: 1px solid #111;
-  --height-autofill-item: 50px;
-
+  --height-autofill-item: 80px;
   --margin-top-scroll-page: 25px;
+  --height-containner-main: 82vh;
+  --border-radius-containner: 5px
 }
 
 .App-logo {
