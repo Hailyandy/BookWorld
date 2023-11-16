@@ -4,6 +4,7 @@ import { Avatar, List, message, Space } from 'antd';
 import './bookrank.css'
 import { useLoaderData } from 'react-router-dom';
 import BSHAREnum from '~/helper/BSHAREenum';
+import { generateUuid } from '~/helper/format';
 const fakeDataUrl =
     'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
 const ContainerHeight = 430;
@@ -11,17 +12,17 @@ const BookRankPage = () => {
     const [data, setData] = useState([]);
     const top50Book = useLoaderData()
     console.log(top50Book)
-    const appendData = () => {
-        fetch(fakeDataUrl)
-            .then((res) => res.json())
-            .then((body) => {
-                setData(data.concat(body.results));
-                message.success(`${body.results.length} more items loaded!`);
-            });
-    };
-    useEffect(() => {
-        appendData();
-    }, []);
+    // const appendData = () => {
+    //     fetch(fakeDataUrl)
+    //         .then((res) => res.json())
+    //         .then((body) => {
+    //             setData(data.concat(body.results));
+    //             message.success(`${body.results.length} more items loaded!`);
+    //         });
+    // };
+    // useEffect(() => {
+    //     appendData();
+    // }, []);
     // const onScroll = (e) => {
     //     if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
     //         appendData();
@@ -36,13 +37,13 @@ const BookRankPage = () => {
                 <List>
                     <div >
                         <VirtualList
-                            data={[...top50Book, ...top50Book]}
+                            data={[...top50Book]}
                             height={ContainerHeight}
                             itemHeight={30}
-                            itemKey="id"
+                            itemKey='idddddd'
                         >
                             {(item, index) => (
-                                <List.Item key={item.id}>
+                                <List.Item key={item.bookId}>
                                     <List.Item.Meta
                                         avatar={<Avatar shape='square' src={item.urlPoster} size={100} />}
                                         title={<a href={`${BSHAREnum.localHost.url}books/${item.id}`} className='font-size-24 '>{item.name}</a>}

@@ -1,5 +1,7 @@
-export class PostEntity {
+import { BaseEntity } from "./base/baseEntity";
+export class PostEntity extends BaseEntity {
     constructor({ id, bookId, pdfId, userId, scoring, content, totalLike, totalComment, createdOn, lastUpdatedOn, likes, comments }) {
+        super();
         this.id = id;
         this.bookId = bookId;
         this.pdfId = pdfId;

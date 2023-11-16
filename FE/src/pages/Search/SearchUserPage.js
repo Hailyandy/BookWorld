@@ -48,7 +48,7 @@ const SearchUserPage = () => {
 
             {
                 userSearchList.map((userSearchListItem) => {
-                    return <TheUserItem userItem={userSearchListItem} type={BSHAREnum.the_user_item.friend_req} />
+                    return <TheUserItem userItem={userSearchListItem} type={userSearchListItem.friendship} />
                 })
             }
 

@@ -12,6 +12,7 @@ import './bookItem.css'
 import { addFriend, unFriend } from '~/slices/user';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { searchUserByName, rejectFriendReq, acceptFriendReq, getListFriendRequest } from '~/slices/user';
 const { Text } = Typography;
 const cardStyle = {
     width: '100%',
@@ -27,30 +28,8 @@ const cardStyle = {
 const imgStyle = {
     display: 'block',
     width: 100,
-    height: 100,
+    height: 50,
 };
-const userItem = {
-    star: 10,
-    numReviews: 2
-}
-const items = [
-    {
-        label: 'Muốn đọc',
-        key: 'Muốn đọc',
-        icon: <BulbOutlined />,
-    },
-    {
-        label: 'Đang đọc',
-        key: 'Đang đọc',
-        icon: <MehOutlined />,
-    },
-    {
-        label: 'Đã đọc',
-        key: 'Đã đọc',
-        icon: <SmileOutlined />,
-    },
-];
-
 
 /**
  *
@@ -59,13 +38,12 @@ const items = [
  */
 const TheUserItem = ({ userItem, type }) => {
     const { searchText } = useParams()
-    console.log(searchText)
+    console.log(userItem)
     console.log(window.location.pathname)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const handleMenuClickAddAFriend = (receiverId) => {
-        console.log('click', receiverId);
-        dispatch(addFriend({ receiverId }))
+    const handelClickUpdatePeopleFriendship = (actionDispatch, id) => {
+        dispatch(actionDispatch(id))
             .unwrap()
             .then(async data => {
                 navigate(`${window.location.pathname}`, { replace: true });
@@ -76,36 +54,57 @@ const TheUserItem = ({ userItem, type }) => {
                 console.log(e)
                 // notyf.error(e.message)
             });
-    };
+    }
+    const renderActionButtonBasedOnFriendship = (userItem) => {
+        switch (type) {
+            case BSHAREnum.friendship.PENDING:
+                return <Space direction='vertical' align='end'>
+                    <Button disabled size='small' style={{}}>
+                        <Space>
+                            Đã gửi lời mời kết bạn
+                        </Space>
+                    </Button>
+                    <Button onClick={() => { handelClickUpdatePeopleFriendship(unFriend, { senderId: userItem.id }) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', }}>
+                        <Space>
+                            Huỷ lời mời
+                        </Space>
+                    </Button>
+                </Space>
+                break;
+            case BSHAREnum.friendship.ACCEPTED:
+                return <Space direction='vertical' align='end'>
+                    <Button onClick={() => { handelClickUpdatePeopleFriendship(unFriend, { senderId: userItem.id }) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', }}>
+                        <Space>
+                            Huỷ kết bạn
+                        </Space>
+                    </Button>
+                </Space>
+                break;
+            case BSHAREnum.friendship.ACCEPT:
+                return <Space direction='vertical' >
+                    <Button onClick={() => { handelClickUpdatePeopleFriendship(acceptFriendReq, { senderId: userItem.id }) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
+                        <Space>
+                            Chấp nhận
+                        </Space>
+                    </Button>
+                    <Button onClick={() => { handelClickUpdatePeopleFriendship(rejectFriendReq, { senderId: userItem.id }) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
+                        <Space>
+                            Từ chối
+                        </Space>
+                    </Button>
+                </Space>
+                break;
+            default:
+                return <Space direction='vertical' >
+                    <Button onClick={() => { handelClickUpdatePeopleFriendship(addFriend, { receiverId: userItem.id }) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
+                        <Space>
+                            Kết bạn
+                        </Space>
+                    </Button>
+                </Space>
+        }
 
-    const handleMenuClickUnFriend = (senderId) => {
-        console.log('click', senderId);
-        dispatch(unFriend({ senderId }))
-            .unwrap()
-            .then(async data => {
-                navigate(`${window.location.pathname}`, { replace: true });
-                console.log(data)
-                return;
-            })
-            .catch(e => {
-                console.log(e)
-                // notyf.error(e.message)
-            });
-    };
-    const handleMenuClickFollowPeople = (e) => {
-        console.log('click', e);
-        // dispatch(followBookAndUpdateStatusAsync({ bookId, status }))
-        //     .unwrap()
-        //     .then(async data => {
-        //         // navigate('/login', { replace: true });
-        //         console.log(data)
-        //         return;
-        //     })
-        //     .catch(e => {
-        //         console.log(e)
-        //         // notyf.error(e.message)
-        //     });
-    };
+    }
     return (
         <Card
             style={cardStyle}
@@ -133,30 +132,7 @@ const TheUserItem = ({ userItem, type }) => {
                     </Space>
                     <div className="user-item--button-containner" style={{ position: 'absolute', right: '10px', top: '50%', transform: "translate(0%, -50%)" }} >
                         {
-                            type == BSHAREnum.the_user_item.friend_req &&
-                            <Space direction='vertical' >
-                                <Button onClick={() => { handleMenuClickAddAFriend(userItem.id) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
-                                    <Space>
-                                        Kết bạn
-                                    </Space>
-                                </Button>
-                                <Button onClick={() => { handleMenuClickFollowPeople(userItem.id) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
-                                    <Space>
-                                        Theo dõi
-                                    </Space>
-                                </Button>
-                            </Space>
-                        }
-
-                        {
-                            type == BSHAREnum.the_user_item.friend_list && <Space direction='vertical' >
-
-                                <Button onClick={() => { handleMenuClickUnFriend(userItem.id) }} size='large' style={{ backgroundColor: 'var(--button-default-background-color)', color: 'white', width: '100px' }}>
-                                    <Space>
-                                        Unfriend
-                                    </Space>
-                                </Button>
-                            </Space>
+                            renderActionButtonBasedOnFriendship(userItem)
                         }
                     </div>
                 </div>

@@ -110,6 +110,7 @@ const HeaderLayout = (props) => {
                  * reload Rootlayout content, truyền function SetIsSignIn để update state rootlayout
                  */
                 props.reloadRootLayout(false)
+
                 navigate(`/login`, { replace: true });
                 break;
             case BSHAREnum.dropdown_user_menu_key.friendList:

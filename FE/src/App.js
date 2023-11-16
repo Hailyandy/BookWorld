@@ -7,6 +7,7 @@ import { useState, } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  createHashRouter,
   Route,
   RouterProvider
 } from 'react-router-dom'
@@ -31,228 +32,239 @@ import { getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync } 
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { mapToClass } from './helper/mappingToClass';
+import { BookEntity, UserEntity, PostEntity } from './entity';
+
+import {
+  AdminRoute,
+  UserRoute,
+  BookRoute,
+  AuthorRout
+} from './routes';
 function App() {
   const [reload, setReload] = useState(0);
   const dispatch = useDispatch()
   const userRoleArray = tokenService.getRoleUser()
-  // console.log(userRoleArray)
+  /** @type {*} */
   const router = createBrowserRouter(
     createRoutesFromElements(
       //Sửa lại để test component tí ấy mà
-      <Route path="/" element={<RootLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="select-fav-book" element={<SelectFavouritebook />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-
-
-        <Route path="search-result" element={<SearchResultLayout />}>
-          <Route path="search-book/:searchBooktext" element={<SearchBookPage />} loader={({ params }) => {
-            return dispatch(searchBookByNameOrAuthor({ name: params.searchBooktext }))
-              .unwrap()
-              .then(async data => {
-                console.log(data)
-                return data;
-              })
-              .catch(e => {
-                console.log(e);
-              })
-          }}
-          />
-          {/* random user online */}
-          <Route path="search-user/:searchText" element={<SearchUserPage />} loader={({ params }) => {
-            return dispatch(searchUserByName({ name: params.searchText }))
-              .unwrap()
-              .then(async data => {
-                console.log(data)
-                return data;
-              })
-              .catch(e => {
-                console.log(e);
-              })
-          }}
-          />
-
-          {/* only friend search */}
-          <Route path="search-friend" element={<SearchFriendPage />} loader={() => {
-            return dispatch(getListFriend())
-              .unwrap()
-              .then(async data => {
-                console.log(data)
-                return data;
-              })
-              .catch(e => {
-                console.log(e);
-              })
-          }}
-          />
-        </Route>
-
-        <Route path="otp-confirmation/:username" element={<OtpCode />} />
-        {
-          tokenService.getRoleUser()?.length > 0 && (
-            <>
-              <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} loader={() => {
-                return dispatch(getListFriendRequest())
-                  .unwrap()
-                  .then(async data => {
-                    console.log(data)
-                    return data;
-                  })
-                  .catch(e => {
-                    console.log(e);
-                    return []
-                  })
-
-              }} />
-              <Route path="users" element={<GeneralLayout />}>
-                <Route
-                  index
-                  element={<UserHomePage />}
-                // loader={authorsLoader}
-                // errorElement={<AuthorsError />}
-                />
-
-
-                <Route
-                  path="fill-infor"
-                  element={<UserDeclareInformationPage />}
-                // loader={authorDetailsLoader}
-                />
-                <Route
-                  path="profile"
-                  element={<GeneralProfile />}
-                // loader={authorDetailsLoader}
-                />
-                <Route
-                  path="my-bookshelf"
-                  element={<MyBookshelf />}
-                  loader={() => {
-                    return dispatch(getAllMyBook())
-                      .unwrap()
-                      .then(async data => {
-                        console.log(data)
-                        return data;
-                      })
-                      .catch(e => {
-                        console.log(e);
-                        return []
-                      })
-
-                  }}
-                // loader={authorDetailsLoader}
-                />
-
-                <Route path="review" >
-                  <Route
-                    path="edit/:bookId"
-                    element={<ModelReviewPost />}
-                    loader={({ params }) => {
-
-                      return dispatch(searchBookByIdAsync({ id: params.bookId }))
-                        .unwrap()
-                        .then(async data => {
-                          return data;
-                        })
-                        .catch(e => {
-                          return e.messege
-                        });
-
-                    }}
-                  />
-                  <Route
-                    path="show/:bookId"
-                    element={<ModelReviewPost />}
-                    loader={({ params }) => {
-
-                      return dispatch(searchBookByIdAsync({ id: params.bookId }))
-                        .unwrap()
-                        .then(async data => {
-                          return data;
-                        })
-                        .catch(e => {
-                          return e.messege
-                        });
-
-                    }}
-                  />
-                </Route>
-              </Route >
-            </>
-
-          )
-        }
-        <Route path="books">
-          <Route
-            index
-            element={<UserHomePage />}
-          // loader={authorsLoader}
-          // errorElement={<AuthorsError />}
-          />
-          <Route path="book-rank" element={<BookRankPage />} loader={() => {
-            return dispatch(get50TopBookAsync())
-              .unwrap()
-              .then(async data => {
-                console.log(data)
-                return data;
-              })
-              .catch(e => {
-                console.log(e);
-              })
-          }} />
-          <Route
-            path="hidden-book"
-            element={<AnonymousUser />}
-          // loader={authorDetailsLoader}
-          />
-          <Route
-            path=":bookId"
-            element={<BookDetailPage />}
-            loader={({ params }) => {
-
-              return dispatch(searchBookByIdAsync({ id: params.bookId }))
+      <>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="select-fav-book" element={<SelectFavouritebook />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="search-result" element={<SearchResultLayout />}>
+            <Route path="search-book/:searchBooktext" element={<SearchBookPage />} loader={({ params }) => {
+              return dispatch(searchBookByNameOrAuthor({ name: params.searchBooktext }))
                 .unwrap()
                 .then(async data => {
+                  console.log(data)
                   return data;
                 })
                 .catch(e => {
-                  return e.messege
-                });
-
+                  console.log(e);
+                })
             }}
-          />
-          <Route
-            path="market"
-            element={<BookMarket />}
-          // loader={authorDetailsLoader}
-          />
-          <Route
-            path="create-market-item"
-            element={<BookMarketPage />}
-          // loader={authorDetailsLoader}
-          />
-        </Route >
-        <Route path="authors" errorElement={<AuthorsError />}>
-          <Route
-            index
-            element={<Authors />}
-          // loader={authorsLoader}
-          // errorElement={<AuthorsError />}
-          />
-          <Route
-            path=":id"
-            element={<AuthorInformationPage />}
-          // loader={authorDetailsLoader}
-          />
-          <Route
-            path="profile"
-            element={<GeneralProfile />}
-          // loader={authorDetailsLoader}
-          />
-        </Route>
+            />
+            {/* random user online */}
+            <Route path="search-user/:searchText" element={<SearchUserPage />} loader={({ params }) => {
+              return dispatch(searchUserByName({ name: params.searchText }))
+                .unwrap()
+                .then(async data => {
+                  console.log(data)
+                  return data;
+                })
+                .catch(e => {
+                  console.log(e);
+                })
+            }}
+            />
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Route >
+            {/* only friend search */}
+            <Route path="search-friend" element={<SearchFriendPage />} loader={() => {
+              return dispatch(getListFriend())
+                .unwrap()
+                .then(async data => {
+                  console.log(data)
+                  return data ? data : [];
+                })
+                .catch(e => {
+                  console.log(e);
+                })
+            }}
+            />
+          </Route>
+
+          <Route path="otp-confirmation/:username" element={<OtpCode />} />
+          {
+            /**
+             * user root
+            */
+            tokenService.getRoleUser()?.length > 0 && (
+              <>
+                <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} loader={() => {
+                  return dispatch(getListFriendRequest())
+                    .unwrap()
+                    .then(async data => {
+                      console.log(data)
+                      return data ? data : [];
+                    })
+                    .catch(e => {
+                      console.log(e);
+                      return []
+                    })
+
+                }} />
+                <Route path="users" element={<GeneralLayout />}>
+                  <Route
+                    index
+                    element={<UserHomePage />}
+                  // loader={authorsLoader}
+                  // errorElement={<AuthorsError />}
+                  />
+                  <Route
+                    path="fill-infor"
+                    element={<UserDeclareInformationPage />}
+                  // loader={authorDetailsLoader}
+                  />
+                  <Route
+                    path="profile"
+                    element={<GeneralProfile />}
+                  // loader={authorDetailsLoader}
+                  />
+                  <Route
+                    path="my-bookshelf"
+                    element={<MyBookshelf />}
+                    loader={() => {
+                      return dispatch(getAllMyBook())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? mapToClass(data, BookEntity) : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+
+                    }}
+                  // loader={authorDetailsLoader}
+                  />
+
+                  <Route path="review" >
+                    <Route
+                      path="edit/:bookId"
+                      element={<ModelReviewPost />}
+                      loader={({ params }) => {
+
+                        return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                          .unwrap()
+                          .then(async data => {
+                            return data;
+                          })
+                          .catch(e => {
+                            return e.messege
+                          });
+
+                      }}
+                    />
+                    <Route
+                      path="show/:bookId"
+                      element={<ModelReviewPost />}
+                      loader={({ params }) => {
+
+                        return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                          .unwrap()
+                          .then(async data => {
+                            return data;
+                          })
+                          .catch(e => {
+                            return e.messege
+                          });
+
+                      }}
+                    />
+                  </Route>
+                </Route >
+              </>
+
+            )
+          }
+          <Route path="books">
+            <Route
+              index
+              element={<UserHomePage />}
+            // loader={authorsLoader}
+            // errorElement={<AuthorsError />}
+            />
+            <Route path="book-rank" element={<BookRankPage />} loader={() => {
+              return dispatch(get50TopBookAsync())
+                .unwrap()
+                .then(async data => {
+                  console.log(data)
+                  return data ? mapToClass(data, BookEntity) : [];
+                })
+                .catch(e => {
+                  console.log(e);
+                })
+            }} />
+            <Route
+              path="hidden-book"
+              element={<AnonymousUser />}
+            // loader={authorDetailsLoader}
+            />
+            <Route
+              path=":bookId"
+              element={<BookDetailPage />}
+              loader={({ params }) => {
+
+                return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                  .unwrap()
+                  .then(async data => {
+                    return data;
+                  })
+                  .catch(e => {
+                    return e.messege
+                  });
+
+              }}
+            />
+            <Route
+              path="market"
+              element={<BookMarket />}
+            // loader={authorDetailsLoader}
+            />
+            <Route
+              path="create-market-item"
+              element={<BookMarketPage />}
+            // loader={authorDetailsLoader}
+            />
+          </Route >
+          <Route path="authors" errorElement={<AuthorsError />}>
+            <Route
+              index
+              element={<Authors />}
+            // loader={authorsLoader}
+            // errorElement={<AuthorsError />}
+            />
+            <Route
+              path=":id"
+              element={<AuthorInformationPage />}
+            // loader={authorDetailsLoader}
+            />
+            <Route
+              path="profile"
+              element={<GeneralProfile />}
+            // loader={authorDetailsLoader}
+            />
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Route >
+      </>
+
     )
   )
   const reloadApp = () => setReload(prev => prev + 1);
