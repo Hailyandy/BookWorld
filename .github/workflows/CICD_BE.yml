@@ -44,12 +44,12 @@ jobs:
 
       - name: Heroku Install
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: 7ea09b73-ea40-4a75-82f8-dd0850815d45
         run: heroku plugins:install java
 
       - name: Heroku Deploy
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: 7ea09b73-ea40-4a75-82f8-dd0850815d45
         run:
           heroku deploy:jar target/*.jar --app book-world
 
