@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import java.time.Instant;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,22 +27,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Comment {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private UUID id;
 
   @ManyToOne
-  @MapsId("userId")
   @JoinColumn(name = "user_id")
   private User user;
 
   @ManyToOne
-  @MapsId("postId")
   @JoinColumn(name = "post_id")
   private Post post;
 
@@ -51,5 +48,5 @@ public class Comment {
   @UpdateTimestamp(source = SourceType.DB)
   private Instant lastUpdatedOn;
   private Double commentScoring;
-  private Long parentId;
+  private UUID parentId;
 }

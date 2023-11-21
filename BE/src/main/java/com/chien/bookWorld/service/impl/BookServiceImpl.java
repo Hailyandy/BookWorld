@@ -244,7 +244,6 @@ public class BookServiceImpl implements BookService {
   public SuccessResponse getBookList(Pageable pageable) {
     // TODO Auto-generated method stub
     Page<Book> books = bookRepository.findAll(pageable);
-    logger.info(pageable.toString());
     if (books.isEmpty()) {
       throw new AppException(404, 44, "Error: Does not exist! No book has been created yet!");
     } else {

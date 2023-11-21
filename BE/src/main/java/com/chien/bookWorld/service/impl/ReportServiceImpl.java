@@ -81,17 +81,18 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public SuccessResponse findAll(Pageable pageable) {
-        Page<Report> reports = reportRepository.findAll(pageable);
+        List<Report> reports = reportRepository.findAllByOrderByTimestampDesc(pageable);
         if (reports.isEmpty()) {
-            new SuccessResponse(null);
-        }
-
-        TypeMap<Report, ReportDto> typeMap = mapper.getTypeMap(Report.class, ReportDto.class);
-        if (typeMap == null) {
-            mapper.addMappings(new ReportDtoMap());
+            return new SuccessResponse(null);
         }
         return new SuccessResponse(reports.stream()
-                .map(a -> mapper.map(a, ReportDto.class)).collect(
+                .map(a -> {
+                    ReportDto reportDto = mapper.map(a, ReportDto.class);
+                    reportDto.setUserName(a.getUser().getName());
+                    reportDto.setUrlAvatar(a.getUser().getUrlAvatar());
+                    reportDto.setUrlPdf(a.getPdf().getUrlPdf());
+                    return reportDto;
+                }).collect(
                         Collectors.toList()));
     }
 
