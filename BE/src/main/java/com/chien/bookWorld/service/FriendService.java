@@ -1,5 +1,6 @@
 package com.chien.bookWorld.service;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.chien.bookWorld.payload.request.AddFriendRequest;
@@ -8,13 +9,13 @@ import java.util.Map;
 
 public interface FriendService extends GeneralService {
 
-    SuccessResponse getFriendsOfUser();
+    SuccessResponse getFriendsOfUser(Pageable pageable);
 
     Map<String, Object> acceptFriendRequest(Long friendId);
 
     Map<String, Object> rejectFriendRequest(Long friendId);
 
-    SuccessResponse getFriendRequestsOfUser();
+    SuccessResponse getFriendRequestsOfUser(Pageable pageable);
 
     Map<String, Object> addFriend(AddFriendRequest addFriendRequest);
 

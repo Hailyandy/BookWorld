@@ -6,8 +6,8 @@ import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.dto.PostCreationDto;
 import com.chien.bookWorld.dto.PostDto;
 import com.chien.bookWorld.entity.Book;
-import com.chien.bookWorld.entity.Post;
 import com.chien.bookWorld.entity.User;
+import com.chien.bookWorld.entity.Post;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
@@ -20,10 +20,13 @@ import com.chien.bookWorld.service.BookService;
 import com.chien.bookWorld.service.PostService;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +49,8 @@ public class PostServiceImpl implements PostService {
   @Autowired
   private ModelMapper mapper;
 
+  private static final Logger logger = Logger.getLogger(PostServiceImpl.class.getName());
+
   @Override
   public Map<String, Object> create(PostCreationDto postCreationDto) {
     if (postCreationDto.getBookId() == null && postCreationDto.getPdfId() == null) {
@@ -62,7 +67,8 @@ public class PostServiceImpl implements PostService {
             "Không tìm thấy tài khoản với id '" + userDetails.getId() + "'!")));
 
     post.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
+    post.setTotalLike(0L);
+    post.setTotalComment(0L);
     if (postCreationDto.getBookId() != null && postCreationDto.getPdfId() == null) {
       post.setBook(bookRepository.findById(postCreationDto.getBookId())
           .orElseThrow(() -> new AppException(404, 44,
@@ -131,17 +137,26 @@ public class PostServiceImpl implements PostService {
     // TODO Auto-generated method stub
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
-    List<Post> posts = null;
-    if (state == null) {
-      posts = postRepository.findAllByOrderByTimestampDesc(pageable);
-    } else if (state == "FRIEND") {
-      posts = postRepository.getPostByFriend(userDetails.getId(), pageable);
+    if (state.equals("PUBLIC")) {
+      List<Post> a = postRepository.findAllByOrderByTimestampDesc(pageable);
+      return new SuccessResponse(a.stream()
+              .map(post -> {
+                PostDto postDto = mapper.map(post, PostDto.class);
+                postDto.setUserName(post.getUser().getName());
+                postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+                return postDto;
+              }).collect(
+                      Collectors.toList()));
+    } else  {
+      List<Post> posts = postRepository.getPostByFriend(userDetails.getId(), pageable);
+      return new SuccessResponse(posts.stream()
+              .map(post -> {
+                PostDto postDto = mapper.map(post, PostDto.class);
+                postDto.setUserName(post.getUser().getName());
+                postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+                return postDto;
+              }).collect(
+                      Collectors.toList()));
     }
-    if (posts.isEmpty()) {
-      return new SuccessResponse(null);
-    }
-    return new SuccessResponse(posts.stream()
-        .map(user -> mapper.map(user, PostDto.class)).collect(
-            Collectors.toList()));
   }
 }

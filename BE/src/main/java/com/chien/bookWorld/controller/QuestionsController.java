@@ -41,9 +41,13 @@ public class QuestionsController {
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, Object>> updateScoring(
+    public ResponseEntity<Map<String, Object>> checkQuestion(
             @RequestBody ScoringCreation scoringCreation) {
         return ResponseEntity.status(200)
-                .body(questionsService.updateScoring(scoringCreation.getIbBook(), scoringCreation.getScore()));
+                .body(questionsService.checkQuestion(
+                        scoringCreation.getIdBook(),
+                        scoringCreation.getScore(),
+                        scoringCreation.getIdAnswer(),
+                        scoringCreation.getQuestionId()));
     }
 }
