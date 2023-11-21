@@ -27,10 +27,6 @@ public class PostDto {
   private Long totalComment;
   private Instant createdOn;
   private Instant lastUpdatedOn;
-
-  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-  private Set<Likes> likes;
-
-  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-  private Set<Comment> comments;
+  private String userName;
+  private String urlAvatarUser;
 }

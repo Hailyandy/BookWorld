@@ -2,6 +2,7 @@ package com.chien.bookWorld.controller;
 
 import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.PostCreationDto;
+import com.chien.bookWorld.dto.StatePost;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.BookService;
 import com.chien.bookWorld.service.PostService;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 @RequestMapping("/api/post")
-@SecurityRequirement(name = "javainuseapi")
 public class PostController {
 
   @Autowired
@@ -40,8 +40,8 @@ public class PostController {
 
   @GetMapping
   public ResponseEntity<SuccessResponse> getPostByState(
-      @RequestParam String state, Pageable pageable) {
-    return ResponseEntity.status(200).body(postService.getPostBySate(state, pageable));
+      @RequestBody StatePost state, Pageable pageable) {
+    return ResponseEntity.status(200).body(postService.getPostBySate(state.getState(), pageable));
   }
 
 }
