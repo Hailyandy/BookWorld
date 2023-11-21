@@ -13,12 +13,12 @@ on:
     branches: ["master"]
   pull_request:
     branches: ["master"]
-  workflow_dispatch:
-    inputs:
-      job_name:
-        description: 'Run Job BE'
-        required: true
-        default: 'build_be'
+  # workflow_dispatch:
+  #   inputs:
+  #     job_name:
+  #       description: 'Run Job BE'
+  #       required: true
+  #       default: 'build_be'
       # job_name:
       #   description: 'Run Job FE'
       #   required: true

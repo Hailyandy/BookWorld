@@ -1,0 +1,19 @@
+name: End-to-end tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./FE
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Start server in the background
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          working-directory: FE
