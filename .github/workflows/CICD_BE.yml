@@ -13,12 +13,12 @@ on:
     branches: ["master"]
   pull_request:
     branches: ["master"]
-  # workflow_dispatch:
-  #   inputs:
-  #     job_name:
-  #       description: 'Run Job BE'
-  #       required: true
-  #       default: 'build_be'
+  workflow_dispatch:
+    inputs:
+      job_name:
+        description: 'Run Job BE'
+        required: true
+        default: 'build_be'
       # job_name:
       #   description: 'Run Job FE'
       #   required: true
@@ -53,17 +53,17 @@ jobs:
         run:
           heroku deploy:jar target/*.jar --app book-world
 
-      # - name: Test
-      #   run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+      - name: Test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
-      # - name: Report
-      #   uses: dorny/test-reporter@v1
-      #   if: always()
-      #   with:
-      #     name: Maven Tests
-      #     path: target/surefire-reports/*.xml
-      #     reporter: java-junit
-      #     fail-on-error: true
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive1
       # - name: Update dependency graph
