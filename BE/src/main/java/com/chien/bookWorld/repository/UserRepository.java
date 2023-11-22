@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
         @Query(value = "SELECT * FROM user WHERE phone LIKE :phone", nativeQuery = true)
         List<User> findByPhone(@Param("phone") String phone);
 
-        @Query(value = "SELECT * FROM user WHERE BINARY(user_name) = BINARY(:userName)", nativeQuery = true)
+        @Query(value = "SELECT * FROM user WHERE user_name = :userName", nativeQuery = true)
         Optional<User> findByUsername(@Param("userName") String username);
 
         List<User> findByEnabled(Boolean enabled);
@@ -34,7 +34,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
         @Modifying
         @Transactional
-        @Query(value = "UPDATE user SET verification_code = :verificationCode WHERE BINARY(user_name) = BINARY(:userName)", nativeQuery = true)
+        @Query(value = "UPDATE user SET verification_code = :verificationCode WHERE user_name = :userName", nativeQuery = true)
         Integer updateVerificationCodeByUserName(@Param("userName") String userName,
                         @Param("verificationCode") String verificationCode);
 
