@@ -19,6 +19,11 @@
   --border-radius-containner: 5px
 }
 
+.stick-to-top {
+  position: sticky;
+  top: 0px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -73,7 +78,7 @@
 .sprite-bigger_book {
   background: url("/public/assets/biggerBook.png") no-repeat -141px -87px;
   width: 568px;
-  height: 500px;
+  height: 450px;
 
 }
 

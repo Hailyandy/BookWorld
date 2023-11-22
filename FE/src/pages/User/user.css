@@ -21,9 +21,10 @@
 }
 
 .form_title h1 {
-    font-size: 60px;
+    font-size: 30px;
     color: rgba(34, 73, 87, 1);
     margin-left: 33px;
+    margin-bottom: 0px;
 }
 
 .form_user {

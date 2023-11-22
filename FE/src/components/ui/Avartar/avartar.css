@@ -1,5 +1,5 @@
 .avartar {
-    width: 200px;
+    /* width: 200px; */
     height: 46px;
     display: flex;
     flex-direction: row;
@@ -8,4 +8,5 @@
 .avartar .name {
     margin: auto;
     font-weight: 600;
+    font-size: large;
 }

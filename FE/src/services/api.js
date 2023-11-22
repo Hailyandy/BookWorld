@@ -6,6 +6,7 @@ import tokenService from "./token.service";
 import { showSpinner, hideSpinner } from "~/helper/notifyDisplay";
 
 const notyf = new Notyf({
+  duration: 2000,
   position: {
     x: 'right',
     y: 'bottom',
@@ -13,7 +14,7 @@ const notyf = new Notyf({
 });
 console.log(tokenService.getLocalAccessToken())
 export let axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/",
+  baseURL: `${BSHAREresource.url.baseUrlBE}`,
   headers: { 'Authorization': `${tokenService.getLocalAccessToken()}`, 'Access-Control-Allow-Origin': '*', 'Accept': '*/*', 'Content-Type': 'application/json' }
 
 });
@@ -37,7 +38,7 @@ export const getAPI = async (endpoint, param, config = {}) => {
   }
   try {
     axiosInstance = axios.create({
-      baseURL: "http://localhost:8080/api/",
+      baseURL: `${BSHAREresource.url.baseUrlBE}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${tokenService.getLocalAccessToken()}`,
@@ -65,7 +66,7 @@ export const getAPI = async (endpoint, param, config = {}) => {
 export const postAPI = async (endpoint, config = {}) => {
   try {
     axiosInstance = axios.create({
-      baseURL: "http://localhost:8080/api/",
+      baseURL: `${BSHAREresource.url.baseUrlBE}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${tokenService.getLocalAccessToken()}`,

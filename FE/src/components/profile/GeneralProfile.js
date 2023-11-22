@@ -56,23 +56,7 @@ const GeneralProfile = () => {
                         </Space>
 
                     </Card>
-                    <div className="book-friend">
-                        <div className="friend">
-                            <h2 class="friend-title">Bạn bè</h2>
-                            <ul class="friend-list">
-                                <li class="friend-item">
-                                    <Avartar></Avartar>
-                                </li>
-                                <li class="friend-item">
-                                    <Avartar></Avartar>
-                                </li>
-                                <li class="friend-item">
-                                    <Avartar></Avartar>
-                                </li>
 
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </Card>
             <div className="profile-footer--list">

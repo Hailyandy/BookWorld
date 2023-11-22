@@ -19,6 +19,11 @@ import SearchFriendPage from "./Search/SearchFriendPage";
 import BookRankPage from "./BookRankPage";
 import AnonymousUser from "./AnonymousUsers/AnonymousUser";
 import BookMarket from "./BookMarket/BookMarketCreateItem";
+import {
+    AdminDashBoard,
+    AdminPostList,
+    AdminReportList
+} from "./admin";
 export {
     BookMarket,
     AnonymousUser,
@@ -40,5 +45,9 @@ export {
     UserHomePage,
     FriendRequestSearchPeoplePage,
     SearchFriendPage,
-    BookRankPage
+    BookRankPage,
+    //admin page
+    AdminDashBoard,
+    AdminPostList,
+    AdminReportList
 }

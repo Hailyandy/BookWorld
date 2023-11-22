@@ -3,7 +3,7 @@ import './App.css';
 import { Layout, Space, Card, List, Avatar, Button, Input, Tooltip, AutoComplete } from 'antd';
 import { ConfigContext } from './context/GlobalContext';
 import tokenService from './services/token.service';
-import { useState, } from 'react';
+import { useEffect, useState, } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -12,6 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import {
+  AdminDashBoard, AdminPostList, AdminReportList,
   BookMarket,
   AnonymousUser,
   BookRankPage,
@@ -44,7 +45,7 @@ import {
 function App() {
   const [reload, setReload] = useState(0);
   const dispatch = useDispatch()
-  const userRoleArray = tokenService.getRoleUser()
+  const userRoleArray = tokenService.getRole()
   /** @type {*} */
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -102,7 +103,7 @@ function App() {
             /**
              * user root
             */
-            tokenService.getRoleUser()?.length > 0 && (
+            tokenService.getRole("ROLE_USER") && (
               <>
                 <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} loader={() => {
                   return dispatch(getListFriendRequest())
@@ -117,7 +118,7 @@ function App() {
                     })
 
                 }} />
-                <Route path="users" element={<GeneralLayout />}>
+                <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                   <Route
                     index
                     element={<UserHomePage />}
@@ -187,61 +188,81 @@ function App() {
                       }}
                     />
                   </Route>
+                  <Route path="books">
+                    <Route
+                      index
+                      element={<UserHomePage />}
+                    // loader={authorsLoader}
+                    // errorElement={<AuthorsError />}
+                    />
+                    <Route path="book-rank" element={<BookRankPage />} loader={() => {
+                      return dispatch(get50TopBookAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? mapToClass(data, BookEntity) : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                        })
+                    }} />
+                    <Route
+                      path="hidden-book"
+                      element={<AnonymousUser />}
+                    // loader={authorDetailsLoader}
+                    />
+                    <Route
+                      path=":bookId"
+                      element={<BookDetailPage />}
+                      loader={({ params }) => {
+
+                        return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                          .unwrap()
+                          .then(async data => {
+                            return data;
+                          })
+                          .catch(e => {
+                            return e.messege
+                          });
+
+                      }}
+                    />
+                    <Route
+                      path="market"
+                      element={<BookMarket />}
+                    // loader={authorDetailsLoader}
+                    />
+                    <Route
+                      path="create-market-item"
+                      element={<BookMarketPage />}
+                    // loader={authorDetailsLoader}
+                    />
+                  </Route >
                 </Route >
               </>
 
             )
           }
-          <Route path="books">
-            <Route
-              index
-              element={<UserHomePage />}
-            // loader={authorsLoader}
-            // errorElement={<AuthorsError />}
-            />
-            <Route path="book-rank" element={<BookRankPage />} loader={() => {
-              return dispatch(get50TopBookAsync())
-                .unwrap()
-                .then(async data => {
-                  console.log(data)
-                  return data ? mapToClass(data, BookEntity) : [];
-                })
-                .catch(e => {
-                  console.log(e);
-                })
-            }} />
-            <Route
-              path="hidden-book"
-              element={<AnonymousUser />}
-            // loader={authorDetailsLoader}
-            />
-            <Route
-              path=":bookId"
-              element={<BookDetailPage />}
-              loader={({ params }) => {
+          {
+            tokenService.getRole("ROLE_ADMIN") && (
+              <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
+                <Route
+                  index
+                  element={<AdminDashBoard />}
+                />
+                <Route
+                  path="statistic-post-list"
+                  element={<AdminPostList />}
+                // loader={authorDetailsLoader}
+                />
+                <Route
+                  path="statistic-report-post"
+                  element={<AdminReportList />}
+                />
+              </Route>
+            )
+          }
 
-                return dispatch(searchBookByIdAsync({ id: params.bookId }))
-                  .unwrap()
-                  .then(async data => {
-                    return data;
-                  })
-                  .catch(e => {
-                    return e.messege
-                  });
-
-              }}
-            />
-            <Route
-              path="market"
-              element={<BookMarket />}
-            // loader={authorDetailsLoader}
-            />
-            <Route
-              path="create-market-item"
-              element={<BookMarketPage />}
-            // loader={authorDetailsLoader}
-            />
-          </Route >
           <Route path="authors" errorElement={<AuthorsError />}>
             <Route
               index
@@ -267,6 +288,7 @@ function App() {
 
     )
   )
+
   const reloadApp = () => setReload(prev => prev + 1);
   return (
 

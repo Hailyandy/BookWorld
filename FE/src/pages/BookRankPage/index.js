@@ -4,6 +4,7 @@ import { Avatar, List, message, Space } from 'antd';
 import './bookrank.css'
 import { useLoaderData } from 'react-router-dom';
 import BSHAREnum from '~/helper/BSHAREenum';
+import BSHAREresource from '~/helper/BSHAREresource';
 import { generateUuid } from '~/helper/format';
 const fakeDataUrl =
     'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
@@ -46,7 +47,7 @@ const BookRankPage = () => {
                                 <List.Item key={item.bookId}>
                                     <List.Item.Meta
                                         avatar={<Avatar shape='square' src={item.urlPoster} size={100} />}
-                                        title={<a href={`${BSHAREnum.localHost.url}books/${item.id}`} className='font-size-24 '>{item.name}</a>}
+                                        title={<a href={`${BSHAREresource.localHost.url}books/${item.id}`} className='font-size-24 '>{item.name}</a>}
                                         description={<Space direction='vertical' size={12} className='font-size-24 '>
                                             <span>{item.scoring}</span>
                                             <span>{item.authorName}</span>

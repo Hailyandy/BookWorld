@@ -11,6 +11,7 @@ import { ConfigContext } from "~/context/GlobalContext";
 import tokenService from '~/services/token.service';
 import notyf from '~/helper/notifyDisplay';
 import BSHAREresource from '~/helper/BSHAREresource';
+import { updateLocalHostUrl } from '~/helper/BSHAREresource';
 // import authService from '~/services/auth.service';
 
 const { Text } = Typography;
@@ -38,18 +39,24 @@ function Login() {
             .then(async data => {
                 console.log(data)
                 tokenService.setUser(data)
-                dispatch(getListFriendRequest('not param'))
-                    .unwrap()
-                    .then(async data => {
-                        console.log('get all friend req success')
-
-                    })
-                    .catch(e => {
-                        console.log(e);
-                        console.log('get all friend req erroer')
-                    })
+                updateLocalHostUrl(tokenService.getUserRoleName())
                 await config()
-                navigate('/users', { replace: true });
+                if (tokenService.getRole("ROLE_USER")) {
+                    dispatch(getListFriendRequest('not param'))
+                        .unwrap()
+                        .then(async data => {
+                            console.log('get all friend req success')
+
+                        })
+                        .catch(e => {
+                            console.log(e);
+                            console.log('get all friend req erroer')
+                        })
+                    navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
+                }
+
+                await config()
+                if (tokenService.getRole("ROLE_ADMIN")) navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
                 return;
             })
             .catch(e => {
@@ -62,12 +69,10 @@ function Login() {
 
     return (
         <div className='login_container'>
-            <img src={img1} alt="img1" />
+            {/* <img src={img1} alt="img1" /> */}
+            <span class="sprite-bigger_book" > </span>
             <div className='login_form'>
-                <div className="form_title">
-                    <img src={img2} alt="img2" />
-                    <h1>BOOK WORLD</h1>
-                </div>
+
                 <div className='form_login'>
                     <h1>Đăng nhập</h1>
 
@@ -99,7 +104,7 @@ function Login() {
                             ]}
 
                         >
-                            <Input className='style-input' placeholder="Tài khoản" />
+                            <Input placeholderTextColor="#faad14" data-input="account" className='style-input' placeholder="Tài khoản" />
                         </Form.Item>
                         <Form.Item
 
