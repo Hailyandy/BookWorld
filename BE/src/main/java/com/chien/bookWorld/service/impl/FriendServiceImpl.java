@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -119,7 +120,7 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public SuccessResponse getFriendRequestsOfUser() {
+    public SuccessResponse getFriendRequestsOfUser(Pageable pageable) {
         // TODO Auto-generated method stub
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
@@ -157,7 +158,7 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public SuccessResponse getFriendsOfUser() {
+    public SuccessResponse getFriendsOfUser(Pageable pageable) {
 
         // TODO Auto-generated method stub
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()

@@ -23,18 +23,8 @@ import com.google.firebase.FirebaseOptions;
 @SecurityScheme(name = "javainuseapi", scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class BookWorldApplication {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		ClassLoader classLoader = SpringBootApplication.class.getClassLoader();
-
-		File file = new File(Objects.requireNonNull(classLoader.getResource("serviceAccountKey.json")).getFile());
-
-		FileInputStream serviceAccount = new FileInputStream(file.getAbsolutePath());
-
-		FirebaseOptions options = new FirebaseOptions.Builder()
-				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-				.build();
-
-		FirebaseApp.initializeApp(options);
 		SpringApplication.run(BookWorldApplication.class, args);
 	}
 

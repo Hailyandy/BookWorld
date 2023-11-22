@@ -88,7 +88,11 @@ public class BookServiceImpl implements BookService {
     } else {
       BookDto bookDto = mapper.map(book, BookDto.class);
       BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), id);
-      bookDto.setStatusWithUser(bookBasket.getStatus());
+      if (bookBasket != null) {
+        bookDto.setStatusWithUser(bookBasket.getStatus());
+      } else {
+        bookDto.setStatusWithUser(null);
+      }
 
       return new SuccessResponse(bookDto);
     }
@@ -114,8 +118,14 @@ public class BookServiceImpl implements BookService {
     List<BookDto> bookList = bookRepository.findByTitleOrAuthor(
         "%" + name + "%", pageable).stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
+          BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
+          if (bookBasket != null) {
+            bookDto.setStatusWithUser(bookBasket.getStatus());
+          } else {
+            bookDto.setStatusWithUser(null);
+          }
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
@@ -138,9 +148,15 @@ public class BookServiceImpl implements BookService {
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     List<BookDto> bookList = bookRepository.findByTitleOrAuthorAndGenre(
         "%" + name + "%", genreId, pageable).stream().map(book -> {
+          BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
+          if (bookBasket != null) {
+            bookDto.setStatusWithUser(bookBasket.getStatus());
+          } else {
+            bookDto.setStatusWithUser(null);
+         }
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
@@ -240,7 +256,6 @@ public class BookServiceImpl implements BookService {
   public SuccessResponse getBookList(Pageable pageable) {
     // TODO Auto-generated method stub
     Page<Book> books = bookRepository.findAll(pageable);
-    logger.info(pageable.toString());
     if (books.isEmpty()) {
       throw new AppException(404, 44, "Error: Does not exist! No book has been created yet!");
     } else {
