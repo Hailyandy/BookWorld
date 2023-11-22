@@ -2,45 +2,22 @@ package com.chien.bookWorld;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import com.chien.bookWorld.entity.ERole;
-import com.chien.bookWorld.entity.Role;
-import com.chien.bookWorld.entity.User;
-import com.chien.bookWorld.entity.UserDetailsImpl;
-import com.chien.bookWorld.jwt.JwtUtils;
 import com.chien.bookWorld.payload.request.LoginRequest;
-import com.chien.bookWorld.repository.RoleRepository;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.AuthService;
-import com.chien.bookWorld.service.EmailService;
-import com.chien.bookWorld.service.impl.AuthServiceImpl;
-import com.chien.bookWorld.service.impl.UserServiceImpl;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AuthServiceTest {
+public class AuthServiceTests {
 
 //  @TestConfiguration
 //  public static class AuthServiceTestConfiguration{
