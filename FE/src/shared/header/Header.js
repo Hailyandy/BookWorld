@@ -42,7 +42,7 @@ const HeaderLayout = (props) => {
      */
     const debouncedSearch = useCallback(debounce((searchTextReturnFromDebounceHelper) => {
         console.log(searchTextReturnFromDebounceHelper)
-        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper }))
+        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper, param: { page: 1, size: 5 } }))
             .unwrap()
             .then(async data => {
                 // notyf.success(BSHAREresource.notification_message.success.login)
@@ -118,7 +118,7 @@ const HeaderLayout = (props) => {
                 break;
 
             case BSHAREnum.dropdown_user_menu_key.personalProfile:
-                navigate(`users/profile`, { replace: true });
+                navigate(`${tokenService.getUserRoleName()}/profile`, { replace: true });
                 break;
             default:
                 console.log(e.key)
@@ -154,16 +154,7 @@ const HeaderLayout = (props) => {
                 <span class="sprite-logo"> </span>
             </div>
             <Menu
-                style={{
-                    minWidth: 200, flex: "auto", backgroundColor: "var(--background-color)", color: "rgba(102, 102, 102, 0.80)",
-                    fontfamily: "Poppins",
-                    fontSize: "20px",
-                    fontStyle: "normal",
-                    fontWeight: 700,
-                    lineHeight: "normal",
-                    borderBottom: "0px"
-                }}
-
+                className='headerbody_menu--style'
                 mode="horizontal"
                 defaultSelectedKeys={['2']}
                 items={BSHAREresource.menuItems.notSignInHeaderMenuItem}
@@ -171,13 +162,7 @@ const HeaderLayout = (props) => {
             <AutoComplete
                 popupMatchSelectWidth={'auto'}
                 allowClear
-                style={{
-                    borderRadius: "16px",
-                    backgroundColor: "var(--background-color)",
-                    width: "40%",
-                    padding: "0px 2rem",
-                    width: 500,
-                }}
+                className='headerbody_autocomplete--style'
                 options={options}
                 onSelect={onSelectSearchItem}
                 onSearch={onSearch}
@@ -199,20 +184,14 @@ const HeaderLayout = (props) => {
     }
 
     if (props.headerType == BSHAREnum.headerType.signed_in) {
-        headerbody = (<>
+        headerbody = tokenService.getRole("ROLE_USER") ? (<>
             <div class="rectangle center-horizontal rectangle-48-48">
                 <span class="sprite-logo"> </span>
             </div>
             <AutoComplete
                 popupMatchSelectWidth={'auto'}
                 allowClear
-                style={{
-                    borderRadius: "16px",
-                    backgroundColor: "var(--background-color)",
-                    width: "40%",
-                    padding: "0rem  2rem",
-                    width: 500,
-                }}
+                className='headerbody_autocomplete--style'
                 options={options}
                 onSelect={onSelectSearchItem}
                 onSearch={onSearch}
@@ -222,19 +201,12 @@ const HeaderLayout = (props) => {
                 <Input.Search size="large" placeholder="input here" enterButton onSearch={searchWhenClickSearchButton} />
             </AutoComplete>
             <Menu
-                style={{
-                    minWidth: 200, flex: "auto", backgroundColor: "var(--background-color)", color: "rgba(102, 102, 102, 0.80)",
-                    fontfamily: "Poppins",
-                    fontSize: "20px",
-                    fontStyle: "normal",
-                    fontWeight: 700,
-                    lineHeight: "normal",
-                    borderBottom: "0px"
-                }}
+
+                className='headerbody_menu--style data-menu-header'
 
                 mode="horizontal"
                 defaultSelectedKeys={['2']}
-                items={BSHAREresource.menuItems.signInHeaderMenuItem}
+                items={BSHAREresource.menuItems['ROLE_USER_MenuItem']}
             />
             <Space direction='horizontal' size={12}>
 
@@ -276,15 +248,78 @@ const HeaderLayout = (props) => {
                 </Dropdown>
             </Space>
 
+        </>) : tokenService.getRole("ROLE_ADMIN") ? (<>
+            <div class="rectangle center-horizontal rectangle-48-48">
+                <span class="sprite-logo"> </span>
+            </div>
+            <Menu
+                className='headerbody_menu--style data-menu-header'
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
+                items={BSHAREresource.menuItems['ROLE_ADMIN_MenuItem']}
+            />
+            <Space direction='horizontal' size={12}>
+                <Dropdown menu={menuProps}>
+                    <Button shape="round" icon={<Avatar style={{
+                        backgroundColor: 'white',
+                        color: 'var(--text-color-main)'
+                    }} size="small" icon={<UserOutlined />} />} className='button-dropdown'>
+                        <Text
+                            style={{
+                                width: 50
+                            }}
+                            ellipsis={
+                                {
+                                    tooltip: userStateFormSlice.userInfo.username,
+                                }
+                            }
+                        >
+                            {userStateFormSlice.userInfo.username}
+                        </Text>
+                        <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </Space>
+        </>) : tokenService.getRole("ROLE_AUTHOR") && (<>
+
+            <div class="rectangle center-horizontal rectangle-48-48">
+                <span class="sprite-logo"> </span>
+            </div>
+            <Menu
+
+                className='headerbody_menu--style data-menu-header'
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
+                items={BSHAREresource.menuItems['ROLE_AUTHOR_MenuItem']}
+            />
+            <Space direction='horizontal' size={12}>
+                <Dropdown menu={menuProps}>
+                    <Button shape="round" icon={<Avatar style={{
+                        backgroundColor: 'white',
+                        color: 'var(--text-color-main)'
+                    }} size="small" icon={<UserOutlined />} />} className='button-dropdown'>
+
+
+                        <Text
+                            style={{
+                                width: 50
+                            }}
+                            ellipsis={
+                                {
+                                    tooltip: userStateFormSlice.userInfo.username,
+                                }
+                            }
+                        >
+                            {userStateFormSlice.userInfo.username}
+                        </Text>
+                        <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </Space>
         </>)
     }
     return <Header
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            backgroundColor: "var(--background-color)",
-            height: "10%",
-        }}
+        className='header-style'
     >
         {headerbody}
     </Header >

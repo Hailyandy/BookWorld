@@ -5,8 +5,10 @@ const initialState = [];
 
 export const searchBookByNameOrAuthor = createAsyncThunk(
     "books/searchByNameOrAuthor",
-    async ({ name }) => {
-        const res = await BookService.searchBookByNameOrAuthor({ name });
+    async ({ name, param }) => {
+        // console.log(name)
+        console.log(param)
+        const res = await BookService.searchBookByNameOrAuthor({ name }, param);
         return res.data;
     }
 );

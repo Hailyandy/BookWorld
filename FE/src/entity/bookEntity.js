@@ -1,7 +1,8 @@
 import { BaseEntity } from "./base/baseEntity";
 export class BookEntity extends BaseEntity {
-    constructor({ id, name, numberPages, publisher, publishDate, introducing, urlPoster, scoring, authorId, authorName, genres }) {
+    constructor({ bookId, id, name, numberPages, publisher, publishDate, introducing, urlPoster, scoring, authorId, authorName, genres }) {
         super();
+        this.bookId = bookId;
         this.id = id;
         this.name = name;
         this.numberPages = numberPages;

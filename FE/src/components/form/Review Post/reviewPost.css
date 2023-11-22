@@ -3,7 +3,8 @@
     border: 2px solid #ccc !important;
     padding: 0.01em 16px;
     border-radius: 16px;
-
+    background-color: var(--background-color-white);
+    width: 550px;
 }
 
 /* Heading Post */
