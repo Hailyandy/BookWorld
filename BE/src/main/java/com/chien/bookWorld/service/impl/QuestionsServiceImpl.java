@@ -9,15 +9,13 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import com.chien.bookWorld.dto.OptionDto;
-import com.chien.bookWorld.dto.QuestionsDto;
+import com.chien.bookWorld.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.chien.bookWorld.dto.QuestionsCreationDto;
 import com.chien.bookWorld.entity.Options;
 import com.chien.bookWorld.entity.Questions;
 import com.chien.bookWorld.entity.Scoring;
@@ -158,22 +156,20 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public Map<String, Object> checkQuestion(Long idBook, Integer scoring, Long idAnswer, UUID idQuestion) {
-        Options option = optionsRepository.findById(idAnswer).orElseThrow(() -> new AppException(404, 44,
-                "Không tìm thấy câu trả lời ứng với id"));
-        Integer isCorrect = option.getIs_correct();
-        if (isCorrect == 0) {
-            updateScoring(idBook, scoring);
-            final Map<String, Object> body = new HashMap<>();
-            body.put("code", 0);
-            body.put("message", "Câu trả lời đúng!");
-            return body;
-        } else {
-            final Map<String, Object> body = new HashMap<>();
-            body.put("code", 0);
-            body.put("message", "Câu trả lời sai!");
-            return body;
+    public Map<String, Object> checkQuestion(ScoringCreation scoringCreation) {
+        int score = 0;
+        List<AnswerCheckDto> answerCheckDtos = scoringCreation.getListAnswer();
+        for (int i = 0; i < answerCheckDtos.size(); i++) {
+            Options option = optionsRepository.findById(answerCheckDtos.get(i).getIdAnswer())
+                    .orElseThrow(() -> new AppException(404, 44, "Không có cuốn sách phù hợp với id book"));
+            int check = option.getIs_correct();
+            if (check == 0) {
+                score = score + answerCheckDtos.get(i).getScore();
+            } else {
+
+            }
         }
+        return null;
     }
 
 }

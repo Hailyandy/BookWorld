@@ -1,7 +1,9 @@
 package com.chien.bookWorld.service.impl;
 
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,13 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public SuccessResponse findAll() {
         // TODO Auto-generated method stub
-        return null;
+        List<User> listUser = userRepository.findUserRoleAuthor();
+
+        return new SuccessResponse(
+                listUser.stream()
+                        .map(user -> mapper.map(user, UserDto.class)).collect(
+                                Collectors.toList())
+        );
     }
 
     @Override

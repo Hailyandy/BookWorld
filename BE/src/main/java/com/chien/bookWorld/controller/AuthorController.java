@@ -35,4 +35,9 @@ public class AuthorController {
 
     // }
 
+    @GetMapping
+    public ResponseEntity<SuccessResponse> getAllAuthor() {
+        return ResponseEntity.status(200).body(authorService.findAll());
+    }
+
 }

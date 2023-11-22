@@ -44,10 +44,6 @@ public class QuestionsController {
     public ResponseEntity<Map<String, Object>> checkQuestion(
             @RequestBody ScoringCreation scoringCreation) {
         return ResponseEntity.status(200)
-                .body(questionsService.checkQuestion(
-                        scoringCreation.getIdBook(),
-                        scoringCreation.getScore(),
-                        scoringCreation.getIdAnswer(),
-                        scoringCreation.getQuestionId()));
+                .body(questionsService.checkQuestion(scoringCreation));
     }
 }

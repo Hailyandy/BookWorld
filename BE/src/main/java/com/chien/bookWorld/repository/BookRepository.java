@@ -33,4 +33,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
   @Query(nativeQuery = true, value = "SELECT * FROM book ORDER BY scoring DESC LIMIT 50")
   List<Book> findTopBook();
 
+  @Query(nativeQuery = true, value = "SELECT * FROM book",
+    countQuery = "SELECT * FROM book")
+  Page<Book> findAllBook(Pageable pageable);
+
 }

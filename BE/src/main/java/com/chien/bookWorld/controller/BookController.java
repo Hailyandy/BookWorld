@@ -2,6 +2,7 @@ package com.chien.bookWorld.controller;
 
 import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.BookDto;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.service.BookService;
@@ -36,14 +37,14 @@ public class BookController {
   @Operation(summary = "Find by title or author")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}")
-  public ResponseEntity<SuccessResponse> findByTitleOrAuthor(@PathVariable String name, Pageable pageable) {
+  public ResponseEntity<PageResponse> findByTitleOrAuthor(@PathVariable String name, Pageable pageable) {
     return ResponseEntity.status(200).body(bookService.findByTitleOrAuthor(name, pageable));
   }
 
   @Operation(summary = "Find by title or author and genre")
   @PreAuthorize("hasRole('ADMIN') or hasRole('AUTHOR') or hasRole('USER')")
   @GetMapping("/{name}/{genreId}")
-  public ResponseEntity<SuccessResponse> findByTitleOrAuthorAndGenre(@PathVariable String name,
+  public ResponseEntity<PageResponse> findByTitleOrAuthorAndGenre(@PathVariable String name,
       @PathVariable Long genreId, Pageable pageable) {
     return ResponseEntity.status(200).body(bookService.findByTitleOrAuthorAndGenre(name, genreId, pageable));
   }
@@ -51,7 +52,7 @@ public class BookController {
   @Operation(summary = "Gợi ý sách")
   @PreAuthorize("hasRole('USER')")
   @GetMapping
-  public ResponseEntity<SuccessResponse> bookRecommendations(Pageable pageable) {
+  public ResponseEntity<PageResponse> bookRecommendations(Pageable pageable) {
     return ResponseEntity.status(200).body(bookService.bookRecommendations(pageable));
   }
 
@@ -85,7 +86,7 @@ public class BookController {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<SuccessResponse> getAll(
+  public ResponseEntity<PageResponse> getAll(
       Pageable pageable) {
     return ResponseEntity.status(200).body(bookService.getBookList(pageable));
   }
