@@ -4,7 +4,7 @@ import 'notyf/notyf.min.css'; // for React, Vue and Svelte
 import BSHAREresource from "~/helper/BSHAREresource";
 import tokenService from "./token.service";
 import { showSpinner, hideSpinner } from "~/helper/notifyDisplay";
-
+import { objectToParams } from "~/helper/format";
 const notyf = new Notyf({
   duration: 2000,
   position: {
@@ -33,8 +33,9 @@ axiosInstance.interceptors.response.use(response => {
 
 
 export const getAPI = async (endpoint, param, config = {}) => {
+  console.log(param)
   if (param) {
-    endpoint = `${endpoint}/${param}`
+    endpoint = `${endpoint}?${objectToParams(param)}`
   }
   try {
     axiosInstance = axios.create({

@@ -12,7 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import {
-  AdminDashBoard, AdminPostList, AdminReportList,
+  AdminDashBoard, AdminPostList, AdminReportList, AdminAddBookPage,
   BookMarket,
   AnonymousUser,
   BookRankPage,
@@ -58,7 +58,7 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="search-result" element={<SearchResultLayout />}>
             <Route path="search-book/:searchBooktext" element={<SearchBookPage />} loader={({ params }) => {
-              return dispatch(searchBookByNameOrAuthor({ name: params.searchBooktext }))
+              return dispatch(searchBookByNameOrAuthor({ param: { page: 1, size: 5 }, name: params.searchBooktext }))
                 .unwrap()
                 .then(async data => {
                   console.log(data)
@@ -258,6 +258,10 @@ function App() {
                 <Route
                   path="statistic-report-post"
                   element={<AdminReportList />}
+                />
+                <Route
+                  path="add-new-book"
+                  element={<AdminAddBookPage />}
                 />
               </Route>
             )

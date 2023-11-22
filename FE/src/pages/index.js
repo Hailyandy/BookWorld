@@ -22,9 +22,11 @@ import BookMarket from "./BookMarket/BookMarketCreateItem";
 import {
     AdminDashBoard,
     AdminPostList,
-    AdminReportList
+    AdminReportList,
+    AdminAddBookPage
 } from "./admin";
 export {
+    AdminAddBookPage,
     BookMarket,
     AnonymousUser,
     SearchUserPage,

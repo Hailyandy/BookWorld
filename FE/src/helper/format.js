@@ -161,3 +161,18 @@ export const generateUuid = () => {
         console.log("🚀 ~ file: common.js:161 ~ generateUuid ~ error:", error);
     }
 };
+/**
+ * Map từ một object sang chuỗi parameter
+ * const object = {
+  name: 'John',
+  age: 30
+}
+  const params = objectToParams(object);
+  // params = "name=John&age=30"
+ * @param {*} obj
+ * @returns
+ */
+export const objectToParams = (obj) => {
+    const params = Object.keys(obj).map(key => `${key}=${encodeURIComponent(obj[key])}`).join('&');
+    return params;
+}
