@@ -3,6 +3,7 @@ package com.chien.bookWorld;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
+import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.request.LoginRequest;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.AuthService;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 class AuthServiceTests {
 
-//  @TestConfiguration
+  //  @TestConfiguration
 //  public static class AuthServiceTestConfiguration{
 //    @Bean
 //    AuthService authService(){
@@ -29,7 +31,7 @@ class AuthServiceTests {
 //
   @Autowired
   UserRepository userRepository;
-//  @MockBean
+  //  @MockBean
 //  RoleRepository roleRepository;
 //
 ////  @MockBean
@@ -71,8 +73,44 @@ class AuthServiceTests {
   }
 
   @Test
-  @Sql(scripts = "classpath:login_data.sql")
-  public void testCount() {
+  public void testLoginUsernameNotFound() {
+    Exception exception = Assert.assertThrows(AppException.class, () -> {
+      authService.authenticateUser(new LoginRequest("chien5pm@gmail.com", "12345678"));
+    });
+
+    String expectedMessage = "Lỗi: Không tồn tại! Không tìm thấy tài khoản có tên '";
+    String actualMessage = exception.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+  public void testLoginNotEnabled() {
+    Exception exception = Assert.assertThrows(AppException.class, () -> {
+      authService.authenticateUser(new LoginRequest("chien9pmt@gmail.com", "12345678"));
+    });
+
+    String expectedMessage = "Tài khoản của bạn chưa được quản trị viên phê duyệt, vui lòng đợi!";
+    String actualMessage = exception.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+  public void testLoginIncorrectPassword() {
+    Exception exception = Assert.assertThrows(BadCredentialsException.class, () -> {
+      authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "123456789"));
+    });
+
+    String expectedMessage = "Bad credentials";
+    String actualMessage = exception.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+//  @Sql(scripts = "classpath:login_data.sql")
+  public void testLoginSuccess() {
     Long code = authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "12345678"))
         .getCode();
     Long expect = 0L;
