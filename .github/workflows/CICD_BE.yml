@@ -54,7 +54,7 @@ jobs:
           heroku deploy:jar target/*.jar --app book-world
 
       - name: Test
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true -Dtest="src/test/java/com/chien/bookWorld/*Tests" test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true -Dtest="com/chien/bookWorld/*Tests" test
 
       - name: Report
         uses: dorny/test-reporter@v1
