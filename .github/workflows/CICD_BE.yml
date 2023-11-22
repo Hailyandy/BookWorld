@@ -53,7 +53,7 @@ jobs:
         if: success() || failure()    
         with:
           name: JEST Tests            
-          path: reports/jest-*.xml
+          path: BE/reports/jest-*.xml
           reporter: jest-junit   
           working-directory: 'BE'     
 
