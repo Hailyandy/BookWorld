@@ -55,7 +55,7 @@ jobs:
           name: JEST Tests            
           path: reports/jest-*.xml
           reporter: jest-junit   
-          working-directory: BE     
+          working-directory: 'BE'     
 
       - name: Heroku Install
         env:
