@@ -88,7 +88,11 @@ public class BookServiceImpl implements BookService {
     } else {
       BookDto bookDto = mapper.map(book, BookDto.class);
       BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), id);
-      bookDto.setStatusWithUser(bookBasket.getStatus());
+      if (bookBasket != null) {
+        bookDto.setStatusWithUser(bookBasket.getStatus());
+      } else {
+        bookDto.setStatusWithUser(null);
+      }
 
       return new SuccessResponse(bookDto);
     }
@@ -117,7 +121,11 @@ public class BookServiceImpl implements BookService {
           BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
-          bookDto.setStatusWithUser(bookBasket.getStatus());
+          if (bookBasket != null) {
+            bookDto.setStatusWithUser(bookBasket.getStatus());
+          } else {
+            bookDto.setStatusWithUser(null);
+          }
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
@@ -144,7 +152,11 @@ public class BookServiceImpl implements BookService {
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
-          bookDto.setStatusWithUser(bookBasket.getStatus());
+          if (bookBasket != null) {
+            bookDto.setStatusWithUser(bookBasket.getStatus());
+          } else {
+            bookDto.setStatusWithUser(null);
+         }
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
