@@ -1,6 +1,126 @@
 import BSHAREnum from "./BSHAREenum"
 import { Link } from 'react-router-dom';
+import tokenService from "~/services/token.service";
+export let localHost = {
+    url: `http://localhost:3000/${tokenService.getUserRoleName()}/`
+}
+export const url = { baseUrlBE: "http://localhost:8080/api/" }
+export const updateLocalHostUrl = (updateStringrole) => {
+    localHost.url = `http://localhost:3000/${updateStringrole}/`
+    BSHAREresource.localHost.url = `http://localhost:3000/${updateStringrole}/`
+    BSHAREresource.menuItems = {
+        ROLE_AUTHOR_MenuItem: [
+            {
+                key: 'community',
+                label: 'Cộng đồng'
+            },
+            {
+                key: 'book_store',
+                label: 'Kho sách'
+            }
+        ],
+
+        ROLE_USER_MenuItem: [
+            {
+                key: 'community',
+                label: 'Cộng đồng'
+            },
+            {
+                key: 'book_store',
+                label: 'Sách',
+                children: [
+                    {
+                        key: 'book_warehouse',
+                        label: (
+                            <Link to={`${localHost.url}my-bookshelf`}>
+                                Kho sách
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'book_favourite',
+                        label: (
+                            <Link to={`${localHost.url}books/book-rank`}>
+                                Sách yêu thích
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'book_hidden',
+                        label: (
+                            <Link to={`${localHost.url}books/hidden-book`}>
+                                Sách ẩn danh
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'book_market',
+                        label: (
+                            <Link to={`${localHost.url}books/market`}>
+                                Chợ sách
+                            </Link>
+                        ),
+                    },
+                    // {
+                    //     key: 'book_rank',
+                    //     label: (
+                    //         <Link to={`${localHost.url}books/book-rank`}>
+                    //             Sách nổi bật
+                    //         </Link>
+                    //     ),
+                    // }
+
+                ],
+            }
+        ],
+        notSignInHeaderMenuItem: [
+            {
+                key: 'homePage',
+                label: 'Trang chủ'
+            },
+            {
+                key: 'introduction',
+                label: 'Giới thiệu'
+            },
+            {
+                key: 'support',
+                label: 'Hỗ trợ'
+            }
+        ],
+        ROLE_ADMIN_MenuItem: [
+            {
+                key: 'dashboard',
+                label: (
+                    < Link to={`${localHost.url}`} >
+                        Dashboard
+                    </Link >)
+
+            },
+            {
+                key: 'reported_post',
+                label: (
+                    < Link to={`${localHost.url}statistic-post-list`} >
+                        Nội dung vi phạm
+                    </Link >)
+
+            },
+            {
+                key: 'support',
+                label: (
+                    < Link to={`${localHost.url}statistic-report-post`} >
+                        Thống kê bài đăng
+                    </Link >)
+
+            }
+        ]
+
+    }
+}
 const BSHAREresource = {
+    localHost: {
+        url: 'http://localhost:3000/'
+    },
+    url: { baseUrlBE: "http://localhost:8080/api/" },
     notification_message: {
         success: {
             login: 'Đăng nhập thành công',
@@ -41,7 +161,7 @@ const BSHAREresource = {
             code_200: 'Lấy dữ liệu thành công',
             code_201: 'Post dữ liệu thành công',
             code_400: 'Lỗi từ client – dữ liệu đầu vào không hợp lệ.',
-            code_401: 'Lỗi từ client - hông tin xác thực không hợp lệ',
+            code_401: 'Lỗi từ client - thông tin xác thực không hợp lệ',
             code_403: 'Không tin xác thực không hợp lệ',
             code_404: 'Không tìm thấy địa chỉ hoặc tài nguyên ',
             code_500: 'Lỗi từ back-end.',
@@ -60,7 +180,7 @@ const BSHAREresource = {
     },
 
     menuItems: {
-        authorPageMenuItem: [
+        ROLE_AUTHOR_MenuItem: [
             {
                 key: 'community',
                 label: 'Cộng đồng'
@@ -71,7 +191,7 @@ const BSHAREresource = {
             }
         ],
 
-        signInHeaderMenuItem: [
+        ROLE_USER_MenuItem: [
             {
                 key: 'community',
                 label: 'Cộng đồng'
@@ -83,7 +203,7 @@ const BSHAREresource = {
                     {
                         key: 'book_warehouse',
                         label: (
-                            <Link to={`${BSHAREnum.localHost.url}users/my-bookshelf`}>
+                            <Link to={`${localHost.url}my-bookshelf`}>
                                 Kho sách
                             </Link>
                         ),
@@ -91,7 +211,7 @@ const BSHAREresource = {
                     {
                         key: 'book_favourite',
                         label: (
-                            <Link to={`${BSHAREnum.localHost.url}books/book-rank`}>
+                            <Link to={`${localHost.url}books/book-rank`}>
                                 Sách yêu thích
                             </Link>
                         ),
@@ -99,7 +219,7 @@ const BSHAREresource = {
                     {
                         key: 'book_hidden',
                         label: (
-                            <Link to={`${BSHAREnum.localHost.url}books/hidden-book`}>
+                            <Link to={`${localHost.url}books/hidden-book`}>
                                 Sách ẩn danh
                             </Link>
                         ),
@@ -107,7 +227,7 @@ const BSHAREresource = {
                     {
                         key: 'book_market',
                         label: (
-                            <Link to={`${BSHAREnum.localHost.url}books/market`}>
+                            <Link to={`${localHost.url}books/market`}>
                                 Chợ sách
                             </Link>
                         ),
@@ -115,7 +235,7 @@ const BSHAREresource = {
                     // {
                     //     key: 'book_rank',
                     //     label: (
-                    //         <Link to={`${BSHAREnum.localHost.url}books/book-rank`}>
+                    //         <Link to={`${localHost.url}books/book-rank`}>
                     //             Sách nổi bật
                     //         </Link>
                     //     ),
@@ -137,7 +257,34 @@ const BSHAREresource = {
                 key: 'support',
                 label: 'Hỗ trợ'
             }
+        ],
+        ROLE_ADMIN_MenuItem: [
+            {
+                key: 'dashboard',
+                label: (
+                    < Link to={`${localHost.url}`} >
+                        Dashboard
+                    </Link >)
+
+            },
+            {
+                key: 'reported_post',
+                label: (
+                    < Link to={`${localHost.url}statistic-post-list`} >
+                        Nội dung vi phạm
+                    </Link >)
+
+            },
+            {
+                key: 'support',
+                label: (
+                    < Link to={`${localHost.url}statistic-report-post`} >
+                        Thống kê bài đăng
+                    </Link >)
+
+            }
         ]
+
     }
 }
 

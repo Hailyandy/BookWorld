@@ -15,7 +15,7 @@ const BSHAREnum = Object.freeze({
             code_200: Symbol('Lấy dữ liệu thành công'),
             code_201: Symbol('Post dữ liệu thành công'),
             code_400: Symbol('Lỗi từ client – dữ liệu đầu vào không hợp lệ.'),
-            code_401: Symbol('Lỗi từ client - hông tin xác thực không hợp lệ'),
+            code_401: Symbol('Lỗi từ client - thông tin xác thực không hợp lệ'),
             code_403: Symbol('Không tin xác thực không hợp lệ'),
             code_404: Symbol('Không tìm thấy địa chỉ hoặc tài nguyên '),
             code_500: Symbol('Lỗi từ back-end.'),
@@ -37,9 +37,7 @@ const BSHAREnum = Object.freeze({
         friend_req: 'friendReq',
         friend_list: 'friendList'
     }),
-    localHost: {
-        url: 'http://localhost:3000/'
-    },
+
     /**
      * null : Không có gì
         PENDING: Đang gửi yêu cầu kb

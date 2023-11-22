@@ -3,6 +3,7 @@ import { useLoaderData, Link } from 'react-router-dom';
 import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Switch, Table, Tooltip, Space } from 'antd';
 import BSHAREnum from '~/helper/BSHAREenum';
+import BSHAREresource from '~/helper/BSHAREresource';
 import { useNavigate } from 'react-router-dom';
 const { Header, Content, Footer, Sider } = Layout;
 const columnsub =
@@ -65,7 +66,7 @@ const columnsub =
                     <>
                         <Space direction='horizontal' >
                             <span onClick={() => {
-                                window.location.replace(`${BSHAREnum.localHost.url}users/review/edit/${record.bookId}`)
+                                window.location.replace(`${BSHAREresource.localHost.url}review/edit/${record.bookId}`)
 
                             }}>
                                 Chỉnh sửa
@@ -155,7 +156,7 @@ const MyBookshelf = () => {
                         <>
                             <Space direction='horizontal' >
                                 <span onClick={() => {
-                                    window.location.replace(`${BSHAREnum.localHost.url}users/review/edit/${record.bookId}`)
+                                    window.location.replace(`${BSHAREresource.localHost.url}review/edit/${record.bookId}`)
 
                                 }}>
                                     Chỉnh sửa

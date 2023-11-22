@@ -41,8 +41,8 @@ const UserHome = () => {
 
       {/* List Book */}
 
-      <div className="list-book">
-        <div class="reading-book">
+      <div className="list-book stick-to-top">
+        <div class="reading-book ">
           <h2 class="reading-book-title">Sách đang đọc</h2>
           <ul class="reading-book-list">
             <li class="reading-book-item">
@@ -88,9 +88,9 @@ const UserHome = () => {
 
       {/* Book rank and friend */}
 
-      <div className="book-friend">
+      <div className="book-friend stick-to-top">
         <div className="book-rating">
-          <h2 class="rating-tilte">Bảng xếp hạng sách</h2>
+          <h2 class="rating-tilte">Xếp hạng sách</h2>
           <ul class="book-rating-list">
             <li class="book-rating-item">
               <BookJacket></BookJacket>
@@ -115,7 +115,12 @@ const UserHome = () => {
             <li class="friend-item">
               <Avartar></Avartar>
             </li>
-
+            <li class="friend-item">
+              <Avartar></Avartar>
+            </li>
+            <li class="friend-item">
+              <Avartar></Avartar>
+            </li>
           </ul>
         </div>
       </div>

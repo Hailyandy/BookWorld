@@ -29,7 +29,7 @@ function Register() {
             })
             .catch(e => {
                 console.log(e)
-                notyf.error(e.message)
+                // notyf.error(e.message)
             });
     };
     const onFinishFailed = (errorInfo) => {
@@ -46,7 +46,7 @@ function Register() {
                 <div className='form_register'>
                     <h1>Đăng kí</h1>
                     <p>Chào mừng bạn đã đến với Book World</p>
-                    <Form form={form} style={{ display: 'flex', flexDirection: "column" }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    <Form name="basic" form={form} style={{ display: 'flex', flexDirection: "column" }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Form.Item
                             name="username"
                             rules={[
@@ -105,7 +105,7 @@ function Register() {
                                     fontStyle: "normal",
                                     fontWeight: 700,
                                     lineHeight: "normal"
-                                }}>Đăng kí</span></Button>
+                                }}>Đăng ký ngay</span></Button>
                         </Form.Item>
                     </Form>
                     <Space direction="horizontal" style={{ width: '300px', display: "flex", justifyContent: "space-between" }}>

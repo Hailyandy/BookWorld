@@ -22,8 +22,8 @@ class BookService extends BaseService {
    * @param {*} name string
    * @returns
    */
-  async searchBookByNameOrAuthor({ name }) {
-    var data = await getAPI(`book/${name}`)
+  async searchBookByNameOrAuthor({ name }, param) {
+    var data = await getAPI(`book/${name}`, param)
     return data
   }
 

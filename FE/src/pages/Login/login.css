@@ -1,24 +1,28 @@
 .login_container {
     display: flex;
     align-items: center;
-    height: var(--height-containner-main);
     width: 100%;
     background-color: rgba(23, 193, 181, 0.2);
+    justify-content: space-evenly;
+    margin: auto;
+    height: 82vh;
+
 }
 
 .login_container img {
-    margin-left: 50px;
+    /* margin-left: 50px; */
+    /* margin-top: 20px; */
 }
 
+.login_form .ant-input::placeholder {
+    color: var(--text-color);
+}
 
 .login_form {
-    margin-left: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 100px;
-    margin-right: 50px;
 }
 
 
