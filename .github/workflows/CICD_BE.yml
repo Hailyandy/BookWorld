@@ -23,7 +23,8 @@ on:
       #   description: 'Run Job FE'
       #   required: true
       #   default: 'build_fe'
-
+permissions:
+  contents: write
 jobs:
   build_be:
     runs-on: ubuntu-latest
