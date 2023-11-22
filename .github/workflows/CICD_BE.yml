@@ -53,7 +53,7 @@ jobs:
         if: success() || failure()    
         with:
           name: JEST Tests            
-          path: reports/jest-*.xml    
+          path: '*.xml'   
           reporter: jest-junit        
 
       - name: Heroku Install
