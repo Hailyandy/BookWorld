@@ -24,7 +24,9 @@ on:
       #   required: true
       #   default: 'build_fe'
 permissions:
-  contents: write
+  contents: read
+  actions: read
+  checks: write
 jobs:
   build_be:
     runs-on: ubuntu-latest
@@ -46,14 +48,13 @@ jobs:
       - name: Test
         run: mvn test -Dtest=com.chien.bookWorld.*Tests
 
-      - name: Report
+      - name: Test Report
         uses: dorny/test-reporter@v1
-        if: always()
+        if: success() || failure()    
         with:
-          name: Maven Tests
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
-          fail-on-error: true
+          name: JEST Tests            
+          path: reports/jest-*.xml    
+          reporter: jest-junit        
 
       - name: Heroku Install
         env:
