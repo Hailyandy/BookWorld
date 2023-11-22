@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AuthServiceTests {
+class AuthServiceTests {
 
 //  @TestConfiguration
 //  public static class AuthServiceTestConfiguration{
