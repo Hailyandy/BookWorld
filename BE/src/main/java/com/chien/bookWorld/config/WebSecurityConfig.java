@@ -91,7 +91,11 @@ public class WebSecurityConfig {
         HttpMethod.HEAD.name(),
         HttpMethod.POST.name(),
         HttpMethod.PUT.name(),
-        HttpMethod.DELETE.name()));
+        HttpMethod.DELETE.name(),
+        HttpMethod.OPTIONS.name()));
+    corsConfiguration.addAllowedHeader("*");
+    corsConfiguration.addExposedHeader("header1");
+    corsConfiguration.addExposedHeader("header2");
     corsConfiguration.setMaxAge(1800L);
     source.registerCorsConfiguration("/**", corsConfiguration); // you restrict your path here
     return source;
