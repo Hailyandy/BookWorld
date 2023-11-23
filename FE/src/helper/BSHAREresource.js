@@ -2,12 +2,12 @@ import BSHAREnum from "./BSHAREenum"
 import { Link } from 'react-router-dom';
 import tokenService from "~/services/token.service";
 export let localHost = {
-    url: `https://hailyandy.github.io/BookWorld/${tokenService.getUserRoleName()}/`
+    url: `http://localhost:3000/${tokenService.getUserRoleName()}/`
 }
 export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
 export const updateLocalHostUrl = (updateStringrole) => {
-    localHost.url = `https://hailyandy.github.io/BookWorld/${updateStringrole}/`
-    BSHAREresource.localHost.url = `https://hailyandy.github.io/BookWorld/${updateStringrole}/`
+    localHost.url = `http://localhost:3000/${updateStringrole}/`
+    BSHAREresource.localHost.url = `http://localhost:3000/${updateStringrole}/`
     BSHAREresource.menuItems = {
         ROLE_AUTHOR_MenuItem: [
             {
@@ -118,7 +118,7 @@ export const updateLocalHostUrl = (updateStringrole) => {
 }
 const BSHAREresource = {
     localHost: {
-        url: 'https://hailyandy.github.io/BookWorld/'
+        url: 'http://localhost:3000/'
     },
     url: { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" },
     notification_message: {
