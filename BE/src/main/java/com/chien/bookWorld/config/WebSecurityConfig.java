@@ -17,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableMethodSecurity
@@ -74,5 +77,24 @@ public class WebSecurityConfig {
         UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
+  }
+
+  @Bean
+  CorsWebFilter corsFilter() {
+
+    CorsConfiguration config = new CorsConfiguration();
+
+    // Possibly...
+    // config.applyPermitDefaultValues()
+
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("https://hailyandy.github.io/BookWorld");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("*");
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+
+    return new CorsWebFilter(source);
   }
 }
