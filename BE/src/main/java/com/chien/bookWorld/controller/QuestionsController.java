@@ -21,7 +21,7 @@ import com.chien.bookWorld.service.QuestionsService;
 
 @RestController
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "https://hailyandy.github.io/BookWorld/", maxAge = 3600)
+
 public class QuestionsController {
 
     @Autowired

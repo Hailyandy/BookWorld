@@ -71,10 +71,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/v3/api-docs/**").permitAll()
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
-        )
-//        .cors()
-//        .configurationSource(corsConfigurationSource())
-    ;
+        );
 
     http.authenticationProvider(authenticationProvider());
 
@@ -83,24 +80,4 @@ public class WebSecurityConfig {
 
     return http.build();
   }
-
-//  @Bean
-//  CorsConfigurationSource corsConfigurationSource() {
-//    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//    CorsConfiguration corsConfiguration = new CorsConfiguration();
-//    corsConfiguration.addAllowedOrigin("https://hailyandy.github.io/BookWorld/");
-//    corsConfiguration.setAllowedMethods(Arrays.asList(
-//        HttpMethod.GET.name(),
-//        HttpMethod.HEAD.name(),
-//        HttpMethod.POST.name(),
-//        HttpMethod.PUT.name(),
-//        HttpMethod.DELETE.name(),
-//        HttpMethod.OPTIONS.name()));
-//    corsConfiguration.addAllowedHeader("*");
-//    corsConfiguration.addExposedHeader("header1");
-//    corsConfiguration.addExposedHeader("header2");
-//    corsConfiguration.setMaxAge(1800L);
-//    source.registerCorsConfiguration("/**", corsConfiguration); // you restrict your path here
-//    return source;
-//  }
 }

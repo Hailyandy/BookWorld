@@ -13,7 +13,7 @@ import com.chien.bookWorld.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "https://hailyandy.github.io/BookWorld/", maxAge = 3600)
+
 public class UserController {
 
     @Autowired

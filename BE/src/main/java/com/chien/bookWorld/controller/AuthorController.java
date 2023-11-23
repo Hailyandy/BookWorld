@@ -16,7 +16,7 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.AuthorService;
 import com.chien.bookWorld.service.UserService;
 
-@CrossOrigin(origins = "https://hailyandy.github.io/BookWorld/", maxAge = 3600)
+
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {

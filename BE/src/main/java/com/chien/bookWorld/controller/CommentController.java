@@ -19,7 +19,7 @@ import com.chien.bookWorld.service.CommentService;
 
 @RestController
 @RequestMapping("/api/comment")
-@CrossOrigin(origins = "https://hailyandy.github.io/BookWorld/", maxAge = 3600)
+
 public class CommentController {
 
     @Autowired

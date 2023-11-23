@@ -13,7 +13,7 @@ import com.chien.bookWorld.service.GenreService;
 
 @RestController
 @RequestMapping("/api/genres")
-@CrossOrigin(origins = "https://hailyandy.github.io/BookWorld/", maxAge = 3600)
+
 public class GenreController {
 
     @Autowired()
