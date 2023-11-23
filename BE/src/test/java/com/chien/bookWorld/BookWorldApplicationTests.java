@@ -14,7 +14,7 @@ class BookWorldApplicationTests {
 	}
 	@AfterAll
 	@Sql(scripts = "classpath:drop.sql")
-	public void drop() {
+	public static void drop() {
 	}
 
 }

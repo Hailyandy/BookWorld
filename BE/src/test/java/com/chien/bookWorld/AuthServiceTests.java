@@ -118,7 +118,7 @@ class AuthServiceTests {
   }
   @AfterAll
   @Sql(scripts = "classpath:drop.sql")
-  public void drop() {
+  public static void drop() {
     System.out.println("dropped");
   }
 }
