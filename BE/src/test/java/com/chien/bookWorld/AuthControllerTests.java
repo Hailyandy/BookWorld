@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,13 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 //@WebMvcTest(AuthController.class)
 //@WebAppConfiguration
 @AutoConfigureMockMvc
 class AuthControllerTests {
 
-    @Autowired
+  @Autowired
   private MockMvc mvc;
 //  private MockMvc mvc;
 //  @Autowired
@@ -68,5 +70,10 @@ class AuthControllerTests {
     String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
     SuccessResponse response = mapFromJson(content, SuccessResponse.class);
     Assert.assertEquals("Thành công!", response.getMessage());
+  }
+
+  @After
+  @Sql(scripts = "classpath:drop.sql")
+  public void drop() {
   }
 }

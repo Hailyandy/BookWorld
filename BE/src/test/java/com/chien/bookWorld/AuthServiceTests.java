@@ -4,6 +4,7 @@ import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.request.LoginRequest;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.AuthService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -11,10 +12,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 class AuthServiceTests {
 
   //  @TestConfiguration
@@ -112,5 +114,9 @@ class AuthServiceTests {
     Long expect = 0L;
     Assert.assertEquals(expect, code
     );
+  }
+  @After
+  @Sql(scripts = "classpath:drop.sql")
+  public void drop() {
   }
 }
