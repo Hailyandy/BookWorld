@@ -20,6 +20,8 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Scoring {
     @Id
+@NotNull
+@Unique
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

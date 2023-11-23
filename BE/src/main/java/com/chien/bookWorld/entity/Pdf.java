@@ -26,6 +26,8 @@ import lombok.ToString;
 public class Pdf {
 
   @Id
+@NotNull
+@Unique
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

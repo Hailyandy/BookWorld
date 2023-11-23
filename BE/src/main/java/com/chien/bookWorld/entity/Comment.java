@@ -31,6 +31,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Comment {
 
   @Id
+@NotNull
+@Unique
   private UUID id;
 
   @ManyToOne

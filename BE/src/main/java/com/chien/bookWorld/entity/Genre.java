@@ -29,6 +29,8 @@ import lombok.ToString;
     property = "id")
 public class Genre {
   @Id
+@NotNull
+@Unique
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

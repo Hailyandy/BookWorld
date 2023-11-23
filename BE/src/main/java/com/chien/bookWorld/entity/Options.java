@@ -18,6 +18,8 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Options {
     @Id
+@NotNull
+@Unique
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

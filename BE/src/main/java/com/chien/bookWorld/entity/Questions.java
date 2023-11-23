@@ -25,6 +25,8 @@ import lombok.Setter;
 public class Questions {
 
     @Id
+@NotNull
+@Unique
     private UUID id;
 
     private String questionText;

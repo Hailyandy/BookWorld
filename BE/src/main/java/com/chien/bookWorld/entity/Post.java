@@ -34,6 +34,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Post {
 
   @Id
+@NotNull
+@Unique
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

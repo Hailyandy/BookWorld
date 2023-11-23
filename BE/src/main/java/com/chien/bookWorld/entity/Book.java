@@ -31,6 +31,8 @@ import lombok.ToString;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Book {
   @Id
+@NotNull
+@Unique
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
