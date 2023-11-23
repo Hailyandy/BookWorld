@@ -14,7 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+import org.checkerframework.common.aliasing.qual.Unique;
+import jakarta.validation.constraints.NotNull;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

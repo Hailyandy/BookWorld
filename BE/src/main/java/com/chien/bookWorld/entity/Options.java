@@ -11,7 +11,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.checkerframework.common.aliasing.qual.Unique;
+import jakarta.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity

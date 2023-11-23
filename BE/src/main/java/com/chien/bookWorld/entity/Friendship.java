@@ -14,7 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
+import org.checkerframework.common.aliasing.qual.Unique;
+import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "friendship")
 @AllArgsConstructor

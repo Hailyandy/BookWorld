@@ -1,7 +1,8 @@
 package com.chien.bookWorld.entity;
 
 import java.sql.Timestamp;
-
+import org.checkerframework.common.aliasing.qual.Unique;
+import jakarta.validation.constraints.NotNull;
 import com.chien.bookWorld.dto.ReportCreationDto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
