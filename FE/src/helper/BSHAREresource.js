@@ -2,12 +2,12 @@ import BSHAREnum from "./BSHAREenum"
 import { Link } from 'react-router-dom';
 import tokenService from "~/services/token.service";
 export let localHost = {
-    url: `http://localhost:3000/${tokenService.getUserRoleName()}/`
+    url: `https://hailyandy.github.io/BookWorld/${tokenService.getUserRoleName()}/`
 }
-export const url = { baseUrlBE: "http://localhost:8080/api/" }
+export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
 export const updateLocalHostUrl = (updateStringrole) => {
-    localHost.url = `http://localhost:3000/${updateStringrole}/`
-    BSHAREresource.localHost.url = `http://localhost:3000/${updateStringrole}/`
+    localHost.url = `https://hailyandy.github.io/BookWorld/${updateStringrole}/`
+    BSHAREresource.localHost.url = `https://hailyandy.github.io/BookWorld/${updateStringrole}/`
     BSHAREresource.menuItems = {
         ROLE_AUTHOR_MenuItem: [
             {
@@ -118,9 +118,9 @@ export const updateLocalHostUrl = (updateStringrole) => {
 }
 const BSHAREresource = {
     localHost: {
-        url: 'http://localhost:3000/'
+        url: 'https://hailyandy.github.io/BookWorld/'
     },
-    url: { baseUrlBE: "http://localhost:8080/api/" },
+    url: { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" },
     notification_message: {
         success: {
             login: 'Đăng nhập thành công',

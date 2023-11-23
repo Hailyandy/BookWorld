@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@CrossOrigin(origins = "https://hailyandy.github.io/BookWorld/", maxAge = 3600)
 @RequestMapping("/api/post")
 public class PostController {
 

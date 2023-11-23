@@ -91,7 +91,7 @@ export default function RootLayout() {
      * console.log(location.pathname); // '/en-US/docs/Web/API/Location/pathname'
     */
     /**
-     * http://localhost:3000/ROLE_ADMIN/statistic-report-post => ['',ROLE_ADMIN,statistic-report-post]
+     * https://hailyandy.github.io/BookWorld/ROLE_ADMIN/statistic-report-post => ['',ROLE_ADMIN,statistic-report-post]
      * filter 1: ['',statistic-report-post]
      * filter 2: [statistic-report-post]
      * mapping với các đường dẫn của breadcrumbNameMap nên phải chỉnh lại. Do thêm tokenservice.getRoleUser vào
