@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -116,8 +117,12 @@ class AuthServiceTests {
     Assert.assertEquals(expect, code
     );
   }
+
   @AfterAll
-  @Sql(scripts = "classpath:drop.sql")
+  @SqlGroup({
+      @Sql("/drop.sql"),
+      @Sql("/data.sql")
+  })
   public static void drop() {
     System.out.println("dropped");
   }
