@@ -115,8 +115,8 @@ class AuthServiceTests {
     Assert.assertEquals(expect, code
     );
   }
-  @After
-  @Sql(scripts = "classpath:drop.sql")
-  public void drop() {
-  }
+//  @After
+//  @Sql(scripts = "classpath:drop.sql")
+//  public void drop() {
+//  }
 }

@@ -72,8 +72,8 @@ class AuthControllerTests {
     Assert.assertEquals("Thành công!", response.getMessage());
   }
 
-  @After
-  @Sql(scripts = "classpath:drop.sql")
-  public void drop() {
-  }
+//  @After
+//  @Sql(scripts = "classpath:drop.sql")
+//  public void drop() {
+//  }
 }
