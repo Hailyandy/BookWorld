@@ -1,5 +1,6 @@
 package com.chien.bookWorld.entity;
 
+import jakarta.persistence.Column;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -21,8 +22,7 @@ import jakarta.validation.constraints.NotNull;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BookSale {
     @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

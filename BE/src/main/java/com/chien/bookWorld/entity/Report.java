@@ -1,5 +1,6 @@
 package com.chien.bookWorld.entity;
 
+import jakarta.persistence.Column;
 import java.sql.Timestamp;
 import org.checkerframework.common.aliasing.qual.Unique;
 import jakarta.validation.constraints.NotNull;
@@ -29,8 +30,7 @@ import lombok.ToString;
 public class Report {
 
     @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

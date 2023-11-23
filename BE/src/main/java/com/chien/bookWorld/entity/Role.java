@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotNull;
     property = "id")
 public class Role {
   @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

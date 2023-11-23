@@ -35,8 +35,7 @@ import jakarta.validation.constraints.NotNull;
 public class Post {
 
   @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

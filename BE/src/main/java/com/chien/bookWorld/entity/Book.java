@@ -32,8 +32,7 @@ import jakarta.validation.constraints.NotNull;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Book {
   @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 

@@ -1,5 +1,6 @@
 package com.chien.bookWorld.entity;
 
+import jakarta.persistence.Column;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -26,8 +27,7 @@ import jakarta.validation.constraints.NotNull;
 public class Questions {
 
     @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
     private UUID id;
 
     private String questionText;

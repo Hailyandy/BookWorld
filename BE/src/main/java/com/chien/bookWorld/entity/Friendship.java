@@ -1,5 +1,6 @@
 package com.chien.bookWorld.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,8 +25,7 @@ import jakarta.validation.constraints.NotNull;
 @Setter
 public class Friendship {
     @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

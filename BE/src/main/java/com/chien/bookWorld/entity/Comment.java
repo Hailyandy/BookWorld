@@ -32,8 +32,7 @@ import jakarta.validation.constraints.NotNull;
 public class Comment {
 
   @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
   private UUID id;
 
   @ManyToOne

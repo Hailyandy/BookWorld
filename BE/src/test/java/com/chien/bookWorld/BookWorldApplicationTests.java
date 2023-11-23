@@ -11,9 +11,9 @@ class BookWorldApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-//	@After
-//	@Sql(scripts = "classpath:drop.sql")
-//	public void drop() {
-//	}
+	@After
+	@Sql(scripts = "classpath:drop.sql")
+	public void drop() {
+	}
 
 }

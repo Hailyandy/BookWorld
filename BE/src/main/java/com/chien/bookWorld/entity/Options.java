@@ -3,6 +3,7 @@ package com.chien.bookWorld.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,8 +20,7 @@ import jakarta.validation.constraints.NotNull;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Options {
     @Id
-@NotNull
-@Unique
+@Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
