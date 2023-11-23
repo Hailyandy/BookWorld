@@ -1,5 +1,7 @@
 package com.chien.bookWorld;
 
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import com.chien.bookWorld.controller.AuthController;
@@ -23,6 +25,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -60,6 +63,11 @@ class AuthControllerTests {
   }
 
   @Test
+  @Sql(
+      scripts = "/drop.sql",
+      config = @SqlConfig(transactionMode = ISOLATED),
+      executionPhase = AFTER_TEST_METHOD
+  )
   public void testLoginSuccess() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)

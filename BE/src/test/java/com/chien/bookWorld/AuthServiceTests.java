@@ -1,5 +1,8 @@
 package com.chien.bookWorld;
 
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
+
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.request.LoginRequest;
 import com.chien.bookWorld.repository.UserRepository;
@@ -13,7 +16,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.BadCredentialsException;
+
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -97,6 +102,11 @@ class AuthServiceTests {
   }
 
   @Test
+  @Sql(
+      scripts = "/drop.sql",
+      config = @SqlConfig(transactionMode = ISOLATED),
+      executionPhase = AFTER_TEST_METHOD
+  )
   public void testLoginIncorrectPassword() {
     Exception exception = Assert.assertThrows(BadCredentialsException.class, () -> {
       authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "123456789"));
@@ -110,6 +120,7 @@ class AuthServiceTests {
 
   @Test
 //  @Sql(scripts = "classpath:login_data.sql")
+
   public void testLoginSuccess() {
     Long code = authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "12345678"))
         .getCode();
@@ -119,11 +130,13 @@ class AuthServiceTests {
   }
 
   @AfterAll
-  @SqlGroup({
-      @Sql("/drop.sql"),
-      @Sql("/data.sql")
-  })
+  @Sql(
+      scripts = "/drop.sql",
+      config = @SqlConfig(transactionMode = ISOLATED),
+      executionPhase = AFTER_TEST_METHOD
+  )
   public static void drop() {
     System.out.println("dropped");
+    Assert.assertTrue(true);
   }
 }
