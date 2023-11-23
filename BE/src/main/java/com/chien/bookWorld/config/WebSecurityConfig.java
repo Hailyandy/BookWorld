@@ -3,9 +3,11 @@ package com.chien.bookWorld.config;
 import com.chien.bookWorld.filters.AuthTokenFilter;
 import com.chien.bookWorld.jwt.AuthEntryPointJwt;
 import com.chien.bookWorld.service.UserService;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -18,8 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableMethodSecurity
@@ -69,7 +71,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/v3/api-docs/**").permitAll()
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
-        ).cors();
+        ).cors().configurationSource(corsConfigurationSource());
 
     http.authenticationProvider(authenticationProvider());
 
@@ -80,21 +82,18 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  CorsWebFilter corsFilter() {
-
-    CorsConfiguration config = new CorsConfiguration();
-
-    // Possibly...
-    // config.applyPermitDefaultValues()
-
-    config.setAllowCredentials(true);
-    config.addAllowedOrigin("https://hailyandy.github.io/BookWorld");
-    config.addAllowedHeader("*");
-    config.addAllowedMethod("*");
-
+  CorsConfigurationSource corsConfigurationSource() {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
-
-    return new CorsWebFilter(source);
+    CorsConfiguration corsConfiguration = new CorsConfiguration();
+    corsConfiguration.addAllowedOrigin("https://hailyandy.github.io/BookWorld/");
+    corsConfiguration.setAllowedMethods(Arrays.asList(
+        HttpMethod.GET.name(),
+        HttpMethod.HEAD.name(),
+        HttpMethod.POST.name(),
+        HttpMethod.PUT.name(),
+        HttpMethod.DELETE.name()));
+    corsConfiguration.setMaxAge(1800L);
+    source.registerCorsConfiguration("/**", corsConfiguration); // you restrict your path here
+    return source;
   }
 }
