@@ -5,7 +5,7 @@ import com.chien.bookWorld.payload.request.LoginRequest;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.AuthService;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -116,7 +116,7 @@ class AuthServiceTests {
     Assert.assertEquals(expect, code
     );
   }
-  @After
+  @AfterAll
   @Sql(scripts = "classpath:drop.sql")
   public void drop() {
     System.out.println("dropped");

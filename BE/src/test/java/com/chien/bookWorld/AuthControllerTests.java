@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ class AuthControllerTests {
     Assert.assertEquals("Thành công!", response.getMessage());
   }
 
-  @After
+  @AfterAll
   @Sql(scripts = "classpath:drop.sql")
   public void drop() {
   }
