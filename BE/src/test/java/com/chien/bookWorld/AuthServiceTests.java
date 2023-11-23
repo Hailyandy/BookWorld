@@ -4,6 +4,7 @@ import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.request.LoginRequest;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.AuthService;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -118,5 +119,6 @@ class AuthServiceTests {
   @After
   @Sql(scripts = "classpath:drop.sql")
   public void drop() {
+    System.out.println("dropped");
   }
 }
