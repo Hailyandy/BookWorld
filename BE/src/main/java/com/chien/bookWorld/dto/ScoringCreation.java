@@ -3,6 +3,7 @@ package com.chien.bookWorld.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -10,7 +11,5 @@ import java.util.UUID;
 public class ScoringCreation {
 
     private Long idBook;
-    private Integer score;
-    private UUID questionId;
-    private Long idAnswer;
+    private List<AnswerCheckDto> listAnswer;
 }

@@ -3,6 +3,7 @@ package com.chien.bookWorld.controller;
 import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.PostCreationDto;
 import com.chien.bookWorld.dto.StatePost;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.BookService;
 import com.chien.bookWorld.service.PostService;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 @RequestMapping("/api/post")
 public class PostController {
 
@@ -39,9 +40,23 @@ public class PostController {
   }
 
   @GetMapping
-  public ResponseEntity<SuccessResponse> getPostByState(
+  public ResponseEntity<PageResponse> getPostByState(
       @RequestBody StatePost state, Pageable pageable) {
     return ResponseEntity.status(200).body(postService.getPostBySate(state.getState(), pageable));
+  }
+
+  @GetMapping("/current")
+  public ResponseEntity<PageResponse> getPostByUser(
+          Pageable pageable
+  ) {
+    return ResponseEntity.status(200).body(postService.getPostByUserCurrent(pageable));
+  }
+
+  @GetMapping("/{userId}")
+  public ResponseEntity<PageResponse> getPostByUserId(
+          @PathVariable Long userId, Pageable pageable
+  ) {
+      return  ResponseEntity.status(200).body(postService.getPostByUser(userId, pageable));
   }
 
 }

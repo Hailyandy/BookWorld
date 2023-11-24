@@ -21,7 +21,7 @@ import com.chien.bookWorld.service.QuestionsService;
 
 @RestController
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 public class QuestionsController {
 
     @Autowired
@@ -41,13 +41,9 @@ public class QuestionsController {
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, Object>> checkQuestion(
+    public ResponseEntity<SuccessResponse> checkQuestion(
             @RequestBody ScoringCreation scoringCreation) {
         return ResponseEntity.status(200)
-                .body(questionsService.checkQuestion(
-                        scoringCreation.getIdBook(),
-                        scoringCreation.getScore(),
-                        scoringCreation.getIdAnswer(),
-                        scoringCreation.getQuestionId()));
+                .body(questionsService.checkQuestion(scoringCreation));
     }
 }

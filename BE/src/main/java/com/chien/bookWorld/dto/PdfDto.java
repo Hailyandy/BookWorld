@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OptionDto {
-    private String options_text;
+public class PdfDto {
     private Long id;
-
+    private String urlPdf;
+    private String userName;
 }

@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/friend")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 public class FriendController {
 
     private static final Logger logger = Logger.getLogger(FriendController.class.getName());

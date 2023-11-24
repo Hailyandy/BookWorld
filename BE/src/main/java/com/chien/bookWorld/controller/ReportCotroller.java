@@ -20,7 +20,7 @@ import com.chien.bookWorld.service.ReportService;
 
 @RestController
 @RequestMapping("/api/report")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 public class ReportCotroller {
 
     @Autowired
