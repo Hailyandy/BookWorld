@@ -4,7 +4,6 @@ const endPoint = 'author'
 class AuthorService extends BaseService {
     constructor() {
         super(endPoint);
-
     }
 
 }

@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import userService from "~/services/user.service";
+import adminService from "~/services/admin.service";
+import authorService from "~/services/author.service";
 import tokenService from "~/services/token.service";
 //friendReqList,userInfo
 const initialState = tokenService.getUser() ? { userInfo: { ...tokenService.getUser() }, friendReqList: [] } : { friendReqList: [] };
@@ -236,6 +238,102 @@ export const get50TopBookAsync = createAsyncThunk(
     }
 );
 
+export const getAllReportPdfAsync = createAsyncThunk(
+    "admin/allReportPdf",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await adminService.getAllReportPdf();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const getAllPostAsync = createAsyncThunk(
+    "user/getAllPost",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await userService.getAllPost();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const getAllSuggestBookAsync = createAsyncThunk(
+    "user/getAllPost",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await userService.getAllSuggestBook();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+export const getAllAuthorsAsync = createAsyncThunk(
+    "admin/getAllAuthors",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await adminService.getAllAuthor();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+
+export const addNewBookAsync = createAsyncThunk(
+    "admin/addNewBook",
+    async ({
+        name,
+        numberPages,
+        publisher,
+        publishDate,
+        introducing,
+        urlPoster,
+        authorId,
+        genreIds,
+
+    }, { rejectWithValue }) => {
+        try {
+            const res = await adminService.addNewBook({
+                name,
+                numberPages,
+                publisher,
+                publishDate,
+                introducing,
+                urlPoster,
+                authorId,
+                genreIds,
+
+            },);
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -283,6 +381,12 @@ const userSlice = createSlice({
             console.log(action.payload)
         },
         [get50TopBookAsync.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [getAllReportPdfAsync.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [addNewBookAsync.fulfilled]: (state, action) => {
             console.log(action.payload)
         },
     },

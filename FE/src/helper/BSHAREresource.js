@@ -89,6 +89,14 @@ export const updateLocalHostUrl = (updateStringrole) => {
         ],
         ROLE_ADMIN_MenuItem: [
             {
+                key: 'add_new_book',
+                label: (
+                    < Link to={`${localHost.url}add-new-book`} >
+                        Thêm sách mới
+                    </Link >)
+
+            },
+            {
                 key: 'dashboard',
                 label: (
                     < Link to={`${localHost.url}`} >
@@ -105,13 +113,14 @@ export const updateLocalHostUrl = (updateStringrole) => {
 
             },
             {
-                key: 'support',
+                key: 'statistic_post',
                 label: (
                     < Link to={`${localHost.url}statistic-report-post`} >
                         Thống kê bài đăng
                     </Link >)
 
-            }
+            },
+
         ]
 
     }
@@ -260,6 +269,14 @@ const BSHAREresource = {
         ],
         ROLE_ADMIN_MenuItem: [
             {
+                key: 'add_new_book',
+                label: (
+                    < Link to={`${localHost.url}add-new-book`} >
+                        Thêm sách mới
+                    </Link >)
+
+            },
+            {
                 key: 'dashboard',
                 label: (
                     < Link to={`${localHost.url}`} >
@@ -276,13 +293,14 @@ const BSHAREresource = {
 
             },
             {
-                key: 'support',
+                key: 'statistic_post',
                 label: (
                     < Link to={`${localHost.url}statistic-report-post`} >
                         Thống kê bài đăng
                     </Link >)
 
-            }
+            },
+
         ]
 
     }

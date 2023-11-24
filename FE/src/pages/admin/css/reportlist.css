@@ -1,0 +1,12 @@
+.repost-list-container {
+    padding: 3.5%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 16px;
+}
+
+.width-30 {
+    width: 32%;
+    display: inline-block;
+}

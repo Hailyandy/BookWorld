@@ -42,7 +42,7 @@ const HeaderLayout = (props) => {
      */
     const debouncedSearch = useCallback(debounce((searchTextReturnFromDebounceHelper) => {
         console.log(searchTextReturnFromDebounceHelper)
-        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper, param: { page: 1, size: 5 } }))
+        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper, param: { page: 0, size: 5 } }))
             .unwrap()
             .then(async data => {
                 // notyf.success(BSHAREresource.notification_message.success.login)
@@ -220,7 +220,7 @@ const HeaderLayout = (props) => {
                             <Avatar shape="circle" icon={<UserOutlined />} />
                         </Badge>}
                     onClick={() => {
-                        navigate(`friend-req-search-people`, { replace: true });
+                        navigate(`${tokenService.getUserRoleName()}/friend-req-search-people`, { replace: true });
                     }}
 
                 />

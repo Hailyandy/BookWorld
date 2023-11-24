@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(response => {
 
 
 export const getAPI = async (endpoint, param, config = {}) => {
-  console.log(param)
+  console.log(config)
   if (param) {
     endpoint = `${endpoint}?${objectToParams(param)}`
   }
@@ -43,11 +43,12 @@ export const getAPI = async (endpoint, param, config = {}) => {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${tokenService.getLocalAccessToken()}`,
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "http://localhost:3000/"
       },
 
     });
-    const response = await axiosInstance.get(endpoint)
+    console.log(config)
+    const response = await axiosInstance.get(endpoint, config)
     // loading.hideLoading()
     if (response.status === 200) {
       // Lấy dữ liệu thành công

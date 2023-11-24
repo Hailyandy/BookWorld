@@ -12,6 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import {
+  QuizPage,
   AdminDashBoard, AdminPostList, AdminReportList, AdminAddBookPage,
   BookMarket,
   AnonymousUser,
@@ -23,13 +24,13 @@ import {
   UserHomePage, RegisterPage, LoginPage, AuthorsError, HomePage, OtpCode, SearchBookPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf
 } from './pages';
 import { ProtectedRoute, ModelReviewPost, TheAutofillItem, RootLayout, AuthorsLayout, GeneralLayout, SearchResultLayout } from './components';
-import { searchBookByNameOrAuthor } from './slices/book';
-import { searchUserByName } from './slices/user';
+import { searchBookByNameOrAuthor, getAllGenresBookAsync, } from './slices/book';
+import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllPostAsync } from './slices/user';
 //page mẫu, gọi api luôn khi chạy vào route này, cần tham khảo nên để import ra ngoài
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
 import { searchBookByIdAsync } from './slices/book';
-import { getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync } from './slices/user';
+import { getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync } from './slices/user';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -52,52 +53,12 @@ function App() {
       //Sửa lại để test component tí ấy mà
       <>
         <Route path="/" element={<RootLayout />}>
+          {/* HomePage */}
           <Route index element={<HomePage />} />
           <Route path="select-fav-book" element={<SelectFavouritebook />} />
-          <Route path="login" element={<LoginPage />} />
+          {/* <QuizPage /> */}
+          <Route path="login" element={<QuizPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route path="search-result" element={<SearchResultLayout />}>
-            <Route path="search-book/:searchBooktext" element={<SearchBookPage />} loader={({ params }) => {
-              return dispatch(searchBookByNameOrAuthor({ param: { page: 1, size: 5 }, name: params.searchBooktext }))
-                .unwrap()
-                .then(async data => {
-                  console.log(data)
-                  return data;
-                })
-                .catch(e => {
-                  console.log(e);
-                })
-            }}
-            />
-            {/* random user online */}
-            <Route path="search-user/:searchText" element={<SearchUserPage />} loader={({ params }) => {
-              return dispatch(searchUserByName({ name: params.searchText }))
-                .unwrap()
-                .then(async data => {
-                  console.log(data)
-                  return data;
-                })
-                .catch(e => {
-                  console.log(e);
-                })
-            }}
-            />
-
-            {/* only friend search */}
-            <Route path="search-friend" element={<SearchFriendPage />} loader={() => {
-              return dispatch(getListFriend())
-                .unwrap()
-                .then(async data => {
-                  console.log(data)
-                  return data ? data : [];
-                })
-                .catch(e => {
-                  console.log(e);
-                })
-            }}
-            />
-          </Route>
-
           <Route path="otp-confirmation/:username" element={<OtpCode />} />
           {
             /**
@@ -105,26 +66,80 @@ function App() {
             */
             tokenService.getRole("ROLE_USER") && (
               <>
-                <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} loader={() => {
-                  return dispatch(getListFriendRequest())
-                    .unwrap()
-                    .then(async data => {
-                      console.log(data)
-                      return data ? data : [];
-                    })
-                    .catch(e => {
-                      console.log(e);
-                      return []
-                    })
-
-                }} />
                 <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                   <Route
                     index
                     element={<UserHomePage />}
-                  // loader={authorsLoader}
+                    loader={async () => {
+                      var data = { userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
+                      data.suggestionBooks = await dispatch(getAllSuggestBookAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? mapToClass(data, BookEntity) : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+
+                      data.friends = await dispatch(getListFriend())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+
+                      data.currentReadingBooks = await dispatch(getAllMyBook())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? mapToClass(data, BookEntity) : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      data.favouriteBooks = await dispatch(get50TopBookAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? mapToClass(data, BookEntity) : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                        })
+
+                      data.userPost = await dispatch(getAllPostAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? mapToClass(data, PostEntity) : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                        })
+                      return data
+                    }}
                   // errorElement={<AuthorsError />}
                   />
+                  <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} loader={() => {
+                    return dispatch(getListFriendRequest())
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+
+                  }} />
                   <Route
                     path="fill-infor"
                     element={<UserDeclareInformationPage />}
@@ -238,7 +253,49 @@ function App() {
                     // loader={authorDetailsLoader}
                     />
                   </Route >
+                  <Route path="search-result" element={<SearchResultLayout />}>
+                    <Route path="search-book/:searchBooktext" element={<SearchBookPage />} loader={({ params }) => {
+                      return dispatch(searchBookByNameOrAuthor({ param: { page: 0, size: 5 }, name: params.searchBooktext }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data;
+                        })
+                        .catch(e => {
+                          console.log(e);
+                        })
+                    }}
+                    />
+                    {/* random user online */}
+                    <Route path="search-user/:searchText" element={<SearchUserPage />} loader={({ params }) => {
+                      return dispatch(searchUserByName({ name: params.searchText }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data;
+                        })
+                        .catch(e => {
+                          console.log(e);
+                        })
+                    }}
+                    />
+
+                    {/* only friend search */}
+                    <Route path="search-friend" element={<SearchFriendPage />} loader={() => {
+                      return dispatch(getListFriend())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                        })
+                    }}
+                    />
+                  </Route>
                 </Route >
+
               </>
 
             )
@@ -257,11 +314,50 @@ function App() {
                 />
                 <Route
                   path="statistic-report-post"
-                  element={<AdminReportList />}
+                  element={<AdminReportList />
+                  }
+                  loader={() => {
+                    return dispatch(getAllReportPdfAsync())
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+
+                  }}
                 />
                 <Route
                   path="add-new-book"
                   element={<AdminAddBookPage />}
+                  loader={async () => {
+                    var data = { genres: [], authors: [] }
+                    data.genres = await dispatch(getAllGenresBookAsync())
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+
+                    data.authors = await dispatch(getAllAuthorsAsync())
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+                    return data
+                  }}
                 />
               </Route>
             )

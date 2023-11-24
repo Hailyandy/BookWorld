@@ -19,6 +19,7 @@ import SearchFriendPage from "./Search/SearchFriendPage";
 import BookRankPage from "./BookRankPage";
 import AnonymousUser from "./AnonymousUsers/AnonymousUser";
 import BookMarket from "./BookMarket/BookMarketCreateItem";
+import QuizPage from "./quiz/QuizPage";
 import {
     AdminDashBoard,
     AdminPostList,
@@ -48,6 +49,9 @@ export {
     FriendRequestSearchPeoplePage,
     SearchFriendPage,
     BookRankPage,
+
+    //Quiz
+    QuizPage,
     //admin page
     AdminDashBoard,
     AdminPostList,

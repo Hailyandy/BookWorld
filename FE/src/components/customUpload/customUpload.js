@@ -43,7 +43,9 @@ function CustomUpload() {
     const customUpload = async ({ onError, onSuccess, file }) => {
         // firebase upload\
         console.log('customUpload')
-        uploadFileFirebase(file)
+        uploadFileFirebase(file).then((url) => {
+            console.log(url)
+        })
         setTimeout(() => {
             onSuccess("ok");
         }, 0);

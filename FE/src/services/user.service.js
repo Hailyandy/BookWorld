@@ -48,14 +48,6 @@ class UserService extends BaseService {
         return data
     }
 
-    /**
-     * API sử dụng để lấy ra các cuốn sách gợi ý
-     * @returns array chứa thông tin các quyển sách gợi ý
-     */
-    async getRecommendedBooks() {
-        var data = await getAPI('book')
-        return data
-    }
 
     async getUserByName({ name }) {
         var data = await getAPI(`users/search?name=${name}`)
@@ -69,6 +61,25 @@ class UserService extends BaseService {
      */
     async getAllMyBook() {
         var data = await getAPI(`bookBasket`)
+        return data
+    }
+
+    /**
+    *API sử dụng lấy tất cả các bài post
+    * @param {*}
+    * @returns
+    */
+    async getAllPost(state = { state: 'PUBLIC' }) {
+        var data = await getAPI(`post`, null, state)
+        return data
+    }
+    /**
+    *API sử dụng để lấy ra các cuốn sách gợi ý
+    * @param {*}
+    * @returns
+    */
+    async getAllSuggestBook() {
+        var data = await getAPI(`book`)
         return data
     }
 }

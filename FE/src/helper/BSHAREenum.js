@@ -58,9 +58,9 @@ const BSHAREnum = Object.freeze({
         follow_people: 'FollowPeople'
     }),
     bookStatusWithUser: Object.freeze({
-        read: 'READ',
-        want_to_read: 'WANT_TO_READ',
-        reading: 'READING',
+        read: 'Đã đọc',
+        want_to_read: 'Muốn đọc',
+        reading: 'Đang đọc',
     })
 })
 

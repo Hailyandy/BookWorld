@@ -16,7 +16,8 @@
   --height-autofill-item: 80px;
   --margin-top-scroll-page: 25px;
   --height-containner-main: 82vh;
-  --border-radius-containner: 5px
+  --border-radius-containner: 5px;
+  --padding-container: 16px
 }
 
 .stick-to-top {
