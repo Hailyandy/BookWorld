@@ -12,5 +12,5 @@ public interface QuestionsService extends
                 GeneralService<Map<String, Object>, QuestionsCreationDto, Questions> {
         SuccessResponse getQuestionsByBook(Long idBook);
 
-        Map<String, Object> checkQuestion(ScoringCreation scoringCreation);
+        SuccessResponse checkQuestion(ScoringCreation scoringCreation);
 }

@@ -2,6 +2,7 @@ package com.chien.bookWorld.controller;
 
 import java.util.Map;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import com.chien.bookWorld.service.CommentService;
 
 @RestController
 @RequestMapping("/api/comment")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 public class CommentController {
 
     @Autowired
@@ -32,9 +33,8 @@ public class CommentController {
     }
 
     @GetMapping
-    public ResponseEntity<SuccessResponse> getCommentByPost(
+    public ResponseEntity<PageResponse> getCommentByPost(
             @RequestBody CommentRequest commentRequest, Pageable pageable) {
         return ResponseEntity.status(200).body(commentService.getCommentByPost(commentRequest.getPostId(), pageable));
     }
-
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/pdf")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+
 public class PdfController {
 
     @Autowired

@@ -10,6 +10,7 @@ import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.Post;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.BookRepository;
 import com.chien.bookWorld.repository.GenreRepository;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -133,13 +135,17 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public SuccessResponse getPostBySate(String state, Pageable pageable) {
+  public PageResponse getPostBySate(String state, Pageable pageable) {
     // TODO Auto-generated method stub
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     if (state.equals("PUBLIC")) {
-      List<Post> a = postRepository.findAllByOrderByTimestampDesc(pageable);
-      return new SuccessResponse(a.stream()
+      Page<Post> postList = postRepository.findAllByOrderByTimestampDesc(pageable);
+      int totalPages = postList.getTotalPages();
+      int numberPage = postList.getNumber();
+      long totalRecord = postList.getTotalElements();
+      int pageSize = postList.getSize();
+      return new PageResponse(totalPages, pageSize, totalRecord, numberPage, postList.stream()
               .map(post -> {
                 PostDto postDto = mapper.map(post, PostDto.class);
                 postDto.setUserName(post.getUser().getName());
@@ -148,8 +154,12 @@ public class PostServiceImpl implements PostService {
               }).collect(
                       Collectors.toList()));
     } else  {
-      List<Post> posts = postRepository.getPostByFriend(userDetails.getId(), pageable);
-      return new SuccessResponse(posts.stream()
+      Page<Post> posts = postRepository.getPostByFriend(userDetails.getId(), pageable);
+      int totalPages = posts.getTotalPages();
+      int numberPage = posts.getNumber();
+      long totalRecord = posts.getTotalElements();
+      int pageSize = posts.getSize();
+      return new PageResponse(totalPages, pageSize, totalRecord, numberPage, posts.stream()
               .map(post -> {
                 PostDto postDto = mapper.map(post, PostDto.class);
                 postDto.setUserName(post.getUser().getName());
@@ -158,5 +168,46 @@ public class PostServiceImpl implements PostService {
               }).collect(
                       Collectors.toList()));
     }
+  }
+
+  @Override
+  public PageResponse getPostByUserCurrent(Pageable pageable) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+    Page<Post> posts = postRepository.getPostByUser(userDetails.getId(), pageable);
+    int totalPages = posts.getTotalPages();
+    int numberPage = posts.getNumber();
+    long totalRecord = posts.getTotalElements();
+    int pageSize = posts.getSize();
+
+
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, posts.stream()
+            .map(post -> {
+              PostDto postDto = mapper.map(post, PostDto.class);
+              postDto.setUserName(post.getUser().getName());
+              postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+              return postDto;
+            }).collect(
+                    Collectors.toList()));
+  }
+
+  @Override
+  public PageResponse getPostByUser(Long userId, Pageable pageable) {
+
+    Page<Post> posts = postRepository.getPostByUser(userId, pageable);
+    int totalPages = posts.getTotalPages();
+    int numberPage = posts.getNumber();
+    long totalRecord = posts.getTotalElements();
+    int pageSize = posts.getSize();
+
+
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, posts.stream()
+            .map(post -> {
+              PostDto postDto = mapper.map(post, PostDto.class);
+              postDto.setUserName(post.getUser().getName());
+              postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+              return postDto;
+            }).collect(
+                    Collectors.toList()));
   }
 }

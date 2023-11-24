@@ -156,20 +156,27 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public Map<String, Object> checkQuestion(ScoringCreation scoringCreation) {
-        int score = 0;
+    public SuccessResponse checkQuestion(ScoringCreation scoringCreation) {
+        Integer score = 0;
         List<AnswerCheckDto> answerCheckDtos = scoringCreation.getListAnswer();
         for (int i = 0; i < answerCheckDtos.size(); i++) {
             Options option = optionsRepository.findById(answerCheckDtos.get(i).getIdAnswer())
-                    .orElseThrow(() -> new AppException(404, 44, "Không có cuốn sách phù hợp với id book"));
+                    .orElseThrow(() -> new AppException(404, 44, "Không có câu trả lời phù hợp với id"));
             int check = option.getIs_correct();
-            if (check == 0) {
+            if (check == 1) {
                 score = score + answerCheckDtos.get(i).getScore();
-            } else {
-
             }
         }
-        return null;
+        logger.info(String.valueOf(score));
+        updateScoring(scoringCreation.getIdBook(), score);
+        List<Options> options = optionsRepository.findByIdBookAndIsCorrect(scoringCreation.getIdBook());
+
+
+        Integer finalScore = score;
+        AnswerDto answerDto = new AnswerDto();
+        answerDto.setScore(finalScore);
+        answerDto.setOptionDtos(options.stream().map(option -> mapper.map(option, OptionDto.class)).collect(Collectors.toList()));
+        return new SuccessResponse(answerDto);
     }
 
 }
