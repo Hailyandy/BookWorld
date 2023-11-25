@@ -19,4 +19,9 @@ public interface OptionsRepository extends JpaRepository<Options, Long> {
     @Query(nativeQuery = true,
         value = "SELECT o.* FROM options o join questions q on o.question_id = q.id where o.is_correct = 1 and q.book_id = :idBook")
     List<Options> findByIdBookAndIsCorrect(@Param("idBook") Long idBook);
+
+
+    @Query(nativeQuery = true,
+        value = "SELECT * FROM options where question_id = :questionId and is_correct = 1")
+    Options findByQuestionIdAndIsCorrect(@Param("questionId") UUID questionId);
  }

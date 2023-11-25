@@ -41,8 +41,8 @@ public class PostController {
 
   @GetMapping
   public ResponseEntity<PageResponse> getPostByState(
-      @RequestBody StatePost state, Pageable pageable) {
-    return ResponseEntity.status(200).body(postService.getPostBySate(state.getState(), pageable));
+      @RequestParam String state, Pageable pageable) {
+    return ResponseEntity.status(200).body(postService.getPostBySate(state, pageable));
   }
 
   @GetMapping("/current")

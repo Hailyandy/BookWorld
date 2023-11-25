@@ -2,6 +2,7 @@ package com.chien.bookWorld.service;
 
 import java.util.Map;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.data.domain.Pageable;
 
 import com.chien.bookWorld.dto.ReportCreationDto;
@@ -13,5 +14,5 @@ public interface ReportService extends GeneralService<Map<String, Object>, Repor
 
     Map<String, Object> acceptHandLer(ReportStatus status, Long id);
 
-    SuccessResponse findAll(Pageable pageable);
+    PageResponse findAll(Pageable pageable);
 }

@@ -1,11 +1,7 @@
 package com.chien.bookWorld.service.impl;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -158,24 +154,30 @@ public class QuestionsServiceImpl implements QuestionsService {
     @Override
     public SuccessResponse checkQuestion(ScoringCreation scoringCreation) {
         Integer score = 0;
+        AnswerDto answerDto = new AnswerDto();
+        ArrayList<CheckQuestionDto> checkQuestionDtos = new ArrayList<>();
         List<AnswerCheckDto> answerCheckDtos = scoringCreation.getListAnswer();
         for (int i = 0; i < answerCheckDtos.size(); i++) {
-            Options option = optionsRepository.findById(answerCheckDtos.get(i).getIdAnswer())
-                    .orElseThrow(() -> new AppException(404, 44, "Không có câu trả lời phù hợp với id"));
-            int check = option.getIs_correct();
-            if (check == 1) {
+            CheckQuestionDto checkQuestionDto = new CheckQuestionDto();
+            checkQuestionDto.setUser_answer(answerCheckDtos.get(i).getAnswer());
+            checkQuestionDto.setQuestionId(answerCheckDtos.get(i).getQuestionId());
+            checkQuestionDto.setUser_answerId(answerCheckDtos.get(i).getIdAnswer());
+            Options optionTrue = optionsRepository.findByQuestionIdAndIsCorrect(answerCheckDtos.get(i).getQuestionId());
+            checkQuestionDto.setCorrect_answer(optionTrue.getOptions_text());
+            checkQuestionDto.setCorrect_answerId(optionTrue.getId());
+            if (optionTrue.getId() == answerCheckDtos.get(i).getIdAnswer()) {
                 score = score + answerCheckDtos.get(i).getScore();
+                checkQuestionDto.setStatus("Đúng");
+            } else {
+                checkQuestionDto.setStatus("Sai");
             }
+            checkQuestionDtos.add(checkQuestionDto);
+
         }
         logger.info(String.valueOf(score));
         updateScoring(scoringCreation.getIdBook(), score);
-        List<Options> options = optionsRepository.findByIdBookAndIsCorrect(scoringCreation.getIdBook());
-
-
-        Integer finalScore = score;
-        AnswerDto answerDto = new AnswerDto();
-        answerDto.setScore(finalScore);
-        answerDto.setOptionDtos(options.stream().map(option -> mapper.map(option, OptionDto.class)).collect(Collectors.toList()));
+        answerDto.setScore(score);
+        answerDto.setCheckQuestionDtos(checkQuestionDtos);
         return new SuccessResponse(answerDto);
     }
 
