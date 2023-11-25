@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 public class AnswerDto {
     private Integer score;
-    private List<OptionDto> optionDtos;
+    private List<CheckQuestionDto> checkQuestionDtos;
 }

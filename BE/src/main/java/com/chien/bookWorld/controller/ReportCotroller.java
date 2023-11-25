@@ -2,6 +2,7 @@ package com.chien.bookWorld.controller;
 
 import java.util.Map;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +36,10 @@ public class ReportCotroller {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<SuccessResponse> getAllReport(
+    public ResponseEntity<PageResponse> getAllReport(
             Pageable pageable
     ) {
-        return ResponseEntity.status(200).body(new SuccessResponse(reportService.findAll(pageable)));
+        return ResponseEntity.status(200).body(reportService.findAll(pageable));
     }
 
     @PostMapping("/handler")

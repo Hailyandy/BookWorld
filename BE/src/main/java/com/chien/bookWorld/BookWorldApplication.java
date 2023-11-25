@@ -24,7 +24,6 @@ import com.google.firebase.FirebaseOptions;
 public class BookWorldApplication {
 
 	public static void main(String[] args) {
-		ClassLoader classLoader = SpringBootApplication.class.getClassLoader();
 		SpringApplication.run(BookWorldApplication.class, args);
 	}
 

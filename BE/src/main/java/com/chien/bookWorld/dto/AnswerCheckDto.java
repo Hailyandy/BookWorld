@@ -11,4 +11,5 @@ public class AnswerCheckDto {
     private Integer score;
     private UUID questionId;
     private Long idAnswer;
+    private String answer;
 }
