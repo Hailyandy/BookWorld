@@ -6,16 +6,13 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.chien.bookWorld.dto.*;
+import com.chien.bookWorld.entity.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.chien.bookWorld.entity.Options;
-import com.chien.bookWorld.entity.Questions;
-import com.chien.bookWorld.entity.Scoring;
-import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.BookRepository;
@@ -61,23 +58,36 @@ public class QuestionsServiceImpl implements QuestionsService {
         if (!isAuthor) {
             throw new AppException(403, 43, "Cần quyền là tác giả.");
         }
-        Questions questions = new Questions();
-        UUID idQuestion = UUID.randomUUID();
-        questions.setId(idQuestion);
-        questions.setBook(bookRepository.findById(c.getIdBook())
-                .orElseThrow(() -> new AppException(404, 44, "Không có cuốn sách phù hợp với id book")));
-        questions.setQuestionText(c.getQuestionsText());
-        questions.setScoring(c.getScoring());
-        questionsRepository.save(questions);
-        Set set = c.getOptionText().keySet();
-        for (Object key : set) {
-            logger.info("tesstt" + key.toString());
-            Integer value = c.getOptionText().get(key);
-            Options option = new Options();
-            option.setIs_correct(value);
-            option.setOptions_text(key.toString());
-            option.setQuestions(questions);
-            optionsRepository.save(option);
+
+        Book book = bookRepository.findById(c.getIdBook())
+                .orElseThrow(() -> new AppException(404, 44, "Không có cuốn sách phù hợp với id book"));
+//        questions.setQuestionText(c.getQuestionsText());
+//        questions.setScoring(c.getScoring());
+//        questionsRepository.save(questions);
+//        Set set = c.getOptionText().keySet();
+
+//        }
+
+        List<QuestionDto> questionsDtos = c.getQuestionDtos();
+        for (QuestionDto i : questionsDtos) {
+            Questions question = new Questions();
+            UUID idQuestion = UUID.randomUUID();
+            question.setId(idQuestion);
+            question.setBook(book);
+            question.setQuestionText(i.getQuestionsText());
+            question.setScoring(i.getScoring());
+            questionsRepository.save(question);
+
+            Set set = i.getOptionText().keySet();
+
+            for (Object key : set) {
+                Integer value = i.getOptionText().get(key);
+                Options option = new Options();
+                option.setIs_correct(value);
+                option.setOptions_text(key.toString());
+                option.setQuestions(question);
+                optionsRepository.save(option);
+            }
         }
 
         final Map<String, Object> body = new HashMap<>();

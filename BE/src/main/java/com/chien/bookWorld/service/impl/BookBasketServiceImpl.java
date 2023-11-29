@@ -4,11 +4,13 @@ import com.chien.bookWorld.dto.BookBasketUpdateDto;
 import com.chien.bookWorld.dto.BookBasketDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.DtoMap.BookBasketDtoMap;
+import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.BookBasketRepository;
 import com.chien.bookWorld.repository.BookRepository;
@@ -46,22 +48,33 @@ public class BookBasketServiceImpl implements BookBasketService {
   }
 
   @Override
-  public SuccessResponse findAll(Pageable pageable) {
+  public PageResponse findAll(Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     Page<BookBasket> bookBasketList = bookBasketRepository.findBookBasketByUser(userDetails.getId(), pageable);
+    int totalPages = bookBasketList.getTotalPages();
+    int numberPage = bookBasketList.getNumber();
+    long totalRecord = bookBasketList.getTotalElements();
+    int pageSize = bookBasketList.getSize();
 
-    if (bookBasketList.isEmpty()) {
-      return new SuccessResponse(null);
-    } else {
-      TypeMap<BookBasket, BookBasketDto> typeMap = mapper.getTypeMap(BookBasket.class, BookBasketDto.class);
-      if (typeMap == null) {
-        mapper.addMappings(new BookBasketDtoMap());
-      }
-      return new SuccessResponse(bookBasketList.stream()
-          .map(book -> mapper.map(book, BookBasketDto.class)).collect(
-              Collectors.toList()));
-    }
+      List<BookDto> bookList = bookBasketList.stream().map(book -> {
+        BookDto bookDto = new BookDto();
+        bookDto.setName(book.getUser().getName());
+        bookDto.setAuthorName(book.getUser().getUserName());
+        bookDto.setAuthorId(book.getUser().getId());
+        bookDto.setIntroducing(book.getBook().getIntroducing());
+        bookDto.setNumberPages(book.getBook().getNumberPages());
+        bookDto.setPublishDate(book.getBook().getPublishDate());
+        bookDto.setPublisher(book.getBook().getPublisher());
+        bookDto.setScoring(book.getBook().getScoring());
+        bookDto.setUrlPoster(book.getBook().getUrlPoster());
+        bookDto.setGenres(book.getBook().getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+                Collectors.toList()));
+        bookDto.setStatusWithUser(book.getStatus());
+         return bookDto;
+      }).collect(Collectors.toList());
+
+      return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookList);
   }
 
   @Override

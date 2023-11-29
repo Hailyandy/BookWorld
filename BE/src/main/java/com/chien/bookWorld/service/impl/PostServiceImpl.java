@@ -150,6 +150,9 @@ public class PostServiceImpl implements PostService {
                 PostDto postDto = mapper.map(post, PostDto.class);
                 postDto.setUserName(post.getUser().getName());
                 postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+                postDto.setAuthorName(post.getBook().getUser().getName());
+                postDto.setAuthorId(post.getBook().getUser().getId());
+                postDto.setBookName(post.getBook().getName());
                 return postDto;
               }).collect(
                       Collectors.toList()));
@@ -180,12 +183,14 @@ public class PostServiceImpl implements PostService {
     long totalRecord = posts.getTotalElements();
     int pageSize = posts.getSize();
 
-
     return new PageResponse(totalPages, pageSize, totalRecord, numberPage, posts.stream()
             .map(post -> {
               PostDto postDto = mapper.map(post, PostDto.class);
               postDto.setUserName(post.getUser().getName());
               postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+              postDto.setAuthorName(post.getBook().getUser().getName());
+              postDto.setAuthorId(post.getBook().getUser().getId());
+              postDto.setBookName(post.getBook().getName());
               return postDto;
             }).collect(
                     Collectors.toList()));
@@ -206,6 +211,9 @@ public class PostServiceImpl implements PostService {
               PostDto postDto = mapper.map(post, PostDto.class);
               postDto.setUserName(post.getUser().getName());
               postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
+              postDto.setAuthorName(post.getBook().getUser().getName());
+              postDto.setAuthorId(post.getBook().getUser().getId());
+              postDto.setBookName(post.getBook().getName());
               return postDto;
             }).collect(
                     Collectors.toList()));
