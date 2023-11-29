@@ -6,12 +6,7 @@ import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.chien.bookWorld.dto.CommentCreationDto;
 import com.chien.bookWorld.payload.request.CommentRequest;
@@ -34,7 +29,7 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<PageResponse> getCommentByPost(
-            @RequestBody CommentRequest commentRequest, Pageable pageable) {
-        return ResponseEntity.status(200).body(commentService.getCommentByPost(commentRequest.getPostId(), pageable));
+            @RequestParam Long postId, Pageable pageable) {
+        return ResponseEntity.status(200).body(commentService.getCommentByPost(postId, pageable));
     }
 }
