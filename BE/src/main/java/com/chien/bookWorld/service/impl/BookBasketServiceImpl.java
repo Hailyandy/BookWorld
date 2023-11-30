@@ -59,6 +59,7 @@ public class BookBasketServiceImpl implements BookBasketService {
 
       List<BookDto> bookList = bookBasketList.stream().map(book -> {
         BookDto bookDto = new BookDto();
+        bookDto.setId(book.getBook().getId());
         bookDto.setName(book.getUser().getName());
         bookDto.setAuthorName(book.getUser().getUserName());
         bookDto.setAuthorId(book.getUser().getId());
