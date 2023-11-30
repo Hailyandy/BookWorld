@@ -112,6 +112,7 @@ public class CommentServiceImpl implements CommentService {
         int pageSize = comments.getSize();
         List<CommentDto> commentDtos = comments.stream().map(comment -> {
                     CommentDto commentDto = mapper.map(comment, CommentDto.class);
+                    commentDto.setPostId(comment.getPost().getId());
                     commentDto.setUserName(comment.getUser().getName());
                     commentDto.setUrlAvatarUser(comment.getUser().getUrlAvatar());
                     commentDto.setUserId(comment.getUser().getId());
