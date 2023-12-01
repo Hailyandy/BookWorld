@@ -40,9 +40,9 @@ public class CommentController {
     @MessageMapping("/chat.createComment")
     @SendTo("/topic/public")
     public String chatTest(
-            @Payload CommentCreationDto commentCreationDto
+            @Payload String a
     ) {
-        return commentCreationDto.getContent();
+        return a;
     }
 
     @GetMapping
