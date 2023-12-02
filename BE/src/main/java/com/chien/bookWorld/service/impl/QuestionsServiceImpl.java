@@ -7,8 +7,11 @@ import java.util.stream.Collectors;
 
 import com.chien.bookWorld.dto.*;
 import com.chien.bookWorld.entity.*;
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -191,4 +194,25 @@ public class QuestionsServiceImpl implements QuestionsService {
         return new SuccessResponse(answerDto);
     }
 
+    @Override
+    public PageResponse getScoringTopByBook(Pageable pageable, Long idBook) {
+
+        Page<Scoring> scorings = scoringRepository.getScoringTopByBook(pageable, idBook);
+        int totalPages = scorings.getTotalPages();
+        int numberPage = scorings.getNumber();
+        long totalRecord = scorings.getTotalElements();
+        int pageSize = scorings.getSize();
+
+        List<UserScoringDto> userScoringDtos = scorings.stream().map(scoring -> {
+            UserScoringDto userScoringDto = new UserScoringDto();
+            userScoringDto.setIdUser(scoring.getUser().getId());
+            userScoringDto.setUserName(scoring.getUser().getName());
+            userScoringDto.setUrlAvatarUser(scoring.getUser().getUrlAvatar());
+            userScoringDto.setBookName(scoring.getBook().getName());
+            userScoringDto.setScore(scoring.getScore());
+            userScoringDto.setTimestamp(scoring.getTimestamp());
+            return userScoringDto;
+        }).collect(Collectors.toList());
+        return new PageResponse(totalPages, pageSize, totalRecord, numberPage, userScoringDtos);
+    }
 }
