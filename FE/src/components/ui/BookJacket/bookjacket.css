@@ -1,24 +1,35 @@
-.bookjacket{
+.bookjacket {
     width: 170px;
     height: 70px;
     display: flex;
     flex-direction: row;
 }
+
 .bookjacket .book-title {
     margin-left: 10px;
     display: flex;
     flex-direction: column;
-}
-.bookjacket .title {
-    margin: 0;
-    color:#71abea;
-    font-weight: 600;
-    font-size: 15px;
+    overflow: hidden;
+
 }
 
-.bookjacket .author-name{
+.bookjacket .title {
+    margin: 0;
+    color: #71abea;
+    font-weight: 600;
+    font-size: 15px;
+
+}
+
+.bookjacket .author-name {
     margin: 5px;
     font-weight: 400;
     font-style: italic;
     font-size: 15px;
+
+}
+
+.bookjacket-image-container {
+    display: inline-block;
+    /* width: 50%; */
 }

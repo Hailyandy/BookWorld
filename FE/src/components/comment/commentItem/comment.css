@@ -22,3 +22,17 @@ h3 {
 span {
     font-size: 16px !important;
 }
+
+.comment-content-container {
+    border: 2px solid #ccc !important;
+    border-radius: 16px;
+    padding: 1em 16px;
+}
+
+.author-comment-name {
+    font-weight: 500;
+}
+
+.comment-container .ant-comment-actions {
+    margin-top: 0px !important;
+}

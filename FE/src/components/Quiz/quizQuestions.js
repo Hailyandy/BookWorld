@@ -1,89 +1,53 @@
 var quizQuestions = [
     {
-        question: "What franchise would you rather play a game from?",
-        answers: [
+        id: "6f48d23d-a9d3-4ed6-93c4-09c689c78c4d",
+        idBook: 1,
+        questionsText: "Đây là câu hỏi 442?",
+        optionDtos: [
             {
-                type: "Microsoft",
-                content: "Halo"
+                options_text: "Lựa chọn A",
+                id: 17
             },
             {
-                type: "Nintendo",
-                content: "Pokemon"
+                options_text: "Lựa chọn B",
+                id: 18
             },
             {
-                type: "Sony",
-                content: "Uncharted"
+                options_text: "Lựa chọn C",
+                id: 19
+            },
+            {
+                options_text: "Lựa chọn D",
+                id: 20
             }
-        ]
+        ],
+        scoring: 5
     },
     {
-        question: "Which console would you prefer to play with friends?",
-        answers: [
+        id: "6f48d23d-a9d3-4ed6-93c4-09c689c78c4d",
+        idBook: 1,
+        questionsText: "Đây là câu hỏi 442?",
+        optionDtos: [
             {
-                type: "Microsoft",
-                content: "X-Box"
+                options_text: "Lựa chọn A",
+                id: 17
             },
             {
-                type: "Nintendo",
-                content: "Nintendo 64"
+                options_text: "Lựa chọn B",
+                id: 18
             },
             {
-                type: "Sony",
-                content: "Playstation 1"
+                options_text: "Lựa chọn C",
+                id: 19
+            },
+            {
+                options_text: "Lựa chọn D",
+                id: 20
             }
-        ]
-    },
-    {
-        question: "Which of these racing franchises would you prefer to play a game from?",
-        answers: [
-            {
-                type: "Microsoft",
-                content: "Forza"
-            },
-            {
-                type: "Nintendo",
-                content: "Mario Kart"
-            },
-            {
-                type: "Sony",
-                content: "Gran Turismo"
-            }
-        ]
-    },
-    {
-        question: "Which of these games do you think is best?",
-        answers: [
-            {
-                type: "Microsoft",
-                content: "BioShock"
-            },
-            {
-                type: "Nintendo",
-                content: "The Legend of Zelda: Ocarina of Time"
-            },
-            {
-                type: "Sony",
-                content: "Final Fantasy VII"
-            }
-        ]
-    },
-    {
-        question: "What console would you prefer to own?",
-        answers: [
-            {
-                type: "Microsoft",
-                content: "X-Box One"
-            },
-            {
-                type: "Nintendo",
-                content: "Wii U"
-            },
-            {
-                type: "Sony",
-                content: "Playstation 4"
-            }
-        ]
+        ],
+        scoring: 5
     }
+
 ];
 
 export default quizQuestions;

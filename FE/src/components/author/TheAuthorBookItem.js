@@ -157,7 +157,7 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
                             defaultValue={renderBookStatusDefaultValue(bookItem)}
                             style={{ width: 120, marginTop: '8px', backgroundColor: 'var(--button-default-background-color)', color: 'white', position: 'absolute', right: '10px' }}
                             onChange={handleMenuClick}
-                            optionsGenres={items}
+                            options={items}
                         />
                     }
                 </div>

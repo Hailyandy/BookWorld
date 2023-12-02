@@ -26,14 +26,12 @@ const HeaderLayout = (props) => {
     const userStateFormSlice = useSelector(state => state.users);
     console.log(userStateFormSlice.friendReqList)
     const [options, setOptions] = useState([]);
-
-
     /**
      * search 1 lần khi muốn hiển thị ra một đống kết quả
      * @param {*} e - value ô search hiện tại
      */
     const searchWhenClickSearchButton = (e) => {
-        navigate(`search-result/search-book/${e}`, { replace: true });
+        navigate(`${tokenService.getUserRoleName()}/search-result/search-book/${e}`, { replace: true });
     }
 
 
@@ -90,12 +88,9 @@ const HeaderLayout = (props) => {
 
     const onSelectSearchItem = (value) => {
         console.log('onSelect', value);
-        navigate(`/books/${value}`, { replace: true });
+        navigate(`${tokenService.getUserRoleName()}/books/${value}`, { replace: true });
     };
-    const handleButtonClick = (e) => {
-        message.info('Click on left button.');
-        console.log('click left button', e);
-    };
+
     const handleMenuClick = async (e) => {
         switch (e.key) {
             case BSHAREnum.dropdown_user_menu_key.logout:
@@ -114,7 +109,7 @@ const HeaderLayout = (props) => {
                 navigate(`/login`, { replace: true });
                 break;
             case BSHAREnum.dropdown_user_menu_key.friendList:
-                navigate(`/search-result/search-friend`, { replace: true });
+                navigate(`${tokenService.getUserRoleName()}/search-result/search-friend`, { replace: true });
                 break;
 
             case BSHAREnum.dropdown_user_menu_key.personalProfile:

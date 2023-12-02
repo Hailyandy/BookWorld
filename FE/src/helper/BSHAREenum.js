@@ -61,6 +61,10 @@ const BSHAREnum = Object.freeze({
         read: 'Đã đọc',
         want_to_read: 'Muốn đọc',
         reading: 'Đang đọc',
+    }),
+    commentType: Object.freeze({
+        bookComment: 'bookComment',
+        postComment: 'postComment',
     })
 })
 

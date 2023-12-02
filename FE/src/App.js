@@ -30,7 +30,7 @@ import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllP
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
 import { searchBookByIdAsync } from './slices/book';
-import { getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync } from './slices/user';
+import { getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -43,6 +43,7 @@ import {
   BookRoute,
   AuthorRout
 } from './routes';
+import CreateTestPage from './pages/quiz/CreateTestPage';
 function App() {
   const [reload, setReload] = useState(0);
   const dispatch = useDispatch()
@@ -57,7 +58,9 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="select-fav-book" element={<SelectFavouritebook />} />
           {/* <QuizPage /> */}
-          <Route path="login" element={<QuizPage />} />
+
+
+          <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="otp-confirmation/:username" element={<OtpCode />} />
           {
@@ -118,7 +121,7 @@ function App() {
                         .unwrap()
                         .then(async data => {
                           console.log(data)
-                          return data ? mapToClass(data, PostEntity) : [];
+                          return data ? data : [];
                         })
                         .catch(e => {
                           console.log(e);
@@ -127,19 +130,34 @@ function App() {
                     }}
                   // errorElement={<AuthorsError />}
                   />
-                  <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />} loader={() => {
-                    return dispatch(getListFriendRequest())
-                      .unwrap()
-                      .then(async data => {
-                        console.log(data)
-                        return data ? data : [];
-                      })
-                      .catch(e => {
-                        console.log(e);
-                        return []
-                      })
+                  <Route path="fun-quiz" element={<QuizPage />}
+                    loader={() => {
+                      return dispatch(getListQuizByBookIdAsync({ idBook: 1 }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
 
-                  }} />
+                    }} />
+                  <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />}
+                    loader={() => {
+                      return dispatch(getListFriendRequest())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+
+                    }} />
                   <Route
                     path="fill-infor"
                     element={<UserDeclareInformationPage />}
@@ -150,59 +168,63 @@ function App() {
                     element={<GeneralProfile />}
                   // loader={authorDetailsLoader}
                   />
-                  <Route
-                    path="my-bookshelf"
-                    element={<MyBookshelf />}
-                    loader={() => {
-                      return dispatch(getAllMyBook())
-                        .unwrap()
-                        .then(async data => {
-                          console.log(data)
-                          return data ? mapToClass(data, BookEntity) : [];
-                        })
-                        .catch(e => {
-                          console.log(e);
-                          return []
-                        })
-
-                    }}
-                  // loader={authorDetailsLoader}
-                  />
-
-                  <Route path="review" >
+                  <Route path="my-bookshelf" element={<GeneralLayout />} >
                     <Route
-                      path="edit/:bookId"
-                      element={<ModelReviewPost />}
-                      loader={({ params }) => {
-
-                        return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                      index
+                      element={<MyBookshelf />}
+                      loader={() => {
+                        return dispatch(getAllMyBook())
                           .unwrap()
                           .then(async data => {
-                            return data;
+                            console.log(data)
+                            return data ? mapToClass(data, BookEntity) : [];
                           })
                           .catch(e => {
-                            return e.messege
-                          });
-
-                      }}
-                    />
-                    <Route
-                      path="show/:bookId"
-                      element={<ModelReviewPost />}
-                      loader={({ params }) => {
-
-                        return dispatch(searchBookByIdAsync({ id: params.bookId }))
-                          .unwrap()
-                          .then(async data => {
-                            return data;
+                            console.log(e);
+                            return []
                           })
-                          .catch(e => {
-                            return e.messege
-                          });
 
                       }}
+                    // loader={authorDetailsLoader}
                     />
+                    <Route path="review" >
+                      <Route
+                        path="edit/:bookId"
+                        element={<ModelReviewPost />}
+                        loader={({ params }) => {
+
+                          return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                            .unwrap()
+                            .then(async data => {
+                              return data;
+                            })
+                            .catch(e => {
+                              return e.messege
+                            });
+
+                        }}
+                      />
+                      <Route
+                        path="show/:bookId"
+                        element={<ModelReviewPost />}
+                        loader={({ params }) => {
+
+                          return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                            .unwrap()
+                            .then(async data => {
+                              return data;
+                            })
+                            .catch(e => {
+                              return e.messege
+                            });
+
+                        }}
+                      />
+                    </Route>
                   </Route>
+
+
+
                   <Route path="books">
                     <Route
                       index
@@ -230,6 +252,7 @@ function App() {
                       path=":bookId"
                       element={<BookDetailPage />}
                       loader={({ params }) => {
+                        let data = { bookDetail: [], comment: [] }
 
                         return dispatch(searchBookByIdAsync({ id: params.bookId }))
                           .unwrap()
@@ -363,24 +386,36 @@ function App() {
             )
           }
 
+
+          {
+            tokenService.getRole("ROLE_AUTHOR") && (
+              <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />} >
+                <Route path="create-test" element={<CreateTestPage />} />
+                <Route
+                  index
+                  element={<Authors />}
+                // loader={authorsLoader}
+                // errorElement={<AuthorsError />}
+                />
+                <Route
+                  path=":id"
+                  element={<AuthorInformationPage />}
+                // loader={authorDetailsLoader}
+                />
+                <Route
+                  path="profile"
+                  element={<GeneralProfile />}
+                // loader={authorDetailsLoader}
+                />
+              </Route>
+            )
+          }
           <Route path="authors" errorElement={<AuthorsError />}>
-            <Route
-              index
-              element={<Authors />}
-            // loader={authorsLoader}
-            // errorElement={<AuthorsError />}
-            />
-            <Route
-              path=":id"
-              element={<AuthorInformationPage />}
-            // loader={authorDetailsLoader}
-            />
-            <Route
-              path="profile"
-              element={<GeneralProfile />}
-            // loader={authorDetailsLoader}
-            />
+
+
           </Route>
+
+
 
           <Route path="*" element={<NotFoundPage />} />
         </Route >

@@ -1,5 +1,5 @@
 import React, { createElement, useState } from "react";
-import moment from "moment";
+
 import { Rate, Avatar, Tooltip, Button } from "antd";
 import { Comment } from "@ant-design/compatible";
 import {
@@ -10,10 +10,17 @@ import {
 } from "@ant-design/icons";
 import "./comment.css";
 import StarRatings from "react-star-ratings";
-const CommentItem = ({ comment, children }) => {
+import CreateComment from "~/components/form/PostComment/CreateComment";
+import BSHAREnum from "~/helper/BSHAREenum";
+import { Typography } from 'antd';
+import moment from "moment";
+moment.locale('vi');
+const { Title, Text, Paragraph } = Typography;
+const CommentItem = ({ comment, type, children }) => {
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
     const [action, setAction] = useState(null);
+    const [visible, setVisible] = useState(false);
     // console.log(comment);
     // console.log(children);
     const like = () => {
@@ -27,27 +34,20 @@ const CommentItem = ({ comment, children }) => {
         setAction("disliked");
     };
     const actions = [
-        <Tooltip key="comment-basic-like" title="Like">
-            <span onClick={like}>
-                {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
-                <span className="comment-action">{likes}</span>
-            </span>
+
+        <Tooltip >
+            <span >{moment(comment.createdOn).fromNow()}</span>
         </Tooltip>,
-        <Tooltip key="comment-basic-dislike" title="Dislike">
-            <span onClick={dislike}>
-                {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-                <span className="comment-action">{dislikes}</span>
-            </span>
-        </Tooltip>,
-        <span key="comment-list-reply-to-0">Reply to</span>,
+        <span key="comment-list-reply-to-0" onClick={() => setVisible(!visible)}>Phản hồi</span>,
     ];
 
 
     return (
         comment && (
             <Comment
+                className="comment-container"
                 actions={actions}
-                author={<a className="author-comment-name">{comment.author}</a>}
+                // author={<a className="author-comment-name">{comment.userName}</a>}
                 avatar={
                     <div className="avatar-container">
                         <Avatar src={comment.avatar} alt="Han Solo" />
@@ -63,33 +63,47 @@ const CommentItem = ({ comment, children }) => {
 
                 }
                 content={
-                    <>
-                        <StarRatings
-                            rating={comment.star}
-                            starDimension="15px"
-                            starSpacing="4px"
-                            starRatedColor="rgb(230, 67, 47)"
-                        />
-                        <p>{comment.content}</p>
-                    </>
-                }
-                datetime={
-                    <Tooltip title="2016-11-22 11:22:33">
-                        <span className="author-comment-name">{moment(comment.datetime).fromNow()}</span>
+                    type == BSHAREnum.commentType.bookComment ?
+                        (<>
+                            <a className="author-comment-name">{comment.userName}</a>
+                            <StarRatings
+                                rating={comment.star}
+                                starDimension="15px"
+                                starSpacing="4px"
+                                starRatedColor="rgb(230, 67, 47)"
+                            />
+                            <Paragraph ellipsis={
+                                {
+                                    rows: 6,
+                                    expandable: true,
+                                    symbol: "Tiếp"
+                                }
+                            } >
+                                {comment.content}
+                            </Paragraph>
 
-                        {/* <Rate
-                            style={{
-                                position: "absolute",
-                                zIndex: "1",
-                                fontSize: "20px",
-                                transform: "translate(0, -15%)",
-                                right: "0px",
-                                lineHeight: "14px",
-                            }}
-                        /> */}
-                    </Tooltip>
+
+                        </>) : (
+                            <div className="comment-content-container">
+                                <span className="author-comment-name">{comment.userName}</span>
+                                <Paragraph ellipsis={
+                                    {
+                                        rows: 6,
+                                        expandable: true,
+                                        symbol: "Tiếp"
+                                    }
+                                } >
+                                    {comment.content}
+                                </Paragraph>
+                            </div>
+                        )
                 }
+
             >
+                {
+                    visible && <CreateComment fatherComment={comment} />
+                }
+
                 {children}
             </Comment>
         )

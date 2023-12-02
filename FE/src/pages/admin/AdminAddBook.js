@@ -17,7 +17,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useLoaderData } from 'react-router-dom';
 import getBase64 from "~/helper/getBase64";
 import { uploadFileFirebase } from "~/helper/firebaseUploadFile";
-import { addNewBookAsync } from '~/slices/user';
+import { addNewBookAsync, addPdfForABookAsync } from '~/slices/user';
 import { useDispatch } from 'react-redux';
 const dateFormatOnFe = 'DD/MM/YYYY';
 const dateFormatReturnBe = 'YYYY-MM-DD HH:mm:ss';
@@ -53,9 +53,7 @@ const AdminAddBookPage = () => {
         setTimeout(() => {
             onSuccess("ok");
         }, 0);
-        setTimeout(() => {
-            onSuccess("ok");
-        }, 0);
+
     };
     const [state, setState] = useState({
         selectedFile: null,

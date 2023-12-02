@@ -70,7 +70,7 @@ class UserService extends BaseService {
     * @returns
     */
     async getAllPost(state = { state: 'PUBLIC' }) {
-        var data = await getAPI(`post`, null, state)
+        var data = await getAPI(`post`, state)
         return data
     }
     /**
@@ -80,6 +80,46 @@ class UserService extends BaseService {
     */
     async getAllSuggestBook() {
         var data = await getAPI(`book`)
+        return data
+    }
+
+
+    /**
+     *Api để thêm một bản pdf vào cuốn sách
+     * @param {*} param0
+     * @returns
+     */
+    async addPdfForABook({ idBook, urlPdf }) {
+        var data = await postAPI('pdf', { idBook, urlPdf })
+        return data
+    }
+    /**
+     * Tạo comment
+     * @param {*} param0
+     * @returns
+     */
+    async createComment({ content, postId, parentId }) {
+        var data = await postAPI('comment', { content, postId, parentId })
+        return data
+    }
+
+    /**
+    * Api để lấy comment của 1 bài post
+    @param {} param0
+    * @returns
+    */
+    async getCommentOfPost({ postId }) {
+        var data = await getAPI(`comment`, { postId })
+        return data
+    }
+
+    /**
+    * Api để lấy danh sách post của 1 người dùng
+    @param {} param0
+    * @returns
+    */
+    async getUserPostList({ userId }) {
+        var data = await getAPI(`post`, { userId })
         return data
     }
 }
