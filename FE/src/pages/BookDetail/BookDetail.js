@@ -1,6 +1,6 @@
 import './bookdetail.css'
 import ContentIntro from '~/components/form/Content Intro/ContentIntro'
-import { message, Button, Input, Space, Row, Col, Rate, Avatar, Tooltip, List, Upload } from 'antd'
+import { message, Button, Input, Space, Row, Col, Rate, Avatar, Tooltip, List, Upload, Typography } from 'antd'
 import moment from "moment";
 import StarRatings from "react-star-ratings";
 import { AudioOutlined, FilterOutlined } from '@ant-design/icons';
@@ -9,24 +9,27 @@ import { useLoaderData } from "react-router-dom"
 import { formatToDate } from '~/helper/format';
 import { uploadFileFirebase } from '~/helper/firebaseUploadFile';
 import { CustomUpload } from '~/components';
+import { useDispatch } from 'react-redux';
+import getBase64 from '~/helper/getBase64';
+import { useState } from 'react';
+import { UploadOutlined } from '@ant-design/icons';
+import { addPdfForABookAsync } from '~/slices/user';
+import notyf from '~/helper/notifyDisplay';
+import NestedComments from '~/components/comment/NestedComment';
+import BSHAREnum from '~/helper/BSHAREenum';
+const { Title, Text, Paragraph } = Typography;
 const { Search } = Input;
-const propsUploadButton = {
-    name: 'file',
-    onChange(info) {
-        if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
-            uploadFileFirebase(info.file.originFileObj)
-        }
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-};
+
 const BookDetailPage = () => {
     const bookDetail = useLoaderData()
+    const [loading, setLoading] = useState(false);
+    const [imageUrl, setImageUrl] = useState('');
     console.log(bookDetail)
+    const dispatch = useDispatch()
+    const [state, setState] = useState({
+        selectedFile: null,
+        selectedFileList: [],
+    });
     const bookItem = {
         star: 10,
         numReviews: 2,
@@ -74,6 +77,57 @@ const BookDetailPage = () => {
             ),
         },
     ];
+    const customUpload = async ({ onError, onSuccess, file }) => {
+        // firebase upload\
+        // firebase upload\
+        console.log('admin addbok')
+        uploadFileFirebase(file).then((url) => {
+            console.log(url)
+            dispatch(addPdfForABookAsync({ idBook: bookDetail.id, urlPdf: url }))
+                .unwrap()
+                .then(async data => {
+                    console.log(data)
+
+                    notyf.success("Upload file thành công")
+                    return data ? data : [];
+                })
+                .catch(e => {
+                    console.log(e);
+                    return []
+                })
+            setImageUrl(url)
+        })
+        setTimeout(() => {
+            onSuccess("ok");
+        }, 0);
+
+    };
+
+    const handleChange = info => {
+        const nextState = {};
+
+        switch (info.file.status) {
+            case "uploading":
+                console.log('upload complete')
+                const file = // get file
+                    getBase64(info.file.originFileObj).then(base64 => {
+                        // setImageUrl(base64)
+                        setLoading(false)
+                    });
+                setLoading(true)
+                nextState.selectedFileList = [info.file];
+                break;
+            case "done":
+                nextState.selectedFile = info.file;
+                nextState.selectedFileList = [info.file];
+                break;
+            default:
+                // error or removed
+                nextState.selectedFile = null;
+                nextState.selectedFileList = [];
+        }
+        setState(nextState);
+    }
     return (
         <div className="book-detail-containner">
             <div className="book-detail-containner--left">
@@ -94,7 +148,9 @@ const BookDetailPage = () => {
                                 type="primary" shape="round"  >
                                 Tạo câu hỏi
                             </Button>
-                            <CustomUpload />
+                            <Upload name="logo" listType="picture" customRequest={customUpload} onChange={handleChange}>
+                                <Button icon={<UploadOutlined />}>Thêm file pdf</Button>
+                            </Upload>
                         </Space>
                     </div>
 
@@ -103,33 +159,39 @@ const BookDetailPage = () => {
             <div className="book-detail-containner--center">
                 <div class="book-content-intro">
                     <h1 class="title">{bookDetail.name}</h1>
-                    <h2 class="author">{bookDetail.authorName}</h2>
+                    {/* {bookDetail.authorName} */}
+                    <h2 class="author">Tác giả: aaaa</h2>
                     <div className="star-rating-book">
                         <StarRatings
                             rating={
-                                0
+                                bookDetail.scoring ? bookDetail.scoring : 0
                             }
-                            starDimension="16px"
+                            starDimension="14px"
                             starSpacing="4px"
                             starRatedColor="rgb(230, 67, 47)"
                         />
-                        <span class="avg-book-rating">{
-                            bookDetail.scoring > 0
-                                ? bookDetail.star / bookDetail.numReviews
-                                : 0
-                        }</span>
+                        <p class="avg-book-rating">{bookDetail.scoring ? bookDetail.scoring : 0}</p>
                     </div>
-                    <h3>Nhà xuất bản: {bookDetail.publisher} </h3>
-                    <h3>{bookDetail.numberPages} trang</h3>
+                    <h3>Nhà xuất bản:  <Text >{bookDetail.publisher}</Text> </h3>
+                    <h3>Tổng số trang: <Text >{bookDetail.numberPages} trang</Text> </h3>
                     <h3>Xuất bản: {formatToDate(bookDetail.publishDate, "dd/MM/yyyy")} </h3>
                     <h3>Thể loại: {bookDetail.genres.map(genreObject => {
                         return genreObject.name
                     }).join(', ')} </h3>
-                    <p class="content-intro">industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lore</p>
+
+                    <Paragraph ellipsis={
+                        {
+                            rows: 6,
+                            expandable: true,
+                            symbol: "Tiếp"
+                        }
+                    } >
+                        <Text strong>Mô tả:</Text>  {bookDetail.introducing}
+                    </Paragraph>
                 </div>
                 <section className="book-review">
-                    <h1>Các đánh giá về sách</h1>
-                    <Row
+                    {/* <h1>Các đánh giá về sách</h1> */}
+                    {/* <Row
                         style={{ marginBottom: '2rem' }}>
                         <Col span={8}>
                             <Search
@@ -148,11 +210,11 @@ const BookDetailPage = () => {
                                 Lọc
                             </Button>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row >
                         <Col span={24}>
                             {/* <CommentItem comment={commentItem} /> */}
-                            <List
+                            {/* <List
                                 className="comment-list"
                                 header={`${commentData.length} replies`}
                                 itemLayout="horizontal"
@@ -168,7 +230,7 @@ const BookDetailPage = () => {
                                         </CommentItem>
                                     </li>
                                 )}
-                            />
+                            /> */}
                         </Col>
                     </Row>
                 </section>

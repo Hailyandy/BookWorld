@@ -31,7 +31,7 @@ const SearchBookPage = () => {
 
     const onSearch = (value, _e, info) => {
         console.log(info?.source, value);
-        navigate(`/search-result/search-book/${value}`, { replace: true });
+        navigate(`../search-book/${value}`, { replace: true });
     }
     return (
         <>

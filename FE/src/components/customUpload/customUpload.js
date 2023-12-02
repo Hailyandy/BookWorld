@@ -4,9 +4,12 @@ import { message, Button, Input, Space, Row, Col, Rate, Avatar, Tooltip, List, U
 import getBase64 from "~/helper/getBase64";
 import './custom-upload.css'
 import { uploadFileFirebase } from "~/helper/firebaseUploadFile";
+import { useDispatch } from "react-redux";
+
 function CustomUpload() {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
+
     const [state, setState] = useState({
         selectedFile: null,
         selectedFileList: [],

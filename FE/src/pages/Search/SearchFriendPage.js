@@ -10,6 +10,8 @@ import { mapToClass } from "~/helper/mappingToClass";
 import { UserEntity } from "~/entity/userEntity";
 import BSHAREnum from "~/helper/BSHAREenum";
 import { useNavigate } from "react-router-dom";
+import NotFoundPage from "../NotFound/NotFound";
+import tokenService from "~/services/token.service";
 const { Search } = Input;
 const suffix = (
     <AudioOutlined
@@ -25,6 +27,8 @@ const SearchFriendPage = () => {
     const navigate = useNavigate()
     const [value1, setValue1] = useState('All');
     const friendSearchList = mapToClass(useLoaderData(), UserEntity)
+    let roleUser = tokenService.getUserRoleName()
+
     console.log(friendSearchList)
     const onChange1 = ({ target: { value } }) => {
         console.log('radio1 checked', value);
@@ -33,29 +37,31 @@ const SearchFriendPage = () => {
 
     const onSearch = (value, _e, info) => {
         console.log(info?.source, value);
-        navigate(`/search-result/search-user/${value}`, { replace: true });
+        // navigate(`${value}`, { replace: true });
+        window.location = `search-user/${value}`
     }
     return (
-        <>
+        <div className="friend-search-container">
             <Search
                 placeholder="Tìm kiếm bạn bè"
                 allowClear
                 enterButton="Tìm kiếm"
-
-                width={300}
+                width={700}
                 onSearch={onSearch}
             />
-
-
             {
-                friendSearchList.map((friendSearchListItem) => {
-                    return <TheUserItem userItem={friendSearchListItem} type={friendSearchListItem.friendship} />
-                })
+                friendSearchList.length > 0 ?
+                    friendSearchList.map((friendSearchListItem) => {
+                        return <li class="reading-book-item">
+                            <TheUserItem userItem={friendSearchListItem} type={friendSearchListItem.friendship} />
+                        </li>
+                    }) : <NotFoundPage />
             }
+            {/* <Pagination defaultCurrent={6} total={500} className="search-pagination" /> */}
+        </div>
 
 
-            <Pagination defaultCurrent={6} total={500} className="search-pagination" />
-        </>
+
     )
 
 }

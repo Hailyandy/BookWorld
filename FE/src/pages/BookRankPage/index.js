@@ -6,6 +6,8 @@ import { useLoaderData } from 'react-router-dom';
 import BSHAREnum from '~/helper/BSHAREenum';
 import BSHAREresource from '~/helper/BSHAREresource';
 import { generateUuid } from '~/helper/format';
+import { Link } from 'react-router-dom';
+import tokenService from '~/services/token.service';
 const fakeDataUrl =
     'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
 const ContainerHeight = 430;
@@ -47,7 +49,7 @@ const BookRankPage = () => {
                                 <List.Item key={item.bookId}>
                                     <List.Item.Meta
                                         avatar={<Avatar shape='square' src={item.urlPoster} size={100} />}
-                                        title={<a href={`${BSHAREresource.localHost.url}books/${item.id}`} className='font-size-24 '>{item.name}</a>}
+                                        title={<Link to={`../${item.id}`} replace={true} className='font-size-24 '>{item.name}</Link>}
                                         description={<Space direction='vertical' size={12} className='font-size-24 '>
                                             <span>{item.scoring}</span>
                                             <span>{item.authorName}</span>

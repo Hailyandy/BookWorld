@@ -39,6 +39,8 @@
     background: var(--background-color-white);
     border-radius: 10px;
     padding: 0.75rem;
+    height: 200px;
+    overflow: scroll;
 }
 
 .reading-book .reading-book-list .reading-book-item,

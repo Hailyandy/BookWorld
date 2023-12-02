@@ -176,3 +176,82 @@ export const objectToParams = (obj) => {
     const params = Object.keys(obj).map(key => `${key}=${encodeURIComponent(obj[key])}`).join('&');
     return params;
 }
+
+
+
+// Original object
+// const original = {
+//     questionsText: "aa",
+//     answer: "key_1",
+//     key_1: "Câu hỏi A",
+//     key_2: "Câu hỏi B",
+//     key_3: "Câu hỏi C",
+//     key_4: "Câu hỏi D",
+//     scoring: 4
+// };
+
+// // Target format
+// const target = {
+//     questionsText: "What is 2 + 2?",
+//     optionText: {
+//         "Câu hỏi A": 1,
+//         "Câu hỏi B": 0,
+//         "Câu hỏi C": 1,
+//         "Câu hỏi D": 1
+//     },
+//     scoring: 5
+// };
+
+// Function to convert
+export const convertDataIntoCreateTestOption = (original) => {
+    let arrayResult = []
+    // Construct new target object
+    original.forEach((ori) => {
+        const newObj = {
+            questionsText: ori.questionsText,
+            optionText: {},
+            scoring: ori.scoring
+        };
+
+        // Get answer key
+        const answerKey = ori.answer;
+
+        // Populate optionText
+        Object.keys(ori)
+            .filter(key => key.startsWith("key_"))
+            .forEach(key => {
+                newObj.optionText[ori[key]] = (key === answerKey) ? 1 : 0;
+            });
+        arrayResult.push(newObj)
+    })
+
+
+    return arrayResult;
+
+}
+
+
+export const convertCommentWithParentId = (arrayInput) => {
+    // const arrayInput = [{ "id": 791, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 790, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 845, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 844, "sortOrder": 0, "parentCategoryId": 842 }, { "id": 802, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 788, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 863, "sortOrder": 0, "parentCategoryId": 863 }, { "id": 858, "sortOrder": 0, "parentCategoryId": 858 }, { "id": 867, "sortOrder": 0, "parentCategoryId": 867 }, { "id": 871, "sortOrder": 0, "parentCategoryId": 867 }, { "id": 801, "name": "Tickets", "sortOrder": 0, "parentCategoryId": 847 }, { "id": 792, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 797, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 789, "name": "Hot food", "sortOrder": 0, "parentCategoryId": 833 }, { "id": 798, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 671, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 833, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 796, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 843, "sortOrder": 0, "parentCategoryId": 842 }, { "id": 840, "sortOrder": 0, "parentCategoryId": 793 }, { "id": 868, "sortOrder": 0, "parentCategoryId": 868 }, { "id": 851, "sortOrder": 0, "parentCategoryId": 851 }, { "id": 839, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 793, "sortOrder": 0, "parentCategoryId": 839 }, { "id": 859, "sortOrder": 0, "parentCategoryId": 859 }, { "id": 805, "sortOrder": 0, "parentCategoryId": 859 }, { "id": 856, "name": "DRINKS", "sortOrder": 0, "parentCategoryId": 805 }, { "id": 870, "sortOrder": 0, "parentCategoryId": 856 }, { "id": 787, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 786, "sortOrder": 0, "parentCategoryId": 833 }, { "id": 799, "sortOrder": 0, "parentCategoryId": 847 }, { "id": 852, "sortOrder": 0, "parentCategoryId": 852 }, { "id": 795, "name": "Gents fragrance", "sortOrder": 0, "parentCategoryId": 847 }, { "id": 864, "sortOrder": 0, "parentCategoryId": 864 }, { "id": 854, "sortOrder": 0, "parentCategoryId": 854 }, { "id": 865, "sortOrder": 0, "parentCategoryId": 865 }, { "id": 869, "name": "GFI", "sortOrder": 0, "parentCategoryId": 869 }, { "id": 785, "sortOrder": 0, "parentCategoryId": 833 }];
+    const ids = arrayInput.map((x) => x.id);
+    const result = arrayInput.map((parent) => {
+        const children = arrayInput.filter((child) => {
+            if (child.id !== child.parentId && child.parentId === parent.id) {
+                return true;
+            }
+            return false;
+        });
+
+        if (children.length) {
+            parent.children = children;
+        }
+        return parent;
+    }).filter((obj) => {
+        if (obj.id === obj.parentId || !ids.includes(obj.parentId)) {
+            // include ultimate parents and orphans at root
+            return true;
+        }
+        return false;
+    });
+    return result
+}

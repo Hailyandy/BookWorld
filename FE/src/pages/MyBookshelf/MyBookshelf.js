@@ -5,97 +5,12 @@ import { Breadcrumb, Layout, Menu, theme, Switch, Table, Tooltip, Space } from '
 import BSHAREnum from '~/helper/BSHAREenum';
 import BSHAREresource from '~/helper/BSHAREresource';
 import { useNavigate } from 'react-router-dom';
-const { Header, Content, Footer, Sider } = Layout;
-const columnsub =
-    [
-        {
-            title: 'Ảnh bìa',
-            width: 100,
-            dataIndex: 'urlBook',
-            key: 'urlBook',
-            fixed: 'left',
-        },
-        {
-            title: 'Tiêu đề',
-            width: 100,
-            dataIndex: 'bookName',
-            key: 'bookName',
-            fixed: 'left',
-        },
-        {
-            title: 'authorName',
-            dataIndex: 'authorName',
-            key: 'authorName',
-            width: 150,
-        },
-        {
-            title: <Tooltip title="Trung bình xếp hạng">
-                <span>TB xếp hạng</span>
-            </Tooltip>,
-            dataIndex: 'scoring',
-            key: 'scoring',
-            width: 150,
-        },
-        {
-            title: 'Bài đánh giá',
-            dataIndex: 'review_post',
-            key: 'review_post',
-            width: 150,
-            ellipsis: true,
-        },
-        // {
-        //     title: 'Ngày đọc',
-        //     dataIndex: 'name',
-        //     key: '5',
-        //     width: 150,
-        // },
-        // {
-        //     title: 'Ngày thêm vào',
-        //     dataIndex: 'name',
-        //     key: '6',
-        //     width: 150,
-        // },
-        {
-            title: 'Đánhg giá',
-            key: 'operation',
-            fixed: 'right',
-            width: 100,
-            render: (text, record, index) => {
-                console.log(record)
-                return (
-                    <>
-                        <Space direction='horizontal' >
-                            <span onClick={() => {
-                                window.location.replace(`${BSHAREresource.localHost.url}review/edit/${record.bookId}`)
 
-                            }}>
-                                Chỉnh sửa
-                            </span>
-                            <span >
-                                Xem bài
-                            </span>
-                        </Space>
-                    </>)
-            },
-        },
-    ];
+const { Header, Content, Footer, Sider } = Layout;
 
 const bookshelf = ['Muốn đọc', 'Đang đọc', 'Đã đọc', 'custom tên giá']
-const slideMenuItem = [{
-    key: `bookshelf`,
-    icon: React.createElement(UserOutlined),
-    label: `Giá sách`,
-    children: bookshelf.map((_, index) => {
-        const subKey = 1 * 4 + index + 1;
-        return {
-            key: subKey,
-            label: `option${subKey}`,
-        };
-    }),
-}]
-
-
 const MyBookshelf = () => {
+    const navigate = useNavigate()
     const columnsub =
         [
             {
@@ -155,15 +70,15 @@ const MyBookshelf = () => {
                     return (
                         <>
                             <Space direction='horizontal' >
-                                <span onClick={() => {
-                                    window.location.replace(`${BSHAREresource.localHost.url}review/edit/${record.bookId}`)
-
+                                <a onClick={() => {
+                                    // window.location.replace(`review/edit/${record.id}`)
+                                    return navigate(`review/edit/${record.id}`)
                                 }}>
-                                    Chỉnh sửa
-                                </span>
-                                <span >
+                                    Tạo bài
+                                </a>
+                                {/* <span >
                                     Xem bài
-                                </span>
+                                </span> */}
                             </Space>
                         </>)
                 },
@@ -173,98 +88,12 @@ const MyBookshelf = () => {
         token: { colorBgContainer },
     } = theme.useToken();
     const myBookshelf = useLoaderData()
-    const navigate = useNavigate()
-    const [isNavigate, setIsnavigate] = useState('')
-    const columns = useMemo(() => {
-        return [
-            {
-                title: 'Ảnh bìa',
-                width: 100,
-                dataIndex: 'urlBook',
-                key: 'urlBook',
-                fixed: 'left',
-            },
-            {
-                title: 'Tiêu đề',
-                width: 100,
-                dataIndex: 'bookName',
-                key: 'bookName',
-                fixed: 'left',
-            },
-            {
-                title: 'authorName',
-                dataIndex: 'authorName',
-                key: 'authorName',
-                width: 150,
-            },
-            {
-                title: <Tooltip title="Trung bình xếp hạng">
-                    <span>TB xếp hạng</span>
-                </Tooltip>,
-                dataIndex: 'scoring',
-                key: 'scoring',
-                width: 150,
-            },
-            {
-                title: 'Bài đánh giá',
-                dataIndex: 'review_post',
-                key: 'review_post',
-                width: 150,
-                ellipsis: true,
-            },
-            // {
-            //     title: 'Ngày đọc',
-            //     dataIndex: 'name',
-            //     key: '5',
-            //     width: 150,
-            // },
-            // {
-            //     title: 'Ngày thêm vào',
-            //     dataIndex: 'name',
-            //     key: '6',
-            //     width: 150,
-            // },
-            {
-                title: 'Đánhg giá',
-                key: 'operation',
-                fixed: 'right',
-                width: 100,
-                render: (text, record, index) => {
-                    console.log(record)
-                    return (
-                        <>
-                            <Space direction='horizontal' >
-                                <span onClick={() => {
-                                    // navigate(`../review/edit/${record.bookId}`);
-                                    setIsnavigate(record.bookId)
-                                }}>
-                                    Chỉnh sửa
-                                </span>
-                                <span >
-                                    Xem bài
-                                </span>
-                            </Space>
-                        </>)
-                },
-            },
-        ];
-    }, []);
-    useEffect(() => {
-        console.log('navigate')
-        if (typeof window !== 'undefined') {
-            if (isNavigate != '') {
-            }
-        }
-        // return () => { navigate(`../users/review/edit/${isNavigate}`, { replace: true }); }
-    }, [isNavigate])
-
-
     return (
         <Layout
             style={{
                 paddingTop: '50px',
                 paddingLeft: '24px',
-                background: colorBgContainer,
+                // background: colorBgContainer,
             }}
         >
             {/* <Sider

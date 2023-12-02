@@ -1,15 +1,37 @@
 import "./bookjacket.css"
+import { Avatar, Typography } from "antd"
+const { Title, Text, Paragraph } = Typography;
+const BookJacket = ({ bookItem }) => {
+  return (
+    <div class="bookjacket">
+      <div className="bookjacket-image-container" >
+        <Avatar shape="square" size={64} src={bookItem.urlPoster} alt="Han Solo" />
+      </div>
 
-const BookJacket = () => {
-    return(
-       <div class = "bookjacket">
-         <span class = "bookjacket-image"></span>
-         <div class = "book-title">
-           <p class = "title">Hôm nay tôi thất tình</p>
-           <p class = "author-name"> Hạ Vũ</p>
-         </div>
-       </div>
-    )
+      <div class="book-title">
+        <Paragraph ellipsis={
+          {
+            rows: 1,
+            expandable: false,
+
+          }
+
+        } className="title">
+          {bookItem.name}
+        </Paragraph>
+        <Paragraph ellipsis={
+          {
+            rows: 1,
+            expandable: false,
+
+          }
+
+        } className="author-name">
+          {bookItem.publisher}
+        </Paragraph>
+      </div>
+    </div>
+  )
 }
 
 export default BookJacket

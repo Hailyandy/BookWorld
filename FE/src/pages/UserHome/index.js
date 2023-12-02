@@ -6,7 +6,7 @@ import { Dropdown, Space } from 'antd';
 import ReviewPost from "~/components/form/Review Post/ReviewPost";
 import Avartar from "~/components/ui/Avartar/Avartar";
 import { useLoaderData } from "react-router-dom";
-
+import NotFoundPage from "../NotFound/NotFound";
 const items = [
     {
         label: (
@@ -33,37 +33,38 @@ const items = [
         disabled: true,
     },
 ];
-
+//{ userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
 const UserHomePage = () => {
     var dataLoader = useLoaderData()
     console.log(dataLoader)
     return (
         <div className="user-home-container">
-
-
             {/* List Book */}
-
             <div className="list-book stick-to-top">
                 <div class="reading-book ">
                     <h2 class="reading-book-title">Sách đang đọc</h2>
                     <ul class="reading-book-list">
-                        <li class="reading-book-item">
-                            <BookJacket />
-                        </li>
-                        <li class="reading-book-item">
-                            <BookJacket />
-                        </li>
+                        {
+                            dataLoader.currentReadingBooks.length > 0 ?
+                                dataLoader.currentReadingBooks.map((book) => {
+                                    return <li class="reading-book-item">
+                                        <BookJacket bookItem={book} />
+                                    </li>
+                                }) : <NotFoundPage />
+                        }
                     </ul>
                 </div>
                 <div class="suggestion-book">
                     <h2 class="suggestion-book-title">Gợi ý sách</h2>
                     <ul class="suggestion-book-list">
-                        <li class="suggestion-book-item">
-                            <BookJacket />
-                        </li>
-                        <li class="suggestion-book-item">
-                            <BookJacket />
-                        </li>
+                        {
+                            dataLoader.suggestionBooks.length > 0 ?
+                                dataLoader.suggestionBooks.map((book) => {
+                                    return <li class="reading-book-item">
+                                        <BookJacket bookItem={book} />
+                                    </li>
+                                }) : <NotFoundPage />
+                        }
                     </ul>
                 </div>
             </div>
@@ -82,9 +83,12 @@ const UserHomePage = () => {
                     </a>
                 </Dropdown>
                 <div class="list-post">
-                    <ReviewPost />
-                    <ReviewPost />
-                    <ReviewPost />
+                    {
+                        dataLoader.userPost.length > 0 ?
+                            dataLoader.userPost.map((post) => {
+                                return <ReviewPost postItem={post} />
+                            }) : <NotFoundPage />
+                    }
                 </div>
             </div>
 
@@ -94,35 +98,27 @@ const UserHomePage = () => {
                 <div className="book-rating">
                     <h2 class="rating-tilte">Xếp hạng sách</h2>
                     <ul class="book-rating-list">
-                        <li class="book-rating-item">
-                            <BookJacket></BookJacket>
-                        </li>
-                        <li class="book-rating-item">
-                            <BookJacket></BookJacket>
-                        </li>
-                        <li class="book-rating-item">
-                            <BookJacket></BookJacket>
-                        </li>
+                        {
+                            dataLoader.favouriteBooks.length > 0 ?
+                                dataLoader.favouriteBooks.map((book) => {
+                                    return <li class="reading-book-item">
+                                        <BookJacket bookItem={book} />
+                                    </li>
+                                }) : <NotFoundPage />
+                        }
                     </ul>
                 </div>
                 <div className="friend">
                     <h2 class="friend-title">Bạn bè</h2>
                     <ul class="friend-list">
-                        <li class="friend-item">
-                            <Avartar></Avartar>
-                        </li>
-                        <li class="friend-item">
-                            <Avartar></Avartar>
-                        </li>
-                        <li class="friend-item">
-                            <Avartar></Avartar>
-                        </li>
-                        <li class="friend-item">
-                            <Avartar></Avartar>
-                        </li>
-                        <li class="friend-item">
-                            <Avartar></Avartar>
-                        </li>
+                        {
+                            dataLoader.friends.length > 0 ?
+                                dataLoader.friends.map((friend) => {
+                                    return <li class="friend-item">
+                                        <Avartar friendItem={friend}></Avartar>
+                                    </li>
+                                }) : <NotFoundPage />
+                        }
                     </ul>
                 </div>
             </div>

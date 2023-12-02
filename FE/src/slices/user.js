@@ -282,6 +282,21 @@ export const getAllSuggestBookAsync = createAsyncThunk(
         }
     }
 );
+
+export const getListQuizByBookIdAsync = createAsyncThunk(
+    "user/getListQuizByBookId",
+    async ({ idBook }, { rejectWithValue }) => {
+        try {
+            const res = await authorService.getListQuizByBookId({ idBook });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
 export const getAllAuthorsAsync = createAsyncThunk(
     "admin/getAllAuthors",
     async (param, { rejectWithValue }) => {
@@ -333,6 +348,87 @@ export const addNewBookAsync = createAsyncThunk(
     }
 );
 
+export const createQuestionAsync = createAsyncThunk(
+    "author/getAllPost",
+    async ({ idBook, questionDtos }, { rejectWithValue }) => {
+        try {
+            const res = await authorService.createQuestion({ idBook, questionDtos });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const checkAnswerAndGetPointAsync = createAsyncThunk(
+    "admin/getAllAuthors",
+    async ({ idBook, listAnswer }, { rejectWithValue }) => {
+        try {
+            const res = await authorService.checkAnswerAndGetPoint({ idBook, listAnswer });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const addPdfForABookAsync = createAsyncThunk(
+    "users/addPdfForABook",
+    async ({ idBook, urlPdf }, { rejectWithValue }) => {
+        try {
+            const res = await userService.addPdfForABook({ idBook, urlPdf });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+
+export const createCommentAsync = createAsyncThunk(
+    'comments/createComment',
+    async ({ content, postId, parentId }, { rejectWithValue }) => {
+        try {
+            const data = await userService.createComment({ content, postId, parentId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getCommentOfPostAsync = createAsyncThunk(
+    'comments/getCommentOfPost',
+    async ({ postId }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getCommentOfPost({ postId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getUserPostListAsync = createAsyncThunk(
+    'posts/getUserPostList',
+    async ({ userId }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getUserPostList({ userId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 
 const userSlice = createSlice({
     name: "user",
