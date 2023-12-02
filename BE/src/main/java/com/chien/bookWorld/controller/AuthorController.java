@@ -1,6 +1,8 @@
 package com.chien.bookWorld.controller;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,6 +40,11 @@ public class AuthorController {
     @GetMapping
     public ResponseEntity<SuccessResponse> getAllAuthor() {
         return ResponseEntity.status(200).body(authorService.findAll());
+    }
+
+    @GetMapping("/book")
+    public ResponseEntity<PageResponse> getBookByAuthor(Pageable pageable) {
+        return ResponseEntity.status(200).body(authorService.getBookByAuthor(pageable));
     }
 
 }

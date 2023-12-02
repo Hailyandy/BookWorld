@@ -1,21 +1,11 @@
 package com.chien.bookWorld.service.impl;
 
-import com.chien.bookWorld.dto.BookCreationDto;
-import com.chien.bookWorld.dto.BookDto;
-import com.chien.bookWorld.dto.GenreDto;
-import com.chien.bookWorld.entity.Book;
-import com.chien.bookWorld.entity.BookBasket;
-import com.chien.bookWorld.entity.Genre;
-import com.chien.bookWorld.entity.User;
-import com.chien.bookWorld.entity.UserDetailsImpl;
+import com.chien.bookWorld.dto.*;
+import com.chien.bookWorld.entity.*;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
-import com.chien.bookWorld.repository.BookBasketRepository;
-import com.chien.bookWorld.repository.BookRepository;
-import com.chien.bookWorld.repository.GenreRepository;
-import com.chien.bookWorld.repository.PostRepository;
-import com.chien.bookWorld.repository.UserRepository;
+import com.chien.bookWorld.repository.*;
 import com.chien.bookWorld.service.BookService;
 
 import java.math.BigDecimal;
@@ -56,6 +46,9 @@ public class BookServiceImpl implements BookService {
 
   @Autowired
   private GenreRepository genreRepository;
+
+  @Autowired
+  private PdfRepository pdfRepository;
   @Autowired
   private ModelMapper mapper;
 
@@ -87,7 +80,17 @@ public class BookServiceImpl implements BookService {
     if (book == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     } else {
-      BookDto bookDto = mapper.map(book, BookDto.class);
+      BookDetailDto bookDto = mapper.map(book, BookDetailDto.class);
+      List<Pdf> pdfs = pdfRepository.findPdfByBook(id);
+      List<PdfDto> pdfDtos = pdfs.stream().map(pdf -> {
+          PdfDto pdfDto = new PdfDto();
+          pdfDto.setUrlPdf(pdf.getUrlPdf());
+          pdfDto.setUserName(pdf.getUser().getName());
+          pdfDto.setId(pdf.getId());
+          return pdfDto;
+
+      }).collect(Collectors.toList());
+      bookDto.setPdfs(pdfDtos);
       BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), id);
       if (bookBasket != null) {
         bookDto.setStatusWithUser(bookBasket.getStatus());
