@@ -191,13 +191,13 @@ const BSHAREresource = {
     menuItems: {
         ROLE_AUTHOR_MenuItem: [
             {
-                key: 'community',
-                label: 'Cộng đồng'
+                key: 'create_test',
+                label: (
+                    <Link to={`${localHost.url}create-test`}>
+                        Tạo bài test
+                    </Link>
+                ),
             },
-            {
-                key: 'book_store',
-                label: 'Kho sách'
-            }
         ],
 
         ROLE_USER_MenuItem: [

@@ -50,9 +50,9 @@ const BookRankPage = () => {
                                     <List.Item.Meta
                                         avatar={<Avatar shape='square' src={item.urlPoster} size={100} />}
                                         title={<Link to={`../${item.id}`} replace={true} className='font-size-24 '>{item.name}</Link>}
-                                        description={<Space direction='vertical' size={12} className='font-size-24 '>
-                                            <span>{item.scoring}</span>
-                                            <span>{item.authorName}</span>
+                                        description={<Space direction='vertical' size={0}>
+                                            <span>Đánh giá: {item.scoring}/5</span>
+                                            {/* <span>{item.publisher}</span> */}
                                             <span>{item.genres.map((genre) => {
                                                 return <span>{genre.name} </span>
                                             })}</span>

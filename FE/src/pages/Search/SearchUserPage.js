@@ -53,7 +53,7 @@ const SearchUserPage = () => {
             }
 
 
-            <Pagination defaultCurrent={6} total={500} className="search-pagination" />
+            {/* <Pagination defaultCurrent={6} total={500} className="search-pagination" /> */}
         </>
     )
 

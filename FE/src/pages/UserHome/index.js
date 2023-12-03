@@ -45,7 +45,7 @@ const UserHomePage = () => {
                     <h2 class="reading-book-title">Sách đang đọc</h2>
                     <ul class="reading-book-list">
                         {
-                            dataLoader.currentReadingBooks.length > 0 ?
+                            dataLoader.currentReadingBooks?.length > 0 ?
                                 dataLoader.currentReadingBooks.map((book) => {
                                     return <li class="reading-book-item">
                                         <BookJacket bookItem={book} />

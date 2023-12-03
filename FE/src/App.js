@@ -12,6 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import {
+  UserCreatedPost,
   QuizPage,
   AdminDashBoard, AdminPostList, AdminReportList, AdminAddBookPage,
   BookMarket,
@@ -30,7 +31,7 @@ import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllP
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
 import { searchBookByIdAsync } from './slices/book';
-import { getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
+import { getUserPostListAsync, getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -130,20 +131,24 @@ function App() {
                     }}
                   // errorElement={<AuthorsError />}
                   />
-                  <Route path="fun-quiz" element={<QuizPage />}
-                    loader={() => {
-                      return dispatch(getListQuizByBookIdAsync({ idBook: 1 }))
+
+                  <Route path="user-post-list" element={<UserCreatedPost />}
+                    loader={async () => {
+                      var data = { userPost: [] }
+                      data.userPost = await dispatch(getUserPostListAsync({ userId: tokenService.getUser().id }))
                         .unwrap()
                         .then(async data => {
                           console.log(data)
-                          return data ? data : [];
+                          return data ? data.data : [];
                         })
                         .catch(e => {
                           console.log(e);
-                          return []
                         })
+                      return data
+
 
                     }} />
+
                   <Route path="friend-req-search-people" element={<FriendRequestSearchPeoplePage />}
                     loader={() => {
                       return dispatch(getListFriendRequest())
@@ -222,9 +227,6 @@ function App() {
                       />
                     </Route>
                   </Route>
-
-
-
                   <Route path="books">
                     <Route
                       index
@@ -264,7 +266,22 @@ function App() {
                           });
 
                       }}
-                    />
+                    >
+                    </Route>
+                    <Route path="fun-quiz/:idBook" element={<QuizPage />}
+                      loader={({ params }) => {
+                        return dispatch(getListQuizByBookIdAsync({ idBook: params.idBook }))
+                          .unwrap()
+                          .then(async data => {
+                            console.log(data)
+                            return data ? data : [];
+                          })
+                          .catch(e => {
+                            console.log(e);
+                            return []
+                          })
+
+                      }} />
                     <Route
                       path="market"
                       element={<BookMarket />}

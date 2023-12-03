@@ -17,6 +17,7 @@ import { addPdfForABookAsync } from '~/slices/user';
 import notyf from '~/helper/notifyDisplay';
 import NestedComments from '~/components/comment/NestedComment';
 import BSHAREnum from '~/helper/BSHAREenum';
+import { useNavigate } from 'react-router-dom';
 const { Title, Text, Paragraph } = Typography;
 const { Search } = Input;
 
@@ -24,6 +25,7 @@ const BookDetailPage = () => {
     const bookDetail = useLoaderData()
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
+    const navigate = useNavigate()
     console.log(bookDetail)
     const dispatch = useDispatch()
     const [state, setState] = useState({
@@ -145,8 +147,10 @@ const BookDetailPage = () => {
                                 marginTop: "20px",
                                 width: '100%'
                             }}
-                                type="primary" shape="round"  >
-                                Tạo câu hỏi
+                                type="primary" shape="round" onClick={() => {
+                                    return navigate(`../fun-quiz/${bookDetail.id}`)
+                                }} >
+                                Làm bài trắc nghiệm
                             </Button>
                             <Upload name="logo" listType="picture" customRequest={customUpload} onChange={handleChange}>
                                 <Button icon={<UploadOutlined />}>Thêm file pdf</Button>
@@ -160,7 +164,7 @@ const BookDetailPage = () => {
                 <div class="book-content-intro">
                     <h1 class="title">{bookDetail.name}</h1>
                     {/* {bookDetail.authorName} */}
-                    <h2 class="author">Tác giả: aaaa</h2>
+                    <h2 class="author"> <Text >Tác giả:</Text> {bookDetail.publisher} </h2>
                     <div className="star-rating-book">
                         <StarRatings
                             rating={

@@ -9,6 +9,7 @@ const { Title, Text, Paragraph } = Typography;
  * @returns
  */
 const TheAutofillItem = (props) => {
+    console.log(props)
     return (
         <div className="autofill-containner">
             <Row gutter={16}>
@@ -20,7 +21,7 @@ const TheAutofillItem = (props) => {
                 <Col flex="4">
                     <Space direction='vertical'>
                         <Text style={{ width: '100px' }} ellipsis={true} strong>{props.bookName}</Text>
-                        <Text>by {props.bookAuthor}</Text>
+                        <Text style={{ width: '100px' }}>by {props.bookAuthor}</Text>
                     </Space>
                 </Col>
             </Row>

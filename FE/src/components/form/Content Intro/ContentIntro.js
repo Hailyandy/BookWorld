@@ -29,7 +29,7 @@ const ContentIntro = ({ postItem }) => {
             </div>
             <div class="book-content-intro">
                 <h2 class="title">{postItem.bookName}</h2>
-                <h3 class="author">aaaaa</h3>
+                <h3 class="author">{postItem.authorName}</h3>
                 {/* <p class="content-intro">
 
                     </p> */}
