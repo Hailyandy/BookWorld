@@ -6,6 +6,7 @@ import './quizpage.css'
 import { useLoaderData } from 'react-router-dom';
 import { checkAnswerAndGetPointAsync } from '~/slices/user';
 import { useDispatch } from 'react-redux';
+import NotFoundPage from '../NotFound/NotFound';
 
 function QuizPage() {
     const dispatch = useDispatch()
@@ -26,14 +27,17 @@ function QuizPage() {
     console.log(funQuiz)
 
     useEffect(() => {
-        const shuffledAnswers = funQuiz.map(q =>
-            shuffleArray(q.optionDtos)
-        );
-        setAnswerOptions(shuffledAnswers[0]);
-        setQuestion(funQuiz[0].questionsText);
-        setScore(funQuiz[0].scoring)
-        setIdBook(funQuiz[0].idBook)
-        setQuestionUuId(funQuiz[0].id)
+        if (funQuiz.length > 0) {
+            const shuffledAnswers = funQuiz.map(q =>
+                shuffleArray(q.optionDtos)
+            );
+            setAnswerOptions(shuffledAnswers[0]);
+            setQuestion(funQuiz[0].questionsText);
+            setScore(funQuiz[0].scoring)
+            setIdBook(funQuiz[0].idBook)
+            setQuestionUuId(funQuiz[0].id)
+        }
+
     }, []);
 
     function shuffleArray(array) {
@@ -127,20 +131,25 @@ function QuizPage() {
                 })
         }
     }, [result])
+    if (funQuiz.length == 0) {
+        return <NotFoundPage />
+    }
     return (
         <div className="quiz-page">
-            {result ? (
-                <Result quizResult={answerFromBe.score} answerFromBe={answerFromBe.checkQuestionDtos} />
-            ) : (
-                <Quiz
-                    answer={answer}
-                    answerOptions={answerOptions}
-                    question={question}
-                    onAnswerSelected={handleAnswerSelected}
-                    questionId={questionId}
-                    questionTotal={funQuiz.length}
-                />
-            )}
+            {
+                funQuiz.length > 0 ? (result ? (
+                    <Result quizResult={answerFromBe.score} answerFromBe={answerFromBe.checkQuestionDtos} />
+                ) : (
+                    <Quiz
+                        answer={answer}
+                        answerOptions={answerOptions}
+                        question={question}
+                        onAnswerSelected={handleAnswerSelected}
+                        questionId={questionId}
+                        questionTotal={funQuiz.length}
+                    />
+                )) : (<NotFoundPage />)
+            }
         </div>
     );
 }

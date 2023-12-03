@@ -1,4 +1,7 @@
 {
+    "presets": [
+        "@babel/preset-react"
+    ],
     "plugins": [
         [
             "module-resolver",
@@ -7,7 +10,8 @@
                     "~": "./src"
                 }
             }
-        ]
+        ],
+        "transform-class-properties",
+        "istanbul"
     ]
 }
-// import App from '~/App'

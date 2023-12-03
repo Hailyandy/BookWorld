@@ -119,7 +119,7 @@ class UserService extends BaseService {
     * @returns
     */
     async getUserPostList({ userId }) {
-        var data = await getAPI(`post`, { userId })
+        var data = await getAPI(`post`, { userId, state: 'PUBLIC' })
         return data
     }
 }

@@ -31,7 +31,9 @@ const BSHAREnum = Object.freeze({
     dropdown_user_menu_key: Object.freeze({
         logout: 'logout',
         friendList: 'friendList',
-        personalProfile: 'personalProfile'
+        personalProfile: 'personalProfile',
+        personalPost: 'personalPost'
+
     }),
     the_user_item: Object.freeze({
         friend_req: 'friendReq',

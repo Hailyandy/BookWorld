@@ -50,7 +50,7 @@ const CommentItem = ({ comment, type, children }) => {
                 // author={<a className="author-comment-name">{comment.userName}</a>}
                 avatar={
                     <div className="avatar-container">
-                        <Avatar src={comment.avatar} alt="Han Solo" />
+                        <Avatar src={comment.urlAvatarUser} alt="Han Solo" />
 
                         <Button style={{
                             backgroundColor: "var(--button-default-background-color)",
