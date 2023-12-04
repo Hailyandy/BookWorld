@@ -20,7 +20,7 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.ReportService;
 
 @RestController
-@RequestMapping("/api/report")
+@RequestMapping("/api/pdf/report")
  
 public class ReportCotroller {
 
