@@ -91,6 +91,13 @@ public class BookController {
     return ResponseEntity.status(200).body(bookService.getBookList(pageable));
   }
 
+  @PatchMapping("/update/{idBook}")
+  public ResponseEntity<Object> updateBook(
+          @PathVariable Long idBook, @RequestBody Book book
+  ) {
+    return ResponseEntity.status(200).body(bookService.update(book));
+  }
+
 
 
 }

@@ -98,35 +98,14 @@ public class UserServiceImpl implements UserService {
   public SuccessResponse update(UserUpdateDto userUpdateDto) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
-    User thisUser = userRepository.findById(userDetails.getId())
-        .orElseThrow(() -> new AppException(404, 44, "Error: Does not exist! User not found!"));
-
     User fromDB = userRepository.findById(userUpdateDto.getId())
         .orElseThrow(() -> new AppException(404, 44, "Error: Does not exist! User not found!"));
-
-    List<String> roles = userDetails.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority).toList();
-    boolean isUser = false;
-    boolean isLib = false;
-    for (String role : roles) {
-      if (Objects.equals(role, "ROLE_USER")) {
-        isUser = true;
-      } else if (Objects.equals(role, "ROLE_LIBRARIAN")) {
-        isLib = true;
-      }
+    if (userDetails.getId() != userUpdateDto.getId()) {
+      throw new AppException(404, 44, "id user sai!");
     }
-    if (!isLib && isUser) {
-      if (!Objects.equals(userUpdateDto.getId(), userDetails.getId())) {
-        throw new AppException(403, 43,
-            "Forbidden! Your account only has permission to edit your own account information!");
-      }
-    }
-
-    // fromDB.setEmail(userUpdateDto.getEmail());
-    fromDB.setName(userUpdateDto.getName());
-    fromDB.setPhone(userUpdateDto.getPhone());
-    // fromDB.setAddress(userUpdateDto.getAddress());
-    return new SuccessResponse(mapper.map(userRepository.save(fromDB), UserDto.class));
+    mapper.map(userUpdateDto, fromDB);
+    User user = userRepository.save(fromDB);
+    return new SuccessResponse(mapper.map(user, UserDto.class));
   }
 
   @Override

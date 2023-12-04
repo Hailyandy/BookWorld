@@ -3,6 +3,7 @@ package com.chien.bookWorld.service;
 import com.chien.bookWorld.dto.BookCreationDto;
 import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.PostCreationDto;
+import com.chien.bookWorld.dto.PostDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.entity.Post;
 import com.chien.bookWorld.payload.response.PageResponse;
@@ -19,6 +20,8 @@ public interface PostService extends
     PageResponse getPostByUserCurrent(Pageable pageable);
 
     PageResponse getPostByUser(Long userId, Pageable pageable);
+
+    PostDto updatePost(Long postId, Post post);
 
 
 }
