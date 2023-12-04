@@ -1,12 +1,9 @@
 package com.chien.bookWorld.controller;
 
+import com.chien.bookWorld.dto.UserUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.UserService;
@@ -23,5 +20,19 @@ public class UserController {
     public ResponseEntity<SuccessResponse> searchUserByName(@RequestParam String name) {
         return ResponseEntity.status(200).body(userService.findByUsersByName(name));
     }
+
+    @PatchMapping("/update/{userId}")
+    public ResponseEntity<Object> updateUser(
+            @PathVariable Long userId, @RequestBody UserUpdateDto userUpdateDto
+            ) {
+        return ResponseEntity.status(200).body(userService.update(userUpdateDto));
+    }
+
+    @GetMapping("/{idUser}")
+    public ResponseEntity<SuccessResponse> getInfoUser(@PathVariable Long idUser) {
+        return ResponseEntity.status(200).body(userService.findById(idUser));
+    }
+
+
 
 }

@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -212,15 +213,20 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse update(Book BookInput) {
-    Book fromDB = bookRepository.findById(BookInput.getId()).orElse(null);
+  public SuccessResponse update(Book bookInput) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+    Book fromDB = bookRepository.findById(bookInput.getId()).orElse(null);
+    List<String> roles = userDetails.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority).toList();
+    boolean isAdmin = roles.contains("ROLE_ADMIN");
+    if (userDetails.getId() != fromDB.getUser().getId() && !isAdmin) {
+      throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
+    }
     if (fromDB == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
+    mapper.map(bookInput, fromDB);
     return new SuccessResponse(bookRepository.save(fromDB));
   }
 

@@ -21,7 +21,7 @@ public class UserDto {
 
   private String urlAvatar;
 
-  private String address;
+  private String nativePlace;
 
   private Boolean enabled;
 }

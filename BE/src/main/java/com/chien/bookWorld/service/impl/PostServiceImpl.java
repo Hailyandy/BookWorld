@@ -82,7 +82,6 @@ public class PostServiceImpl implements PostService {
     }
 
     postRepository.save(post);
-
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 0);
     body.put("message", "Tạo post thành công!");
@@ -115,19 +114,18 @@ public class PostServiceImpl implements PostService {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
     fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
     return new SuccessResponse(bookRepository.save(fromDB));
   }
 
   @Override
   public Map<String, Object> delete(Long id) {
-    Book fromDB = bookRepository.findById(id).orElse(null);
-    if (fromDB == null) {
-      throw new AppException(404, 44, "Error: Does not exist! Book not found!");
-    }
-    bookRepository.deleteById(id);
+      UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+              .getAuthentication().getPrincipal();
+    Post post = postRepository.findById(id).orElseThrow(null);
+      if (userDetails.getId() != post.getUser().getId()) {
+          throw  new AppException(401, 41, "Không thể xóa post của người khác!");
+      }
+    postRepository.delete(post);
     final Map<String, Object> body = new HashMap<>();
     body.put("code", 0);
     body.put("message", "Successfully deleted!");
@@ -218,4 +216,20 @@ public class PostServiceImpl implements PostService {
             }).collect(
                     Collectors.toList()));
   }
+
+    @Override
+    public PostDto updatePost(Long postId, Post post) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        Post post_ = postRepository.findById(postId)
+                .orElseThrow(() ->new AppException(404, 44, "Error: Does not exist! No book has been created yet!"));
+        if (userDetails.getId() != post_.getUser().getId()) {
+            throw  new AppException(401, 41, "Không có quyền chỉnh sủa post của người khác!");
+        }
+        if(post.getContent() != null) {
+            post_.setContent(post.getContent());
+        }
+        Post postUpdate = postRepository.save(post_);
+        return mapper.map(postUpdate, PostDto.class);
+    }
 }
