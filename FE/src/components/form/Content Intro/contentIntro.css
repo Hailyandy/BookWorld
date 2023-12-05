@@ -3,7 +3,7 @@
 .body-post {
     padding: 0 50px 0 50px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 

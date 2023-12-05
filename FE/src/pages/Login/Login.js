@@ -59,7 +59,7 @@ function Login() {
                 }
 
                 // await config()
-                if (tokenService.getRole("ROLE_ADMIN")) navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
+                if (tokenService.getRole("ROLE_ADMIN") || tokenService.getRole("ROLE_AUTHOR")) navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
                 return;
             })
             .catch(e => {

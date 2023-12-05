@@ -34,6 +34,15 @@ class AuthorService extends BaseService {
         return data
     }
 
+    /**
+     * Api để lấy danh sách sách của tác giả
+     * @returns
+     */
+    async getListBookOfAuthor() {
+        var data = await getAPI(`author/book`)
+        return data
+    }
+
 }
 
 export default new AuthorService()

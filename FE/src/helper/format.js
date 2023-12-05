@@ -205,6 +205,8 @@ export const objectToParams = (obj) => {
 // Function to convert
 export const convertDataIntoCreateTestOption = (original) => {
     let arrayResult = []
+    const keys = ['key_1', 'key_2', 'key_3', 'key_4'];
+    let values = [];
     // Construct new target object
     original.forEach((ori) => {
         const newObj = {
@@ -212,15 +214,30 @@ export const convertDataIntoCreateTestOption = (original) => {
             optionText: {},
             scoring: ori.scoring
         };
-
         // Get answer key
         const answerKey = ori.answer;
+        const answerText = ori[answerKey]
+        values = [answerText]
+        // Check for duplicate values
+        keys.forEach(key => {
+            if (values.includes(ori[key]) && key != answerKey) {
+                // Found duplicate value
 
+                // Generate new value
+                const newValue = generateUuid();
+
+                // Update key with new value
+                ori[key] = newValue;
+            } else {
+                // Track unique value
+                values.push(ori[key]);
+            }
+        });
         // Populate optionText
         Object.keys(ori)
             .filter(key => key.startsWith("key_"))
             .forEach(key => {
-                newObj.optionText[ori[key]] = (key === answerKey) ? 1 : 0;
+                newObj.optionText[ori[key]] = (key === answerKey && ori[key] == answerText) ? 1 : 0;
             });
         arrayResult.push(newObj)
     })

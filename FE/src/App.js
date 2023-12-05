@@ -12,6 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import {
+  AuthorBook,
   UserCreatedPost,
   QuizPage,
   AdminDashBoard, AdminPostList, AdminReportList, AdminAddBookPage,
@@ -31,7 +32,7 @@ import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllP
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
 import { searchBookByIdAsync } from './slices/book';
-import { getUserPostListAsync, getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
+import { getUserTopScoreByBookIdAsync, getListBookOfAuthorAsync, getUserPostListAsync, getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -45,6 +46,7 @@ import {
   AuthorRout
 } from './routes';
 import CreateTestPage from './pages/quiz/CreateTestPage';
+import BSHAREnum from './helper/BSHAREenum';
 function App() {
   const [reload, setReload] = useState(0);
   const dispatch = useDispatch()
@@ -68,7 +70,7 @@ function App() {
             /**
              * user root
             */
-            tokenService.getRole("ROLE_USER") && (
+            tokenService.getRole(BSHAREnum.roles.user) && (
               <>
                 <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                   <Route
@@ -253,18 +255,26 @@ function App() {
                     <Route
                       path=":bookId"
                       element={<BookDetailPage />}
-                      loader={({ params }) => {
-                        let data = { bookDetail: [], comment: [] }
+                      loader={async ({ params }) => {
+                        let data = { bookDetail: [], comment: [], userTopScore: [] }
 
-                        return dispatch(searchBookByIdAsync({ id: params.bookId }))
+                        data.bookDetail = await dispatch(searchBookByIdAsync({ id: params.bookId }))
                           .unwrap()
                           .then(async data => {
-                            return data;
+                            return data ? data : [];
                           })
                           .catch(e => {
-                            return e.messege
+                            return []
                           });
-
+                        data.userTopScore = await dispatch(getUserTopScoreByBookIdAsync({ idBook: params.bookId }))
+                          .unwrap()
+                          .then(async data => {
+                            return data ? data.data : [];
+                          })
+                          .catch(e => {
+                            return []
+                          });
+                        return data
                       }}
                     >
                     </Route>
@@ -341,7 +351,7 @@ function App() {
             )
           }
           {
-            tokenService.getRole("ROLE_ADMIN") && (
+            tokenService.getRole(BSHAREnum.roles.admin) && (
               <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                 <Route
                   index
@@ -402,17 +412,43 @@ function App() {
               </Route>
             )
           }
-
-
           {
-            tokenService.getRole("ROLE_AUTHOR") && (
-              <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />} >
-                <Route path="create-test" element={<CreateTestPage />} />
+            tokenService.getRole(BSHAREnum.roles.author) && (
+              <Route path={`/${tokenService.getUserRoleName()}`} element={<AuthorsLayout />} >
+                <Route path="create-test/:idBook" element={<CreateTestPage />} loader={async ({ params }) => {
+                  return dispatch(getListQuizByBookIdAsync({ idBook: params.idBook }))
+                    .unwrap()
+                    .then(async data => {
+                      console.log(data)
+                      return data ? data : [];
+                    })
+                    .catch(e => {
+                      console.log(e);
+                      return []
+                    })
+                }} />
+                <Route path="author-created-book" element={<AuthorBook />} loader={async () => {
+                  return await dispatch(getListBookOfAuthorAsync())
+                    .unwrap()
+                    .then(async data => {
+                      console.log(data)
+                      return data ? mapToClass(data.data, BookEntity) : [];
+                    })
+                    .catch(e => {
+                      console.log(e);
+                      return []
+                    })
+                }} />
                 <Route
                   index
                   element={<Authors />}
                 // loader={authorsLoader}
                 // errorElement={<AuthorsError />}
+                />
+                <Route
+                  path="created-book"
+                  element={<BookMarket />}
+                // loader={authorDetailsLoader}
                 />
                 <Route
                   path=":id"
@@ -424,16 +460,37 @@ function App() {
                   element={<GeneralProfile />}
                 // loader={authorDetailsLoader}
                 />
+                <Route path="books">
+                  <Route
+                    path=":bookId"
+                    element={<BookDetailPage />}
+                    loader={async ({ params }) => {
+                      let data = { bookDetail: [], comment: [], userTopScore: [] }
+
+                      data.bookDetail = await dispatch(searchBookByIdAsync({ id: params.bookId }))
+                        .unwrap()
+                        .then(async data => {
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          return []
+                        });
+                      data.userTopScore = await dispatch(getUserTopScoreByBookIdAsync({ idBook: params.bookId }))
+                        .unwrap()
+                        .then(async data => {
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          return []
+                        });
+                      return data
+                    }}
+                  >
+                  </Route>
+                </Route >
               </Route>
             )
           }
-          <Route path="authors" errorElement={<AuthorsError />}>
-
-
-          </Route>
-
-
-
           <Route path="*" element={<NotFoundPage />} />
         </Route >
       </>

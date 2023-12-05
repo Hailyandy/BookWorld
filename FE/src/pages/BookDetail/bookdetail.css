@@ -3,14 +3,16 @@
     display: flex;
     /* margin-top: var(--margin-top-scroll-page); */
     padding: 30px;
-    padding-left: 0px;
+
 }
 
 .book-detail-containner--left {
     display: flex;
-    flex: 1 1;
+    flex: 0 1;
     right: 0px;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    flex-direction: column;
+
 }
 
 .bookjacket-intro--sticky {
@@ -29,6 +31,7 @@
     padding: 1em 16px;
     row-gap: 20px;
     display: flex;
+    flex-direction: column;
 }
 
 .book-detail-containner--right {}
