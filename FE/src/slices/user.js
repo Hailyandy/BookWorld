@@ -430,6 +430,42 @@ export const getUserPostListAsync = createAsyncThunk(
     }
 );
 
+
+export const createReportAboutPdfAsync = createAsyncThunk(
+    'pdf/createReportAboutPdf',
+    async ({ reason, description, pdf_id }, { rejectWithValue }) => {
+        try {
+            const data = await userService.createReportAboutPdf({ reason, description, pdf_id });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getListBookOfAuthorAsync = createAsyncThunk(
+    'author/getListBookOfAuthor',
+    async (param, { rejectWithValue }) => {
+        try {
+            const data = await authorService.getListBookOfAuthor();
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getUserTopScoreByBookIdAsync = createAsyncThunk(
+    'user/getListBookOfAuthor',
+    async ({ idBook }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getUserTopScoreByBookId({ idBook });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,

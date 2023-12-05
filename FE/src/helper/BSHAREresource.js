@@ -198,6 +198,14 @@ const BSHAREresource = {
                     </Link>
                 ),
             },
+            {
+                key: 'created_post',
+                label: (
+                    <Link to={`${localHost.url}author-created-book`}>
+                        Sách tác giả
+                    </Link>
+                ),
+            },
         ],
 
         ROLE_USER_MenuItem: [

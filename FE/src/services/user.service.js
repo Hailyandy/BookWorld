@@ -122,6 +122,22 @@ class UserService extends BaseService {
         var data = await getAPI(`post`, { userId, state: 'PUBLIC' })
         return data
     }
+
+
+    /**
+ * API sử dụng để tạo report về bản pdf
+ * @param {*} param0
+ * @returns
+ */
+    async createReportAboutPdf({ reason, description, pdf_id }) {
+        var data = await postAPI('pdf/report', { reason, description, pdf_id })
+        return data
+    }
+
+    async getUserTopScoreByBookId({ idBook }) {
+        var data = await getAPI(`/questions/scoring/top`, { idBook })
+        return data
+    }
 }
 
 export default new UserService()
