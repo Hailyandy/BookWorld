@@ -69,17 +69,17 @@ describe('Spec đăng nhập', () => {
 
         cy.intercept('GET', '/api/book', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'book/suggest_book.json',
         }).as('books');
 
         cy.intercept('GET', '/api/friend/list', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'friend/friend_list.json',
         }).as('friendList');
 
         cy.intercept('GET', '/api/friend/request', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'friend/friend_request.json',
         }).as('friendReq');
 
         cy.intercept('GET', '/api/bookBasket', {
