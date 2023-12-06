@@ -84,18 +84,18 @@ describe('Spec đăng nhập', () => {
 
         cy.intercept('GET', '/api/bookBasket', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'book/book_basket.json',
         }).as('bookBasket');
 
 
         cy.intercept('GET', '/api/book/top', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'book/book_top.json',
         }).as('bookTop');
 
         cy.intercept('GET', '/api/post?state=PUBLIC', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'post/post_public.json',
         }).as('postPublic');
 
         cy.get('.form_login button').contains('Đăng nhập').click();
