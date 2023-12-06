@@ -1,9 +1,9 @@
 /* Body Post */
-
+/* suaw tu column sang row */
 .body-post {
     padding: 0 50px 0 50px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 

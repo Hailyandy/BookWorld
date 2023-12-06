@@ -1,0 +1,951 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": [
+        {
+            "id": 2,
+            "name": "Harry Potter and the Philosopher’s Stone",
+            "numberPages": null,
+            "publisher": "Hàn Vũ Ký",
+            "publishDate": null,
+            "introducing": null,
+            "urlPoster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbSko59ktzE0FJS4usiq58pb7tTjR1UVrHzA&usqp=CAU",
+            "scoring": 3.0,
+            "authorId": null,
+            "authorName": null,
+            "genres": [],
+            "statusWithUser": null
+        },
+        {
+            "id": 3,
+            "name": "月刊少女野崎くん 15 [Gekkan Shoujo Nozaki-kun 15]",
+            "numberPages": 3,
+            "publisher": "スクウェア・エニックス",
+            "publishDate": "2023-09-12T15:40:02",
+            "introducing": "She is a Japanese manga artist known for creating The Magic Touch and Oresama Teacher which have both been serialized on the Hana to Yume magazine./nTsubaki began drawing manga in her first year of high school. She was soon selected to be in the top 10 of Hana to Yume Mangaka Course, and subsequently won the Big Challenge contest.",
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
+            "scoring": 3.0,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 1,
+            "name": "The Girl with the Dragon Tattoo",
+            "numberPages": null,
+            "publisher": "Hàn Vũ Ký",
+            "publishDate": null,
+            "introducing": null,
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 4,
+            "name": "月刊少女野崎くん 15 [Gekkan Shoujo Nozaki-kun 15]",
+            "numberPages": 3,
+            "publisher": "スクウェア・エニックス",
+            "publishDate": "2023-09-12T15:40:02",
+            "introducing": "She is a Japanese manga artist known for creating The Magic Touch and Oresama Teacher which have both been serialized on the Hana to Yume magazine./nTsubaki began drawing manga in her first year of high school. She was soon selected to be in the top 10 of Hana to Yume Mangaka Course, and subsequently won the Big Challenge contest.",
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 5,
+            "name": "2 月刊少女野崎くん 15 [Gekkan Shoujo Nozaki-kun 15]",
+            "numberPages": 3,
+            "publisher": "スクウェア・エニックス",
+            "publishDate": "2023-09-12T15:40:02",
+            "introducing": "She is a Japanese manga artist known for creating The Magic Touch and Oresama Teacher which have both been serialized on the Hana to Yume magazine./nTsubaki began drawing manga in her first year of high school. She was soon selected to be in the top 10 of Hana to Yume Mangaka Course, and subsequently won the Big Challenge contest.",
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 6,
+            "name": "a",
+            "numberPages": 1,
+            "publisher": "1",
+            "publishDate": "2023-11-27T21:34:44",
+            "introducing": "2",
+            "urlPoster": "https://firebasestorage.googleapis.com/v0/b/ha-pj-a27a8.appspot.com/o/files%2FScreenshot%202023-07-22%20103902.png?alt=media&token=6cf55135-ae60-4adf-ac33-04b32e4bf59e",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 7,
+            "name": "Harry Potter and the Philosopher’s Stone",
+            "numberPages": 223,
+            "publisher": "Bloomsbury Publishing",
+            "publishDate": "1997-06-26T00:00:00",
+            "introducing": "Harry Potter nghĩ mình là một cậu bé bình thường - cho đến khi cậu được một con cú cứu, đưa đến Trường Pháp thuật và Ma thuật Hogwarts, học chơi Quidditch và chiến đấu trong một trận đấu tay đôi chết người.",
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1170803558l/72193.jpg",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 8,
+            "name": "Xin chào thiếu tướng đại nhân",
+            "numberPages": 400,
+            "publisher": "Hàn Vũ Ký",
+            "publishDate": "2022-08-05T00:00:00",
+            "introducing": "Cố Niệm Chi là một cô bé mồ côi, bố mẹ đã mất trong một tai nạn bí ẩn. Cô được quân đội giao cho Hoắc Thiệu Hằng - Thiếu tướng đứng đầu cục tác chiến đặc biệt và quân khu sáu chăm sóc.\r\nCố Niệm Chi mới mười bảy tuổi đã tốt nghiệp đại học, muốn thi nghiên cứu sinh khoa Luật Đại học B do Giáo sư Hà Chi Sơ hướng dẫn. Do đố kị tài năng và nhan sắc của Cố Niệm Chi mà Phùng Nghi Hỷ đã dụ cô đến tiệc sinh nhật mình, hạ thuốc nhằm làm cô nhục nhã, không đến kịp kì thi tuyển nghiên cứu sinh.\r\nHoắc Thiệu Hằng vì muốn cứu cô nên hai người đã có “tình một đêm” nhưng Cố Niệm Chi không hề hay biết. Là Thiếu tướng, sóng to gió lớn gì mà anh chưa từng thấy qua nhưng không ngờ lại thua trong tay của cô nhóc mình nuôi nấng sáu năm trời, chậm rãi mà rơi vào tâm của cô. Sau sự việc đó, Hoắc Thiệu Hằng luôn tìm cách tránh mặt, thờ ơ với Cố Niệm Chi.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/37754.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 9,
+            "name": "Siêu cấp cưng chiều",
+            "numberPages": 300,
+            "publisher": "Mạn Tây",
+            "publishDate": "2021-04-02T00:00:00",
+            "introducing": "Cuốn sách này đã hết hạn bản quyền trên Waka, chúng tôi sẽ thông báo khi có cập nhật bản quyền mới nhất. biết anh yêu em. Mà là rõ ràng em ở bên cạnh anh, nhưng anh không biết anh yêu em. Cũng có thể là rõ ràng cả hai gần nhau như vậy, nhưng một người rẽ trái, một người khác lại rẽ phải. Mua dây buộc mình chính là câu truyện ấy, là gần nhau, xa nhau, yêu nhau do cả hai sai phương hướng. Nhiều năm trước, Trịnh Hài thề rằng: “Nếu tôi có bất cứ ý đồ gì khác với Hòa Hòa, tôi sẽ bị sét đánh!” Sức mạnh lý trí kiên định của anh mạnh gấp vạn lần sức mạnh cảm tính. Nhiều năm sau, anh dùng cách thức mà bản thân mình chưa từng nghĩ đến, đồng thời đã bị sét trời và sét đất đánh trúng. Là anh đã lâm vào lưới tình với cô. Đến với truyện tình yêu này cả cô và anh, cả hai là do không chịu bước\r\nĐôi nam nữ trong kén, quá gần không được, quá xa không được, bên nhau không được, xa nhau không được. Thật ra, trong tình yêu, điều cần thiết đôi khi chỉ là một cơ hội phá kén bung ra, và chút ít dũng khí mà thôi",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/10268.jpg?v=3&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 10,
+            "name": "Nhất phẩm thiên kim",
+            "numberPages": 500,
+            "publisher": "Địch Hoa",
+            "publishDate": "2014-10-09T00:00:00",
+            "introducing": "Nội dung dễ thương, có những lúc ngọt ngào, có những lúc hài hước và có cả những lúc làm người đọc cảm động về tình cảm của 2 nhân vật chính.\r\nHoắc Truy Ân bề ngoài mạnh mẽ nhưng bên trong rất đáng yêu, Tiết Niệm Chung bề ngoài thư sinh nhưng bên trong lại rất kiên cường",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/975.jpg?v=2&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 11,
+            "name": "Đảo giấu vàng",
+            "numberPages": 400,
+            "publisher": "Robert Louis Stevenson",
+            "publishDate": "2022-02-18T00:00:00",
+            "introducing": "Một hòn đảo chơi vơi giữa biển,nó chứa trong lòng mình một kho vàng do băng cướp của một viên thuyền trưởng tên là Flint cất giấuVàng – cái ma lực phi thường của xã hội châu Âu.Ai sẽ đoạt được kho vàng, bọn cướp còn lại trong băng nhóm của Flint hay những kẻ khác?",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/6972.jpg?v=3&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 12,
+            "name": "Đi tìm Gobi",
+            "numberPages": 400,
+            "publisher": "Dion Leonard",
+            "publishDate": "2022-12-05T00:00:00",
+            "introducing": "Giống như một điều kì diệu, “Đi tìm Gobi” kể về câu chuyện gặp gỡ thần kỳ giữa Dion - vận động viên điền kinh người Scotland và người bạn chó đặc biệt khi anh tham gia chạy đua quãng đường 250 km trên sa mạc Gobi",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/41120.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 13,
+            "name": "Thời ấy chưa xa",
+            "numberPages": 600,
+            "publisher": " Lương Sĩ Cầm",
+            "publishDate": "2022-11-14T00:00:00",
+            "introducing": "Bọn lính ở các chòi canh châu nòng súng bắn liên hồi. Quý Lê trúng đạn. Hy sinh dưới chân hàng rào dây thép gai. Milô được tin, tức tốc chạy đến. Nhìn thi thể bất động của người tù binh, hắn làm dấu thánh và thốt ra lời: - Một người lính kiên cường! ",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/39587.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 14,
+            "name": "Sống để đời yêu",
+            "numberPages": 500,
+            "publisher": " Phùng Thiên Tân",
+            "publishDate": "2022-11-14T00:00:00",
+            "introducing": "Anh cảnh sát quay ra phía vòng người, nói: - Thôi bà con về ngủ đi. Khuya rồi! Chính lúc ấy gã đàn ông rút con dao ở trong người ra nhảy bổ đâm vào lưng trên bên trái anh cảnh sát. Mọi người chỉ kêu “hú” lên... Anh cảnh sát đổ sấp xuống. Chị Trinh té nhào xuống ôm lấy người Kỳ, gào thét như điên dại. Những tiếng sau cùng mà người ta nghe rõ được là “Trời ơi! Suốt đời tôi mang nợ!...”.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/39584.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 15,
+            "name": "Cạm bẫy người",
+            "numberPages": 300,
+            "publisher": "Vũ Trọng Phụng",
+            "publishDate": "2022-06-17T00:00:00",
+            "introducing": "Phóng sự “Cạm bẫy người” của Vũ Trọng Phụng viết về nạn cờ bạc bịp ở đất Hà thành những năm 1930, vạch rõ bộ mặt của một tệ đoan xã hội đồng thời nêu ra những bi kịch của nó cho bọn tín đồ “tôn giáo đỏ đen”.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/37127.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 16,
+            "name": "Dấn thân",
+            "numberPages": 700,
+            "publisher": "Jeffrey Archer",
+            "publishDate": "2023-04-11T00:00:00",
+            "introducing": "William Warwick luôn mơ ước trở thành một thám tử trong khi cha của anh lại muốn anh trở thành một luật sư,William đã tốt nghiệp đại học và trở thành một thám tử cánh sát với những vụ án đầu tiên trong sự nghiệp ở đội Nghệ thuật và Cổ vật",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/44081.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 17,
+            "name": "Thạch Hầu",
+            "numberPages": 800,
+            "publisher": " Jeffery Deaver",
+            "publishDate": "2022-08-08T00:00:00",
+            "introducing": "Một con thuyền chở những người vượt biên tiến vào hải phận nước Mỹ. Một cuộc truy quét của cơ quan hành pháp Hoa Kỳ khiến đám buôn người trở nên manh động. Quỷ - tên “xà thủ” khét tiếng tàn bạo quyết định ra tay với đám “khách hàng” của mình.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/37793.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 18,
+            "name": "Hát trong bão lửa",
+            "numberPages": 600,
+            "publisher": "Nguyễn Thanh Hương",
+            "publishDate": "2022-11-22T00:00:00",
+            "introducing": "Cuốn tiểu thuyết viết về đội văn công xung kích mang tên \"Hoa phong lan\" và những câu chuyện của nhân vật \"tôi\" trong đội văn công.Trong kháng chiến chống Mỹ, đội văn công xung kích\"Hoa phong lan\" đã ra trận với những lời ca tiếng hát để động viên cán bộ, chiến sĩ đang đối mặt với kẻ thù ở dọc Trường Sơn, đường Hồ Chí Minh",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/40796.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 19,
+            "name": "Sống mòn",
+            "numberPages": 500,
+            "publisher": "Nam Cao",
+            "publishDate": "2022-04-29T00:00:00",
+            "introducing": "Có thể nói rằng cuốn tiểu thuyết này như là một lời tự sự đầy trăn trở và suy nghĩ của chính tác giả Nam Cao về cuộc sống đấu tranh tư tưởng và nội tâm của những người trí thức nghèo thời đó.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/36416.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 6,
+                    "name": "Tiểu thuyết"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 20,
+            "name": "Kẻ đoạt hồn",
+            "numberPages": 700,
+            "publisher": "Sebastian Fitzek",
+            "publishDate": "2021-05-14T00:00:00",
+            "introducing": "Cuốn sách nói về: Một ông giáo sư mời các sinh viên của ông tham gia một thí nghiệm.Những người tham gia thí nghiệm cần phải đọc một tập hồ sơ bệnh án.Tập hồ sơ bệnh án này được viết giống như một quyển tiểu thuyết,thuật lại sự việc đã xảy ra tại một bệnh viện tâm thần trước đây.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/31380.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 7,
+                    "name": "Trinh thám"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 21,
+            "name": "Tội ác vô hình",
+            "numberPages": 800,
+            "publisher": "Mạc Y Lai",
+            "publishDate": "2022-09-07T00:00:00",
+            "introducing": "Kỷ Uyên, chàng cảnh sát có thành tích nghiệp vụ xuất sắc nhưng lại bị ám ảnh tâm lý hậu chấn thương, luôn lạnh lùng và né tránh việc hợp tác với đồng nghiệp.\r\nHạ Thanh, bông hoa vàng của đội hình sự Cục Cảnh sát thành phố W, từng vượt qua quá khứ đầy khủng hoảng và giờ đã trở thành một nữ cảnh sát tài sắc vẹn toàn.Hai người sẽ dùng phương pháp nào để có thể sát cánh bên nhau, phá giải những bài toán về tội ác vô hình đầy bí ẩn?",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/26650.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 7,
+                    "name": "Trinh thám"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 22,
+            "name": "Không thể quên em",
+            "numberPages": 800,
+            "publisher": "Hoa Thanh Thần",
+            "publishDate": "2015-01-22T00:00:00",
+            "introducing": "Tang Du là một cô nữ sinh xinh đẹp.Thẩm Tiên Phi ngược lại, anh là một chàng trai nhà nghèo nhưng học rất giỏi, tính cách trầm tĩnh, lạnh nhạt, luôn tránh xa “con gái” và “yêu đương” Nếu không vì Thẩm Tiên Phi đã 2 lần cản trở “chuyện tốt” của Tang Du, thì oan gia đã không gặp nhau.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/3581.jpg?v=3&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 5,
+                    "name": "Ngôn tình"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 23,
+            "name": "Cửa tiệm hạnh phúc",
+            "numberPages": 600,
+            "publisher": " Lê Di",
+            "publishDate": "2018-01-22T00:00:00",
+            "introducing": "Cửa tiệm hạnh phúc của Lê Di không phải là một cuốn sách bàn về hạnh phúc theo kiểu chuyên viên tư vấn hay triết gia mà bằng góc nhìn rất riêng của tác giả, một người trẻ thích rong chơi và cóp nhặt những điều nhỏ nhặt,bình dị trong cuộc sống",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/17943.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 8,
+                    "name": "Nuôi dưỡng tinh thần"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 24,
+            "name": "Vắc-xin chán nản",
+            "numberPages": 700,
+            "publisher": "Lê Di",
+            "publishDate": "2018-07-10T00:00:00",
+            "introducing": "Vắc-xin chán nản sẽ giúp chúng ta hiểu hơn về trạng thái cảm xúc tưởng chừng đáng ghét cay, tìm cách làm bạn với chán nản.Và tất nhiên khi đi qua những cơn chán nản, mình sẽ yêu hơn những ngày tháng hạnh phúc.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/19207.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 8,
+                    "name": "Nuôi dưỡng tinh thần"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 25,
+            "name": "Sức bật tinh thần",
+            "numberPages": 900,
+            "publisher": "Susan Kahn",
+            "publishDate": "2021-08-06T00:00:00",
+            "introducing": "Trong Sức bật tinh thần tác giả đã định nghĩa Sức bật tinh thần chính là khả năng thích ứng và thay đổi, là tận dụng ngịch cảnh để mài giũa bản thân trở nên giỏi giang hơn, mạnh mẽ và linh hoạt hơn.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/32638.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 8,
+                    "name": "Nuôi dưỡng tinh thần"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 26,
+            "name": "Sức mạnh của tĩnh lặng",
+            "numberPages": 800,
+            "publisher": "Eckhart Tolle",
+            "publishDate": "2021-05-15T00:00:00",
+            "introducing": "Đây là một cuốn sách hữu ích và thiết thực cho những ai muốn tiếp xúc với bản chất sâu lắng, trong sáng và chân thật trong con người mình.\r\nCuốn sách có thể giúp bạn vun bồi sự vững chải, khả năng trầm lắng ở tâm hồn bên ngoài đang xảy ra những biến động gì đi nữa.Sức mạnh của tĩnh lặng có thể giúp bạn vượt qua những tình huống thử thách trong đời sống cá nhân.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/31386.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 8,
+                    "name": "Nuôi dưỡng tinh thần"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 27,
+            "name": "Sức mạnh tình bạn",
+            "numberPages": 700,
+            "publisher": "Alan Loy Mcginnis",
+            "publishDate": "2017-07-24T00:00:00",
+            "introducing": "Sức mạnh tình bạn được ra đời với mục đích giúp bạn có được những hiểu biết thiết thực nhất để sống gần gũi hơn với những người mình yêu quý. Nó cũng sẽ đóng vai trò là đòn bẩy, là động lực kích thích tính sáng tạo, xây dựng cuộc sống của chúng ta ngày một trọn vẹn và hạnh phúc hơn.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/16859.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 8,
+                    "name": "Nuôi dưỡng tinh thần"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 28,
+            "name": "Biến ước mơ thành hiện thực",
+            "numberPages": 900,
+            "publisher": "Pamala Oslie",
+            "publishDate": "2021-12-09T00:00:00",
+            "introducing": "Cuốn sách này là nhằm giúp bạn đi tìm niềm tin cho mình và khám phá ảnh hưởng của niềm tin ấy đối với cuộc đời của bạn. Bạn sẽ học được cách loại bỏ những niềm tin tiêu cực được hình thành từ nỗi sợ hãi, tự ti bởi đó chính là nguyên nhân tạo nên những khó khăn, bất lợi cho cuộc sống.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/14775.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 8,
+                    "name": "Nuôi dưỡng tinh thần"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 29,
+            "name": "Đừng sợ lỡ cuộc chơi",
+            "numberPages": 800,
+            "publisher": " Patrick J. McGinnis",
+            "publishDate": "2021-05-21T00:00:00",
+            "introducing": "Cuốn sách chứa đựng lược sử của FOMO, những phân tích chuyên sâu về FOMO dưới góc nhìn sinh học, văn hoá, công nghệ, hàng loạt các câu hỏi giúp bạn đọc tự đánh giá mức độ sợ bỏ lỡ của bản thân, và đặc biệt, cách ta có thể thoát khỏi nanh vuốt của FOMO.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/31473.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 30,
+            "name": "QBQ! Tư duy Thông minh",
+            "numberPages": 700,
+            "publisher": "John G. Miller",
+            "publishDate": "2021-12-09T00:00:00",
+            "introducing": "QBQ! Tư duy Thông minh là một công cụ giúp bạn nhận diện giá trị thực sự của mình, dám nhìn thẳng vào trách nhiệm của bản thân từ trong suy nghĩ để vạch ra những phương hướng hành động thật thông minh. ",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/15755.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 31,
+            "name": "Sống ở thế chủ động",
+            "numberPages": 700,
+            "publisher": "Nguyễn Tuấn Quỳnh",
+            "publishDate": "2018-06-25T00:00:00",
+            "introducing": "Cuốn sách này phản ánh suy nghĩ, những trăn trở, chia sẻ của tác giả với thế hệ trẻ thông qua những chuyến đi thú vị đến các nước trên thế giới và công việc kinh doanh mà tác giả yêu thích.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/18871.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 32,
+            "name": "Phi lý một cách hợp lý",
+            "numberPages": 800,
+            "publisher": "Dan Ariely",
+            "publishDate": "2023-09-13T00:00:00",
+            "introducing": "Đã bao giờ bạn tự hỏi tại sao người ta muốn giảm cân nhưng lại thất bại trong kế hoạch ăn kiêng? Hay tại sao người ta lại vứt rác một cách vô ý thức ở nơi công cộng? Hoặc chỉ đơn giản là tại sao những chiếc tất của mình lại thường xuyên biến mất? Những câu hỏi tưởng chừng đơn giản nhưng lại không dễ trả lời chút nào đó chính là chủ đề của quyển sách Phi lý một cách hợp lý.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/14351.jpg?v=3&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 33,
+            "name": "Thuật nói chuyện hàng ngày",
+            "numberPages": 800,
+            "publisher": "Hoàng Xuân Việt",
+            "publishDate": "2019-09-04T00:00:00",
+            "introducing": "Cuốn sách giúp người đọc hiểu rộng hơn về nghệ thuật nói chuyện, đặc biệt là những đức tính cần có, cần được rèn luyện để thành người có nhân cách, có sức thuyết phục trong việc nói chuyện, giao tiếp hằng ngày.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/22232.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 34,
+            "name": "Logic của tâm trí",
+            "numberPages": 700,
+            "publisher": "Michael Lewis",
+            "publishDate": "2023-04-21T00:00:00",
+            "introducing": "Cuốn sách là câu chuyện về tình bạn của hai nhà tâm lý học nổi tiếng cùng hành trình khám phá, lý giải tâm lý con người của đôi bạn này.Trước đây các nhà khoa học đều coi con người là những người có lý trí có khả năng sử dụng dữ liệu cứng để đưa ra quyết định không ảnh hưởng cảm xúc. Song đôi bạn đã chứng minh rằng điều chúng ta vẫn tin thực chất lại trái ngược.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/44069.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 35,
+            "name": "Những cánh cổng kỳ bí",
+            "numberPages": 99,
+            "publisher": "Đông Thảo",
+            "publishDate": "2021-07-07T00:00:00",
+            "introducing": "Tồn tại song song với thế giới khách quan là thế giới những Cánh Cổng được tạo nên nhờ trí tưởng tượng của những cô cậu mang trong mình chất Kim để trở thành một Chìa Khóa Vạn Năng.\r\nCô bé Vỹ - mười ba tuổi – làm bạn với một chú cá tên Cục Than biết nói tiếng người. Vào ngày Cục Than trở thành người, cô bé Vỹ khám phá ra được khả năng đặc biệt của mình, khi bản thân cũng là một Chìa Khóa non, đang trong quá trình trở thành Chìa Khóa Vạn Năng – người có khả năng mở tất cả các Cánh Cổng và bước vào thế giới tưởng tượng đó.\r\nTừ lúc đó, hành trình chống lại âm mưu phá hủy thế giới Cánh Cổng của Tiểu Ly – người yêu của anh trai Vỹ, chị gái của Cục Than được bắt đầu. Để thực hiện được âm mưu của mình, Tiểu Ly cần bắt được 99 tiểu Tinh linh, trong đó có em gái mình – Bé Bụt và thực hiện suy tính của mình vào mười hai giờ trưa Noel. Sau quá trình này, thế giới sẽ bị hủy diệt, một trong các tiểu Tinh linh sẽ phải tan biến. Nhóm bạn của Vỹ và Cục Than ra sức bảo vệ Bé Bụt và chống lại Tiểu Ly. Cuối cùng, cách thức họ chọn chính là để Vỹ hoán đổi thân xác với Bé Bụt. Ngay lúc hoán đổi thành công, âm mưu của Tiểu Ly bị sụp đổ, cũng chính là lúc Vỹ tan biến. Mãi mãi …",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/32185.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 36,
+            "name": "Đàn ông sao Hỏa, đàn bà sao Kim - Hạnh phúc bên nhau",
+            "numberPages": 800,
+            "publisher": "John Gray",
+            "publishDate": "2021-06-05T00:00:00",
+            "introducing": "Đàn Ông Sao Hỏa, Đàn Bà Sao Kim - Hạnh Phúc Bên Nhau chỉ ra những nguyên nhân dẫn đến xung đột trong hôn nhân, đồng thời giúp bạn có thêm nhiều kỹ năng mới trong việc giữ gìn và vun đắp hạnh phúc gia đình.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/31671.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 37,
+            "name": "Tư duy biện luận - Nghĩ hay hơn hay nghĩ",
+            "numberPages": 800,
+            "publisher": "Đỗ Thị Diệu Ngọc",
+            "publishDate": "2019-10-15T00:00:00",
+            "introducing": "Những nội dung trình bày trong cuốn sách sẽ đưa bạn đi từ những khái niệm cơ bản nhất, khám phá dòng chảy tư duy từ cổ đại với tam đại triết gia Plato, Socrates, Aristotle đến hiện đại với “bậc thầy của tư duy sáng tạo” – Bono, sau đó tìm hiểu những yếu tố căn bản của lập luận và những lỗi ngụy biện phổ biến.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/24034.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 38,
+            "name": "Nghệ thuật đánh cắp ý tưởng",
+            "numberPages": 789,
+            "publisher": "Austin Kleon",
+            "publishDate": "2021-08-20T00:00:00",
+            "introducing": "Cuốn sách gửi tới chúng ta thông điệp: thực tế là không có thứ gì trên đời là nguyên bản. Vậy nên hãy học hỏi từ các tác phẩm của người khác, phối lại, mường tượng lại và khám phá ra trên con đường riêng của bạn. Hãy cứ dành thời gian cho những việc bạn thích làm, đôi khi những điều ban đầu chỉ là sở thích lại trở thành công việc bạn sẽ đeo đuổi suốt đời.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/32764.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 39,
+            "name": "Thông minh hơn, nhanh hơn, giỏi hơn",
+            "numberPages": 870,
+            "publisher": "Charles Duhigg",
+            "publishDate": "2023-08-16T00:00:00",
+            "introducing": "Thông minh hơn, nhanh hơn, giỏi hơn là kết quả nghiên cứu của Charles Duhigg về cơ chế hoạt động của năng suất và nỗ lực để tìm hiểu lý do vì sao một số cá nhân và doanh nghiệp lại đạt được năng suất cao hơn những cá nhân và doanh nghiệp khác rất nhiều.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/16299.jpg?v=2&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 40,
+            "name": "Không gì là không thể",
+            "numberPages": 400,
+            "publisher": "George Matthew Adams",
+            "publishDate": "2021-01-22T00:00:00",
+            "introducing": "Không gì là không thể của George Matthew Adams đã dần trở thành người bạn đồng hành thân thiết của rất nhiều người. Những triết lý đơn giản nhưng vô cùng sâu sắc và hữu dụng trong cuốn sách đã giúp rất nhiều người đạt được thành công như họ mong đợi. Đến với những bí quyết này, bạn sẽ nhận ra rằng: Không có giới hạn nào trong tư duy của con người ngoài những giới hạn do chính con người đặt ra.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/29496.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 41,
+            "name": "Bí quyết trở thành người xuất sắc",
+            "numberPages": 900,
+            "publisher": " Ken Honda",
+            "publishDate": "2021-01-22T00:00:00",
+            "introducing": "Năng khiếu thường được phát hiện một cách ngẫu nhiên khi người ta bắt đầu một lối sống khác với lối sống ở trước thời điểm đó. Nói cách khác, năng khiếu chủ yếu được phát hiện khi xảy ra những biến cố quan trọng trong đời. ",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/18884.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 42,
+            "name": "Khởi nghiệp táo bạo",
+            "numberPages": 100,
+            "publisher": " Steven Kotler",
+            "publishDate": "2022-12-29T00:00:00",
+            "introducing": "Cuốn sách sẽ trang bị cho bạn những công cụ thiết thực từng giúp các bậc thầy công nghệ như Larry Page, Elon Musk, Richard Branson, Jeff Bezos thành công, cùng những bí quyết khởi nghiệp của chính tác giả qua kinh nghiệm thành lập 17 công ty.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 10,
+                    "name": "Phát triển cá nhân"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 44,
+            "name": "Vua mua sắm tam giới",
+            "numberPages": 80,
+            "publisher": "Mộc Tử Hạc",
+            "publishDate": "2022-12-29T00:00:00",
+            "introducing": "Sinh viên học viện Hoa Hạ Lý Hạo bỗng dưng bị bạn gái đá. Vì sao? Vì cậu chỉ là chàng trai nghèo, bán hàng online, bán những món mỹ phẩm bình thường, không được như người ta đi siêu xe, mua đồ hiệu. Thế rồi bỗng dưng, Hạo Tử phát hiện ra điện thoại mình kết nối được với... Hằng Nga ở cung trăng. Hằng Nga mua hàng cho cậu xong còn quay lại, giới thiệu cho cậu thêm mối khác.\r\nNhờ có những vụ trao đổi mua bán với người của Thiên giới, Minh giới mà Lý Hạo có thể mua về bí kíp võ công, thuốc quý, những kiến thức Trung y cao thâm. Cũng từ đó, cậu được bao người đẹp vây quanh, được bạn học ngưỡng mộ.\r\nCông ty đa quốc gia có là gì? Lý Hạo cậu đây bán hàng xuyên tam giới!",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/23799.jpg?v=2&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 45,
+            "name": "Lời nguyền bất tử",
+            "numberPages": 410,
+            "publisher": "Mộc Tử Hạ",
+            "publishDate": "2019-08-08T00:00:00",
+            "introducing": "Những đứa trẻ mồ côi vẫn luôn ngây thơ nghĩ rằng, đó là ơn, là ân tình. Chúng không thể biết, mọi thứ thực chất chỉ là một trò lừa, từ kẻ có suy nghĩ điên khùng muốn lập lại trật tự thế giới.\r\nGemma - hậu duệ của tộc người rắn Medaras - mang sức mạnh phi thường và gánh trách nhiệm nặng nề, đôi khi tưởng như quá sức.\r\nP.T - người bột không nhớ được quá khứ, chấp nhận sống giản đơn như một phiên bản lỗi của cuộc đời - rồi phải trở thành mạnh mẽ để lựa chọn con đường mình nên đi.\r\nP.T, Gemma và những người bạn khác có đủ sức chiến đấu để chống lại người mà mình từng mang ơn? Họ sẽ trở thành chiến binh đứng về phía chính nghĩa; hay buông xuôi và chấp nhận trở thành những cỗ máy giết người vô cảm?\r\nWaka trân trọng giới thiệu tác phẩm Lời nguyền bất tử - Tập 1: Những đứa trẻ Corun của Nhóm 4.0.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/23607.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 46,
+            "name": "Bãi săn",
+            "numberPages": 210,
+            "publisher": "Nguyễn Đình Tú",
+            "publishDate": "2019-03-29T00:00:00",
+            "introducing": "Bãi săn là câu chuyện về trận chiến truyền kiếp giữa người Vượn và các tộc người thú còn lại trên Trái Đất, giữa những thợ săn và những con mồi trên bãi săn vô hình cùng hành trình khám phá của nhóm bạn trẻ về bí mật của Không Lộ viện. Truyện mang màu sắc huyền sử, thần học, gắn liền với giai đoạn lịch sử thời nhà Lý.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/22182.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 47,
+            "name": "Những màu cánh thiên thần",
+            "numberPages": 210,
+            "publisher": "Trương Thanh Thùy",
+            "publishDate": "2019-01-16T00:00:00",
+            "introducing": "Thiên thần cánh trắng với sứ mệnh giữ nụ cười và niềm vui cho con người, thiên thần cánh tím với sứ mệnh giữ đam mê và hạnh phúc cho con người, thiên thần cánh đen với sứ mệnh giữ niềm tin và sức mạnh ý chí cho con người. Chính Lâm, Tùng và Phàm sẽ là những thiên thần huynh trưởng phải gánh vác nhiệm vụ lớn lao đó. Họ là những thiên thần được chọn.\r\nTrên chiến trường ngổn ngang xác quỷ sứ, những thiên thần cũng đã nhuộm đỏ đôi cánh của mình. Nhưng quỷ sứ thì càng lúc lại càng đông lên, còn thiên thần thì mỗi lúc một thêm mệt mỏi. Trời đã về chiều, ánh mặt trời như máu loang dài trên khung cảnh chết chóc; tiếng gào rú, gầm gừ vẫn rúng động cả bầu trời.\r\nNhững người xứng đáng chứng kiến cuộc chiến đã kể lại cho con cháu họ sau này rằng đó là chiến trường khốc liệt nhất, dữ dội nhất, kinh sợ nhất…",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/21233.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 48,
+            "name": "Lời nguyền bất tử",
+            "numberPages": 410,
+            "publisher": "Mộc Tử Hạ",
+            "publishDate": "2019-08-08T00:00:00",
+            "introducing": "uộc chiến đầu tiên kể về những cuộc phiêu lưu của Helena",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/23607.jpg?v=1&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 49,
+            "name": "Kết giới",
+            "numberPages": 344,
+            "publisher": "Mộc Tử Hạ",
+            "publishDate": "2019-09-20T00:00:00",
+            "introducing": "Cuộc chiến đầu tiên kể về những cuộc phiêu lưu của Helena - một chiến binh xinh đẹp, quả cảm; và Jade - người bạn thân của cô, một chàng trai mãi trong hình hài đứa trẻ 13 tuổi.\r\nHai người bạn cùng được Dmitri - thủ lĩnh đội Vệ Nhân - nhận nuôi khi còn nhỏ. Cả hai không nhớ gì về quãng thời gian trước khi được Dmitri nhận nuôi; vì thế trong lòng họ luôn canh cánh nỗi khát khao tìm kiếm sự thật về thân thế, trả lời câu hỏi mình là ai, từ đâu tới...\r\nSau cái chết của thầy Dmitri và sau sự cố trong một nhiệm vụ khi Helena là thủ lĩnh đội săn Rồng, cô quyết định rời khỏi đội Vệ Nhân, cùng Jade phiêu bạt giang hồ, sống cuộc đời của một thợ săn tiền thưởng. Họ đã cùng nhau trải qua những cuộc phiêu lưu kỳ thú.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/19904.jpg?v=3&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 50,
+            "name": "Bách luyện thành thần",
+            "numberPages": 454,
+            "publisher": " Ân Tứ Giải Thoát",
+            "publishDate": "2018-05-02T00:00:00",
+            "introducing": "La Chinh - thiếu gia của gia tộc họ La, bởi vì phụ thân bị sát hại trong cuộc nội loạn gia tộc mà bị biến làm nô, trở thành \"bia thịt\" cho các thành viên khác trong gia tộc luyện tập. Trong lúc vô ý, hắn thu được một tấm thiếp vàng và từ đó đạt được luyện thể thần pháp - Thái Thượng Luyện Khí Pháp, đem chính mình luyện thành Khí Giới. Cuộc sống bị đánh đấm không ngừng khiến tu vi hắn nhanh chóng tăng mạnh, từ đó thoát khỏi sự trói buộc của La gia và đi lên con đường báo thù.\r\nLa Chinh - thiên kiêu từ chiến trường mộng ảo cho tới hiện thực tàn khốc.\r\nBách luyện thành thần là hành trình từ một nô bộc của một gia tộc nho nhỏ ở Đông Vực đến thiên tài tuyệt thế được vạn người ngưỡng mộ của Thượng Giới.\r\nHuyền cơ của thiên đạo, bí ẩn của Cửu Long trong Thần Hỏa Đỉnh, hay là bí mật của Tiên Phủ, thậm chí là lý do mà La Yên - muội muội của La Chinh rời đi cũng là kế hoạch của phụ thân hắn bày bố ra.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/18587.jpg?v=2&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        },
+        {
+            "id": 51,
+            "name": "Percy Jackson ",
+            "numberPages": 342,
+            "publisher": "Rick Riordan",
+            "publishDate": "2017-09-15T00:00:00",
+            "introducing": "Các á thần đã chuẩn bị cho cuộc chiến chống lại các thần Titan trong suốt năm qua, biết rằng lợi thế chiến thắng là rất mong manh. Quân đội của Kronos mạnh mẽ hơn bao giờ hết, và cứ mỗi vị thần hay á thần gia nhập vào đội ngũ của hắn, sức mạnh của tên Titan ma quỷ đó lại lớn thêm lên.",
+            "urlPoster": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/17235.jpg?v=2&w=340&h=497",
+            "scoring": null,
+            "authorId": null,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 4,
+                    "name": "Viễn tưởng"
+                }
+            ],
+            "statusWithUser": null
+        }
+    ]
+}

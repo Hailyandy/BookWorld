@@ -1,0 +1,44 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "totalPage": 1,
+    "pageSize": 20,
+    "totalRecord": 2,
+    "pageNumber": 0,
+    "data": [
+        {
+            "id": 1,
+            "bookId": null,
+            "pdfId": null,
+            "userId": null,
+            "scoring": 3,
+            "content": "Sách rất hay",
+            "totalLike": null,
+            "totalComment": 5,
+            "createdOn": "2023-10-19T14:17:22.622733Z",
+            "lastUpdatedOn": "2023-12-01T23:40:14.868303Z",
+            "userName": null,
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/3581.jpg?v=3&w=340&h=497",
+            "authorName": null,
+            "authorId": 3,
+            "bookName": "月刊少女野崎くん 15 [Gekkan Shoujo Nozaki-kun 15]"
+        },
+        {
+            "id": 2,
+            "bookId": null,
+            "pdfId": null,
+            "userId": null,
+            "scoring": 3,
+            "content": "aaaa",
+            "totalLike": null,
+            "totalComment": 0,
+            "createdOn": "2023-11-03T11:00:20.321950Z",
+            "lastUpdatedOn": "2023-11-03T11:00:20.321950Z",
+            "userName": "Nguyện giỏi",
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "authorName": null,
+            "authorId": 2,
+            "bookName": "Harry Potter and the Philosopher’s Stone"
+        }
+    ]
+}
