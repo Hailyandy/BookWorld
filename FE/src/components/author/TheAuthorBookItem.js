@@ -56,7 +56,6 @@ let items = [
  */
 const TheAuthorBookItem = ({ bookItem, typeItem }) => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const handleMenuClick = (e) => {
         message.info('Click on menu item.');
         console.log(`selected ${e}`);
@@ -79,30 +78,17 @@ const TheAuthorBookItem = ({ bookItem, typeItem }) => {
         items,
         onClick: handleMenuClick,
     };
-    const handelClickUpdatePeopleFriendship = (actionDispatch, id) => {
-        dispatch(actionDispatch(id))
-            .unwrap()
-            .then(async data => {
-                navigate(`${window.location.pathname}`, { replace: true });
-                console.log(data)
-                return;
-            })
-            .catch(e => {
-                console.log(e)
-                // notyf.error(e.message)
-            });
-    }
     const renderBookStatusDefaultValue = (bookItem) => {
         switch (bookItem.statusWithUser) {
             case BSHAREnum.bookStatusWithUser.read:
                 return 'Đã đọc'
-                break;
+
             case BSHAREnum.bookStatusWithUser.want_to_read:
                 return 'Muốn đọc'
-                break;
+
             case BSHAREnum.bookStatusWithUser.reading:
                 return 'Đang đọc'
-                break;
+
             default:
                 return 'Chưa đọc'
         }

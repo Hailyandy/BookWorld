@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/friend")
-
+ 
 public class FriendController {
 
     private static final Logger logger = Logger.getLogger(FriendController.class.getName());

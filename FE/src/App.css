@@ -6,6 +6,7 @@
 
 :root {
   --background-color-white: #ffffff;
+  --warning-color: #fe9400;
   --text-color: #ffffff;
   --ant-input-password-icon-color: #ffffff;
   --background-color: #bcf4f4;
@@ -16,7 +17,9 @@
   --height-autofill-item: 80px;
   --margin-top-scroll-page: 25px;
   --height-containner-main: 82vh;
-  --border-radius-containner: 5px
+  --border-radius-containner: 5px;
+  --padding-container: 16px;
+  --height-body: 82vh
 }
 
 .stick-to-top {

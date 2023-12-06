@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -102,17 +103,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public SuccessResponse getCommentByPost(Long postId, Pageable pageable) {
+    public PageResponse getCommentByPost(Long postId, Pageable pageable) {
         // TODO Auto-generated method stub
-        List<CommentDto> comments = commentRepository.findByPostId(postId, pageable)
-                .stream().map(comment -> {
+        Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
+        int totalPages = comments.getTotalPages();
+        int numberPage = comments.getNumber();
+        long totalRecord = comments.getTotalElements();
+        int pageSize = comments.getSize();
+        List<CommentDto> commentDtos = comments.stream().map(comment -> {
                     CommentDto commentDto = mapper.map(comment, CommentDto.class);
+                    commentDto.setPostId(comment.getPost().getId());
                     commentDto.setUserName(comment.getUser().getName());
                     commentDto.setUrlAvatarUser(comment.getUser().getUrlAvatar());
                     commentDto.setUserId(comment.getUser().getId());
                     return commentDto;
                 }).collect(Collectors.toList());
-        return new SuccessResponse(comments);
+        return new PageResponse(totalPages, pageSize, totalRecord, numberPage, commentDtos);
     }
 
 }

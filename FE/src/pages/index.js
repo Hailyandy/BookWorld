@@ -19,6 +19,9 @@ import SearchFriendPage from "./Search/SearchFriendPage";
 import BookRankPage from "./BookRankPage";
 import AnonymousUser from "./AnonymousUsers/AnonymousUser";
 import BookMarket from "./BookMarket/BookMarketCreateItem";
+import QuizPage from "./quiz/QuizPage";
+import UserCreatedPost from "./user_created_post/UserCreatedPost";
+import AuthorBook from "./Author/AuthorBook";
 import {
     AdminDashBoard,
     AdminPostList,
@@ -26,7 +29,7 @@ import {
     AdminAddBookPage
 } from "./admin";
 export {
-    AdminAddBookPage,
+    AuthorBook,
     BookMarket,
     AnonymousUser,
     SearchUserPage,
@@ -48,8 +51,13 @@ export {
     FriendRequestSearchPeoplePage,
     SearchFriendPage,
     BookRankPage,
+    UserCreatedPost,
+
+    //Quiz
+    QuizPage,
     //admin page
     AdminDashBoard,
     AdminPostList,
-    AdminReportList
+    AdminReportList,
+    AdminAddBookPage
 }

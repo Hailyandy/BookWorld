@@ -68,7 +68,7 @@ const BookMarket = () => {
   const navigate = useNavigate()
   const handleClickSellButton = () => {
     // navigate('/books/create-market-item', { replace: true });
-    window.location = "/books/create-market-item"
+    window.location = "BookWorld/#/books/create-market-item"
   }
   return (
     <>

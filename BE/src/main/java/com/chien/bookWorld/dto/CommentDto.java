@@ -19,5 +19,6 @@ public class CommentDto {
     private Long userId;
     private String urlAvatarUser;
     private String userName;
+    private Long postId;
 
 }

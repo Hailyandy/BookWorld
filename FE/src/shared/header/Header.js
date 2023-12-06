@@ -23,17 +23,16 @@ const { Paragraph, Text } = Typography;
 const HeaderLayout = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [selectedValue, setSelectedValue] = useState('')
     const userStateFormSlice = useSelector(state => state.users);
     console.log(userStateFormSlice.friendReqList)
     const [options, setOptions] = useState([]);
-
-
     /**
      * search 1 lần khi muốn hiển thị ra một đống kết quả
      * @param {*} e - value ô search hiện tại
      */
     const searchWhenClickSearchButton = (e) => {
-        navigate(`search-result/search-book/${e}`, { replace: true });
+        navigate(`BookWorld/#/${tokenService.getUserRoleName()}/search-result/search-book/${e}`, { replace: true });
     }
 
 
@@ -42,17 +41,18 @@ const HeaderLayout = (props) => {
      */
     const debouncedSearch = useCallback(debounce((searchTextReturnFromDebounceHelper) => {
         console.log(searchTextReturnFromDebounceHelper)
-        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper, param: { page: 1, size: 5 } }))
+        dispatch(searchBookByNameOrAuthor({ name: searchTextReturnFromDebounceHelper, param: { page: 0, size: 5 } }))
             .unwrap()
             .then(async data => {
                 // notyf.success(BSHAREresource.notification_message.success.login)
                 // console.log(data)
                 // setResultSearch(data)
                 setOptions(data.map((resultItem) => {
+                    console.log(resultItem)
                     return {
                         value: resultItem.id,
                         label: (
-                            <TheAutofillItem bookCover={resultItem.urlPoster} bookName={resultItem.name} bookAuthor={resultItem.authorName} />
+                            <TheAutofillItem bookCover={resultItem.urlPoster} bookName={resultItem.name} bookAuthor={resultItem.publisher} />
                         ),
                     }
                 }))
@@ -79,7 +79,7 @@ const HeaderLayout = (props) => {
      */
     const onSearch = (value, _e, info) => {
         console.log(value)
-
+        setSelectedValue(value)
         debouncedSearch(value)
         // setOptions(value ? searchResult(value) : []);
 
@@ -88,14 +88,12 @@ const HeaderLayout = (props) => {
         console.log(e)
     }
 
-    const onSelectSearchItem = (value) => {
-        console.log('onSelect', value);
-        navigate(`/books/${value}`, { replace: true });
+    const onSelectSearchItem = (value, options) => {
+        console.log('onSelect', options.label.props.bookName);
+        setSelectedValue(options.label.props.bookName)
+        navigate(`BookWorld/#/${tokenService.getUserRoleName()}/books/${value}`, { replace: true });
     };
-    const handleButtonClick = (e) => {
-        message.info('Click on left button.');
-        console.log('click left button', e);
-    };
+
     const handleMenuClick = async (e) => {
         switch (e.key) {
             case BSHAREnum.dropdown_user_menu_key.logout:
@@ -111,14 +109,17 @@ const HeaderLayout = (props) => {
                  */
                 props.reloadRootLayout(false)
 
-                navigate(`/login`, { replace: true });
+                navigate(`BookWorld/#/login`, { replace: true });
                 break;
             case BSHAREnum.dropdown_user_menu_key.friendList:
-                navigate(`/search-result/search-friend`, { replace: true });
+                navigate(`BookWorld/#/${tokenService.getUserRoleName()}/search-result/search-friend`, { replace: true });
                 break;
 
             case BSHAREnum.dropdown_user_menu_key.personalProfile:
-                navigate(`${tokenService.getUserRoleName()}/profile`, { replace: true });
+                navigate(`BookWorld/#/${tokenService.getUserRoleName()}/profile`, { replace: true });
+                break;
+            case BSHAREnum.dropdown_user_menu_key.personalPost:
+                navigate(`BookWorld/#/${tokenService.getUserRoleName()}/user-post-list`, { replace: true });
                 break;
             default:
                 console.log(e.key)
@@ -138,6 +139,12 @@ const HeaderLayout = (props) => {
         {
             label: 'Thông tin cá nhân',
             key: `${BSHAREnum.dropdown_user_menu_key.personalProfile}`,
+            icon: <UserOutlined />,
+        },
+
+        {
+            label: 'Bài post',
+            key: `${BSHAREnum.dropdown_user_menu_key.personalPost}`,
             icon: <UserOutlined />,
         },
     ];
@@ -167,8 +174,8 @@ const HeaderLayout = (props) => {
                 onSelect={onSelectSearchItem}
                 onSearch={onSearch}
                 onChange={changeInputSearch}
-
                 size="large"
+                value={selectedValue}
             >
                 <Input.Search size="large" placeholder="input here" enterButton />
             </AutoComplete>
@@ -178,7 +185,7 @@ const HeaderLayout = (props) => {
                 color: "rgba(17, 17, 17, 1)"
 
             }}
-                onClick={() => { window.location = "/BookWorld/#/login"; }}
+                onClick={() => { navigate(`BookWorld/${decodeURIComponent("#")}/login`, { replace: true }); }}
             >Đăng nhập</Button>
         </>)
     }
@@ -197,8 +204,9 @@ const HeaderLayout = (props) => {
                 onSearch={onSearch}
                 onChange={changeInputSearch}
                 size="large"
+                value={selectedValue}
             >
-                <Input.Search size="large" placeholder="input here" enterButton onSearch={searchWhenClickSearchButton} />
+                <Input.Search size="large" placeholder="Nhập tên sách" enterButton onSearch={searchWhenClickSearchButton} />
             </AutoComplete>
             <Menu
 
@@ -220,7 +228,7 @@ const HeaderLayout = (props) => {
                             <Avatar shape="circle" icon={<UserOutlined />} />
                         </Badge>}
                     onClick={() => {
-                        navigate(`friend-req-search-people`, { replace: true });
+                        navigate(`BookWorld/#/${tokenService.getUserRoleName()}/friend-req-search-people`, { replace: true });
                     }}
 
                 />

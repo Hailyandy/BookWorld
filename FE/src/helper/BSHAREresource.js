@@ -2,12 +2,12 @@ import BSHAREnum from "./BSHAREenum"
 import { Link } from 'react-router-dom';
 import tokenService from "~/services/token.service";
 export let localHost = {
-    url: `https://hailyandy.github.io/BookWorld/${tokenService.getUserRoleName()}/`
+    url: `https://hailyandy.github.io/BookWorld/#/${tokenService.getUserRoleName()}/`
 }
 export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
 export const updateLocalHostUrl = (updateStringrole) => {
-    localHost.url = `https://hailyandy.github.io/BookWorld/${updateStringrole}/`
-    BSHAREresource.localHost.url = `https://hailyandy.github.io/BookWorld/${updateStringrole}/`
+    localHost.url = `https://hailyandy.github.io/BookWorld/#/${updateStringrole}/`
+    BSHAREresource.localHost.url = `https://hailyandy.github.io/BookWorld/#/${updateStringrole}/`
     BSHAREresource.menuItems = {
         ROLE_AUTHOR_MenuItem: [
             {
@@ -89,6 +89,14 @@ export const updateLocalHostUrl = (updateStringrole) => {
         ],
         ROLE_ADMIN_MenuItem: [
             {
+                key: 'add_new_book',
+                label: (
+                    < Link to={`${localHost.url}add-new-book`} >
+                        Thêm sách mới
+                    </Link >)
+
+            },
+            {
                 key: 'dashboard',
                 label: (
                     < Link to={`${localHost.url}`} >
@@ -105,20 +113,21 @@ export const updateLocalHostUrl = (updateStringrole) => {
 
             },
             {
-                key: 'support',
+                key: 'statistic_post',
                 label: (
                     < Link to={`${localHost.url}statistic-report-post`} >
                         Thống kê bài đăng
                     </Link >)
 
-            }
+            },
+
         ]
 
     }
 }
 const BSHAREresource = {
     localHost: {
-        url: 'https://hailyandy.github.io/BookWorld/'
+        url: 'https://hailyandy.github.io/BookWorld/#/'
     },
     url: { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" },
     notification_message: {
@@ -182,13 +191,21 @@ const BSHAREresource = {
     menuItems: {
         ROLE_AUTHOR_MenuItem: [
             {
-                key: 'community',
-                label: 'Cộng đồng'
+                key: 'create_test',
+                label: (
+                    <Link to={`${localHost.url}create-test`}>
+                        Tạo bài test
+                    </Link>
+                ),
             },
             {
-                key: 'book_store',
-                label: 'Kho sách'
-            }
+                key: 'created_post',
+                label: (
+                    <Link to={`${localHost.url}author-created-book`}>
+                        Sách tác giả
+                    </Link>
+                ),
+            },
         ],
 
         ROLE_USER_MenuItem: [
@@ -260,6 +277,14 @@ const BSHAREresource = {
         ],
         ROLE_ADMIN_MenuItem: [
             {
+                key: 'add_new_book',
+                label: (
+                    < Link to={`${localHost.url}add-new-book`} >
+                        Thêm sách mới
+                    </Link >)
+
+            },
+            {
                 key: 'dashboard',
                 label: (
                     < Link to={`${localHost.url}`} >
@@ -276,13 +301,14 @@ const BSHAREresource = {
 
             },
             {
-                key: 'support',
+                key: 'statistic_post',
                 label: (
                     < Link to={`${localHost.url}statistic-report-post`} >
                         Thống kê bài đăng
                     </Link >)
 
-            }
+            },
+
         ]
 
     }

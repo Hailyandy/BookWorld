@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(response => {
 
 
 export const getAPI = async (endpoint, param, config = {}) => {
-  console.log(param)
+  console.log(config)
   if (param) {
     endpoint = `${endpoint}?${objectToParams(param)}`
   }
@@ -43,11 +43,12 @@ export const getAPI = async (endpoint, param, config = {}) => {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${tokenService.getLocalAccessToken()}`,
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "http://localhost:3000/"
       },
 
     });
-    const response = await axiosInstance.get(endpoint)
+    console.log(config)
+    const response = await axiosInstance.get(endpoint, config)
     // loading.hideLoading()
     if (response.status === 200) {
       // Lấy dữ liệu thành công
@@ -76,6 +77,28 @@ export const postAPI = async (endpoint, config = {}) => {
 
     });
     const response = await axiosInstance.post(endpoint, config)
+
+    return handleAPISuccess(response)
+  } catch (error) {
+    handleAPIError(error)
+    throw error
+  }
+}
+
+
+
+export const patchAPI = async (endpoint, config = {}) => {
+  try {
+    axiosInstance = axios.create({
+      baseURL: `${BSHAREresource.url.baseUrlBE}`,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${tokenService.getLocalAccessToken()}`,
+        "Access-Control-Allow-Origin": "*"
+      },
+
+    });
+    const response = await axiosInstance.patch(endpoint, config)
 
     return handleAPISuccess(response)
   } catch (error) {

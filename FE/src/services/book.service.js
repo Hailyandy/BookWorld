@@ -4,7 +4,6 @@ const endPoint = 'book'
 class BookService extends BaseService {
   constructor() {
     super(endPoint);
-
   }
 
   /**
@@ -12,7 +11,7 @@ class BookService extends BaseService {
    * @returns
    */
   async getAllGenresBook() {
-    var data = await getAPI(`book/genres`)
+    var data = await getAPI(`genres`)
     return data
   }
 
@@ -29,7 +28,7 @@ class BookService extends BaseService {
 
 
   /**
-   * Tìm kiếm sách bằng id của sachs
+   * API sử dụng để lấy ra thông tin sách qua id
    * @param {*} param0
    * @returns
    */
@@ -48,6 +47,16 @@ class BookService extends BaseService {
     var data = await putAPI('/bookBasket', { bookId, status })
     return data
   }
+
+  /**
+   * API sử dụng để lấy ra các cuốn sách gợi ý
+   * @returns array chứa thông tin các quyển sách gợi ý
+  */
+  async getRecommendedBooks() {
+    var data = await getAPI('book')
+    return data
+  }
+
 
 }
 

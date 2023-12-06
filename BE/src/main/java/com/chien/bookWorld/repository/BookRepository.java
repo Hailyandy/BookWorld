@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -32,5 +33,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
   @Query(nativeQuery = true, value = "SELECT * FROM book ORDER BY scoring DESC LIMIT 50")
   List<Book> findTopBook();
+
+  @Query(nativeQuery = true, value = "SELECT * FROM book",
+    countQuery = "SELECT * FROM book")
+  Page<Book> findAllBook(Pageable pageable);
+
+
+  @Query(nativeQuery = true, value = "SELECT * FROM book where user_id = :userId")
+  Page<Book> findBookByAuthor(Pageable pageable, @Param("userId") Long userId);
 
 }

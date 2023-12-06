@@ -3,14 +3,16 @@
     display: flex;
     /* margin-top: var(--margin-top-scroll-page); */
     padding: 30px;
-    padding-left: 0px;
+
 }
 
 .book-detail-containner--left {
     display: flex;
-    flex: 1 1;
+    flex: 0 1;
     right: 0px;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    flex-direction: column;
+
 }
 
 .bookjacket-intro--sticky {
@@ -23,7 +25,13 @@
 
 .book-detail-containner--center {
     flex: 2;
-
+    background-color: var(--background-color-white);
+    border: 2px solid #ccc !important;
+    border-radius: 16px;
+    padding: 1em 16px;
+    row-gap: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .book-detail-containner--right {}
@@ -31,11 +39,13 @@
 .avg-book-rating {
     color: #000;
     font-family: 'Inknut Antiqua';
-    font-size: 30px;
+    font-size: 30px !important;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-left: 3rem;
+    margin-left: 1rem;
+    height: 16px;
+    display: inline-block;
 }
 
 h3 {
@@ -43,7 +53,7 @@ h3 {
 }
 
 .book-review {
-    margin-top: 250px;
+    margin-top: 25px;
 
 }
 
@@ -57,3 +67,13 @@ h3 {
 } */
 
 .book-detail-containner--left .bookjacket-intro {}
+
+.book-content-intro {
+    display: flex;
+    row-gap: 12px;
+    flex-direction: column;
+}
+
+.book-content-intro .author {
+    margin: 0px;
+}

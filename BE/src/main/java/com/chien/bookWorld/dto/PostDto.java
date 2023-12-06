@@ -29,4 +29,8 @@ public class PostDto {
   private Instant lastUpdatedOn;
   private String userName;
   private String urlAvatarUser;
+  private String authorName;
+  private Long authorId;
+  private String bookName;
+
 }

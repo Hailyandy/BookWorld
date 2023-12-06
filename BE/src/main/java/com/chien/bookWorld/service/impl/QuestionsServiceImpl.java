@@ -1,27 +1,21 @@
 package com.chien.bookWorld.service.impl;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import com.chien.bookWorld.dto.OptionDto;
-import com.chien.bookWorld.dto.QuestionsDto;
+import com.chien.bookWorld.dto.*;
+import com.chien.bookWorld.entity.*;
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.chien.bookWorld.dto.QuestionsCreationDto;
-import com.chien.bookWorld.entity.Options;
-import com.chien.bookWorld.entity.Questions;
-import com.chien.bookWorld.entity.Scoring;
-import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.BookRepository;
@@ -67,23 +61,36 @@ public class QuestionsServiceImpl implements QuestionsService {
         if (!isAuthor) {
             throw new AppException(403, 43, "Cần quyền là tác giả.");
         }
-        Questions questions = new Questions();
-        UUID idQuestion = UUID.randomUUID();
-        questions.setId(idQuestion);
-        questions.setBook(bookRepository.findById(c.getIdBook())
-                .orElseThrow(() -> new AppException(404, 44, "Không có cuốn sách phù hợp với id book")));
-        questions.setQuestionText(c.getQuestionsText());
-        questions.setScoring(c.getScoring());
-        questionsRepository.save(questions);
-        Set set = c.getOptionText().keySet();
-        for (Object key : set) {
-            logger.info("tesstt" + key.toString());
-            Integer value = c.getOptionText().get(key);
-            Options option = new Options();
-            option.setIs_correct(value);
-            option.setOptions_text(key.toString());
-            option.setQuestions(questions);
-            optionsRepository.save(option);
+
+        Book book = bookRepository.findById(c.getIdBook())
+                .orElseThrow(() -> new AppException(404, 44, "Không có cuốn sách phù hợp với id book"));
+//        questions.setQuestionText(c.getQuestionsText());
+//        questions.setScoring(c.getScoring());
+//        questionsRepository.save(questions);
+//        Set set = c.getOptionText().keySet();
+
+//        }
+
+        List<QuestionDto> questionsDtos = c.getQuestionDtos();
+        for (QuestionDto i : questionsDtos) {
+            Questions question = new Questions();
+            UUID idQuestion = UUID.randomUUID();
+            question.setId(idQuestion);
+            question.setBook(book);
+            question.setQuestionText(i.getQuestionsText());
+            question.setScoring(i.getScoring());
+            questionsRepository.save(question);
+
+            Set set = i.getOptionText().keySet();
+
+            for (Object key : set) {
+                Integer value = i.getOptionText().get(key);
+                Options option = new Options();
+                option.setIs_correct(value);
+                option.setOptions_text(key.toString());
+                option.setQuestions(question);
+                optionsRepository.save(option);
+            }
         }
 
         final Map<String, Object> body = new HashMap<>();
@@ -158,22 +165,54 @@ public class QuestionsServiceImpl implements QuestionsService {
     }
 
     @Override
-    public Map<String, Object> checkQuestion(Long idBook, Integer scoring, Long idAnswer, UUID idQuestion) {
-        Options option = optionsRepository.findById(idAnswer).orElseThrow(() -> new AppException(404, 44,
-                "Không tìm thấy câu trả lời ứng với id"));
-        Integer isCorrect = option.getIs_correct();
-        if (isCorrect == 0) {
-            updateScoring(idBook, scoring);
-            final Map<String, Object> body = new HashMap<>();
-            body.put("code", 0);
-            body.put("message", "Câu trả lời đúng!");
-            return body;
-        } else {
-            final Map<String, Object> body = new HashMap<>();
-            body.put("code", 0);
-            body.put("message", "Câu trả lời sai!");
-            return body;
+    public SuccessResponse checkQuestion(ScoringCreation scoringCreation) {
+        Integer score = 0;
+        AnswerDto answerDto = new AnswerDto();
+        ArrayList<CheckQuestionDto> checkQuestionDtos = new ArrayList<>();
+        List<AnswerCheckDto> answerCheckDtos = scoringCreation.getListAnswer();
+        for (int i = 0; i < answerCheckDtos.size(); i++) {
+            CheckQuestionDto checkQuestionDto = new CheckQuestionDto();
+            checkQuestionDto.setUser_answer(answerCheckDtos.get(i).getAnswer());
+            checkQuestionDto.setQuestionId(answerCheckDtos.get(i).getQuestionId());
+            checkQuestionDto.setUser_answerId(answerCheckDtos.get(i).getIdAnswer());
+            Options optionTrue = optionsRepository.findByQuestionIdAndIsCorrect(answerCheckDtos.get(i).getQuestionId());
+            checkQuestionDto.setCorrect_answer(optionTrue.getOptions_text());
+            checkQuestionDto.setCorrect_answerId(optionTrue.getId());
+            if (optionTrue.getId() == answerCheckDtos.get(i).getIdAnswer()) {
+                score = score + answerCheckDtos.get(i).getScore();
+                checkQuestionDto.setStatus("Đúng");
+            } else {
+                checkQuestionDto.setStatus("Sai");
+            }
+            checkQuestionDtos.add(checkQuestionDto);
+
         }
+        logger.info(String.valueOf(score));
+        updateScoring(scoringCreation.getIdBook(), score);
+        answerDto.setScore(score);
+        answerDto.setCheckQuestionDtos(checkQuestionDtos);
+        return new SuccessResponse(answerDto);
     }
 
+    @Override
+    public PageResponse getScoringTopByBook(Pageable pageable, Long idBook) {
+
+        Page<Scoring> scorings = scoringRepository.getScoringTopByBook(pageable, idBook);
+        int totalPages = scorings.getTotalPages();
+        int numberPage = scorings.getNumber();
+        long totalRecord = scorings.getTotalElements();
+        int pageSize = scorings.getSize();
+
+        List<UserScoringDto> userScoringDtos = scorings.stream().map(scoring -> {
+            UserScoringDto userScoringDto = new UserScoringDto();
+            userScoringDto.setIdUser(scoring.getUser().getId());
+            userScoringDto.setUserName(scoring.getUser().getName());
+            userScoringDto.setUrlAvatarUser(scoring.getUser().getUrlAvatar());
+            userScoringDto.setBookName(scoring.getBook().getName());
+            userScoringDto.setScore(scoring.getScore());
+            userScoringDto.setTimestamp(scoring.getTimestamp());
+            return userScoringDto;
+        }).collect(Collectors.toList());
+        return new PageResponse(totalPages, pageSize, totalRecord, numberPage, userScoringDtos);
+    }
 }

@@ -26,7 +26,7 @@ public class UserUpdateDto {
   @NotEmpty(message = "Thiếu số điện thoại!")
   @Size(min = 10, message = "Số điện thoại phải có 10 số trở lên!")
   private String phone;
-
-  @NotEmpty(message = "Thiếu địa chỉ!")
-  private String address;
+  private String introducing;
+  private String nativePlace;
+  private String birthDate;
 }

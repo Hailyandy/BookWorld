@@ -1,4 +1,4 @@
-import { getAPI, postAPI, putAPI } from "./api";
+import { getAPI, patchAPI, postAPI, putAPI, deleteAPI } from "./api";
 import { BaseService } from "./base/baseService";
 const endPoint = 'endpoint'
 class UserService extends BaseService {
@@ -48,14 +48,6 @@ class UserService extends BaseService {
         return data
     }
 
-    /**
-     * API sử dụng để lấy ra các cuốn sách gợi ý
-     * @returns array chứa thông tin các quyển sách gợi ý
-     */
-    async getRecommendedBooks() {
-        var data = await getAPI('book')
-        return data
-    }
 
     async getUserByName({ name }) {
         var data = await getAPI(`users/search?name=${name}`)
@@ -69,6 +61,141 @@ class UserService extends BaseService {
      */
     async getAllMyBook() {
         var data = await getAPI(`bookBasket`)
+        return data
+    }
+
+    /**
+    *API sử dụng lấy tất cả các bài post
+    * @param {*}
+    * @returns
+    */
+    async getAllPost(state = { state: 'PUBLIC' }) {
+        var data = await getAPI(`post`, state)
+        return data
+    }
+    /**
+    *API sử dụng để lấy ra các cuốn sách gợi ý
+    * @param {*}
+    * @returns
+    */
+    async getAllSuggestBook() {
+        var data = await getAPI(`book`)
+        return data
+    }
+
+
+    /**
+     *Api để thêm một bản pdf vào cuốn sách
+     * @param {*} param0
+     * @returns
+     */
+    async addPdfForABook({ idBook, urlPdf }) {
+        var data = await postAPI('pdf', { idBook, urlPdf })
+        return data
+    }
+    /**
+     * Tạo comment
+     * @param {*} param0
+     * @returns
+     */
+    async createComment({ content, postId, parentId }) {
+        var data = await postAPI('comment', { content, postId, parentId })
+        return data
+    }
+
+    /**
+    * Api để lấy comment của 1 bài post
+    @param {} param0
+    * @returns
+    */
+    async getCommentOfPost({ postId }) {
+        var data = await getAPI(`comment`, { postId })
+        return data
+    }
+
+    /**
+    * Api để lấy danh sách post của 1 người dùng
+    @param {} param0
+    * @returns
+    */
+    async getUserPostList({ userId }) {
+        var data = await getAPI(`post`, { userId, state: 'PUBLIC' })
+        return data
+    }
+
+
+    /**
+ * API sử dụng để tạo report về bản pdf
+ * @param {*} param0
+ * @returns
+ */
+    async createReportAboutPdf({ reason, description, pdf_id }) {
+        var data = await postAPI('pdf/report', { reason, description, pdf_id })
+        return data
+    }
+    /**
+     * Api để lấy danh sách sách điểm test của 1 người dùng của cuốn sách
+     * @param {*} param0
+     * @returns
+     */
+    async getUserTopScoreByBookId({ idBook }) {
+        var data = await getAPI(`questions/scoring/top`, { idBook })
+        return data
+    }
+    //----------cbi viet slice---------------------------------------------------------------//
+    /**
+     * Api để cập nhật bài post
+     * @param {*} param0
+     * @returns
+     */
+    async updatePost({ idPost }) {
+        var data = await patchAPI('pdf/post', { idPost })
+        return data
+    }
+
+    /**
+     * Api để xóa bài post
+     * @param {*} param0
+     * @returns
+     */
+    async deletePost({ idPost }) {
+        var data = await deleteAPI('pdf/post', { idPost })
+        return data
+    }
+    /**
+     * Api để cập nhật sách
+     * @param {*} param0
+     * @returns
+     */
+    async updateBookInfo({ idBook }) {
+        var data = await patchAPI('book/update', { idBook })
+        return data
+    }
+    /**
+     * Api để lấy thông tin của 1 người dùng
+     * @param {*} param0
+     * @returns
+     */
+    async getUserInformation({ idUser }) {
+        var data = await getAPI(`idUser`, { idUser })
+        return data
+    }
+    /**
+     * Api để cập nhật thông tin người dùng
+     * @param {*} param0
+     * @returns
+     */
+    async updateUserInformation({ idUser }) {
+        var data = await patchAPI('users/update', { idUser })
+        return data
+    }
+    /**
+     * Api để thống kế số lượng tk theo tháng của năm
+     * @param {*} param0
+     * @returns
+     */
+    async statistic({ year }) {
+        var data = await getAPI(`statistics/new-registrations-by-month`, { year })
         return data
     }
 }

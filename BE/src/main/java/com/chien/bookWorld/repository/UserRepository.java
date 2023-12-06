@@ -45,4 +45,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
                         "WHERE user.name LIKE :name \n" + //
                         "AND role.name NOT IN ('ROLE_ADMIN') AND user.id <> :userId")
         List<User> findByNameAndNotRoleAdmin(@Param("name") String name, @Param("userId") Long userId);
+
+        @Query(
+                nativeQuery = true,
+                value = "SELECT u.* FROM user u join user_role ur on u.id = ur.user_id join role r on ur.role_id = r.id where r.name = 'ROLE_AUTHOR'"
+        )
+        List<User> findUserRoleAuthor();
 }

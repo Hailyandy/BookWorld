@@ -39,6 +39,8 @@
     background: var(--background-color-white);
     border-radius: 10px;
     padding: 0.75rem;
+    height: 200px;
+    overflow: scroll;
 }
 
 .reading-book .reading-book-list .reading-book-item,
@@ -88,7 +90,7 @@
 
 
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 14px;
 }
 
 ::-webkit-scrollbar-track {
@@ -103,5 +105,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #a8bbbf;
+    background-color: #287a8b;
 }

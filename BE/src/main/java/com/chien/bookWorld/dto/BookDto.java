@@ -11,7 +11,6 @@ import lombok.Setter;
 public class BookDto {
 
   private Long id;
-
   private String name;
   private Long numberPages;
   private String publisher;

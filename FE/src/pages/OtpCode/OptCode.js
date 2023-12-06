@@ -25,7 +25,7 @@ const OtpCode = () => {
             .unwrap()
             .then(async data => {
 
-                navigate('/login', { replace: true });
+                navigate('BookWorld/#/login', { replace: true });
                 return;
             })
             .catch(e => {
@@ -37,7 +37,7 @@ const OtpCode = () => {
         console.log('Failed:', errorInfo);
     };
     if (!username) {
-        navigate(`/login`, { replace: true });
+        navigate(`BookWorld/#/login`, { replace: true });
         return;
     }
 

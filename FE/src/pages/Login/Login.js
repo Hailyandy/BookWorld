@@ -42,6 +42,7 @@ function Login() {
                 updateLocalHostUrl(tokenService.getUserRoleName())
                 await config()
                 if (tokenService.getRole("ROLE_USER")) {
+                    console.log('dong 45 ffile login')
                     dispatch(getListFriendRequest('not param'))
                         .unwrap()
                         .then(async data => {
@@ -52,11 +53,13 @@ function Login() {
                             console.log(e);
                             console.log('get all friend req erroer')
                         })
-                    navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
+                    window.location = `/BookWorld/#/${tokenService.getUserRoleName()}`;
+                    return
+                    // return navigate(`/BookWorld/#/${tokenService.getUserRoleName()}`, { replace: true });
                 }
 
-                await config()
-                if (tokenService.getRole("ROLE_ADMIN")) navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
+                // await config()
+                if (tokenService.getRole("ROLE_ADMIN") || tokenService.getRole("ROLE_AUTHOR")) navigate(`/BookWorld/#/${tokenService.getUserRoleName()}`, { replace: true });
                 return;
             })
             .catch(e => {

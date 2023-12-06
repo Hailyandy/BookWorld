@@ -24,14 +24,16 @@ const BSHAREnum = Object.freeze({
         })
     }),
     roles: Object.freeze({
-        user: Symbol('ROLE_USER'),
-        author: Symbol('ROLE_AUTHOR'),
-        admin: Symbol('ROLE_ADMIN')
+        user: 'ROLE_USER',
+        author: 'ROLE_AUTHOR',
+        admin: 'ROLE_ADMIN'
     }),
     dropdown_user_menu_key: Object.freeze({
         logout: 'logout',
         friendList: 'friendList',
-        personalProfile: 'personalProfile'
+        personalProfile: 'personalProfile',
+        personalPost: 'personalPost'
+
     }),
     the_user_item: Object.freeze({
         friend_req: 'friendReq',
@@ -58,9 +60,13 @@ const BSHAREnum = Object.freeze({
         follow_people: 'FollowPeople'
     }),
     bookStatusWithUser: Object.freeze({
-        read: 'READ',
-        want_to_read: 'WANT_TO_READ',
-        reading: 'READING',
+        read: 'Đã đọc',
+        want_to_read: 'Muốn đọc',
+        reading: 'Đang đọc',
+    }),
+    commentType: Object.freeze({
+        bookComment: 'bookComment',
+        postComment: 'postComment',
     })
 })
 

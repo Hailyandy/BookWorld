@@ -39,4 +39,8 @@ public class Pdf {
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
   private Book book;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 }
