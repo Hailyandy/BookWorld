@@ -61,14 +61,14 @@ class AuthControllerTests {
     ObjectMapper objectMapper = new ObjectMapper();
     return objectMapper.readValue(json, clazz);
   }
-
+//1
   @Test
-  @Sql(scripts = "/schema.sql")
-//  @Sql(
-//      scripts = "/drop.sql",
-//      config = @SqlConfig(transactionMode = ISOLATED),
-//      executionPhase = AFTER_TEST_METHOD
-//  )
+//  @Sql(scripts = "/schema.sql")
+  @Sql(
+      scripts = "/schema.sql",
+      config = @SqlConfig(transactionMode = ISOLATED),
+      executionPhase = AFTER_TEST_METHOD
+  )
   public void testLoginSuccess() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
@@ -83,7 +83,7 @@ class AuthControllerTests {
   }
 
   @AfterAll
-  @Sql(scripts = "classpath:drop.sql")
+//  @Sql(scripts = "classpath:drop.sql")
   public static void drop() {
   }
 }
