@@ -185,7 +185,10 @@ const HeaderLayout = (props) => {
                 color: "rgba(17, 17, 17, 1)"
 
             }}
-                onClick={() => { navigate(`BookWorld/${decodeURIComponent("#")}/login`, { replace: true }); }}
+                onClick={() => {
+
+                    window.location = '/login'
+                }}
             >Đăng nhập</Button>
         </>)
     }
