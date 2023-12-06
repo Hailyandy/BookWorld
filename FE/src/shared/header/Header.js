@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
-
+import { cicd_href } from '~/helper/BSHAREresource';
 const { Paragraph, Text } = Typography;
 //props == BSHAREnum.headerType, vào đọc file enum để biết truyền prop gì vào đây
 
@@ -186,8 +186,7 @@ const HeaderLayout = (props) => {
 
             }}
                 onClick={() => {
-
-                    window.location = '/login'
+                    window.location = `${cicd_href}/login`
                 }}
             >Đăng nhập</Button>
         </>)
