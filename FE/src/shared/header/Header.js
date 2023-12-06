@@ -32,7 +32,7 @@ const HeaderLayout = (props) => {
      * @param {*} e - value ô search hiện tại
      */
     const searchWhenClickSearchButton = (e) => {
-        navigate(`BookWorld/#/${tokenService.getUserRoleName()}/search-result/search-book/${e}`, { replace: true });
+        navigate(`${tokenService.getUserRoleName()}/search-result/search-book/${e}`, { replace: true });
     }
 
 
@@ -91,7 +91,7 @@ const HeaderLayout = (props) => {
     const onSelectSearchItem = (value, options) => {
         console.log('onSelect', options.label.props.bookName);
         setSelectedValue(options.label.props.bookName)
-        navigate(`BookWorld/#/${tokenService.getUserRoleName()}/books/${value}`, { replace: true });
+        navigate(`${tokenService.getUserRoleName()}/books/${value}`, { replace: true });
     };
 
     const handleMenuClick = async (e) => {
@@ -109,17 +109,17 @@ const HeaderLayout = (props) => {
                  */
                 props.reloadRootLayout(false)
 
-                navigate(`BookWorld/#/login`, { replace: true });
+                navigate(`login`, { replace: true });
                 break;
             case BSHAREnum.dropdown_user_menu_key.friendList:
-                navigate(`BookWorld/#/${tokenService.getUserRoleName()}/search-result/search-friend`, { replace: true });
+                navigate(`${tokenService.getUserRoleName()}/search-result/search-friend`, { replace: true });
                 break;
 
             case BSHAREnum.dropdown_user_menu_key.personalProfile:
-                navigate(`BookWorld/#/${tokenService.getUserRoleName()}/profile`, { replace: true });
+                navigate(`${tokenService.getUserRoleName()}/profile`, { replace: true });
                 break;
             case BSHAREnum.dropdown_user_menu_key.personalPost:
-                navigate(`BookWorld/#/${tokenService.getUserRoleName()}/user-post-list`, { replace: true });
+                navigate(`${tokenService.getUserRoleName()}/user-post-list`, { replace: true });
                 break;
             default:
                 console.log(e.key)
@@ -228,7 +228,7 @@ const HeaderLayout = (props) => {
                             <Avatar shape="circle" icon={<UserOutlined />} />
                         </Badge>}
                     onClick={() => {
-                        navigate(`BookWorld/#/${tokenService.getUserRoleName()}/friend-req-search-people`, { replace: true });
+                        navigate(`${tokenService.getUserRoleName()}/friend-req-search-people`, { replace: true });
                     }}
 
                 />

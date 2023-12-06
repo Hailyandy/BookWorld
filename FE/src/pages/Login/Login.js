@@ -53,13 +53,13 @@ function Login() {
                             console.log(e);
                             console.log('get all friend req erroer')
                         })
-                    window.location = `/BookWorld/#/${tokenService.getUserRoleName()}`;
+                    window.location = `/${tokenService.getUserRoleName()}`;
                     return
-                    // return navigate(`/BookWorld/#/${tokenService.getUserRoleName()}`, { replace: true });
+                    // return navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
                 }
 
                 // await config()
-                if (tokenService.getRole("ROLE_ADMIN") || tokenService.getRole("ROLE_AUTHOR")) navigate(`/BookWorld/#/${tokenService.getUserRoleName()}`, { replace: true });
+                if (tokenService.getRole("ROLE_ADMIN") || tokenService.getRole("ROLE_AUTHOR")) navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
                 return;
             })
             .catch(e => {
