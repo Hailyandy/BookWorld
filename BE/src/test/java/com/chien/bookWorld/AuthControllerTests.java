@@ -72,7 +72,7 @@ class AuthControllerTests {
   public void testLoginSuccess() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
-            .content(mapToJson(new LoginRequest("chien9pm@gmail.com", "12345678")))).andReturn();
+            .content(mapToJson(new LoginRequest("chien9pm@gmail.com", "123456")))).andReturn();
 
     int status = mvcResult.getResponse().getStatus();
     Assert.assertEquals(200, status);
