@@ -186,7 +186,7 @@ const HeaderLayout = (props) => {
                 color: "rgba(17, 17, 17, 1)"
 
             }}
-                onClick={() => { window.location = "/BookWorld/#/login"; }}
+                onClick={() => { window.location = `${cicd_href}/login`; }}
             >Đăng nhập</Button>
         </>)
     }

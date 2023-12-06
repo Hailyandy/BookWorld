@@ -5,7 +5,7 @@ export let localHost = {
     url: `https://hailyandy.github.io/BookWorld/#/${tokenService.getUserRoleName()}/`
 }
 export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
-export const cicd_href = 'BookWorld/#'
+export const cicd_href = '/BookWorld/#'
 export const updateLocalHostUrl = (updateStringrole) => {
     localHost.url = `https://hailyandy.github.io/BookWorld/#/${updateStringrole}/`
     BSHAREresource.localHost.url = `https://hailyandy.github.io/BookWorld/#/${updateStringrole}/`
