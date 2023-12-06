@@ -103,11 +103,10 @@
   },
   "devDependencies": {
     "gh-pages": "^6.0.0",
-    "@testing-library/cypress": "^10.0.1"
+    "@testing-library/cypress": "^10.0.1",
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-react": "^7.23.3",
     "@cypress/code-coverage": "^3.12.12",
-    "@testing-library/cypress": "^10.0.1",
     "customize-cra": "^1.0.0"
   }
 }
