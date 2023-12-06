@@ -63,11 +63,12 @@ class AuthControllerTests {
   }
 
   @Test
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+  @Sql(scripts = "/schema.sql")
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public void testLoginSuccess() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)

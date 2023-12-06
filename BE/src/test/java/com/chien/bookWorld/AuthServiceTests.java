@@ -90,6 +90,7 @@ class AuthServiceTests {
   }
 
   @Test
+  @Sql(scripts = "/schema.sql")
   public void testLoginNotEnabled() {
     Exception exception = Assert.assertThrows(AppException.class, () -> {
       authService.authenticateUser(new LoginRequest("chien9pmt@gmail.com", "12345678"));
@@ -102,11 +103,11 @@ class AuthServiceTests {
   }
 
   @Test
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public void testLoginIncorrectPassword() {
     Exception exception = Assert.assertThrows(BadCredentialsException.class, () -> {
       authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "123456789"));
