@@ -13,6 +13,7 @@
     /* justify-content: flex-end; */
     flex-direction: column;
 
+
 }
 
 .bookjacket-intro--sticky {
@@ -76,4 +77,8 @@ h3 {
 
 .book-content-intro .author {
     margin: 0px;
+}
+
+.display-flex-column {
+    flex-direction: column !important;
 }

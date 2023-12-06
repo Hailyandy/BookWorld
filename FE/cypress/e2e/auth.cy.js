@@ -6,6 +6,7 @@ describe('Spec đăng nhập', () => {
 
     it('Vào được trang đăng nhập', () => { });
 
+
     it('Có trường tài khoản và mật khẩu', () => {
         cy.get('.form_login #basic_username ')
             .should('have.attr', 'placeholder', 'Tài khoản')

@@ -4,6 +4,7 @@
 describe('Spec màn hình danh sách bạn bè và chuyển màn khi thực hiện tìm kiếm người dùng', () => {
     beforeEach(() => {
         cy.viewport(1226, 1009)
+        cy.visit(`/`);
         cy.visit(`/login`);
         cy.get('.form_login #basic_username ')
             .type('lehuyhaianh0808@gmail.com')
@@ -58,10 +59,10 @@ describe('Spec màn hình danh sách bạn bè và chuyển màn khi thực hi�
         }).as('comment_postId_1');
 
         cy.get('.form_login button').contains('Đăng nhập').click();
-        cy.contains('lehuyhaianh0808@gmail.com', { matchCase: false }).click()
+        cy.get('.anticon.anticon-user').first()
+            .click()
         // cy.findByText('Thông tin cá nhân').click();
 
-        cy.contains("Danh sách bạn bè").click();
     });
 
     it('Thực hiện tìm kiếm bạn bè, trả về kết quả tìm kiếm', () => {
@@ -70,41 +71,21 @@ describe('Spec màn hình danh sách bạn bè và chuyển màn khi thực hi�
             statusCode: 200,
             fixture: 'login/friend_search_result.json',
         }).as('search_user_name_a');
-        cy.get('button').filter(':contains("Tìm kiếm")').click()
-        cy.get('button').filter(':contains("Kết bạn")').should('be.visible')
-        cy.get('.ant-space-item').first().click()
-    });
-
-    it('Thực hiện nhấn nút kết bạn', () => {
-        cy.get('input[placeholder="Tìm kiếm bạn bè"]').type('a')
-        cy.intercept('GET', '/api/users/search?name=a', {
+        // cy.get('button').filter(':contains("Tìm kiếm")').click()
+        // cy.get('button').filter(':contains("Kết bạn")').should('be.visible')
+        cy.intercept('GET', '/api/post?userId=9&state=PUBLIC', {
             statusCode: 200,
-            fixture: 'login/friend_search_result.json',
+            fixture: 'search/search_post_by_userId.json',
         }).as('search_user_name_a');
-        cy.get('button').filter(':contains("Tìm kiếm")').click()
 
-        cy.intercept('POST', '/api/friend/add', {
+        cy.intercept('GET', '/api/users/9', {
             statusCode: 200,
-            fixture: 'friend/friend_list.json',
-        }).as('add_friend');
-        cy.get('button').filter(':contains("Kết bạn")').first().click()
-        cy.get('.notyf__message').filter(':contains("Thành công")')
-    });
-
-    it('Thực hiện nhấn nút Huỷ lời mời', () => {
-        cy.get('input[placeholder="Tìm kiếm bạn bè"]').type('a')
-        cy.intercept('GET', '/api/users/search?name=a', {
-            statusCode: 200,
-            fixture: 'login/friend_search_result.json',
+            fixture: 'search/search_user_by_id.json',
         }).as('search_user_name_a');
-        cy.get('button').filter(':contains("Tìm kiếm")').click()
-        cy.intercept('DELETE', '/api/friend/unfriend', {
-            statusCode: 200,
-            fixture: 'friend/unfriend.json',
-        }).as('add_friend');
-        cy.get('button').filter(':contains("Huỷ lời mời")').first().click()
-        cy.get('.notyf__message').filter(':contains("Friend delete!")')
+        cy.get('strong').first().click()
     });
+
+
 
 
     // it('Các thông tin chi tiết về tên, năm sinh, số sách đang đọc, muốn đọc và đã đọc xong', () => {

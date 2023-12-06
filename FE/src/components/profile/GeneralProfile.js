@@ -11,7 +11,9 @@ const { Text, Title } = Typography;
 //khi render
 const GeneralProfile = () => {
     const { id } = useParams()
-    const career = useLoaderData()
+    const dataProfile = useLoaderData()
+    const profileInfo = dataProfile.userInfor
+    const userPostList = dataProfile.postList
     let authorDetail = {
         content: 'hello world',
         images: 'https://t3.ftcdn.net/jpg/03/13/42/46/360_F_313424630_Uja1TnjdFhdz0bdbFnhMRuBTSIw25TWQ.jpg',
@@ -37,22 +39,20 @@ const GeneralProfile = () => {
                 </div> */}
                 <div className="description-containner1">
                     <div>
-                        <Image className="image-ant" src={authorDetail.images} />
+                        <Image className="image-ant" src={profileInfo.urlAvatar} />
                     </div>
 
                     <Card
-                        title={<h1>{authorDetail.authorName}</h1>}
+                        title={<h1>{profileInfo.name}</h1>}
                         bordered={false}
                         style={{ width: "70%" }}
                     >
                         <Space direction='vertical' size={16}>
-                            <Text strong>
-                                {authorDetail.bornPlace}
+                            <Text strong >
+                                Quê quán: <Text italic style={{ fontWeight: '400' }}>{profileInfo.nativePlace}</Text>
                             </Text>
-                            <Text>{authorDetail.content}</Text>
-                            <Text >{authorDetail.dateOfBirth}</Text>
-                            <Text>{authorDetail.typeCompose}</Text>
-                            <Text>{authorDetail.authorDescription}</Text    >
+                            <Text strong >Ngày sinh: <Text italic style={{ fontWeight: '400' }}>{profileInfo.birthDate}</Text></Text>
+                            <Text strong>Tên đăng nhập: <Text italic style={{ fontWeight: '400' }}>{profileInfo.userName}</Text></Text    >
                         </Space>
 
                     </Card>
@@ -60,7 +60,7 @@ const GeneralProfile = () => {
                 </div>
             </Card>
             <div className="profile-footer--list">
-                <Title level={3}>Bài đăng của Xuân Bách</Title>
+                <Title level={2}>Bài đăng của {profileInfo.name}</Title>
                 <div className='line-drawing'></div>
                 <div class="author-book-list">
                     {/* <TheAuthorBookItem />
@@ -70,11 +70,16 @@ const GeneralProfile = () => {
                     <TheAuthorBookItem />
                     <TheAuthorBookItem />
                     <TheAuthorBookItem /> */}
-                    <ReviewPost />
+                    {/* <ReviewPost /> */}
                     {/* <ReviewPost />
                     <ReviewPost />
                     <ReviewPost />
                     <ReviewPost /> */}
+                    {
+                        userPostList.map((postItem) => {
+                            return <ReviewPost postItem={postItem} />
+                        })
+                    }
                 </div>
             </div>
         </div>

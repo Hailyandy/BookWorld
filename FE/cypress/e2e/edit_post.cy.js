@@ -15,7 +15,7 @@ describe('Spec màn hình chỉnh sửa bài post', () => {
             fixture: 'login/login_success.json',
         }).as('login');
         cy.get('.form_login button').contains('Đăng nhập').click();
-        cy.contains('Sách', { matchCase: false }).click();
+        cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
         //Các mục trong menu Sách
         cy.contains('Kho sách', { matchCase: false }).click();
     });

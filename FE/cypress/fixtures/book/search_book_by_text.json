@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "totalPage": 1,
+    "pageSize": 5,
+    "totalRecord": 1,
+    "pageNumber": 0,
+    "data": [
+        {
+            "id": 1,
+            "name": "The Girl with the Dragon Tattoo",
+            "numberPages": null,
+            "publisher": "Hàn Vũ Ký",
+            "publishDate": null,
+            "introducing": null,
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
+            "scoring": null,
+            "authorId": 2,
+            "authorName": null,
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": "Đang đọc"
+        }
+    ]
+}
