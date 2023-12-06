@@ -55,11 +55,75 @@ describe('Spec đăng nhập', () => {
         cy.get('@passwordInput').should('have.attr', 'type', 'password');
     });
 
-    it('Hiện thông báo khi đăng nhập thành công', () => {
+    it('Hiện thông báo khi đăng nhập thành công user', () => {
         cy.get('.form_login #basic_username ')
             .type('lehuyhaianh0808@gmail.com')
         cy.get('.form_login #basic_password ')
             .type('123456')
+        cy.get('#basic_remember').click();
+
+        cy.intercept('POST', '/api/auth/signin', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('login');
+
+        cy.intercept('GET', '/api/book', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('books');
+
+        cy.intercept('GET', '/api/friend/list', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('friendList');
+
+        cy.intercept('GET', '/api/friend/request', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('friendReq');
+
+        cy.intercept('GET', '/api/bookBasket', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('bookBasket');
+
+
+        cy.intercept('GET', '/api/book/top', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('bookTop');
+
+        cy.intercept('GET', '/api/post?state=PUBLIC', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('postPublic');
+
+        cy.get('.form_login button').contains('Đăng nhập').click();
+
+        cy.get('.notyf__message').should('have.text', 'Thành công!')
+    });
+
+    it('Hiện thông báo khi đăng nhập thành công admin', () => {
+        cy.get('.form_login #basic_username ')
+            .type('admin@gmail.com')
+        cy.get('.form_login #basic_password ')
+            .type('123456')
+        cy.get('#basic_remember').click();
+        cy.intercept('POST', '/api/auth/signin', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('login');
+        cy.get('.form_login button').contains('Đăng nhập').click();
+
+        cy.get('.notyf__message').should('have.text', 'Thành công!')
+    });
+
+    it('Hiện thông báo khi đăng nhập thành công author', () => {
+        cy.get('.form_login #basic_username ')
+            .type('user50@gmail.com')
+        cy.get('.form_login #basic_password ')
+            .type('123456')
+        cy.get('#basic_remember').click();
         cy.intercept('POST', '/api/auth/signin', {
             statusCode: 200,
             fixture: 'login/login_success.json',
@@ -73,4 +137,15 @@ describe('Spec đăng nhập', () => {
         cy.contains('Đăng ký ngay').click();
         cy.url().should('include', '/register');
     });
+
+    it('Nhấn đăng ký chuyển hướng đến trang đăng ký', () => {
+        cy.contains('Đăng ký ngay').click();
+        cy.url().should('include', '/register');
+
+    });
+
+    // it('Nhấn nút remember me', () => {
+    //     cy.get('#basic_remember').click();
+    //     cy.url().should('include', '/register');
+    // });
 });

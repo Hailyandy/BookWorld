@@ -325,7 +325,7 @@ const BookDetailPage = () => {
                                     itemKey='idddddd'
                                 >
                                     {(item, index) => (
-                                        <List.Item key={item.bookId} actions={[<Button key="list-loadmore-edit" style={{ backgroundColor: 'var(--warning-color)' }} onClick={showModal} >Báo cáo file pdf</Button>]}>
+                                        <List.Item key={item.id} actions={[<Button key="list-loadmore-edit" style={{ backgroundColor: 'var(--warning-color)' }} onClick={showModal} >Báo cáo file pdf</Button>]}>
                                             <List.Item.Meta
                                                 avatar={<Avatar shape='round' icon={<FilePdfOutlined />} size={70} style={{
                                                     backgroundColor: '#87d068',
@@ -337,7 +337,73 @@ const BookDetailPage = () => {
 
                                                 </Space>}
                                             />
+                                            <Modal title="Báo cáo file"
+                                                footer={null}
+                                                centered
+                                                open={isModalOpen}
+                                                onOk={() => setIsModalOpen(false)}
+                                                onCancel={() => setIsModalOpen(false)}
+                                            >
+                                                {/* <p>some contents...</p>
+                <p>some contents...</p>
+                <p>some contents...</p> */}
+                                                <Form
+                                                    name="basic"
+                                                    labelCol={{
+                                                        span: 8,
+                                                    }}
+                                                    wrapperCol={{
+                                                        span: 16,
+                                                    }}
+                                                    style={{
+                                                        maxWidth: 600,
+                                                    }}
+                                                    initialValues={{
+                                                        remember: true,
+                                                    }}
+                                                    onFinish={(val) => onFinish(val, item.id)}
+                                                    onFinishFailed={onFinishFailed}
+                                                    autoComplete="off"
+                                                    form={form}
+                                                    preserve={false}
+                                                >
+                                                    <Form.Item
+                                                        label="Lý do"
+                                                        name="reason"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Nhập lý do chính!',
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input />
+                                                    </Form.Item>
 
+                                                    <Form.Item
+                                                        label="Mô tả chi tiết"
+                                                        name="description"
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Nhập mô tả chi tiết lý do',
+                                                            },
+                                                        ]}
+                                                    >
+                                                        <Input />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        wrapperCol={{
+                                                            offset: 8,
+                                                            span: 16,
+                                                        }}
+                                                    >
+                                                        <Button type="primary" htmlType="submit">
+                                                            Tạo báo cáo
+                                                        </Button>
+                                                    </Form.Item>
+                                                </Form>
+                                            </Modal>
                                         </List.Item>
                                     )}
                                 </VirtualList>

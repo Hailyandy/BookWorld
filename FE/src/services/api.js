@@ -85,6 +85,28 @@ export const postAPI = async (endpoint, config = {}) => {
   }
 }
 
+
+
+export const patchAPI = async (endpoint, config = {}) => {
+  try {
+    axiosInstance = axios.create({
+      baseURL: `${BSHAREresource.url.baseUrlBE}`,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `${tokenService.getLocalAccessToken()}`,
+        "Access-Control-Allow-Origin": "*"
+      },
+
+    });
+    const response = await axiosInstance.patch(endpoint, config)
+
+    return handleAPISuccess(response)
+  } catch (error) {
+    handleAPIError(error)
+    throw error
+  }
+}
+
 export const putAPI = async (endpoint, config = {}) => {
   try {
     const response = await axiosInstance.put(endpoint, config)
