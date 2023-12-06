@@ -5,8 +5,10 @@ const initialState = [];
 
 export const searchBookByNameOrAuthor = createAsyncThunk(
     "books/searchByNameOrAuthor",
-    async ({ name }) => {
-        const res = await BookService.searchBookByNameOrAuthor({ name });
+    async ({ name, param }) => {
+        // console.log(name)
+        console.log(param)
+        const res = await BookService.searchBookByNameOrAuthor({ name }, param);
         return res.data;
     }
 );
@@ -25,6 +27,22 @@ export const followBookAndUpdateStatusAsync = createAsyncThunk(
 
         try {
             const res = await bookService.followBookAndUpdateStatus({ bookId, status });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const getAllGenresBookAsync = createAsyncThunk(
+    "users/getAllGenresBook",
+    async (param, { rejectWithValue }) => {
+
+        try {
+            const res = await bookService.getAllGenresBook();
             return res.data;
         } catch (err) {
             // Use `err.response.data` as `action.payload` for a `rejected` action,

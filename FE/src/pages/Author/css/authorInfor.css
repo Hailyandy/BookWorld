@@ -6,6 +6,12 @@
     font-size: 30px !important;
 }
 
+.author-created-book-containner {
+    margin: auto;
+    width: 90%;
+    padding: 24px;
+}
+
 /* .ant-image {
     display: inline-block;
 
@@ -29,4 +35,24 @@
 .author-book-list {
     display: flex;
     flex-wrap: wrap;
+}
+
+.authors {
+    width: 100%;
+    height: var(--height-body);
+    background-image: url(https://startbootstrap.github.io/startbootstrap-stylish-portfolio/assets/img/bg-masthead.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+}
+
+.authors span,
+.authors h1 {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 40px;
 }

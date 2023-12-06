@@ -16,4 +16,5 @@ public class ReportDto {
     private Timestamp timestamp;
     private String userName;
     private String urlAvatar;
+    private String urlPdf;
 }

@@ -1,20 +1,11 @@
 package com.chien.bookWorld.service.impl;
 
-import com.chien.bookWorld.dto.BookCreationDto;
-import com.chien.bookWorld.dto.BookDto;
-import com.chien.bookWorld.dto.GenreDto;
-import com.chien.bookWorld.entity.Book;
-import com.chien.bookWorld.entity.BookBasket;
-import com.chien.bookWorld.entity.Genre;
-import com.chien.bookWorld.entity.User;
-import com.chien.bookWorld.entity.UserDetailsImpl;
+import com.chien.bookWorld.dto.*;
+import com.chien.bookWorld.entity.*;
 import com.chien.bookWorld.exception.AppException;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
-import com.chien.bookWorld.repository.BookBasketRepository;
-import com.chien.bookWorld.repository.BookRepository;
-import com.chien.bookWorld.repository.GenreRepository;
-import com.chien.bookWorld.repository.PostRepository;
-import com.chien.bookWorld.repository.UserRepository;
+import com.chien.bookWorld.repository.*;
 import com.chien.bookWorld.service.BookService;
 
 import java.math.BigDecimal;
@@ -32,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -55,6 +47,9 @@ public class BookServiceImpl implements BookService {
 
   @Autowired
   private GenreRepository genreRepository;
+
+  @Autowired
+  private PdfRepository pdfRepository;
   @Autowired
   private ModelMapper mapper;
 
@@ -86,9 +81,23 @@ public class BookServiceImpl implements BookService {
     if (book == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     } else {
-      BookDto bookDto = mapper.map(book, BookDto.class);
+      BookDetailDto bookDto = mapper.map(book, BookDetailDto.class);
+      List<Pdf> pdfs = pdfRepository.findPdfByBook(id);
+      List<PdfDto> pdfDtos = pdfs.stream().map(pdf -> {
+          PdfDto pdfDto = new PdfDto();
+          pdfDto.setUrlPdf(pdf.getUrlPdf());
+          pdfDto.setUserName(pdf.getUser().getName());
+          pdfDto.setId(pdf.getId());
+          return pdfDto;
+
+      }).collect(Collectors.toList());
+      bookDto.setPdfs(pdfDtos);
       BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), id);
-      bookDto.setStatusWithUser(bookBasket.getStatus());
+      if (bookBasket != null) {
+        bookDto.setStatusWithUser(bookBasket.getStatus());
+      } else {
+        bookDto.setStatusWithUser(null);
+      }
 
       return new SuccessResponse(bookDto);
     }
@@ -104,47 +113,65 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse findByTitleOrAuthor(String name, Pageable pageable) {
+  public PageResponse findByTitleOrAuthor(String name, Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     User user = userRepository.findByUsername(userDetails.getUsername())
         .orElseThrow(
             () -> new AppException(404, 44,
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
-    List<BookDto> bookList = bookRepository.findByTitleOrAuthor(
-        "%" + name + "%", pageable).stream().map(book -> {
+    Page<Book> bookList = bookRepository.findByTitleOrAuthor(
+            "%" + name + "%", pageable);
+    int totalPages = bookList.getTotalPages();
+    int numberPage = bookList.getNumber();
+    long totalRecord = bookList.getTotalElements();
+    int pageSize = bookList.getSize();
+    List<BookDto> bookListDto = bookList.stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
           BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
-          bookDto.setStatusWithUser(bookBasket.getStatus());
+          if (bookBasket != null) {
+            bookDto.setStatusWithUser(bookBasket.getStatus());
+          } else {
+            bookDto.setStatusWithUser(null);
+          }
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
           return bookDto;
         }).collect(Collectors.toList());
-    if (bookList.isEmpty()) {
+    if (bookListDto.isEmpty()) {
       throw new AppException(404, 44,
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name + "'!");
     }
-    return new SuccessResponse(bookList);
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
 
   @Override
-  public SuccessResponse findByTitleOrAuthorAndGenre(String name, Long genreId, Pageable pageable) {
+  public PageResponse findByTitleOrAuthorAndGenre(String name, Long genreId, Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     User user = userRepository.findByUsername(userDetails.getUsername())
         .orElseThrow(
             () -> new AppException(404, 44,
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
-    List<BookDto> bookList = bookRepository.findByTitleOrAuthorAndGenre(
-        "%" + name + "%", genreId, pageable).stream().map(book -> {
+    Page<Book> bookList = bookRepository.findByTitleOrAuthorAndGenre(
+                    "%" + name + "%", genreId, pageable);
+    int totalPages = bookList.getTotalPages();
+    int numberPage = bookList.getNumber();
+    long totalRecord = bookList.getTotalElements();
+    int pageSize = bookList.getSize();
+    List<BookDto> bookListDto = bookList.stream().map(book -> {
           BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
-          bookDto.setStatusWithUser(bookBasket.getStatus());
+          if (bookBasket != null) {
+            bookDto.setStatusWithUser(bookBasket.getStatus());
+          } else {
+            bookDto.setStatusWithUser(null);
+         }
           bookDto.setGenres(
               book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
                   Collectors.toList()));
@@ -155,17 +182,21 @@ public class BookServiceImpl implements BookService {
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name
               + "' và có id thể loại là '" + genreId + "'!");
     }
-    return new SuccessResponse(bookList);
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
 
   @Override
-  public SuccessResponse bookRecommendations(Pageable pageable) {
+  public PageResponse bookRecommendations(Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     Collection<Long> genreIds = bookBasketRepository.findTheIDOfFavoriteGenre(userDetails.getId())
         .orElse(genreRepository.findAll().stream().map(Genre::getId).collect(Collectors.toList()));
-    List<BookDto> bookList = bookRepository.findSuitableBooks(userDetails.getId(), genreIds, pageable)
-        .stream().map(book -> {
+    Page<Book> bookList = bookRepository.findSuitableBooks(userDetails.getId(), genreIds, pageable);
+    int totalPages = bookList.getTotalPages();
+    int numberPage = bookList.getNumber();
+    long totalRecord = bookList.getTotalElements();
+    int pageSize = bookList.getSize();
+    List<BookDto> bookListDto = bookList.stream().map(book -> {
           BookDto bookDto = mapper.map(book, BookDto.class);
           bookDto.setAuthorId(book.getUser().getId());
           bookDto.setAuthorName(book.getUser().getName());
@@ -178,19 +209,24 @@ public class BookServiceImpl implements BookService {
       throw new AppException(404, 44,
           "Không có sách gợi ý phù hơp!");
     }
-    return new SuccessResponse(bookList);
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
 
   @Override
-  public SuccessResponse update(Book BookInput) {
-    Book fromDB = bookRepository.findById(BookInput.getId()).orElse(null);
+  public SuccessResponse update(Book bookInput) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+    Book fromDB = bookRepository.findById(bookInput.getId()).orElse(null);
+    List<String> roles = userDetails.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority).toList();
+    boolean isAdmin = roles.contains("ROLE_ADMIN");
+    if (userDetails.getId() != fromDB.getUser().getId() && !isAdmin) {
+      throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
+    }
     if (fromDB == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
-    fromDB.setId(BookInput.getId());
+    mapper.map(bookInput, fromDB);
     return new SuccessResponse(bookRepository.save(fromDB));
   }
 
@@ -241,16 +277,25 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse getBookList(Pageable pageable) {
+  public PageResponse getBookList(Pageable pageable) {
     // TODO Auto-generated method stub
-    Page<Book> books = bookRepository.findAll(pageable);
-    logger.info(pageable.toString());
-    if (books.isEmpty()) {
+    Page<Book> bookList = bookRepository.findAllBook(pageable);
+    int totalPages = bookList.getTotalPages();
+    int numberPage = bookList.getNumber();
+    long totalRecord = bookList.getTotalElements();
+    int pageSize = bookList.getSize();
+    if (bookList.isEmpty()) {
       throw new AppException(404, 44, "Error: Does not exist! No book has been created yet!");
-    } else {
-      return new SuccessResponse(books.stream()
-          .map(book -> mapper.map(book, BookDto.class)).collect(
-              Collectors.toList()));
     }
+    List<BookDto> bookListDto = bookList.stream().map(book -> {
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setAuthorName(book.getUser().getName());
+      bookDto.setGenres(
+              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+                      Collectors.toList()));
+      return bookDto;
+    }).collect(Collectors.toList());
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
 }

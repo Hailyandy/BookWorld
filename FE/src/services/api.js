@@ -4,8 +4,9 @@ import 'notyf/notyf.min.css'; // for React, Vue and Svelte
 import BSHAREresource from "~/helper/BSHAREresource";
 import tokenService from "./token.service";
 import { showSpinner, hideSpinner } from "~/helper/notifyDisplay";
-
+import { objectToParams } from "~/helper/format";
 const notyf = new Notyf({
+  duration: 2000,
   position: {
     x: 'right',
     y: 'bottom',
@@ -13,7 +14,7 @@ const notyf = new Notyf({
 });
 console.log(tokenService.getLocalAccessToken())
 export let axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/",
+  baseURL: `${BSHAREresource.url.baseUrlBE}`,
   headers: { 'Authorization': `${tokenService.getLocalAccessToken()}`, 'Access-Control-Allow-Origin': '*', 'Accept': '*/*', 'Content-Type': 'application/json' }
 
 });
@@ -32,20 +33,22 @@ axiosInstance.interceptors.response.use(response => {
 
 
 export const getAPI = async (endpoint, param, config = {}) => {
+  console.log(config)
   if (param) {
-    endpoint = `${endpoint}/${param}`
+    endpoint = `${endpoint}?${objectToParams(param)}`
   }
   try {
     axiosInstance = axios.create({
-      baseURL: "http://localhost:8080/api/",
+      baseURL: `${BSHAREresource.url.baseUrlBE}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${tokenService.getLocalAccessToken()}`,
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "http://localhost:3000/"
       },
 
     });
-    const response = await axiosInstance.get(endpoint)
+    console.log(config)
+    const response = await axiosInstance.get(endpoint, config)
     // loading.hideLoading()
     if (response.status === 200) {
       // Lấy dữ liệu thành công
@@ -65,7 +68,7 @@ export const getAPI = async (endpoint, param, config = {}) => {
 export const postAPI = async (endpoint, config = {}) => {
   try {
     axiosInstance = axios.create({
-      baseURL: "http://localhost:8080/api/",
+      baseURL: `${BSHAREresource.url.baseUrlBE}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `${tokenService.getLocalAccessToken()}`,

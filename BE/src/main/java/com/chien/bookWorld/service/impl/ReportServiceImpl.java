@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,18 +81,20 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public SuccessResponse findAll(Pageable pageable) {
-        Page<Report> reports = reportRepository.findAll(pageable);
-        if (reports.isEmpty()) {
-            new SuccessResponse(null);
-        }
-
-        TypeMap<Report, ReportDto> typeMap = mapper.getTypeMap(Report.class, ReportDto.class);
-        if (typeMap == null) {
-            mapper.addMappings(new ReportDtoMap());
-        }
-        return new SuccessResponse(reports.stream()
-                .map(a -> mapper.map(a, ReportDto.class)).collect(
+    public PageResponse findAll(Pageable pageable) {
+        Page<Report> reports = reportRepository.findAllByOrderByTimestampDesc(pageable);
+        int totalPages = reports.getTotalPages();
+        int numberPage = reports.getNumber();
+        long totalRecord = reports.getTotalElements();
+        int pageSize = reports.getSize();
+        return new PageResponse(totalPages, pageSize, totalRecord, numberPage, reports.stream()
+                .map(a -> {
+                    ReportDto reportDto = mapper.map(a, ReportDto.class);
+                    reportDto.setUserName(a.getUser().getName());
+                    reportDto.setUrlAvatar(a.getUser().getUrlAvatar());
+                    reportDto.setUrlPdf(a.getPdf().getUrlPdf());
+                    return reportDto;
+                }).collect(
                         Collectors.toList()));
     }
 

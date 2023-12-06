@@ -1,3 +1,4 @@
 .authors-layout {
-    padding: 2% 50px 0px 50px;
+    width: 100%;
+    /* height: var(--height-body); */
 }

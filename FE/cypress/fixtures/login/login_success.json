@@ -1,0 +1,15 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": {
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZWh1eWhhaWFuaDA4MDhAZ21haWwuY29tIiwiaWF0IjoxNzAwMzE2MTg3LCJleHAiOjE3MDA0MDI1ODd9.m9gN2mXEsoscS7jvV95z0XE13Hm2pRAUH5g0a22dmYk",
+        "type": "Bearer",
+        "id": 12,
+        "username": "lehuyhaianh0808@gmail.com",
+        "roles": [
+            {
+                "name": "ROLE_USER"
+            }
+        ]
+    }
+}

@@ -1,0 +1,25 @@
+.addpost-container {
+    padding: 16px;
+
+}
+
+.addpost-container h1 {
+    text-align: center;
+}
+
+.addpost-container form {
+
+    margin: auto;
+    border: 1px solid #ccc;
+    padding: 12px;
+    background-color: var(--background-color-white);
+    border-radius: var(--border-radius-containner);
+}
+
+.last-form-item {
+    margin-bottom: 0px !important;
+}
+
+.addpost-container .ant-select-selection-item-remove {
+    color: var(--background-color-white);
+}

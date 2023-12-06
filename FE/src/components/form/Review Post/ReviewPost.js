@@ -13,87 +13,79 @@ import React, { useState } from 'react';
 import Avartar from "~/components/ui/Avartar/Avartar";
 import CommentPost from "../PostComment/PostComment";
 import PostComment from "../PostComment/PostComment";
-
+import StarRatings from "react-star-ratings";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCommentOfPostAsync } from "~/slices/user";
+import { convertCommentWithParentId } from "~/helper/format";
+import NestedComments from "~/components/comment/NestedComment";
+import BSHAREnum from "~/helper/BSHAREenum";
+import { createCommentAsync } from "~/slices/user";
+import moment from "moment";
+moment.locale('vi');
 // const cho dropdown tất cả các bình luận
-const items = [
-    {
-        key: '1',
-        label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                1st menu item
-            </a>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                2nd menu item (disabled)
-            </a>
-        ),
-        icon: <SmileOutlined />,
-        disabled: true,
-    },
-    {
-        key: '3',
-        label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                3rd menu item (disabled)
-            </a>
-        ),
-        disabled: true,
-    },
-    {
-        key: '4',
-        danger: true,
-        label: 'a danger item',
-    },
-];
 
-
-
-
-
-const { Meta } = Card;
-
-
-
-
-const ReviewPost = () => {
+const ReviewPost = ({ postItem }) => {
+    console.log(postItem)
+    const dispatch = useDispatch()
     const [likes, setLikes] = useState(0);
     const [comments, setComments] = useState([]);
     const [commentText, setCommentText] = useState('');
-
+    const [commentFormUserIntoPost, setCommentFormUserIntoPost] = useState([]);
+    const [visible, setVisible] = useState(false);
     const handleLikeClick = () => {
         setLikes(likes + 1);
     };
 
     const handleCommentSubmit = () => {
-        if (commentText.trim() !== '') {
-            setComments([...comments, commentText]);
-            setCommentText('');
-        }
+        dispatch(createCommentAsync({ content: commentText, postId: postItem.id, parentId: null }))
+            .unwrap()
+            .then(async data => {
+                console.log(data)
+
+
+            })
+            .catch(e => {
+                console.log(e)
+            });
+
     };
+    useEffect(() => {
+        dispatch(getCommentOfPostAsync({ postId: postItem.id }))
+            .unwrap()
+            .then(async data => {
+                console.log(convertCommentWithParentId(data.data))
+                setCommentFormUserIntoPost(convertCommentWithParentId(data.data))
+
+            })
+            .catch(e => {
+                return e.messege
+            });
+    }, [])
     return (
         <div class="review-post">
             <div class="review">
                 {/* Heading Post */}
 
                 <div class="heading-post">
-                    <AvartarTime></AvartarTime>
-                    <p class="status-title">Đánh giá một cuốn sách</p>
+                    <AvartarTime postItem={postItem}></AvartarTime>
+                    {/* <Avatar shape="square" size={64} src={bookItem.urlPoster} alt="Han Solo" /> */}
+
                     <ul class="list-star">
-                        <li class="star"><StarFilled /></li>
-                        <li class="star"><StarFilled /></li>
-                        <li class="star"><StarFilled /></li>
-                        <li class="star"><StarFilled /></li>
-                        <li class="star"><StarFilled /></li>
+                        <StarRatings
+                            rating={
+                                postItem.scoring ? postItem.scoring : 0
+                            }
+                            starDimension="12px"
+                            starSpacing="4px"
+                            starRatedColor="rgb(230, 67, 47)"
+                        />
                     </ul>
                 </div>
 
                 {/* Body Post */}
 
-                <ContentIntro></ContentIntro>
+                <ContentIntro postItem={postItem}></ContentIntro>
             </div>
 
             <div class="footer">
@@ -105,23 +97,17 @@ const ReviewPost = () => {
                     <Button style={{ border: 'none' }} icon={<LikeOutlined />} onClick={handleLikeClick}>
                         Like ({likes})
                     </Button>
-                    <Button style={{ border: 'none' }} icon={<MessageOutlined />}>Comment</Button>
+                    <Button style={{ border: 'none' }} icon={<MessageOutlined />} onClick={() => setVisible(!visible)} >Comment</Button>
                 </div>
                 <div>
                     <Divider className="bold-divider" />
                 </div>
-                <div class="commented">
-                    <Dropdown menu={{ items }}>
-                        <a onClick={(e) => e.preventDefault()}>
-                            <Space>
-                                Tất cả các bình luận
-                                <DownOutlined />
-                            </Space>
-                        </a>
-                    </Dropdown>
-                    <PostComment />
-                    <PostComment />
-                </div>
+                {
+                    visible && (<div class="commented">
+                        <NestedComments comments={commentFormUserIntoPost} type={BSHAREnum.commentType.postComment} />
+                    </div>)
+                }
+
                 <div>
                     <Divider className="bold-divider" />
                 </div>
@@ -135,7 +121,7 @@ const ReviewPost = () => {
                         rows={4}
                         onChange={(e) => setCommentText(e.target.value)}
                     />
-                    <SendOutlined style={{ color: 'blue', marginLeft: '10px' }} />
+                    <SendOutlined style={{ color: 'blue', marginLeft: '10px' }} onClick={handleCommentSubmit} />
 
 
                 </div>

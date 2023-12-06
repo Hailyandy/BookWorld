@@ -3,11 +3,19 @@ import React, { useState } from 'react';
 import { Button } from 'antd';
 import imgApp from '../assets/imgs/App Store.png'
 import imgPlay from '../assets/imgs/Google Play.png'
-
-
+import { useNavigate } from 'react-router-dom';
+import tokenService from '~/services/token.service';
+import BSHAREresource from "~/helper/BSHAREresource";
+import BSHAREnum from "~/helper/BSHAREenum";
 const Home = () => {
+    const navigate = useNavigate()
     function goToPage() {
 
+    }
+    if (tokenService.getRole("ROLE_USER")) {
+        // navigate(`users`, { replace: true });
+        window.location.replace(`${BSHAREresource.localHost.url}${tokenService.getUserRoleName()}`)
+        return;
     }
     return (
         <div className="home-container">

@@ -1,3 +1,4 @@
+import { findIndexByAttribute } from "~/helper/format";
 class TokenService {
   getLocalRefreshToken() {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -9,10 +10,13 @@ class TokenService {
     return `Bearer ${user?.token}`;
   }
 
-  getRoleUser() {
+  getRole(rolename) {
     const user = JSON.parse(localStorage.getItem("user"));
-    return user?.roles;
+    findIndexByAttribute(user?.roles, "name", rolename)
+    return findIndexByAttribute(user?.roles, "name", rolename) >= 0;
   }
+
+
   getCredentialUser() {
     return JSON.parse(localStorage.getItem("credentials"));
   }
@@ -24,6 +28,10 @@ class TokenService {
 
   getUser() {
     return JSON.parse(localStorage.getItem("user"));
+  }
+  getUserRoleName() {
+    // console.log(JSON.parse(localStorage.getItem("user")).roles[0].name)
+    return JSON.parse(localStorage.getItem("user"))?.roles[0].name;
   }
 
   getCredentials() {

@@ -173,7 +173,7 @@ const FriendRequestSearchPeoplePage = () => {
             </Layout>
             <Sider style={siderStyle} width={350}>
                 <Card
-                    title="TÌm kiếm bạn bè"
+                    title="Tìm kiếm bạn bè"
                     bordered={false}
                     style={{
 

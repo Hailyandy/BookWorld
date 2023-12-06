@@ -2,7 +2,9 @@ package com.chien.bookWorld.controller;
 
 import java.util.Map;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,8 +20,8 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.ReportService;
 
 @RestController
-@RequestMapping("/api/report")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@RequestMapping("/api/pdf/report")
+ 
 public class ReportCotroller {
 
     @Autowired
@@ -34,8 +36,10 @@ public class ReportCotroller {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<SuccessResponse> getAllReport() {
-        return ResponseEntity.status(200).body(new SuccessResponse(reportService.findAll()));
+    public ResponseEntity<PageResponse> getAllReport(
+            Pageable pageable
+    ) {
+        return ResponseEntity.status(200).body(reportService.findAll(pageable));
     }
 
     @PostMapping("/handler")

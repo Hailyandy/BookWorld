@@ -9,7 +9,7 @@ public class UserDto {
 
   private Long id;
 
-  private String username;
+  private String userName;
 
   private String name;
 
@@ -21,7 +21,7 @@ public class UserDto {
 
   private String urlAvatar;
 
-  private String address;
+  private String nativePlace;
 
   private Boolean enabled;
 }

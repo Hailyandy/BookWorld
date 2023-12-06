@@ -13,7 +13,8 @@
 
 .avartarTime .name-time .name {
     margin: 0;
-    font-weight: 700;
+    font-weight: 500;
+    font-size: 20px;
 }
 
 .avartarTime .name-time .time {

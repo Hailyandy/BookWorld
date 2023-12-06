@@ -15,6 +15,15 @@ import ProtectedRoute from './protectedRoute/ProtectedRoute';
 import SearchResultLayout from '~/layouts/SearchResultLayout';
 import TheUserItem from './author/TheUserItem';
 import CustomUpload from './customUpload/customUpload';
+
+import BarChart from './charts/BarChart';
+import PieChart from './charts/PieChart';
+import LineChart from './charts/LineChart';
+
+import Question from './Quiz/Question';
+import QuestionCount from './Quiz/QuestionCount';
+import AnswerOption from './Quiz/AnswerOption';
+import Quiz from './Quiz';
 export {
     RootLayout,
     AuthorsLayout,
@@ -32,5 +41,12 @@ export {
     ProtectedRoute,
     SearchResultLayout,
     TheUserItem,
-    CustomUpload
+    CustomUpload,
+    BarChart,
+    PieChart,
+    LineChart,
+    Question,
+    QuestionCount,
+    AnswerOption,
+    Quiz
 }

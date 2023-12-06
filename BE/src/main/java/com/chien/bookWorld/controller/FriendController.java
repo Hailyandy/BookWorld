@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/friend")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 public class FriendController {
 
     private static final Logger logger = Logger.getLogger(FriendController.class.getName());
@@ -42,9 +43,9 @@ public class FriendController {
     }
 
     @GetMapping("/request")
-    public ResponseEntity<SuccessResponse> getFriendRequestOfUser() {
+    public ResponseEntity<SuccessResponse> getFriendRequestOfUser(Pageable pageable) {
         return ResponseEntity.status(200).body(
-                friendService.getFriendRequestsOfUser());
+                friendService.getFriendRequestsOfUser(pageable));
     }
 
     @PutMapping("/accept")
@@ -54,8 +55,8 @@ public class FriendController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<SuccessResponse> getFriends() {
-        return ResponseEntity.ok(friendService.getFriendsOfUser());
+    public ResponseEntity<SuccessResponse> getFriends(Pageable pageable) {
+        return ResponseEntity.ok(friendService.getFriendsOfUser(pageable));
     }
 
     @PutMapping("/reject")

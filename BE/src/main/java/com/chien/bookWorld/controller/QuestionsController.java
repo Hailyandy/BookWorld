@@ -2,16 +2,12 @@ package com.chien.bookWorld.controller;
 
 import java.util.Map;
 
+import com.chien.bookWorld.payload.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.chien.bookWorld.dto.QuestionsCreationDto;
 import com.chien.bookWorld.dto.ScoringCreation;
@@ -21,7 +17,7 @@ import com.chien.bookWorld.service.QuestionsService;
 
 @RestController
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 public class QuestionsController {
 
     @Autowired
@@ -34,16 +30,23 @@ public class QuestionsController {
         return ResponseEntity.status(200).body(questionsService.create(creationDto));
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<SuccessResponse> getQuestionsByBook(
-            @RequestBody QuestionsRequest qRequest) {
-        return ResponseEntity.ok(questionsService.getQuestionsByBook(qRequest.getIdBook()));
+            @RequestParam Long idBook) {
+        return ResponseEntity.ok(questionsService.getQuestionsByBook(idBook));
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, Object>> updateScoring(
+    public ResponseEntity<SuccessResponse> checkQuestion(
             @RequestBody ScoringCreation scoringCreation) {
         return ResponseEntity.status(200)
-                .body(questionsService.updateScoring(scoringCreation.getIbBook(), scoringCreation.getScore()));
+                .body(questionsService.checkQuestion(scoringCreation));
+    }
+
+    @GetMapping("/scoring/top")
+    public ResponseEntity<PageResponse> getScoringByBook(
+            Pageable pageable, @RequestParam Long idBook
+    ) {
+        return ResponseEntity.status(200).body(questionsService.getScoringTopByBook(pageable, idBook));
     }
 }

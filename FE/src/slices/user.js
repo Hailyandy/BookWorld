@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import userService from "~/services/user.service";
+import adminService from "~/services/admin.service";
+import authorService from "~/services/author.service";
 import tokenService from "~/services/token.service";
 //friendReqList,userInfo
 const initialState = tokenService.getUser() ? { userInfo: { ...tokenService.getUser() }, friendReqList: [] } : { friendReqList: [] };
@@ -236,6 +238,234 @@ export const get50TopBookAsync = createAsyncThunk(
     }
 );
 
+export const getAllReportPdfAsync = createAsyncThunk(
+    "admin/allReportPdf",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await adminService.getAllReportPdf();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const getAllPostAsync = createAsyncThunk(
+    "user/getAllPost",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await userService.getAllPost();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const getAllSuggestBookAsync = createAsyncThunk(
+    "user/getAllPost",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await userService.getAllSuggestBook();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const getListQuizByBookIdAsync = createAsyncThunk(
+    "user/getListQuizByBookId",
+    async ({ idBook }, { rejectWithValue }) => {
+        try {
+            const res = await authorService.getListQuizByBookId({ idBook });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+export const getAllAuthorsAsync = createAsyncThunk(
+    "admin/getAllAuthors",
+    async (param, { rejectWithValue }) => {
+        try {
+            const res = await adminService.getAllAuthor();
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+
+export const addNewBookAsync = createAsyncThunk(
+    "admin/addNewBook",
+    async ({
+        name,
+        numberPages,
+        publisher,
+        publishDate,
+        introducing,
+        urlPoster,
+        authorId,
+        genreIds,
+
+    }, { rejectWithValue }) => {
+        try {
+            const res = await adminService.addNewBook({
+                name,
+                numberPages,
+                publisher,
+                publishDate,
+                introducing,
+                urlPoster,
+                authorId,
+                genreIds,
+
+            },);
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const createQuestionAsync = createAsyncThunk(
+    "author/getAllPost",
+    async ({ idBook, questionDtos }, { rejectWithValue }) => {
+        try {
+            const res = await authorService.createQuestion({ idBook, questionDtos });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const checkAnswerAndGetPointAsync = createAsyncThunk(
+    "admin/getAllAuthors",
+    async ({ idBook, listAnswer }, { rejectWithValue }) => {
+        try {
+            const res = await authorService.checkAnswerAndGetPoint({ idBook, listAnswer });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+export const addPdfForABookAsync = createAsyncThunk(
+    "users/addPdfForABook",
+    async ({ idBook, urlPdf }, { rejectWithValue }) => {
+        try {
+            const res = await userService.addPdfForABook({ idBook, urlPdf });
+            return res.data;
+        } catch (err) {
+            // Use `err.response.data` as `action.payload` for a `rejected` action,
+            // by explicitly returning it using the `rejectWithValue()` utility
+            console.log(err)
+            return rejectWithValue(err.response.data)
+        }
+    }
+);
+
+
+export const createCommentAsync = createAsyncThunk(
+    'comments/createComment',
+    async ({ content, postId, parentId }, { rejectWithValue }) => {
+        try {
+            const data = await userService.createComment({ content, postId, parentId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getCommentOfPostAsync = createAsyncThunk(
+    'comments/getCommentOfPost',
+    async ({ postId }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getCommentOfPost({ postId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getUserPostListAsync = createAsyncThunk(
+    'posts/getUserPostList',
+    async ({ userId }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getUserPostList({ userId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+
+export const createReportAboutPdfAsync = createAsyncThunk(
+    'pdf/createReportAboutPdf',
+    async ({ reason, description, pdf_id }, { rejectWithValue }) => {
+        try {
+            const data = await userService.createReportAboutPdf({ reason, description, pdf_id });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getListBookOfAuthorAsync = createAsyncThunk(
+    'author/getListBookOfAuthor',
+    async (param, { rejectWithValue }) => {
+        try {
+            const data = await authorService.getListBookOfAuthor();
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getUserTopScoreByBookIdAsync = createAsyncThunk(
+    'user/getListBookOfAuthor',
+    async ({ idBook }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getUserTopScoreByBookId({ idBook });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -283,6 +513,12 @@ const userSlice = createSlice({
             console.log(action.payload)
         },
         [get50TopBookAsync.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [getAllReportPdfAsync.fulfilled]: (state, action) => {
+            console.log(action.payload)
+        },
+        [addNewBookAsync.fulfilled]: (state, action) => {
             console.log(action.payload)
         },
     },

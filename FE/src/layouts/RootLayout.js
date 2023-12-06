@@ -11,6 +11,8 @@ import { BookService } from "~/services/book.service";
 import { useSelector } from 'react-redux';
 import { getListFriendRequest } from "~/slices/user";
 import { useDispatch } from 'react-redux';
+import { updateLocalHostUrl } from "~/helper/BSHAREresource";
+
 const breadcrumbNameMap = {
     //Fatherless route
     '/book-market': 'Chợ sách',
@@ -49,12 +51,22 @@ const breadcrumbNameMap = {
 
     //authors
     '/authors/profile': 'Profile Tác giả',
-    '/authors/slug': 'Trang cá nhân'
+    '/authors/slug': 'Trang cá nhân',
+
+    //admin
+    '/statistic-post-list': 'Các bài đăng',
+    '/statistic-report-post': 'Nội dung báo cáo',
 };
 
+const newBreadcrumbNameMap = {};
+// Loop over the keys of the original object
+for (let key of Object.keys(breadcrumbNameMap)) {
+    // Add the text before the key and assign the same value
+    newBreadcrumbNameMap[`${tokenService.getUserRoleName()}${key}`] = breadcrumbNameMap[key];
+}
 export default function RootLayout() {
     const userStateFormSlice = useSelector(state => state.users);
-    console.log(userStateFormSlice)
+    // updateLocalHostUrl(tokenService.getUserRoleName())
     // let a = new BookService()
     // console.log(a.endPoint)
     const [reload, setReload] = useState(0);
@@ -73,11 +85,28 @@ export default function RootLayout() {
     }, [userStateFormSlice.userInfo, userStateFormSlice.friendReqList])
 
     const location = useLocation();
-    console.log(location.pathname)
-    const pathSnippets = location.pathname.split('/').filter((i) => {
+
+    /**
+     * Let's say we are on the URL https://developer.mozilla.org/en-US/docs/Web/API/Location/pathname#examples
+     * console.log(location.pathname); // '/en-US/docs/Web/API/Location/pathname'
+    */
+    /**
+     * http://localhost:3000/ROLE_ADMIN/statistic-report-post => ['',ROLE_ADMIN,statistic-report-post]
+     * filter 1: ['',statistic-report-post]
+     * filter 2: [statistic-report-post]
+     * mapping với các đường dẫn của breadcrumbNameMap nên phải chỉnh lại. Do thêm tokenservice.getRoleUser vào
+     */
+    const pathSnippets = location.pathname.split('/').filter((item, index) => {
         // Check if last item is slug
-        return i
+        console.log(index)
+        return index != 1
+
+    }).filter((item) => {
+        return item != ''
     });
+
+
+    // console.log(pathSnippets)
     for (let i = 0; i < pathSnippets.length; i++) {
         const isSlug = /^\d+$/.test(pathSnippets[i]);
         // Check for slug
@@ -86,17 +115,20 @@ export default function RootLayout() {
         }
 
     }
+
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-
         return {
             key: url,
-            title: <Link to={url}>{breadcrumbNameMap[url]}</Link>,
+            title: <Link to={
+                `/${tokenService.getUserRoleName()}${url}`
+            }>{breadcrumbNameMap[url]}</Link>,
         };
     });
+
     const breadcrumbItems = [
         {
-            title: <Link to="/">Trang chủ</Link>,
+            title: <Link to={`/${tokenService.getUserRoleName()}`}>Trang chủ</Link>,
             key: 'home',
         },
     ].concat(extraBreadcrumbItems);

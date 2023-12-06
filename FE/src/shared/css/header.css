@@ -17,3 +17,34 @@
 .button-dropdown .ant-typography {
     color: white !important;
 }
+
+.data-menu-header {
+    /* background-color: black !important; */
+}
+
+.headerbody_menu--style {
+    min-width: 200px;
+    flex: auto;
+    background-color: var(--background-color);
+    color: rgba(102, 102, 102, 0.80);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-bottom: 0px;
+    line-height: 46px !important;
+}
+
+.headerbody_autocomplete--style {
+    border-radius: 16px;
+    background-color: var(--background-color);
+    width: 500px;
+    padding: 0px 2rem;
+}
+
+.header-style {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-color);
+    height: 10%;
+}

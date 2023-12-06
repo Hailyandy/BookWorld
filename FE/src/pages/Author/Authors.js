@@ -5,12 +5,8 @@ export default function Authors() {
 
     return (
         <div className="authors">
-            {/* {careers.map(career => (
-                <Link to={career.id.toString()} key={career.id}>
-                    <p>{career.title}</p>
-                    <p>Based in {career.location}</p>
-                </Link>
-            ))} */}
+            <h1>Chào mừng tác giả. </h1>
+            <span> Hãy cũng nhau lan tỏa nghệ thuật</span>
         </div>
     )
 }

@@ -1,3 +1,4 @@
+//fake, không dùng nữa
 import { Avatar, Button, Comment, Form, Input, List } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -17,7 +18,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
         </Form.Item>
         <Form.Item>
             <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-                Add Comment
+                Tạo comment
             </Button>
         </Form.Item>
     </>

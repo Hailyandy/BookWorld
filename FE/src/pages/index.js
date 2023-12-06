@@ -19,7 +19,17 @@ import SearchFriendPage from "./Search/SearchFriendPage";
 import BookRankPage from "./BookRankPage";
 import AnonymousUser from "./AnonymousUsers/AnonymousUser";
 import BookMarket from "./BookMarket/BookMarketCreateItem";
+import QuizPage from "./quiz/QuizPage";
+import UserCreatedPost from "./user_created_post/UserCreatedPost";
+import AuthorBook from "./Author/AuthorBook";
+import {
+    AdminDashBoard,
+    AdminPostList,
+    AdminReportList,
+    AdminAddBookPage
+} from "./admin";
 export {
+    AuthorBook,
     BookMarket,
     AnonymousUser,
     SearchUserPage,
@@ -40,5 +50,14 @@ export {
     UserHomePage,
     FriendRequestSearchPeoplePage,
     SearchFriendPage,
-    BookRankPage
+    BookRankPage,
+    UserCreatedPost,
+
+    //Quiz
+    QuizPage,
+    //admin page
+    AdminDashBoard,
+    AdminPostList,
+    AdminReportList,
+    AdminAddBookPage
 }

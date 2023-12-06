@@ -2,6 +2,7 @@ package com.chien.bookWorld.controller;
 
 import com.chien.bookWorld.dto.BookBasketUpdateDto;
 import com.chien.bookWorld.entity.Book;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.service.BookBasketService;
 import com.chien.bookWorld.service.BookService;
@@ -16,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+ 
 @RestController
 @RequestMapping("/api/bookBasket")
 @SecurityRequirement(name = "javainuseapi")
@@ -56,7 +57,7 @@ public class BookBasketController {
   // }
 
   @GetMapping
-  public ResponseEntity<SuccessResponse> getBookOfBasketByUser(Pageable pageable) {
+  public ResponseEntity<PageResponse> getBookOfBasketByUser(Pageable pageable) {
     return ResponseEntity.status(200).body(bookBasketService.findAll(pageable));
   }
 

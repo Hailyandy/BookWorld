@@ -45,9 +45,9 @@
     text-align: center;
 }
 
-.ant-select-selector,
-.ant-select-selection-placeholder,
-.ant-select-arrow {
+.register_container .ant-select-selector,
+.register_container .ant-select-selection-placeholder,
+.register_container .ant-select-arrow {
     background-color: var(--text-color-main) !important;
     color: var(--text-color) !important;
 }

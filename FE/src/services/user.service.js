@@ -48,14 +48,6 @@ class UserService extends BaseService {
         return data
     }
 
-    /**
-     * API sử dụng để lấy ra các cuốn sách gợi ý
-     * @returns array chứa thông tin các quyển sách gợi ý
-     */
-    async getRecommendedBooks() {
-        var data = await getAPI('book')
-        return data
-    }
 
     async getUserByName({ name }) {
         var data = await getAPI(`users/search?name=${name}`)
@@ -69,6 +61,81 @@ class UserService extends BaseService {
      */
     async getAllMyBook() {
         var data = await getAPI(`bookBasket`)
+        return data
+    }
+
+    /**
+    *API sử dụng lấy tất cả các bài post
+    * @param {*}
+    * @returns
+    */
+    async getAllPost(state = { state: 'PUBLIC' }) {
+        var data = await getAPI(`post`, state)
+        return data
+    }
+    /**
+    *API sử dụng để lấy ra các cuốn sách gợi ý
+    * @param {*}
+    * @returns
+    */
+    async getAllSuggestBook() {
+        var data = await getAPI(`book`)
+        return data
+    }
+
+
+    /**
+     *Api để thêm một bản pdf vào cuốn sách
+     * @param {*} param0
+     * @returns
+     */
+    async addPdfForABook({ idBook, urlPdf }) {
+        var data = await postAPI('pdf', { idBook, urlPdf })
+        return data
+    }
+    /**
+     * Tạo comment
+     * @param {*} param0
+     * @returns
+     */
+    async createComment({ content, postId, parentId }) {
+        var data = await postAPI('comment', { content, postId, parentId })
+        return data
+    }
+
+    /**
+    * Api để lấy comment của 1 bài post
+    @param {} param0
+    * @returns
+    */
+    async getCommentOfPost({ postId }) {
+        var data = await getAPI(`comment`, { postId })
+        return data
+    }
+
+    /**
+    * Api để lấy danh sách post của 1 người dùng
+    @param {} param0
+    * @returns
+    */
+    async getUserPostList({ userId }) {
+        var data = await getAPI(`post`, { userId, state: 'PUBLIC' })
+        return data
+    }
+
+
+    /**
+ * API sử dụng để tạo report về bản pdf
+ * @param {*} param0
+ * @returns
+ */
+    async createReportAboutPdf({ reason, description, pdf_id }) {
+        var data = await postAPI('pdf/report', { reason, description, pdf_id })
+        return data
+    }
+
+    async getUserTopScoreByBookId({ idBook }) {
+        var data = await getAPI(`/questions/scoring/top`, { idBook })
         return data
     }
 }
