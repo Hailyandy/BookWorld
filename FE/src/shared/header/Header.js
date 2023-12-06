@@ -187,7 +187,7 @@ const HeaderLayout = (props) => {
 
             }}
                 onClick={() => {
-                    window.location = `/login`
+                    window.location = `BookWorld/#/login`
                 }}
             >Đăng nhập</Button>
         </>)
