@@ -28,7 +28,7 @@ class BookService extends BaseService {
 
 
   /**
-   * Tìm kiếm sách bằng id của sachs
+   * API sử dụng để lấy ra thông tin sách qua id
    * @param {*} param0
    * @returns
    */

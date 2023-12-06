@@ -20,7 +20,7 @@ class AdminService extends BaseService {
      * @returns
      */
     async getAllReportPdf() {
-        var data = await getAPI(`report`)
+        var data = await getAPI(`pdf/report`)
         return data
     }
 

@@ -1,4 +1,4 @@
-<reference types="Cypress" />
+/// <reference types="Cypress" />
 // Thêm dòng ở trên để có gợi ý code cypress
 
 
