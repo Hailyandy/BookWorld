@@ -187,7 +187,7 @@ const HeaderLayout = (props) => {
 
             }}
                 onClick={() => {
-                    window.location = `${cicd_href}/login`
+                    window.location = `/login`
                 }}
             >Đăng nhập</Button>
         </>)
