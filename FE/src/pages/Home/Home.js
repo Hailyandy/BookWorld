@@ -14,7 +14,7 @@ const Home = () => {
     }
     if (tokenService.getRole("ROLE_USER")) {
         // navigate(`users`, { replace: true });
-        window.location.replace(`${BSHAREresource.localHost.url}${tokenService.getUserRoleName()}`)
+        window.location.replace(`${BSHAREresource.localHost.url}BookWorld/#/${tokenService.getUserRoleName()}`)
         return;
     }
     return (
@@ -29,7 +29,7 @@ const Home = () => {
                     height: "64px",
                     fontSize: "20px",
                 }}
-                    type="primary" shape="round" onClick={() => { window.location = "/register"; }}>
+                    type="primary" shape="round" onClick={() => { window.location = "BookWorld/#/register"; }}>
                     Đăng ký
                 </Button>
                 <div class="app_connect">

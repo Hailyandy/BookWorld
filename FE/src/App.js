@@ -59,20 +59,20 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           {/* HomePage */}
           <Route index element={<HomePage />} />
-          <Route path="select-fav-book" element={<SelectFavouritebook />} />
+          <Route path="BookWorld/#/select-fav-book" element={<SelectFavouritebook />} />
           {/* <QuizPage /> */}
 
-
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="otp-confirmation/:username" element={<OtpCode />} />
+          {/* /login */}
+          <Route path="BookWorld/#/login" element={<LoginPage />} />
+          <Route path="BookWorld/#/register" element={<RegisterPage />} />
+          <Route path="BookWorld/#/otp-confirmation/:username" element={<OtpCode />} />
           {
             /**
              * user root
             */
             tokenService.getRole(BSHAREnum.roles.user) && (
               <>
-                <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
+                <Route path={`/BookWorld/#/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                   <Route
                     index
                     element={<UserHomePage />}
@@ -352,7 +352,7 @@ function App() {
           }
           {
             tokenService.getRole(BSHAREnum.roles.admin) && (
-              <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
+              <Route path={`/BookWorld/#/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                 <Route
                   index
                   element={<AdminDashBoard />}
@@ -414,7 +414,7 @@ function App() {
           }
           {
             tokenService.getRole(BSHAREnum.roles.author) && (
-              <Route path={`/${tokenService.getUserRoleName()}`} element={<AuthorsLayout />} >
+              <Route path={`/BookWorld/#/${tokenService.getUserRoleName()}`} element={<AuthorsLayout />} >
                 <Route path="create-test/:idBook" element={<CreateTestPage />} loader={async ({ params }) => {
                   return dispatch(getListQuizByBookIdAsync({ idBook: params.idBook }))
                     .unwrap()

@@ -24,7 +24,7 @@ function Register() {
         dispatch(registerAsync({ username, password, roles: [roles] }))
             .unwrap()
             .then(data => {
-                navigate(`/otp-confirmation/${username}`, { replace: true });
+                navigate(`BookWorld/#/otp-confirmation/${username}`, { replace: true });
                 return;
             })
             .catch(e => {

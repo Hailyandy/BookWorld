@@ -121,14 +121,13 @@ export default function RootLayout() {
         return {
             key: url,
             title: <Link to={
-                `/${tokenService.getUserRoleName()}${url}`
-            }>{breadcrumbNameMap[url]}</Link>,
+                `/BookWorld/#/${tokenService.getUserRoleName()}${url}`}>{breadcrumbNameMap[url]}</Link>,
         };
     });
 
     const breadcrumbItems = [
         {
-            title: <Link to={`/${tokenService.getUserRoleName()}`}>Trang chủ</Link>,
+            title: <Link to={`/BookWorld/#/${tokenService.getUserRoleName()}`}>Trang chủ</Link>,
             key: 'home',
         },
     ].concat(extraBreadcrumbItems);
