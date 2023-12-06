@@ -65,7 +65,7 @@ class AuthControllerTests {
   @Test
 //  @Sql(scripts = "/schema.sql")
   @Sql(
-      scripts = "/schema.sql",
+      scripts = "/drop.sql",
       config = @SqlConfig(transactionMode = ISOLATED),
       executionPhase = AFTER_TEST_METHOD
   )
