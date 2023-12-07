@@ -78,7 +78,8 @@ class AuthorControllerTests {
     return objectMapper.readValue(json, clazz);
   }
 
-  @BeforeAll
+  @Test
+  @Order(0)
   public void setUp() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
