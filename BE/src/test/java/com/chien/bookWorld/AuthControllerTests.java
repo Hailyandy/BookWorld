@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import com.chien.bookWorld.controller.AuthController;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.request.LoginRequest;
+import com.chien.bookWorld.payload.request.SignupRequest;
 import com.chien.bookWorld.payload.response.AppExceptionBody;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -15,8 +16,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -138,6 +143,26 @@ class AuthControllerTests {
 //    Assert.assertEquals("Thành công!", response.getMessage());
 
     String expectedMessage = "Sai mật khẩu!";
+    String actualMessage = response.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+  //3
+  @Test
+  public void testRegisterUserEmailIsPresent() throws Exception {
+    MvcResult mvcResult = mvc.perform(
+        post("/api/auth/signup").contentType(MediaType.APPLICATION_JSON)
+            .content(mapToJson(new SignupRequest("chien9pm@gmail.com", "123456789", new HashSet<>(
+                List.of("user")))))).andReturn();
+
+    int status = mvcResult.getResponse().getStatus();
+    Assert.assertEquals(400, status);
+
+    String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    AppExceptionBody response = mapFromJson(content, AppExceptionBody.class);
+//    Assert.assertEquals("Thành công!", response.getMessage());
+
+    String expectedMessage = "Lỗi: Email này đã được đăng ký trước đó!";
     String actualMessage = response.getMessage();
 
     Assert.assertTrue(actualMessage.contains(expectedMessage));
