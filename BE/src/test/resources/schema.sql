@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS user;
 -- Create table `user`
 --
 CREATE TABLE user (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL UNIQUE AUTO_INCREMENT (20),
   birth_date varchar(255) DEFAULT NULL,
   enabled boolean DEFAULT NULL,
   introducing varchar(255) DEFAULT NULL,
@@ -597,7 +597,7 @@ INSERT INTO user VALUES
 (17, NULL, False, NULL, NULL, NULL, '$2a$10$XmGF3K1eislW1eUJx5G.ouz1UalAeCtxmgxzufbVu/Ux0z0b9oH2S', NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZoE5vp-UIJzCrfbD7pztJhbXAHxqL_u2PcA&usqp=CAU', 'user102@gmail.com', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ODczNDIiLCJpYXQiOjE3MDAzMjM4ODUsImV4cCI6MTcwMDMyMzk0NX0.WA2Q_b4BkYw8UpZY43yrZ3YUnvvg9HRqTX2UuqIGHxo', NULL),
 (18, NULL, False, NULL, NULL, NULL, '$2a$10$XmGF3K1eislW1eUJx5G.ouz1UalAeCtxmgxzufbVu/Ux0z0b9oH2S', NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-EZVOW02TwzoNmVUD_Q8Ic39cNuxYnpYtw&usqp=CAU', 'user103@gmail.com', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNjA2NjUiLCJpYXQiOjE3MDAzMjM5NTksImV4cCI6MTcwMDMyNDAxOX0.IKbt1MfrmBiuTZgCAFrBOQLpfby27R2V3ygYJZYG2zU', NULL),
 (19, NULL, False, NULL, NULL, NULL, '$2a$10$XmGF3K1eislW1eUJx5G.ouz1UalAeCtxmgxzufbVu/Ux0z0b9oH2S', NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqWooaUj3eW2kqfuH__4FM_mtNE5uTH8j64g&usqp=CAU', 'user104@gmail.com', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODU5MTciLCJpYXQiOjE3MDAzMjQwMjYsImV4cCI6MTcwMDMyNDA4Nn0.gaq9J7-_EBvdjOHrpD3v5HoSZE1L8KDbEOqlslZ8iYI', NULL);
-
+--ALTER TABLE user AUTO_INCREMENT=20;
 -- 
 -- Dumping data for table book
 --
@@ -751,7 +751,7 @@ INSERT INTO user_role VALUES
 (16, 1),
 (17, 1),
 (18, 1),
-(19, 1);
+(19, 2);
 
 -- 
 -- Dumping data for table test

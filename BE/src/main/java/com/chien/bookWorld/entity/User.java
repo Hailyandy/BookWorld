@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.checkerframework.common.aliasing.qual.Unique;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +23,7 @@ import org.checkerframework.common.aliasing.qual.Unique;
 public class User {
 
   @Id
-@Column(unique = true, nullable = false)
+  @Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String userName;
