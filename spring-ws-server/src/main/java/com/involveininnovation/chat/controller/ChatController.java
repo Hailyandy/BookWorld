@@ -7,8 +7,13 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class ChatController {
 
     @Autowired
@@ -26,4 +31,11 @@ public class ChatController {
         System.out.println(message.toString());
         return message;
     }
+
+    @PostMapping("/test")
+    public String getTest(@RequestBody TestDto test) {
+        simpMessagingTemplate.convertAndSend("/chatroom/comment", "update thanh cong");
+        return test.getTest();
+    }
+
 }
