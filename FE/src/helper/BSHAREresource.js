@@ -2,12 +2,13 @@ import BSHAREnum from "./BSHAREenum"
 import { Link } from 'react-router-dom';
 import tokenService from "~/services/token.service";
 export let localHost = {
-    url: `https://hailyandy.github.io/BookWorld/#/${tokenService.getUserRoleName()}/`
+    url: `/${tokenService.getUserRoleName()}/`
 }
 export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
+export const cicd_href = '/BookWorld/#'
 export const updateLocalHostUrl = (updateStringrole) => {
-    localHost.url = `https://hailyandy.github.io/BookWorld/#/${updateStringrole}/`
-    BSHAREresource.localHost.url = `https://hailyandy.github.io/BookWorld/#/${updateStringrole}/`
+    localHost.url = `/${updateStringrole}/`
+    BSHAREresource.localHost.url = `/${updateStringrole}/`
     BSHAREresource.menuItems = {
         ROLE_AUTHOR_MenuItem: [
             {
