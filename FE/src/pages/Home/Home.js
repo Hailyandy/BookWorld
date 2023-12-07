@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import tokenService from '~/services/token.service';
 import BSHAREresource from "~/helper/BSHAREresource";
 import BSHAREnum from "~/helper/BSHAREenum";
+import { cicd_href } from "~/helper/BSHAREresource";
 const Home = () => {
     const navigate = useNavigate()
     function goToPage() {
@@ -14,7 +15,7 @@ const Home = () => {
     }
     if (tokenService.getRole("ROLE_USER")) {
         // navigate(`users`, { replace: true });
-        window.location.replace(`${BSHAREresource.localHost.url}BookWorld/#/${tokenService.getUserRoleName()}`)
+        window.location.replace(`${BSHAREresource.localHost.url}/${tokenService.getUserRoleName()}`)
         return;
     }
     return (
@@ -29,7 +30,7 @@ const Home = () => {
                     height: "64px",
                     fontSize: "20px",
                 }}
-                    type="primary" shape="round" onClick={() => { window.location = "BookWorld/#/register"; }}>
+                    type="primary" shape="round" onClick={() => { window.location = `${cicd_href}/register`; }}>
                     Đăng ký
                 </Button>
                 <div class="app_connect">
