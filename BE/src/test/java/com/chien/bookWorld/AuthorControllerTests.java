@@ -80,9 +80,6 @@ class AuthorControllerTests {
 
   @Test
   @Order(1)
-  @Sql(
-      scripts = "/schema.sql"
-  )
   public void testSetUp() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
@@ -131,11 +128,11 @@ class AuthorControllerTests {
 
   @Test
   @Order(4)
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public void testGetBookByAuthor() throws Exception {
 //    User user = userRepository.findByUsername("user104@gmail.com")
 //        .orElseThrow(() -> new AppException(404, 44,

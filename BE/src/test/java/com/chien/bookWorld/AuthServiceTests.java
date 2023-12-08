@@ -103,11 +103,11 @@ class AuthServiceTests {
   }
 //4
   @Test
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public void testLoginIncorrectPassword() {
     Exception exception = Assert.assertThrows(BadCredentialsException.class, () -> {
       authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "123456789"));

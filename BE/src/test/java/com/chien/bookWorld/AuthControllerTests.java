@@ -335,11 +335,11 @@ class AuthControllerTests {
   }
   @Test
   @Order(13)
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public void testRegisterUserOTPVerificationRoleArthorSuccess() throws Exception {
     User user = userRepository.findByUsername("user104@gmail.com")
         .orElseThrow(() -> new AppException(404, 44,
