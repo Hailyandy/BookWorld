@@ -491,6 +491,7 @@ CREATE TABLE book_basket (
   book_id bigint NOT NULL,
   user_id bigint NOT NULL,
   status varchar(255) DEFAULT NULL,
+  timestamp datetime(6) DEFAULT NULL,
   PRIMARY KEY (book_id, user_id)
 )
 ;
@@ -954,11 +955,7 @@ INSERT INTO book_genre VALUES
 -- 
 -- Dumping data for table book_basket
 --
-INSERT INTO book_basket VALUES
-(1, 2, 'Đang đọc'),
-(1, 12, 'Đang đọc'),
-(2, 2, 'Đang đọc'),
-(2, 12, 'Muốn đọc');
+INSERT INTO `book_basket` VALUES (1,2,'Đang đọc',NULL),(1,12,'Đang đọc',NULL),(2,2,'Đang đọc',NULL),(2,12,'Muốn đọc',NULL);
 
 -- 
 -- Restore previous SQL mode

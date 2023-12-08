@@ -64,7 +64,7 @@ class AuthorControllerTests {
 
   @Autowired
   private ModelMapper mapper;
-  private String userToken;
+  private static String userToken;
 
   protected String mapToJson(Object obj) throws JsonProcessingException {
     ObjectMapper objectMapper = new ObjectMapper();
