@@ -106,7 +106,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setParentId(c.getParentId());
         logger.info(c.getPostId().toString());
         comment.setPost(postRepository.findById(c.getPostId())
-                .orElseThrow(() -> new AppException(404, 44, "Post not found!")));
+                .orElseThrow(() -> new AppException(404, 44, "Post not found!1")));
         Instant now = Instant.now();
         comment.setCreatedOn(now);
         comment.setId(UUID.randomUUID());
@@ -116,7 +116,7 @@ public class CommentServiceImpl implements CommentService {
 
         // update total comment post
         Post post = postRepository.findById(c.getPostId())
-                .orElseThrow(() -> new AppException(404, 44, "Post not found!"));
+                .orElseThrow(() -> new AppException(404, 44, "Post not found!2"));
         Long totalComment = post.getTotalComment() + 1;
         post.setTotalComment(totalComment);
         postRepository.save(post);
