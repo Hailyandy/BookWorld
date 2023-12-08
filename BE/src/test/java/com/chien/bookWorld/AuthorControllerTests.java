@@ -80,6 +80,9 @@ class AuthorControllerTests {
 
   @Test
   @Order(1)
+  @Sql(
+      scripts = "/schema.sql"
+  )
   public void testSetUp() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
