@@ -400,6 +400,11 @@ ALTER TABLE post
 ADD CONSTRAINT FKtbl5q10ybsqlqgcx5q3ntjijb FOREIGN KEY (book_id)
 REFERENCES book (id);
 
+CREATE TABLE `month` (
+  `month` int NOT NULL,
+  `quarter` int DEFAULT NULL,
+  PRIMARY KEY (`month`)
+)
 --
 -- Create table `likes`
 --
