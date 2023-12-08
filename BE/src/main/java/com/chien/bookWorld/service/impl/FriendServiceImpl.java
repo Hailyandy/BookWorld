@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import com.chien.bookWorld.dto.UserAndFriendshipDto;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,7 +156,11 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
         return new SuccessResponse(requestSenders.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(
+                .map(user -> {
+                    UserAndFriendshipDto userAndFriendshipDto = mapper.map(user, UserAndFriendshipDto.class);
+                    userAndFriendshipDto.setFriendship("ACCEPT");
+                    return userAndFriendshipDto;
+                }).collect(
                         Collectors.toList()));
     }
 
@@ -194,8 +200,11 @@ public class FriendServiceImpl implements FriendService {
         }
 
         return new SuccessResponse(listFriend.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(
-                        Collectors.toList()));
+                .map(user -> {
+                    UserAndFriendshipDto userAndFriendshipDto = mapper.map(user, UserAndFriendshipDto.class);
+                    userAndFriendshipDto.setFriendship("ACCEPTED");
+                    return userAndFriendshipDto;
+                } ).collect(Collectors.toList()));
 
     }
 
