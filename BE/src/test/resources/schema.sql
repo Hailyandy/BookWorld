@@ -406,7 +406,7 @@ CREATE TABLE `month` (
   `month` int NOT NULL,
   `quarter` int DEFAULT NULL,
   PRIMARY KEY (`month`)
-)
+);
 --
 -- Create table `likes`
 --
