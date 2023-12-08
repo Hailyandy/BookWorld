@@ -1,10 +1,7 @@
 package com.chien.bookWorld.service.impl;
 
-import com.chien.bookWorld.dto.BookBasketUpdateDto;
-import com.chien.bookWorld.dto.BookBasketDto;
-import com.chien.bookWorld.dto.BookDto;
+import com.chien.bookWorld.dto.*;
 import com.chien.bookWorld.dto.DtoMap.BookBasketDtoMap;
-import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.User;
@@ -18,6 +15,7 @@ import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookBasketService;
 import com.chien.bookWorld.service.BookService;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +77,19 @@ public class BookBasketServiceImpl implements BookBasketService {
   }
 
   @Override
+  public SuccessResponse statisticBookBasketStatus(int year) {
+      List<Object[]> result = bookBasketRepository.statisticBookBasketStatus(year);
+      return new SuccessResponse(result.stream().map(row -> new MonthlyStatusBookBasketDto(
+              (Integer) row[0],
+              year,
+              (Integer) row[2],
+              (BigDecimal) row[4],
+              (BigDecimal) row[5],
+              (BigDecimal) row[6]
+      )).collect(Collectors.toList()));
+  }
+
+  @Override
   public SuccessResponse findById(Long id) {
     return null;
 
@@ -117,4 +128,6 @@ public class BookBasketServiceImpl implements BookBasketService {
     // TODO Auto-generated method stub
     return null;
   }
+
+
 }

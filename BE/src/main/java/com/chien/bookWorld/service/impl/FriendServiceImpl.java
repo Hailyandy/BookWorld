@@ -1,5 +1,6 @@
 package com.chien.bookWorld.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,7 +144,7 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
 
-        List<User> requestSenders = null;
+        List<User> requestSenders = new ArrayList<>();
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             requestSenders.add(sender);
@@ -182,7 +183,7 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
 
-        List<User> listFriend = null;
+        List<User> listFriend = new ArrayList<>();
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             listFriend.add(sender);

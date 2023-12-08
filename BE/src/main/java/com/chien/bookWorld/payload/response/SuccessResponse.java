@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SuccessResponse {
+public class  SuccessResponse {
 
   private Long code = 0L;
   private String message = "Thành công!";
