@@ -44,7 +44,11 @@
     "react-transition-group": "^4.4.5",
     "spin.js": "^4.1.1",
     "start-server-and-test": "^2.0.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "sockjs-client": "^1.5.2",
+    "stompjs": "^2.3.3",
+    "cors": "^2.8.5",
+    "net": "^1.0.2"
   },
   "scripts": {
     "predeploy": "npm run build",

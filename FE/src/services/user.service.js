@@ -119,7 +119,7 @@ class UserService extends BaseService {
     * @returns
     */
     async getUserPostList({ userId }) {
-        var data = await getAPI(`post`, { userId, state: 'PUBLIC' })
+        var data = await getAPI(`post/${userId}`)
         return data
     }
 
@@ -156,8 +156,8 @@ class UserService extends BaseService {
      * @param {*} param0
      * @returns
      */
-    async updatePost({ idPost }) {
-        var data = await patchAPI('pdf/post', { idPost })
+    async updatePost({ score, content, idPost }) {
+        var data = await patchAPI(`post/${idPost}`, { score, content, idPost })
         return data
     }
 
@@ -167,7 +167,7 @@ class UserService extends BaseService {
      * @returns
      */
     async deletePost({ idPost }) {
-        var data = await deleteAPI('pdf/post', { idPost })
+        var data = await deleteAPI(`post/${idPost}`)
         return data
     }
     /**
@@ -199,11 +199,11 @@ class UserService extends BaseService {
     }
     /**
      * Api để thống kế số lượng tk theo tháng của năm
-     * @param {*} param0
+     * @param {*} param0 year
      * @returns
      */
     async statistic({ year }) {
-        var data = await getAPI(`statistics/new-registrations-by-month`, { year })
+        var data = await getAPI(`statistics/new-registrations-by-month/${year}`)
         return data
     }
 }

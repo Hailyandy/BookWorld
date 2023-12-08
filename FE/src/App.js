@@ -12,6 +12,7 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import {
+  Admins,
   AuthorBook,
   UserCreatedPost,
   QuizPage,
@@ -27,7 +28,7 @@ import {
 } from './pages';
 import { ProtectedRoute, ModelReviewPost, TheAutofillItem, RootLayout, AuthorsLayout, GeneralLayout, SearchResultLayout } from './components';
 import { searchBookByNameOrAuthor, getAllGenresBookAsync, } from './slices/book';
-import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllPostAsync } from './slices/user';
+import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllPostAsync, statisticAsync } from './slices/user';
 //page mẫu, gọi api luôn khi chạy vào route này, cần tham khảo nên để import ra ngoài
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
@@ -47,6 +48,7 @@ import {
 } from './routes';
 import CreateTestPage from './pages/quiz/CreateTestPage';
 import BSHAREnum from './helper/BSHAREenum';
+
 function App() {
   const [reload, setReload] = useState(0);
   const dispatch = useDispatch()
@@ -77,7 +79,17 @@ function App() {
                     index
                     element={<UserHomePage />}
                     loader={async () => {
-                      var data = { userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
+                      var data = { listFriendRequest: [], userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
+                      data.listFriendRequest = await dispatch(getListFriendRequest('not param'))
+                        .unwrap()
+                        .then(async data => {
+                          console.log('get all friend req success')
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          console.log('get all friend req erroer')
+                        })
+
                       data.suggestionBooks = await dispatch(getAllSuggestBookAsync())
                         .unwrap()
                         .then(async data => {
@@ -411,12 +423,26 @@ function App() {
               <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                 <Route
                   index
-                  element={<AdminDashBoard />}
+                  element={<Admins />}
+                // loader={authorsLoader}
+                // errorElement={<AuthorsError />}
                 />
                 <Route
                   path="statistic-post-list"
-                  element={<AdminPostList />}
-                // loader={authorDetailsLoader}
+                  element={<AdminDashBoard />}
+                  loader={() => {
+                    return dispatch(statisticAsync({ year: 2023 }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+
+                  }}
                 />
                 <Route
                   path="statistic-report-post"
@@ -471,6 +497,12 @@ function App() {
           {
             tokenService.getRole(BSHAREnum.roles.author) && (
               <Route path={`/${tokenService.getUserRoleName()}`} element={<AuthorsLayout />} >
+                <Route
+                  index
+                  element={<Authors />}
+                // loader={authorsLoader}
+                // errorElement={<AuthorsError />}
+                />
                 <Route path="create-test/:idBook" element={<CreateTestPage />} loader={async ({ params }) => {
                   return dispatch(getListQuizByBookIdAsync({ idBook: params.idBook }))
                     .unwrap()
@@ -495,12 +527,7 @@ function App() {
                       return []
                     })
                 }} />
-                <Route
-                  index
-                  element={<Authors />}
-                // loader={authorsLoader}
-                // errorElement={<AuthorsError />}
-                />
+
                 <Route
                   path="created-book"
                   element={<BookMarket />}

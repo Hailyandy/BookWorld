@@ -54,17 +54,7 @@ const FriendRequestSearchPeoplePage = () => {
     //chua hoan thanh, can code màn user cá nhân khi người ngoài muốn xem thông tin
     const onSelectSearchItem = (value) => {
         console.log('onSelect', value);
-        // dispatch(getUserInformationAsync({ idUser: value }))
-        //     .unwrap()
-        //     .then(async data => {
-        //         console.log(data)
-        //         return data ? data.data : [];
-        //     })
-        //     .catch(e => {
-        //         console.log(e);
-        //         return []
-        //     })
-        // return data
+
         navigate(`../profileOther/${value}`, { relative: "path" });
     };
 
@@ -77,9 +67,6 @@ const FriendRequestSearchPeoplePage = () => {
         dispatch(searchUserByName({ name: searchTextReturnFromDebounceHelper }))
             .unwrap()
             .then(async data => {
-                // notyf.success(BSHAREresource.notification_message.success.login)
-                // console.log(data)
-                // setResultSearch(data)
                 setOptions(data.map((resultItem) => {
                     return {
                         value: resultItem.id,

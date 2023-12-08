@@ -1,35 +1,44 @@
 import { BarChart, PieChart } from "~/components"
 import './css/dashboard.css'
-import React from 'react';
-import { Avatar, List, Space, Col, Row } from 'antd';
+import React, { useState } from 'react';
+import { Avatar, List, Space, Col, Row, DatePicker } from 'antd';
 import { SnippetsOutlined, WifiOutlined, AliwangwangOutlined } from "@ant-design/icons";
-const data = [
-    {
-        icon: <WifiOutlined />,
-        title: 'Số người dùng đang online ',
-    },
-    {
-        icon: <AliwangwangOutlined />,
-        title: 'Tổng số người dùng hiện tại ',
-    },
-    {
-        icon: <SnippetsOutlined />,
-        title: 'Tổng số bài post hôm nay',
-    },
-    {
-        icon: <SnippetsOutlined />,
-        title: 'Số người dùng đang online',
-    },
-];
-
+import { useLoaderData } from "react-router-dom";
 
 
 const AdminDashBoard = () => {
-
+    const [statisticData, setStatisticData] = useState(useLoaderData())
+    const [yearStatistic, setYearStatistic] = useState(2023)
+    console.log(statisticData)
+    const handleChange = (date, dateString) => {
+        console.log(dateString);
+        setYearStatistic(dateString)
+    };
+    const data = [
+        {
+            icon: <WifiOutlined />,
+            title: 'Số người dùng đang online ',
+            description: 0
+        },
+        {
+            icon: <AliwangwangOutlined />,
+            title: 'Tổng số người dùng hiện tại ',
+            description: 0
+        },
+        {
+            icon: <SnippetsOutlined />,
+            title: 'Tổng số bài post hôm nay',
+            description: 0
+        },
+        {
+            icon: <SnippetsOutlined />,
+            title: 'Số người dùng đang online',
+            description: 0
+        },
+    ];
     return (
-        <div >
-
-            <Row>
+        <div>
+            <Row style={{ backgroundColor: 'var(--background-color-white)', padding: '10px' }}>
                 <Col span={12}>
                     <List
                         itemLayout="horizontal"
@@ -41,17 +50,18 @@ const AdminDashBoard = () => {
                                         backgroundColor: '#87d068',
                                     }} />}
                                     title={<a href="https://ant.design">{item.title}</a>}
-                                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                    description={item.description}
                                 />
                             </List.Item>
                         )}
                     /></Col>
-                <Col span={12}><BarChart></BarChart></Col>
+                <Col span={12}>
+                    <DatePicker onChange={handleChange} picker="year" />
+                    <BarChart dataBarChart={statisticData} year={yearStatistic}> </BarChart>
+                </Col>
             </Row>
-
-
             {/* <LineChart></LineChart> */}
-            <PieChart></PieChart>
+            {/* <PieChart></PieChart> */}
         </div>
     )
 }

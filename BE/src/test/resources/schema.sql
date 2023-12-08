@@ -308,7 +308,7 @@ REFERENCES questions (id);
 -- Create table `pdf`
 --
 CREATE TABLE pdf (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (5),
   url_pdf varchar(255) DEFAULT NULL,
   book_id bigint DEFAULT NULL,
   user_id bigint DEFAULT NULL,
@@ -363,7 +363,7 @@ REFERENCES pdf (id);
 -- Create table `post`
 --
 CREATE TABLE post (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (3),
   scoring bigint DEFAULT NULL,
   total_comment bigint DEFAULT NULL,
   total_like bigint DEFAULT NULL,
@@ -743,6 +743,7 @@ INSERT INTO user_role VALUES
 (2, 1),
 (3, 1),
 (4, 3),
+(5, 2),
 (9, 1),
 (10, 1),
 (12, 1),
