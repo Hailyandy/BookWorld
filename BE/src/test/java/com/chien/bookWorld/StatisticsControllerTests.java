@@ -114,7 +114,8 @@ class StatisticsControllerTests {
   public void testGetNewRegistrationsByMonth() throws Exception {
 
     MvcResult mvcResult = mvc.perform(
-        get("/api/statistics/new-registrations-by-month/2023").header("Authorization", "Bearer " + adminToken)
+        get("/api/statistics/new-registrations-by-month/2023").header("Authorization",
+                "Bearer " + adminToken)
             .contentType(MediaType.APPLICATION_JSON)).andReturn();
     int status = mvcResult.getResponse().getStatus();
     Assert.assertEquals(200, status);
