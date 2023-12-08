@@ -201,7 +201,7 @@ REFERENCES user (id);
 -- Create table `scoring`
 --
 CREATE TABLE scoring (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (23),
   score int DEFAULT NULL,
   timestamp datetime(6) DEFAULT NULL,
   book_id bigint DEFAULT NULL,
@@ -289,7 +289,7 @@ REFERENCES book (id);
 -- Create table `options`
 --
 CREATE TABLE options (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (53),
   is_correct int DEFAULT NULL,
   options_text varchar(255) DEFAULT NULL,
   question_id binary(16) DEFAULT NULL,
@@ -334,7 +334,7 @@ REFERENCES user (id);
 -- Create table `report`
 --
 CREATE TABLE report (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (3),
   description varchar(255) DEFAULT NULL,
   reason varchar(255) DEFAULT NULL,
   status tinyint DEFAULT NULL,
@@ -957,6 +957,19 @@ INSERT INTO book_genre VALUES
 -- Dumping data for table book_basket
 --
 INSERT INTO `book_basket` VALUES (1,2,'Đang đọc',NULL),(1,12,'Đang đọc',NULL),(2,2,'Đang đọc',NULL),(2,12,'Muốn đọc',NULL);
+
+INSERT INTO `month` (`month`, `quarter`) VALUES ('1', '1');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('2', '1');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('3', '1');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('4', '2');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('5', '2');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('6', '2');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('7', '3');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('8', '3');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('9', '3');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('10', '4');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('11', '4');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('12', '4');
 
 -- 
 -- Restore previous SQL mode

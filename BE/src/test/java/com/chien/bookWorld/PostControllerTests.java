@@ -1,5 +1,6 @@
 package com.chien.bookWorld;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -309,6 +310,65 @@ class PostControllerTests {
     AppExceptionBody response = mapFromJson(content, AppExceptionBody.class);
 
     String expectedMessage = "Không có quyền chỉnh sủa post của người khác!";
+    String actualMessage = response.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+  @Order(12)
+  public void testUpdateContentPostNotFound() throws Exception {
+
+    MvcResult mvcResult = mvc.perform(
+        patch("/api/post/10").header("Authorization", "Bearer " + chien9pmToken)
+            .contentType(MediaType.APPLICATION_JSON).content("{\n"
+                + "    \"content\": \"hay oi la hay\"\n"
+                + "}")).andReturn();
+    int status = mvcResult.getResponse().getStatus();
+    Assert.assertEquals(404, status);
+
+    String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    AppExceptionBody response = mapFromJson(content, AppExceptionBody.class);
+
+    String expectedMessage = "Error: Does not exist! No book has been created yet!";
+    String actualMessage = response.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+  @Order(13)
+  public void testDeletePost() throws Exception {
+
+    MvcResult mvcResult = mvc.perform(
+        delete("/api/post/1").header("Authorization", "Bearer " + userToken)
+            .contentType(MediaType.APPLICATION_JSON)).andReturn();
+    int status = mvcResult.getResponse().getStatus();
+    Assert.assertEquals(200, status);
+
+    String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    AppExceptionBody response = mapFromJson(content, AppExceptionBody.class);
+
+    String expectedMessage = "Successfully deleted!";
+    String actualMessage = response.getMessage();
+
+    Assert.assertTrue(actualMessage.contains(expectedMessage));
+  }
+
+  @Test
+  @Order(14)
+  public void testDeletePostForbidden() throws Exception {
+
+    MvcResult mvcResult = mvc.perform(
+        delete("/api/post/2").header("Authorization", "Bearer " + userToken)
+            .contentType(MediaType.APPLICATION_JSON)).andReturn();
+    int status = mvcResult.getResponse().getStatus();
+    Assert.assertEquals(401, status);
+
+    String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    AppExceptionBody response = mapFromJson(content, AppExceptionBody.class);
+
+    String expectedMessage = "Không thể xóa post của người khác!";
     String actualMessage = response.getMessage();
 
     Assert.assertTrue(actualMessage.contains(expectedMessage));
