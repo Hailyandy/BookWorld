@@ -71,6 +71,8 @@ DROP TABLE IF EXISTS likes;
 --
 DROP TABLE IF EXISTS post;
 
+DROP TABLE IF EXISTS `month`;
+
 --
 -- Drop table `report`
 --
