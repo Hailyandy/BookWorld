@@ -93,9 +93,9 @@ public class BookController {
 
   @PatchMapping("/update/{idBook}")
   public ResponseEntity<Object> updateBook(
-          @PathVariable Long idBook, @RequestBody Book book
+          @PathVariable Long idBook, @RequestBody Map<Object, Object> fileds
   ) {
-    return ResponseEntity.status(200).body(bookService.update(book));
+    return ResponseEntity.status(200).body(bookService.updateBook(idBook, fileds));
   }
 
 

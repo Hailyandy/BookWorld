@@ -2,12 +2,15 @@ package com.chien.bookWorld.service.impl;
 
 import com.chien.bookWorld.dto.PdfCreationDto;
 import com.chien.bookWorld.entity.Pdf;
+import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.BookRepository;
 import com.chien.bookWorld.repository.PdfRepository;
+import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -21,13 +24,22 @@ public class PdfServiceImpl implements PdfService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public Map<String, Object> create(PdfCreationDto pdfCreationDto) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
         Pdf pdf = new Pdf();
         pdf.setUrlPdf(pdfCreationDto.getUrlPdf());
         pdf.setBook(bookRepository.findById(pdfCreationDto.getIdBook())
                 .orElseThrow(() -> new AppException(404, 44,
                         "Không tìm thấy sách với id ")));
+        pdf.setUser(userRepository.findById(userDetails.getId()).orElseThrow(
+                () -> new AppException(404, 44,
+                        "Không tìm thấy sách với id ")
+        ));
         pdfRepository.save(pdf);
         final Map<String, Object> body = new HashMap<>();
         body.put("code", 0);
