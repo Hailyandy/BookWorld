@@ -14,16 +14,14 @@ import java.util.List;
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 
-    @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO Friendship (id_sender, id_receiver, status) VALUES (:senderId, :receiverId, 'PENDING')")
-    void addFriend(@Param("senderId") Long senderId, @Param("receiverId") Long receiverId);
+
 
     // // Tìm mối quan hệ bạn bè dựa trên sender và receiver
     // Friendship findBySenderAndReceiver(User sender, User receiver);
 
     List<Friendship> findByReceiverIdAndStatus(Long receiverId, FriendshipStatus status);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM Friendship WHERE (id_sender = :senderId AND id_receiver = :userId) AND status = 'PENDING'")
+    @Query(nativeQuery = true, value = "SELECT * FROM friendship WHERE (id_sender = :senderId AND id_receiver = :userId) AND status = 'PENDING'")
     Friendship findFriendRequestsByUsers(@Param("senderId") Long senderId, @Param("userId") Long userId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM friendship\n" +
