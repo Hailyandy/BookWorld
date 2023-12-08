@@ -29,6 +29,7 @@
 --
 -- Drop table `book_genre`
 --
+DROP ALL OBJECTS DELETE FILES;
 DROP TABLE IF EXISTS book_genre;
 
 --
