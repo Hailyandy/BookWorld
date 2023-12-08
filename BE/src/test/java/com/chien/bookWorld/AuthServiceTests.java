@@ -76,7 +76,7 @@ class AuthServiceTests {
 //    when(authentication.getPrincipal()).thenReturn(
 //        UserDetailsImpl.build(user));
   }
-
+//3
   @Test
   public void testLoginUsernameNotFound() {
     Exception exception = Assert.assertThrows(AppException.class, () -> {
@@ -88,8 +88,9 @@ class AuthServiceTests {
 
     Assert.assertTrue(actualMessage.contains(expectedMessage));
   }
-
+//1
   @Test
+//  @Sql(scripts = "/schema.sql")
   public void testLoginNotEnabled() {
     Exception exception = Assert.assertThrows(AppException.class, () -> {
       authService.authenticateUser(new LoginRequest("chien9pmt@gmail.com", "12345678"));
@@ -100,13 +101,13 @@ class AuthServiceTests {
 
     Assert.assertTrue(actualMessage.contains(expectedMessage));
   }
-
+//4
   @Test
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public void testLoginIncorrectPassword() {
     Exception exception = Assert.assertThrows(BadCredentialsException.class, () -> {
       authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "123456789"));
@@ -117,12 +118,12 @@ class AuthServiceTests {
 
     Assert.assertTrue(actualMessage.contains(expectedMessage));
   }
-
+//2
   @Test
 //  @Sql(scripts = "classpath:login_data.sql")
 
   public void testLoginSuccess() {
-    Long code = authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "12345678"))
+    Long code = authService.authenticateUser(new LoginRequest("chien9pm@gmail.com", "123456"))
         .getCode();
     Long expect = 0L;
     Assert.assertEquals(expect, code
@@ -130,11 +131,11 @@ class AuthServiceTests {
   }
 
   @AfterAll
-  @Sql(
-      scripts = "/drop.sql",
-      config = @SqlConfig(transactionMode = ISOLATED),
-      executionPhase = AFTER_TEST_METHOD
-  )
+//  @Sql(
+//      scripts = "/drop.sql",
+//      config = @SqlConfig(transactionMode = ISOLATED),
+//      executionPhase = AFTER_TEST_METHOD
+//  )
   public static void drop() {
     System.out.println("dropped");
     Assert.assertTrue(true);

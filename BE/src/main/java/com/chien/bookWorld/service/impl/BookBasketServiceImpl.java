@@ -54,44 +54,60 @@ public class BookBasketServiceImpl implements BookBasketService {
   public PageResponse findAll(Pageable pageable) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
-    Page<BookBasket> bookBasketList = bookBasketRepository.findBookBasketByUser(userDetails.getId(), pageable);
+    Page<BookBasket> bookBasketList = bookBasketRepository.findBookBasketByUser(userDetails.getId(),
+        pageable);
     int totalPages = bookBasketList.getTotalPages();
     int numberPage = bookBasketList.getNumber();
     long totalRecord = bookBasketList.getTotalElements();
     int pageSize = bookBasketList.getSize();
 
-      List<BookDto> bookList = bookBasketList.stream().map(book -> {
-        BookDto bookDto = new BookDto();
-        bookDto.setId(book.getBook().getId());
-        bookDto.setName(book.getBook().getName());
-        bookDto.setAuthorName(book.getUser().getUserName());
-        bookDto.setAuthorId(book.getUser().getId());
-        bookDto.setIntroducing(book.getBook().getIntroducing());
-        bookDto.setNumberPages(book.getBook().getNumberPages());
-        bookDto.setPublishDate(book.getBook().getPublishDate());
-        bookDto.setPublisher(book.getBook().getPublisher());
-        bookDto.setScoring(book.getBook().getScoring());
-        bookDto.setUrlPoster(book.getBook().getUrlPoster());
-        bookDto.setGenres(book.getBook().getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-                Collectors.toList()));
-        bookDto.setStatusWithUser(book.getStatus());
-         return bookDto;
-      }).collect(Collectors.toList());
+    List<BookDto> bookList = bookBasketList.stream().map(book -> {
+      BookDto bookDto = new BookDto();
+      bookDto.setId(book.getBook().getId());
+      bookDto.setName(book.getBook().getName());
+      bookDto.setAuthorName(book.getUser().getUserName());
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setIntroducing(book.getBook().getIntroducing());
+      bookDto.setNumberPages(book.getBook().getNumberPages());
+      bookDto.setPublishDate(book.getBook().getPublishDate());
+      bookDto.setPublisher(book.getBook().getPublisher());
+      bookDto.setScoring(book.getBook().getScoring());
+      bookDto.setUrlPoster(book.getBook().getUrlPoster());
+      bookDto.setGenres(
+          book.getBook().getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class))
+              .collect(
+                  Collectors.toList()));
+      bookDto.setStatusWithUser(book.getStatus());
+      return bookDto;
+    }).collect(Collectors.toList());
 
-      return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookList);
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookList);
   }
 
   @Override
   public SuccessResponse statisticBookBasketStatus(int year) {
-      List<Object[]> result = bookBasketRepository.statisticBookBasketStatus(year);
-      return new SuccessResponse(result.stream().map(row -> new MonthlyStatusBookBasketDto(
-              (Integer) row[0],
-              year,
-              (Integer) row[2],
-              (BigDecimal) row[4],
-              (BigDecimal) row[5],
-              (BigDecimal) row[6]
-      )).collect(Collectors.toList()));
+    List<Object[]> result = bookBasketRepository.statisticBookBasketStatus(year);
+    return new SuccessResponse(result.stream().map(row -> {
+      if (row[4] instanceof Long) {
+        return new MonthlyStatusBookBasketDto(
+            (Integer) row[0],
+            year,
+            (Integer) row[2],
+            new BigDecimal((long) row[4]),
+            new BigDecimal((long) row[5]),
+            new BigDecimal((long) row[6])
+        );
+      } else {
+        return new MonthlyStatusBookBasketDto(
+            (Integer) row[0],
+            year,
+            (Integer) row[2],
+            (BigDecimal) row[4],
+            (BigDecimal) row[5],
+            (BigDecimal) row[6]
+        );
+      }
+    }).collect(Collectors.toList()));
   }
 
   @Override
@@ -105,19 +121,21 @@ public class BookBasketServiceImpl implements BookBasketService {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
 
-    BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), bookBasketUpdateDto.getBookId());
+    BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(),
+        bookBasketUpdateDto.getBookId());
     if (bookBasket != null) {
-        bookBasket.setStatus(bookBasketUpdateDto.getStatus());
-        bookBasketRepository.save(bookBasket);
+      bookBasket.setStatus(bookBasketUpdateDto.getStatus());
+      bookBasketRepository.save(bookBasket);
     } else {
-        BookBasket bookBasketCreate = new BookBasket(bookBasketUpdateDto.getBookId(), userDetails.getId());
-        bookBasketCreate.setBook(bookRepository.findById(bookBasketUpdateDto.getBookId())
-                .orElseThrow(() -> new AppException(404, 44, "Error: không tìm thấy sách với id!") ));
-        bookBasketCreate.setUser(userRepository.findById(userDetails.getId())
-                .orElseThrow(() -> new AppException(404, 44, "Error: Không tìm thấy người dùng!")  ));
+      BookBasket bookBasketCreate = new BookBasket(bookBasketUpdateDto.getBookId(),
+          userDetails.getId());
+      bookBasketCreate.setBook(bookRepository.findById(bookBasketUpdateDto.getBookId())
+          .orElseThrow(() -> new AppException(404, 44, "Error: không tìm thấy sách với id!")));
+      bookBasketCreate.setUser(userRepository.findById(userDetails.getId())
+          .orElseThrow(() -> new AppException(404, 44, "Error: Không tìm thấy người dùng!")));
 
-        bookBasketCreate.setStatus(bookBasketUpdateDto.getStatus());
-        bookBasketRepository.save(bookBasketCreate);
+      bookBasketCreate.setStatus(bookBasketUpdateDto.getStatus());
+      bookBasketRepository.save(bookBasketCreate);
     }
 
     final Map<String, Object> body = new HashMap<>();

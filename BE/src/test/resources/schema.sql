@@ -29,6 +29,7 @@
 --
 -- Drop table `book_genre`
 --
+DROP ALL OBJECTS DELETE FILES;
 DROP TABLE IF EXISTS book_genre;
 
 --
@@ -70,6 +71,8 @@ DROP TABLE IF EXISTS likes;
 -- Drop table `post`
 --
 DROP TABLE IF EXISTS post;
+
+DROP TABLE IF EXISTS `month`;
 
 --
 -- Drop table `report`
@@ -130,42 +133,34 @@ DROP TABLE IF EXISTS user;
 -- Create table `user`
 --
 CREATE TABLE user (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL UNIQUE AUTO_INCREMENT (20),
   birth_date varchar(255) DEFAULT NULL,
-  enabled bit(1) DEFAULT NULL,
+  enabled boolean DEFAULT NULL,
   introducing varchar(255) DEFAULT NULL,
   name varchar(255) DEFAULT NULL,
   native_place varchar(255) DEFAULT NULL,
   password varchar(255) DEFAULT NULL,
   phone varchar(255) DEFAULT NULL,
-  total_book int(11) DEFAULT NULL,
+  total_book int DEFAULT NULL,
   url_avatar varchar(255) DEFAULT NULL,
   user_name varchar(255) DEFAULT NULL,
   verification_code varchar(255) DEFAULT NULL,
   registration_date datetime(6) DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 20,
-AVG_ROW_LENGTH = 1092,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create table `friendship`
 --
 CREATE TABLE friendship (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (45),
   status enum ('ACCEPTED', 'PENDING', 'REJECTED') DEFAULT NULL,
-  id_receiver bigint(20) DEFAULT NULL,
-  id_sender bigint(20) DEFAULT NULL,
+  id_receiver bigint DEFAULT NULL,
+  id_sender bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 45,
-AVG_ROW_LENGTH = 3276,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -185,22 +180,18 @@ REFERENCES user (id);
 -- Create table `book`
 --
 CREATE TABLE book (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (72),
   name varchar(255) DEFAULT NULL,
-  number_pages bigint(20) DEFAULT NULL,
+  number_pages bigint DEFAULT NULL,
   publish_date datetime(6) DEFAULT NULL,
   publisher varchar(255) DEFAULT NULL,
   url_poster varchar(255) DEFAULT NULL,
-  user_id bigint(20) DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
   scoring double DEFAULT NULL,
   introducing text DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 72,
-AVG_ROW_LENGTH = 1222,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -213,18 +204,14 @@ REFERENCES user (id);
 -- Create table `scoring`
 --
 CREATE TABLE scoring (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  score int(11) DEFAULT NULL,
+  id bigint NOT NULL AUTO_INCREMENT (23),
+  score int DEFAULT NULL,
   timestamp datetime(6) DEFAULT NULL,
-  book_id bigint(20) DEFAULT NULL,
-  user_id bigint(20) DEFAULT NULL,
+  book_id bigint DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 23,
-AVG_ROW_LENGTH = 963,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -244,14 +231,12 @@ REFERENCES book (id);
 -- Create table `quick_test`
 --
 CREATE TABLE quick_test (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT,
   name varchar(255) DEFAULT NULL,
-  book_id bigint(20) DEFAULT NULL,
+  book_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -264,20 +249,18 @@ REFERENCES book (id);
 -- Create table `test`
 --
 CREATE TABLE test (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT,
   answer1 varchar(255) DEFAULT NULL,
   answer2 varchar(255) DEFAULT NULL,
   answer3 varchar(255) DEFAULT NULL,
   answer4 varchar(255) DEFAULT NULL,
   correct_answer varchar(255) DEFAULT NULL,
-  ordinal_number bigint(20) DEFAULT NULL,
+  ordinal_number bigint DEFAULT NULL,
   question varchar(255) DEFAULT NULL,
-  quick_id bigint(20) DEFAULT NULL,
+  quick_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -292,14 +275,11 @@ REFERENCES quick_test (id);
 CREATE TABLE questions (
   id binary(16) NOT NULL,
   question_text varchar(255) DEFAULT NULL,
-  scoring int(11) DEFAULT NULL,
-  book_id bigint(20) DEFAULT NULL,
+  scoring int DEFAULT NULL,
+  book_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AVG_ROW_LENGTH = 1170,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -312,17 +292,13 @@ REFERENCES book (id);
 -- Create table `options`
 --
 CREATE TABLE options (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  is_correct int(11) DEFAULT NULL,
+  id bigint NOT NULL AUTO_INCREMENT (53),
+  is_correct int DEFAULT NULL,
   options_text varchar(255) DEFAULT NULL,
   question_id binary(16) DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 53,
-AVG_ROW_LENGTH = 341,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -335,17 +311,13 @@ REFERENCES questions (id);
 -- Create table `pdf`
 --
 CREATE TABLE pdf (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (5),
   url_pdf varchar(255) DEFAULT NULL,
-  book_id bigint(20) DEFAULT NULL,
-  user_id bigint(20) DEFAULT NULL,
+  book_id bigint DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 5,
-AVG_ROW_LENGTH = 4096,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -365,20 +337,16 @@ REFERENCES user (id);
 -- Create table `report`
 --
 CREATE TABLE report (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (3),
   description varchar(255) DEFAULT NULL,
   reason varchar(255) DEFAULT NULL,
-  status tinyint(4) DEFAULT NULL,
+  status tinyint DEFAULT NULL,
   timestamp datetime(6) DEFAULT NULL,
-  pdf_id bigint(20) DEFAULT NULL,
-  user_id bigint(20) DEFAULT NULL,
+  pdf_id bigint DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 3,
-AVG_ROW_LENGTH = 8192,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -398,13 +366,13 @@ REFERENCES pdf (id);
 -- Create table `post`
 --
 CREATE TABLE post (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  scoring bigint(20) DEFAULT NULL,
-  total_comment bigint(20) DEFAULT NULL,
-  total_like bigint(20) DEFAULT NULL,
-  book_id bigint(20) DEFAULT NULL,
-  pdf_id bigint(20) DEFAULT NULL,
-  user_id bigint(20) DEFAULT NULL,
+  id bigint NOT NULL AUTO_INCREMENT (3),
+  scoring bigint DEFAULT NULL,
+  total_comment bigint DEFAULT NULL,
+  total_like bigint DEFAULT NULL,
+  book_id bigint DEFAULT NULL,
+  pdf_id bigint DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
   introducing text DEFAULT NULL,
   created_on datetime(6) DEFAULT NULL,
   last_updated_on datetime(6) DEFAULT NULL,
@@ -412,10 +380,7 @@ CREATE TABLE post (
   timestamp datetime(6) DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 3,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -438,18 +403,21 @@ ALTER TABLE post
 ADD CONSTRAINT FKtbl5q10ybsqlqgcx5q3ntjijb FOREIGN KEY (book_id)
 REFERENCES book (id);
 
+CREATE TABLE if not EXISTS `month` (
+  `month` int NOT NULL,
+  `quarter` int DEFAULT NULL,
+  PRIMARY KEY (`month`)
+);
 --
 -- Create table `likes`
 --
 CREATE TABLE likes (
-  user_id bigint(20) NOT NULL,
-  post_id bigint(20) NOT NULL,
+  user_id bigint NOT NULL,
+  post_id bigint NOT NULL,
   created_on datetime(6) DEFAULT NULL,
   PRIMARY KEY (user_id, post_id)
 )
-ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -475,14 +443,11 @@ CREATE TABLE comment (
   created_on datetime(6) DEFAULT NULL,
   last_updated_on datetime(6) DEFAULT NULL,
   parent_id binary(16) DEFAULT NULL,
-  post_id bigint(20) NOT NULL,
-  user_id bigint(20) NOT NULL,
+  post_id bigint NOT NULL,
+  user_id bigint NOT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AVG_ROW_LENGTH = 4096,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -502,18 +467,16 @@ REFERENCES post (id);
 -- Create table `book_sale`
 --
 CREATE TABLE book_sale (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  book_condition tinyint(4) DEFAULT NULL,
+  id bigint NOT NULL AUTO_INCREMENT,
+  book_condition tinyint DEFAULT NULL,
   description varchar(255) DEFAULT NULL,
-  price bigint(20) DEFAULT NULL,
+  price bigint DEFAULT NULL,
   timestamp datetime(6) DEFAULT NULL,
-  book_id bigint(20) DEFAULT NULL,
-  user_id bigint(20) DEFAULT NULL,
+  book_id bigint DEFAULT NULL,
+  user_id bigint DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-CHARACTER SET latin1,
-COLLATE latin1_swedish_ci;
+;
 
 --
 -- Create foreign key
@@ -533,15 +496,13 @@ REFERENCES user (id);
 -- Create table `book_basket`
 --
 CREATE TABLE book_basket (
-  book_id bigint(20) NOT NULL,
-  user_id bigint(20) NOT NULL,
+  book_id bigint NOT NULL,
+  user_id bigint NOT NULL,
   status varchar(255) DEFAULT NULL,
+  timestamp datetime(6) DEFAULT NULL,
   PRIMARY KEY (book_id, user_id)
 )
-ENGINE = INNODB,
-AVG_ROW_LENGTH = 4096,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -561,28 +522,21 @@ REFERENCES user (id);
 -- Create table `role`
 --
 CREATE TABLE role (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT,
   name enum ('ROLE_ADMIN', 'ROLE_AUTHOR', 'ROLE_USER') DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 4,
-AVG_ROW_LENGTH = 8192,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create table `user_role`
 --
 CREATE TABLE user_role (
-  user_id bigint(20) NOT NULL,
-  role_id bigint(20) NOT NULL,
+  user_id bigint NOT NULL,
+  role_id bigint NOT NULL,
   PRIMARY KEY (user_id, role_id)
 )
-ENGINE = INNODB,
-AVG_ROW_LENGTH = 1365,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -602,28 +556,21 @@ REFERENCES user (id);
 -- Create table `genre`
 --
 CREATE TABLE genre (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT,
   name varchar(255) DEFAULT NULL,
   PRIMARY KEY (id)
 )
-ENGINE = INNODB,
-AUTO_INCREMENT = 12,
-AVG_ROW_LENGTH = 1638,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create table `book_genre`
 --
 CREATE TABLE book_genre (
-  book_id bigint(20) NOT NULL,
-  genre_id bigint(20) NOT NULL,
+  book_id bigint NOT NULL,
+  genre_id bigint NOT NULL,
   PRIMARY KEY (book_id, genre_id)
 )
-ENGINE = INNODB,
-AVG_ROW_LENGTH = 248,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci;
+;
 
 --
 -- Create foreign key
@@ -659,7 +606,7 @@ INSERT INTO user VALUES
 (17, NULL, False, NULL, NULL, NULL, '$2a$10$XmGF3K1eislW1eUJx5G.ouz1UalAeCtxmgxzufbVu/Ux0z0b9oH2S', NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZoE5vp-UIJzCrfbD7pztJhbXAHxqL_u2PcA&usqp=CAU', 'user102@gmail.com', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0ODczNDIiLCJpYXQiOjE3MDAzMjM4ODUsImV4cCI6MTcwMDMyMzk0NX0.WA2Q_b4BkYw8UpZY43yrZ3YUnvvg9HRqTX2UuqIGHxo', NULL),
 (18, NULL, False, NULL, NULL, NULL, '$2a$10$XmGF3K1eislW1eUJx5G.ouz1UalAeCtxmgxzufbVu/Ux0z0b9oH2S', NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs-EZVOW02TwzoNmVUD_Q8Ic39cNuxYnpYtw&usqp=CAU', 'user103@gmail.com', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNjA2NjUiLCJpYXQiOjE3MDAzMjM5NTksImV4cCI6MTcwMDMyNDAxOX0.IKbt1MfrmBiuTZgCAFrBOQLpfby27R2V3ygYJZYG2zU', NULL),
 (19, NULL, False, NULL, NULL, NULL, '$2a$10$XmGF3K1eislW1eUJx5G.ouz1UalAeCtxmgxzufbVu/Ux0z0b9oH2S', NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqWooaUj3eW2kqfuH__4FM_mtNE5uTH8j64g&usqp=CAU', 'user104@gmail.com', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2ODU5MTciLCJpYXQiOjE3MDAzMjQwMjYsImV4cCI6MTcwMDMyNDA4Nn0.gaq9J7-_EBvdjOHrpD3v5HoSZE1L8KDbEOqlslZ8iYI', NULL);
-
+--ALTER TABLE user AUTO_INCREMENT=20;
 -- 
 -- Dumping data for table book
 --
@@ -804,6 +751,7 @@ INSERT INTO user_role VALUES
 (2, 1),
 (3, 1),
 (4, 3),
+(5, 2),
 (9, 1),
 (10, 1),
 (12, 1),
@@ -813,7 +761,7 @@ INSERT INTO user_role VALUES
 (16, 1),
 (17, 1),
 (18, 1),
-(19, 1);
+(19, 2);
 
 -- 
 -- Dumping data for table test
@@ -1016,11 +964,20 @@ INSERT INTO book_genre VALUES
 -- 
 -- Dumping data for table book_basket
 --
-INSERT INTO book_basket VALUES
-(1, 2, 'Đang đọc'),
-(1, 12, 'Đang đọc'),
-(2, 2, 'Đang đọc'),
-(2, 12, 'Muốn đọc');
+INSERT INTO `book_basket` VALUES (1,2,'Đang đọc',NULL),(1,12,'Đang đọc',NULL),(2,2,'Đang đọc',NULL),(2,12,'Muốn đọc',NULL);
+
+INSERT INTO `month` (`month`, `quarter`) VALUES ('1', '1');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('2', '1');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('3', '1');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('4', '2');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('5', '2');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('6', '2');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('7', '3');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('8', '3');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('9', '3');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('10', '4');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('11', '4');
+INSERT INTO `month` (`month`, `quarter`) VALUES ('12', '4');
 
 -- 
 -- Restore previous SQL mode
