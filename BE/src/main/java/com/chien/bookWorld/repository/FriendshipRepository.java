@@ -14,22 +14,26 @@ import java.util.List;
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 
-    @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO Friendship (id_sender, id_receiver, status) VALUES (:senderId, :receiverId, 'PENDING')")
-    void addFriend(@Param("senderId") Long senderId, @Param("receiverId") Long receiverId);
+
 
     // // Tìm mối quan hệ bạn bè dựa trên sender và receiver
     // Friendship findBySenderAndReceiver(User sender, User receiver);
 
     List<Friendship> findByReceiverIdAndStatus(Long receiverId, FriendshipStatus status);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM Friendship WHERE (id_sender = :senderId AND id_receiver = :userId) AND status = 'PENDING'")
+    @Query(nativeQuery = true, value = "SELECT * FROM friendship WHERE (id_sender = :senderId AND id_receiver = :userId) AND status = 'PENDING'")
     Friendship findFriendRequestsByUsers(@Param("senderId") Long senderId, @Param("userId") Long userId);
 
-    List<Friendship> findByStatusAndSenderIdOrReceiverId(FriendshipStatus status, Long userId, Long receiverId);
+    @Query(nativeQuery = true, value = "SELECT * FROM friendship\n" +
+            "WHERE status = 'ACCEPTED' AND  (id_sender = :userId or id_receiver = :receiverId)")
+    List<Friendship> findByStatusAndSenderIdOrReceiverId(@Param("userId") Long userId,@Param("receiverId") Long receiverId);
 
     Friendship findBySenderIdAndReceiverIdAndStatus(Long senderId, Long receiverId, FriendshipStatus status);
 
     Friendship findBySenderIdAndReceiverId(Long senderId, Long receiverId);
 
+    @Query(nativeQuery = true, value = "SELECT COUNT(*) as total_pending_invitations\n" +
+            "FROM friendship\n" +
+            "WHERE status = 'PENDING' AND id_receiver = :receiverId")
+    Long countPendingInvitation(@Param("receiverId") Long receiverId);
 }

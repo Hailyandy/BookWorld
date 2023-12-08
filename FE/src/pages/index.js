@@ -1,4 +1,4 @@
-import SelectFavouritebook from "./SelectFavouritebook";
+
 import AuthorInformationPage from "./Author";
 import NotFoundPage from "./NotFound/NotFound";
 import GeneralProfile from "~/components/profile/GeneralProfile";
@@ -26,14 +26,15 @@ import {
     AdminDashBoard,
     AdminPostList,
     AdminReportList,
-    AdminAddBookPage
+    AdminAddBookPage,
+    Admins,
 } from "./admin";
 export {
     AuthorBook,
     BookMarket,
     AnonymousUser,
     SearchUserPage,
-    SelectFavouritebook,
+    Admins,
     AuthorInformationPage,
     NotFoundPage,
     GeneralProfile,

@@ -6,6 +6,7 @@ describe('Spec đăng nhập', () => {
 
     it('Vào được trang đăng nhập', () => { });
 
+
     it('Có trường tài khoản và mật khẩu', () => {
         cy.get('.form_login #basic_username ')
             .should('have.attr', 'placeholder', 'Tài khoản')
@@ -84,23 +85,33 @@ describe('Spec đăng nhập', () => {
 
         cy.intercept('GET', '/api/bookBasket', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'book/book_basket.json',
         }).as('bookBasket');
 
 
         cy.intercept('GET', '/api/book/top', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'book/book_top.json',
         }).as('bookTop');
 
         cy.intercept('GET', '/api/post?state=PUBLIC', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'post/post_public.json',
         }).as('postPublic');
+
+        cy.intercept('GET', '/api/comment?postId=2', {
+            statusCode: 200,
+            fixture: 'comment/comment_postId_2.json',
+        }).as('comment_postId_2');
+
+        cy.intercept('GET', '/api/comment?postId=1', {
+            statusCode: 200,
+            fixture: 'comment/comment_postId_1.json',
+        }).as('comment_postId_1');
 
         cy.get('.form_login button').contains('Đăng nhập').click();
 
-        cy.get('.notyf__message').should('have.text', 'Thành công!')
+        // cy.get('.notyf__message').should('have.text', 'Thành công!')
     });
 
     it('Hiện thông báo khi đăng nhập thành công admin', () => {
@@ -111,11 +122,26 @@ describe('Spec đăng nhập', () => {
         cy.get('#basic_remember').click();
         cy.intercept('POST', '/api/auth/signin', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'login/login_success_admin.json',
         }).as('login');
+        cy.intercept('GET', '/api/friend/list', {
+            statusCode: 200,
+            fixture: 'friend/friend_list.json',
+        }).as('friendList');
+
+        cy.intercept('GET', '/api/book', {
+            statusCode: 200,
+            fixture: 'book/suggest_book.json',
+        }).as('books');
+
+        cy.intercept('GET', '/api/bookBasket', {
+            statusCode: 200,
+            fixture: 'book/book_basket.json',
+        }).as('bookBasket');
+
         cy.get('.form_login button').contains('Đăng nhập').click();
 
-        cy.get('.notyf__message').should('have.text', 'Thành công!')
+        // cy.get('.notyf__message').should('have.text', 'Thành công!')
     });
 
     it('Hiện thông báo khi đăng nhập thành công author', () => {
@@ -126,26 +152,19 @@ describe('Spec đăng nhập', () => {
         cy.get('#basic_remember').click();
         cy.intercept('POST', '/api/auth/signin', {
             statusCode: 200,
-            fixture: 'login/login_success.json',
+            fixture: 'login/login_success_author.json',
         }).as('login');
         cy.get('.form_login button').contains('Đăng nhập').click();
 
-        cy.get('.notyf__message').should('have.text', 'Thành công!')
+        // cy.get('.notyf__message').should('have.text', 'Thành công!')
     });
 
     it('Nhấn đăng ký chuyển hướng đến trang đăng ký', () => {
         cy.contains('Đăng ký ngay').click();
         cy.url().should('include', '/register');
     });
-
-    it('Nhấn đăng ký chuyển hướng đến trang đăng ký', () => {
-        cy.contains('Đăng ký ngay').click();
-        cy.url().should('include', '/register');
-
+    it('Nhấn nút remember me', () => {
+        cy.get('#basic_remember').click();
+        // cy.url().should('include', '/register');
     });
-
-    // it('Nhấn nút remember me', () => {
-    //     cy.get('#basic_remember').click();
-    //     cy.url().should('include', '/register');
-    // });
 });

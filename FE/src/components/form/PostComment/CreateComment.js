@@ -16,7 +16,7 @@ const CommentList = ({ comments }) => (
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
         <Form.Item>
-            <TextArea rows={4} onChange={onChange} value={value} />
+            <TextArea rows={4} onChange={onChange} value={value} id='input-create-nest-comment' />
         </Form.Item>
         <Form.Item>
             <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">

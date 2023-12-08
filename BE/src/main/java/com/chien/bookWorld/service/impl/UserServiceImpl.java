@@ -1,9 +1,6 @@
 package com.chien.bookWorld.service.impl;
 
-import com.chien.bookWorld.dto.UserAndFriendshipDto;
-import com.chien.bookWorld.dto.UserCreationDto;
-import com.chien.bookWorld.dto.UserDto;
-import com.chien.bookWorld.dto.UserUpdateDto;
+import com.chien.bookWorld.dto.*;
 import com.chien.bookWorld.entity.Friendship;
 import com.chien.bookWorld.entity.FriendshipStatus;
 import com.chien.bookWorld.entity.Role;
@@ -15,7 +12,11 @@ import com.chien.bookWorld.repository.FriendshipRepository;
 import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.UserService;
 import jakarta.transaction.Transactional;
+
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -103,7 +104,12 @@ public class UserServiceImpl implements UserService {
     if (userDetails.getId() != userUpdateDto.getId()) {
       throw new AppException(404, 44, "id user sai!");
     }
-    mapper.map(userUpdateDto, fromDB);
+    fromDB.setIntroducing(userUpdateDto.getIntroducing());
+    fromDB.setNativePlace(userUpdateDto.getNativePlace());
+    fromDB.setUrlAvatar(userUpdateDto.getUrlAvatar());
+    fromDB.setPhone(userUpdateDto.getPhone());
+    fromDB.setBirthDate(userUpdateDto.getBirthDate());
+    fromDB.setName(userUpdateDto.getName());
     User user = userRepository.save(fromDB);
     return new SuccessResponse(mapper.map(user, UserDto.class));
   }
@@ -254,4 +260,19 @@ public class UserServiceImpl implements UserService {
       return new SuccessResponse(userDtos);
     }
   }
+
+  @Override
+  public SuccessResponse getNewRegistrationsByMonth(int year) {
+
+
+    List<Object[]> result = userRepository.countNewUserRegistrationsByMonth(year);
+
+    return new SuccessResponse(result.stream().map(row -> new MonthlyRegistrationStatsDto(
+            (Integer) row[0],
+            year,
+            (long) row [1]
+    )).collect(Collectors.toList()));
+  }
+
+
 }

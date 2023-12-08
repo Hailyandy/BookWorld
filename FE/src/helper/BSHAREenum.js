@@ -67,7 +67,8 @@ const BSHAREnum = Object.freeze({
     commentType: Object.freeze({
         bookComment: 'bookComment',
         postComment: 'postComment',
-    })
+    }),
+    dateFormat: 'DD/MM/YYYY'
 })
 
 export default BSHAREnum

@@ -1,42 +1,50 @@
 import BookJacket from "~/components/ui/BookJacket/BookJacket"
 import "./userhome.css"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import ReviewPost from "~/components/form/Review Post/ReviewPost";
 import Avartar from "~/components/ui/Avartar/Avartar";
 import { useLoaderData } from "react-router-dom";
 import NotFoundPage from "../NotFound/NotFound";
+import { useDispatch } from "react-redux";
+// import { connect, onConnected } from '~/slices/socket';
+import { connect } from "~/helper/socket";
+import { useSelector } from 'react-redux';
 const items = [
     {
         label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                1st menu item
-            </a>
+            <span >
+                Công khai
+            </span>
         ),
-        key: '0',
+        key: 'PUBLIC',
     },
     {
         label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                2nd menu item
-            </a>
+            <span >
+                bạn bè
+            </span>
         ),
-        key: '1',
+        key: 'FRIEND',
     },
     {
         type: 'divider',
     },
-    {
-        label: '3rd menu item（disabled）',
-        key: '3',
-        disabled: true,
-    },
+
 ];
 //{ userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
 const UserHomePage = () => {
     var dataLoader = useLoaderData()
     console.log(dataLoader)
+    const dispatch = useDispatch()
+    const userStateFormSlice = useSelector(state => state.users);
+    console.log(userStateFormSlice.postList)
+    useEffect(() => {
+        // dispatch(connect())
+        // dispatch(onConnected())
+        connect()
+    }, [])
     return (
         <div className="user-home-container">
             {/* List Book */}
@@ -76,16 +84,16 @@ const UserHomePage = () => {
                     menu={{
                         items,
                     }}>
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space>Bạn bè
-                            <DownOutlined />
-                        </Space>
-                    </a>
+
+                    <Space>Bạn bè
+                        <DownOutlined />
+                    </Space>
+
                 </Dropdown>
                 <div class="list-post">
                     {
-                        dataLoader.userPost.length > 0 ?
-                            dataLoader.userPost.map((post) => {
+                        userStateFormSlice.postList.length > 0 ?
+                            userStateFormSlice.postList.map((post) => {
                                 return <ReviewPost postItem={post} />
                             }) : <NotFoundPage />
                     }

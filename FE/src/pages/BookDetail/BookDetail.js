@@ -34,52 +34,6 @@ const BookDetailPage = () => {
         selectedFile: null,
         selectedFileList: [],
     });
-    const bookItem = {
-        star: 10,
-        numReviews: 2,
-        publisher: 'Đh Quốc gia Hà Nội',
-        pageTotal: 300,
-        publishDate: '20/9/1972',
-        typeBook: 'Trinh Thám'
-    }
-    const onSearch = (value, _e, info) => console.log(info?.source, value);
-    const commentData = [
-        {
-            star: 5,
-            author: 'Han Solo',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
-                    efficiently.
-                </p>
-            ),
-            datetime: (
-                <Tooltip title="2016-11-22 11:22:33">
-                    <span>{moment('2016-11-22 11:22:33').fromNow()}</span>
-                </Tooltip>
-            ),
-        },
-        {
-            star: 5,
-
-            author: 'Han Solo',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
-                    efficiently.
-                </p>
-            ),
-            datetime: (
-                <Tooltip title="2016-11-22 10:22:33">
-                    <span>{moment('2016-11-22 11:22:33').fromNow()}</span>
-                </Tooltip>
-            ),
-        },
-    ];
     const customUpload = async ({ onError, onSuccess, file }) => {
         // firebase upload\
         // firebase upload\
@@ -152,13 +106,11 @@ const BookDetailPage = () => {
             });
 
     };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+
     return (
         <div className="book-detail-containner">
             <div className="book-detail-containner--left">
-                <div class="body-post">
+                <div class="body-post display-flex-column" >
                     <div class="bookjacket-intro">
                         <Avatar shape='square' size={200} src={data.bookDetail.urlPoster} alt="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg" />
                         <Space direction='vertical'  >
@@ -177,7 +129,7 @@ const BookDetailPage = () => {
                             </Upload>
                         </Space>
                     </div>
-                    <section className="list-containner" style={{ width: '200px', marginTop: '20px' }}>
+                    <section className="list-containner" style={{ width: '300px', marginTop: '20px' }}>
                         <h3 style={{ textAlign: 'center' }}>Bảng điểm</h3>
                         {data.userTopScore.length > 0 ? (
                             <List >
@@ -230,7 +182,7 @@ const BookDetailPage = () => {
                     <h3>Nhà xuất bản:  <Text >{data.bookDetail.publisher}</Text> </h3>
                     <h3>Tổng số trang: <Text >{data.bookDetail.numberPages} trang</Text> </h3>
                     <h3>Xuất bản: {formatToDate(data.bookDetail.publishDate, "dd/MM/yyyy")} </h3>
-                    <h3>Thể loại: {data.bookDetail.genres.map(genreObject => {
+                    <h3>Thể loại: {data.bookDetail.genres?.map(genreObject => {
                         return genreObject.name
                     }).join(', ')} </h3>
 
@@ -295,7 +247,7 @@ const BookDetailPage = () => {
                                                         remember: true,
                                                     }}
                                                     onFinish={(val) => onFinish(val, item.id)}
-                                                    onFinishFailed={onFinishFailed}
+
                                                     autoComplete="off"
                                                     form={form}
                                                     preserve={false}

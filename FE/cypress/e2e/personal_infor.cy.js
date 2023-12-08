@@ -29,7 +29,7 @@ describe('Spec màn hình thông tin cá nhân', () => {
         // cy.findByText('Thông tin cá nhân').click();
 
         cy.contains("Thông tin cá nhân").click();
-        cy.url().should('include', '/users/profile');
+        cy.url().should('include', '/profile');
     });
 
     it('Các thông tin chi tiết về tên, năm sinh, số sách đang đọc, muốn đọc và đã đọc xong', () => {

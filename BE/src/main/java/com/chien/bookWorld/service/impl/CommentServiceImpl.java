@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import com.chien.bookWorld.dto.CommentUpdateDto;
 import com.chien.bookWorld.payload.response.PageResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.dto.CommentCreationDto;
 import com.chien.bookWorld.dto.CommentDto;
-import com.chien.bookWorld.dto.GenreDto;
-import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.Comment;
 import com.chien.bookWorld.entity.Post;
 import com.chien.bookWorld.entity.UserDetailsImpl;
@@ -51,27 +48,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Map<String, Object> create(CommentCreationDto c) {
         // TODO Auto-generated method stub
-        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        Comment comment = new Comment();
-        comment.setContent(c.getContent());
-        comment.setParentId(c.getParentId());
-        logger.info(c.getPostId().toString());
-        comment.setPost(postRepository.findById(c.getPostId())
-                .orElseThrow(() -> new AppException(404, 44, "Post not found!")));
-        Instant now = Instant.now();
-        comment.setCreatedOn(now);
-        comment.setId(UUID.randomUUID());
-        comment.setUser(userRepository.findById(userDetails.getId())
-                .orElseThrow(() -> new AppException(404, 44, "User not found!")));
-        commentRepository.save(comment);
-
-        // update total comment post
-        Post post = postRepository.findById(c.getPostId())
-                .orElseThrow(() -> new AppException(404, 44, "Post not found!"));
-        Long totalComment = post.getTotalComment() + 1;
-        post.setTotalComment(totalComment);
-        postRepository.save(post);
         final Map<String, Object> body = new HashMap<>();
         body.put("code", 0);
         body.put("message", "Comment success!");
@@ -119,6 +95,67 @@ public class CommentServiceImpl implements CommentService {
                     return commentDto;
                 }).collect(Collectors.toList());
         return new PageResponse(totalPages, pageSize, totalRecord, numberPage, commentDtos);
+    }
+
+    @Override
+    public SuccessResponse createComment(CommentCreationDto  c) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        Comment comment = new Comment();
+        comment.setContent(c.getContent());
+        comment.setParentId(c.getParentId());
+        logger.info(c.getPostId().toString());
+        comment.setPost(postRepository.findById(c.getPostId())
+                .orElseThrow(() -> new AppException(404, 44, "Post not found!")));
+        Instant now = Instant.now();
+        comment.setCreatedOn(now);
+        comment.setId(UUID.randomUUID());
+        comment.setUser(userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new AppException(404, 44, "User not found!")));
+        Comment comment1 = commentRepository.save(comment);
+
+        // update total comment post
+        Post post = postRepository.findById(c.getPostId())
+                .orElseThrow(() -> new AppException(404, 44, "Post not found!"));
+        Long totalComment = post.getTotalComment() + 1;
+        post.setTotalComment(totalComment);
+        postRepository.save(post);
+        return new SuccessResponse(mapper.map(comment1, CommentDto.class));
+    }
+
+    @Override
+    public Boolean deleteComment(UUID id, Long postId) {
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> new AppException(404, 44, "comment not found!")
+        );
+        Post post = comment.getPost();
+        commentRepository.delete(comment);
+        List<Comment> comments = getRepliesByParentId(id);
+        if (!comments.isEmpty()) {
+            for (Comment reply : comments) {
+                deleteComment(reply.getId(), postId);
+            }
+        }
+        Long totalComment = post.getTotalComment();
+        totalComment = totalComment - 1;
+        post.setTotalComment(totalComment);
+        postRepository.save(post);
+        return true;
+    }
+
+    public List<Comment> getRepliesByParentId(UUID parentId) {
+        List<Comment> comments = commentRepository.findByParentId(parentId);
+        return comments;
+    }
+
+    @Override
+    public SuccessResponse updateComment(CommentUpdateDto commentUpdateDto) {
+        Comment comment = commentRepository.findById(commentUpdateDto.getId()).orElseThrow(
+                () -> new AppException(404, 44, "comment not found!")
+        );
+        comment.setContent(commentUpdateDto.getContent());
+        Comment commentUpdate = commentRepository.save(comment);
+        return new SuccessResponse(mapper.map(commentUpdate, CommentDto.class));
     }
 
 }

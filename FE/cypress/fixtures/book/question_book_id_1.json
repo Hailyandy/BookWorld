@@ -1,0 +1,74 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": [
+        {
+            "id": "6f48d23d-a9d3-4ed6-93c4-09c689c78c4d",
+            "idBook": 1,
+            "questionsText": "a",
+            "optionDtos": [
+                {
+                    "options_text": "aa",
+                    "id": 4
+                },
+                {
+                    "options_text": "aaa",
+                    "id": 5
+                },
+                {
+                    "options_text": "aaaa",
+                    "id": 6
+                },
+                {
+                    "options_text": "aaaaa",
+                    "id": 7
+                }
+            ],
+            "scoring": 3
+        },
+        {
+            "id": "76c1ffcc-dab9-41c8-bb6b-41f37232c9cc",
+            "idBook": 1,
+            "questionsText": "what your name",
+            "optionDtos": [
+                {
+                    "options_text": "4",
+                    "id": 8
+                },
+                {
+                    "options_text": "Mot",
+                    "id": 9
+                },
+                {
+                    "options_text": "Hai ",
+                    "id": 10
+                },
+                {
+                    "options_text": "Ba",
+                    "id": 11
+                }
+            ],
+            "scoring": 6
+        },
+        {
+            "id": "ffdff35e-ac76-454c-ac84-eafff398c128",
+            "idBook": 1,
+            "questionsText": "â",
+            "optionDtos": [
+                {
+                    "options_text": "aaa",
+                    "id": 1
+                },
+                {
+                    "options_text": "aaaaa",
+                    "id": 2
+                },
+                {
+                    "options_text": "aaaa",
+                    "id": 3
+                }
+            ],
+            "scoring": 2
+        }
+    ]
+}

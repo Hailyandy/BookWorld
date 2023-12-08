@@ -1,14 +1,18 @@
 package com.chien.bookWorld.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import com.chien.bookWorld.dto.UserAndFriendshipDto;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -38,6 +42,9 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
     @Override
     public Map<String, Object> acceptFriendRequest(Long senderId) {
         // TODO Auto-generated method stub
@@ -45,6 +52,8 @@ public class FriendServiceImpl implements FriendService {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
 
+        simpMessagingTemplate.convertAndSendToUser(senderId.toString(), "/queue/friend/request/total", getTotalFriendRequest(senderId));
+        simpMessagingTemplate.convertAndSendToUser(userDetails.getId().toString(), "/queue/friend/request/total", getTotalFriendRequest(userDetails.getId()));
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toList();
 
@@ -76,6 +85,7 @@ public class FriendServiceImpl implements FriendService {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
 
+        simpMessagingTemplate.convertAndSendToUser(addFriendRequest.getReceiverId().toString(), "/queue/friend/request/total", getTotalFriendRequest(addFriendRequest.getReceiverId()));
         // Kiểm tra xem người dùng hiện tại có quyền thực hiện thao tác thêm bạn bè
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toList();
@@ -113,6 +123,10 @@ public class FriendServiceImpl implements FriendService {
 
         // Save
         rFriendshipRepository.save(newFriendship);
+
+        simpMessagingTemplate.convertAndSendToUser(addFriendRequest.getReceiverId().toString(), "/queue/friend/request", getUserSender());
+        simpMessagingTemplate.convertAndSendToUser(addFriendRequest.getReceiverId().toString(), "/queue/friend/request/total", getTotalFriendRequest(addFriendRequest.getReceiverId()));
+
         final Map<String, Object> body = new HashMap<>();
         body.put("code", 0);
         body.put("message", "Friend request sent!");
@@ -143,7 +157,7 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
 
-        List<User> requestSenders = null;
+        List<User> requestSenders = new ArrayList<>();
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             requestSenders.add(sender);
@@ -153,7 +167,11 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
         return new SuccessResponse(requestSenders.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(
+                .map(user -> {
+                    UserAndFriendshipDto userAndFriendshipDto = mapper.map(user, UserAndFriendshipDto.class);
+                    userAndFriendshipDto.setFriendship("ACCEPT");
+                    return userAndFriendshipDto;
+                }).collect(
                         Collectors.toList()));
     }
 
@@ -175,14 +193,13 @@ public class FriendServiceImpl implements FriendService {
             throw new AppException(403, 43, "Forbidden! You don't have permission to add friends.");
         }
 
-        List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(
-                FriendshipStatus.ACCEPTED, userId, userId);
-
+        List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(userId, userId);
+        logger.info("test get friend request: " + friendRequests.toString());
         if (friendRequests.isEmpty()) {
             return new SuccessResponse(null);
         }
 
-        List<User> listFriend = null;
+        List<User> listFriend = new ArrayList<>();
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             listFriend.add(sender);
@@ -193,8 +210,11 @@ public class FriendServiceImpl implements FriendService {
         }
 
         return new SuccessResponse(listFriend.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(
-                        Collectors.toList()));
+                .map(user -> {
+                    UserAndFriendshipDto userAndFriendshipDto = mapper.map(user, UserAndFriendshipDto.class);
+                    userAndFriendshipDto.setFriendship("ACCEPTED");
+                    return userAndFriendshipDto;
+                } ).collect(Collectors.toList()));
 
     }
 
@@ -265,11 +285,32 @@ public class FriendServiceImpl implements FriendService {
             rFriendshipRepository.delete(friendship2);
         }
 
+
+        simpMessagingTemplate.convertAndSendToUser(senderId.toString(), "/queue/friend/request/total", getTotalFriendRequest(senderId));
+        simpMessagingTemplate.convertAndSendToUser(senderId.toString(), "/queue/friend/cancel", getUserSender());
         final Map<String, Object> body = new HashMap<>();
         body.put("code", 0);
         body.put("message", "Friend delete!");
         return body;
 
+    }
+
+    @Override
+    public SuccessResponse getTotalFriendRequest(Long id) {
+        Long count = rFriendshipRepository.countPendingInvitation(id);
+        return new SuccessResponse(count);
+    }
+
+    @Override
+    public SuccessResponse getUserSender() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        User sender = userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new AppException(404, 44, "Error: Sender does not exist!"));
+
+        UserAndFriendshipDto userAndFriendshipDto = mapper.map(sender, UserAndFriendshipDto.class);
+        userAndFriendshipDto.setFriendship(FriendshipStatus.ACCEPT.toString());
+        return new SuccessResponse(userAndFriendshipDto);
     }
 
     @Override

@@ -12,4 +12,13 @@ public class BookBasketKey implements Serializable {
 
   @Column(name = "user_id")
   private Long userId;
+
+    public BookBasketKey() {
+    }
+
+    public BookBasketKey(Long bookId, Long userId)  {
+      this.bookId = bookId;
+      this.userId = userId;
+  }
+
 }

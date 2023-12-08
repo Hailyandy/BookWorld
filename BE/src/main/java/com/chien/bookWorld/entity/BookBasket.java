@@ -2,16 +2,10 @@ package com.chien.bookWorld.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.*;
+
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -45,4 +39,16 @@ public class BookBasket {
   private User user;
 
   private String status;
+
+  private Timestamp timestamp;
+
+  public BookBasket(Long bookId, Long userId){
+    this.id = new BookBasketKey(bookId, userId);
+  }
+
+  @PrePersist
+  @PreUpdate
+  public void prePerist() {
+    this.timestamp = Timestamp.from(Instant.now());
+  }
 }

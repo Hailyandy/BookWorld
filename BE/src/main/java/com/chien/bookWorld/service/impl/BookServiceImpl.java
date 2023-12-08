@@ -8,12 +8,9 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.*;
 import com.chien.bookWorld.service.BookService;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -28,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
 @Service
 @Component
@@ -111,6 +109,12 @@ public class BookServiceImpl implements BookService {
     }
     return new SuccessResponse(userList);
   }
+
+  @Override
+  public Object update(Book book) {
+    return null;
+  }
+
 
   @Override
   public PageResponse findByTitleOrAuthor(String name, Pageable pageable) {
@@ -213,21 +217,37 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public SuccessResponse update(Book bookInput) {
+  public SuccessResponse updateBook(Long idBook, Map<Object, Object> fields) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
             .getAuthentication().getPrincipal();
-    Book fromDB = bookRepository.findById(bookInput.getId()).orElse(null);
+    Optional<Book> fromDB = bookRepository.findById(idBook);
     List<String> roles = userDetails.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority).toList();
     boolean isAdmin = roles.contains("ROLE_ADMIN");
-    if (userDetails.getId() != fromDB.getUser().getId() && !isAdmin) {
-      throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
-    }
     if (fromDB == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
-    mapper.map(bookInput, fromDB);
-    return new SuccessResponse(bookRepository.save(fromDB));
+    if (userDetails.getId() != fromDB.get().getUser().getId() && !isAdmin) {
+      throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
+    }
+    if (fromDB.isPresent()) {
+      fields.forEach((key, value) -> {
+        Field field = ReflectionUtils.findField(Book.class, (String) key);
+        field.setAccessible(true);
+        Object convertedValue = convertToFieldType(field.getType(), value);
+        ReflectionUtils.setField(field, fromDB.get(), convertedValue);
+      });
+      Book updateBook = bookRepository.save(fromDB.get());
+      return  new SuccessResponse(mapper.map(updateBook, BookDto.class));
+    }
+    return null;
+  }
+
+  private Object convertToFieldType(Class<?> fieldType, Object value) {
+    if (fieldType == Long.class && value instanceof Integer) {
+      return ((Integer) value).longValue();
+    }
+    return value;
   }
 
   @Override
@@ -298,4 +318,6 @@ public class BookServiceImpl implements BookService {
     }).collect(Collectors.toList());
     return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
+
+
 }

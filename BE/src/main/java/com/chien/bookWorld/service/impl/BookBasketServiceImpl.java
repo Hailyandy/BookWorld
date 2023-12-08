@@ -1,10 +1,7 @@
 package com.chien.bookWorld.service.impl;
 
-import com.chien.bookWorld.dto.BookBasketUpdateDto;
-import com.chien.bookWorld.dto.BookBasketDto;
-import com.chien.bookWorld.dto.BookDto;
+import com.chien.bookWorld.dto.*;
 import com.chien.bookWorld.dto.DtoMap.BookBasketDtoMap;
-import com.chien.bookWorld.dto.GenreDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.entity.BookBasket;
 import com.chien.bookWorld.entity.User;
@@ -18,9 +15,11 @@ import com.chien.bookWorld.repository.UserRepository;
 import com.chien.bookWorld.service.BookBasketService;
 import com.chien.bookWorld.service.BookService;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -35,10 +34,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookBasketServiceImpl implements BookBasketService {
 
+  private static final Logger logger = Logger.getLogger(BookBasketServiceImpl.class.getName());
   @Autowired
   private BookBasketRepository bookBasketRepository;
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private BookRepository bookRepository;
   @Autowired
   private ModelMapper mapper;
 
@@ -79,6 +82,19 @@ public class BookBasketServiceImpl implements BookBasketService {
   }
 
   @Override
+  public SuccessResponse statisticBookBasketStatus(int year) {
+      List<Object[]> result = bookBasketRepository.statisticBookBasketStatus(year);
+      return new SuccessResponse(result.stream().map(row -> new MonthlyStatusBookBasketDto(
+              (Integer) row[0],
+              year,
+              (Integer) row[2],
+              (BigDecimal) row[4],
+              (BigDecimal) row[5],
+              (BigDecimal) row[6]
+      )).collect(Collectors.toList()));
+  }
+
+  @Override
   public SuccessResponse findById(Long id) {
     return null;
 
@@ -89,16 +105,19 @@ public class BookBasketServiceImpl implements BookBasketService {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
 
-    Integer rowCount = bookBasketRepository.update(bookBasketUpdateDto.getBookId(),
-        userDetails.getId(),
-        bookBasketUpdateDto.getStatus());
-    if (rowCount == 0) {
-      bookBasketRepository.create(bookBasketUpdateDto.getBookId(),
-          userDetails.getId(),
-          bookBasketUpdateDto.getStatus());
-      // throw new AppException(404, 44,
-      // "Không tìm thấy bản ghi với id sách là " + bookBasketUpdateDto.getBookId()
-      // + " và id tài khoản là " + userDetails.getId() + "!");
+    BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), bookBasketUpdateDto.getBookId());
+    if (bookBasket != null) {
+        bookBasket.setStatus(bookBasketUpdateDto.getStatus());
+        bookBasketRepository.save(bookBasket);
+    } else {
+        BookBasket bookBasketCreate = new BookBasket(bookBasketUpdateDto.getBookId(), userDetails.getId());
+        bookBasketCreate.setBook(bookRepository.findById(bookBasketUpdateDto.getBookId())
+                .orElseThrow(() -> new AppException(404, 44, "Error: không tìm thấy sách với id!") ));
+        bookBasketCreate.setUser(userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new AppException(404, 44, "Error: Không tìm thấy người dùng!")  ));
+
+        bookBasketCreate.setStatus(bookBasketUpdateDto.getStatus());
+        bookBasketRepository.save(bookBasketCreate);
     }
 
     final Map<String, Object> body = new HashMap<>();
@@ -117,4 +136,6 @@ public class BookBasketServiceImpl implements BookBasketService {
     // TODO Auto-generated method stub
     return null;
   }
+
+
 }

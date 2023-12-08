@@ -1,0 +1,42 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": [
+        {
+            "id": 9,
+            "username": null,
+            "name": "cho Bach",
+            "email": null,
+            "phone": null,
+            "birthDate": null,
+            "urlAvatar": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/18871.jpg?v=1&w=340&h=497",
+            "address": null,
+            "enabled": true,
+            "friendship": "PENDING"
+        },
+        {
+            "id": 10,
+            "username": null,
+            "name": "Chiến học mãi ko giỏi",
+            "email": null,
+            "phone": null,
+            "birthDate": null,
+            "urlAvatar": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/44069.jpg?v=1&w=340&h=497",
+            "address": null,
+            "enabled": true,
+            "friendship": "null"
+        },
+        {
+            "id": 13,
+            "username": null,
+            "name": "Chiến Nhật Bản",
+            "email": null,
+            "phone": null,
+            "birthDate": null,
+            "urlAvatar": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/22182.jpg?v=1&w=340&h=497",
+            "address": null,
+            "enabled": true,
+            "friendship": "null"
+        }
+    ]
+}

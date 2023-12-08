@@ -20,26 +20,29 @@ const headerStyle = {
     lineHeight: '48px',
     backgroundColor: '#7dbcea',
 
+
 };
 const contentStyle = {
     padding: '1rem',
     paddingBottom: '0px',
     minHeight: 120,
     lineHeight: '120px',
-    color: '#fff',
-    backgroundColor: '#108ee9',
+    color: 'black',
+    backgroundColor: '#fff',
+
+
 
 };
 const siderStyle = {
-    marginTop: '24px',
-    lineHeight: '120px',
+    lineHeight: '100px',
     color: '#fff',
     backgroundColor: 'white',
+    width: '50% '
 };
 const FriendRequestSearchPeoplePage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const friendRequestList = useLoaderData()
+    const [friendRequestList, setFriendRequestList] = useState(useLoaderData())
     console.log(friendRequestList)
     const [options, setOptions] = useState([]);
     const changeInputSearch = (e) => {
@@ -51,7 +54,8 @@ const FriendRequestSearchPeoplePage = () => {
     //chua hoan thanh, can code màn user cá nhân khi người ngoài muốn xem thông tin
     const onSelectSearchItem = (value) => {
         console.log('onSelect', value);
-        navigate(`/books/${value}`, { replace: true });
+
+        navigate(`../profileOther/${value}`, { relative: "path" });
     };
 
 
@@ -63,9 +67,6 @@ const FriendRequestSearchPeoplePage = () => {
         dispatch(searchUserByName({ name: searchTextReturnFromDebounceHelper }))
             .unwrap()
             .then(async data => {
-                // notyf.success(BSHAREresource.notification_message.success.login)
-                // console.log(data)
-                // setResultSearch(data)
                 setOptions(data.map((resultItem) => {
                     return {
                         value: resultItem.id,
@@ -101,12 +102,13 @@ const FriendRequestSearchPeoplePage = () => {
             .unwrap()
             .then(async data => {
                 console.log(data)
-                dispatch(getListFriendRequest())
+                let newFriendReq = dispatch(getListFriendRequest()).unwrap().then(async data => {
+                    setFriendRequestList(data ? data : [])
+                })
             })
             .catch(e => {
                 notyf.error(e.message)
             });
-
     }
 
     const handleRejectFriendReq = ({ senderId }) => {
@@ -115,7 +117,9 @@ const FriendRequestSearchPeoplePage = () => {
             .unwrap()
             .then(async data => {
                 console.log(data)
-                dispatch(getListFriendRequest())
+                let newFriendReq = dispatch(newFriendReq()).unwrap().then(async data => {
+                    setFriendRequestList(data ? data : [])
+                })
             })
             .catch(e => {
                 notyf.error(e.message)
@@ -123,9 +127,9 @@ const FriendRequestSearchPeoplePage = () => {
 
     }
     return <div className="friend-req-search-pple-containner">
-        <Layout style={{ margin: '0px auto' }}>
+        <Layout style={{ margin: '0px auto', width: '80%' }}>
 
-            <Layout >
+            <Layout style={{}} >
                 <Header style={headerStyle}>Bạn có {friendRequestList.length} lời mời</Header>
                 <Content style={contentStyle}>
                     <List
@@ -171,13 +175,14 @@ const FriendRequestSearchPeoplePage = () => {
                 </Content>
 
             </Layout>
-            <Sider style={siderStyle} width={350}>
+            <Sider style={siderStyle} width={300}>
                 <Card
                     title="Tìm kiếm bạn bè"
                     bordered={false}
                     style={{
+                        borderRadius: '0px',
+                        height: '100%'
 
-                        borderRadius: '0px'
                     }}
                 >
                     <AutoComplete
@@ -185,7 +190,7 @@ const FriendRequestSearchPeoplePage = () => {
                         allowClear
                         style={{
                             borderRadius: "16px",
-                            width: 300,
+
                         }}
                         options={options}
                         onSelect={onSelectSearchItem}

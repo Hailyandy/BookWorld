@@ -13,6 +13,14 @@
     padding-top: 10px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.review-post .heading-post--right {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    column-gap: 12px
 }
 
 .review-post .heading-post .status-title {

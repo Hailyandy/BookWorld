@@ -5,7 +5,7 @@ import adminService from "~/services/admin.service";
 import authorService from "~/services/author.service";
 import tokenService from "~/services/token.service";
 //friendReqList,userInfo
-const initialState = tokenService.getUser() ? { userInfo: { ...tokenService.getUser() }, friendReqList: [] } : { friendReqList: [] };
+const initialState = tokenService.getUser() ? { userInfo: { ...tokenService.getUser() }, friendReqList: [], postList: [] } : { friendReqList: [] };
 
 export const loginAsync = createAsyncThunk(
     "users/login",
@@ -466,6 +466,89 @@ export const getUserTopScoreByBookIdAsync = createAsyncThunk(
         }
     }
 );
+
+export const getCurrentUserPostListAsync = createAsyncThunk(
+    'user/getCurrentUserPostList',
+    async (param, { rejectWithValue }) => {
+        try {
+            const data = await userService.getCurrentUserPostList();
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getUserInformationAsync = createAsyncThunk(
+    'user/getUserInformation',
+    async ({ idUser }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getUserInformation({ idUser });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const updatePostAsync = createAsyncThunk(
+    'user/updatePost',
+    async ({ score, content, idPost }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updatePost({ score, content, idPost });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const deletePostAsync = createAsyncThunk(
+    'user/deletePost',
+    async ({ idPost }, { rejectWithValue }) => {
+        try {
+            const data = await userService.deletePost({ idPost });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+export const updateBookInfoAsync = createAsyncThunk(
+    'user/updateBookInfo',
+    async ({ idBook }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updateBookInfo({ idBook });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const updateUserInformationAsync = createAsyncThunk(
+    'user/updateUserInformation',
+    async ({ idUser }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updateUserInformation({ idUser });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const statisticAsync = createAsyncThunk(
+    'user/statistic',
+    async ({ year }, { rejectWithValue }) => {
+        try {
+            const data = await userService.statistic({ year });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -476,11 +559,31 @@ const userSlice = createSlice({
             state.userInfo = ''
             state.friendReqList = []
         },
+
+        deletePostReducer: (state, action) => {
+            console.log(action.payload)
+            state.postList = state.postList.filter((postItem) => {
+                return postItem.id != action.payload.id
+            })
+            console.log(state.postList)
+        }
     },
     extraReducers: {
         [loginAsync.fulfilled]: (state, action) => {
             state.userInfo = action.payload
             console.log(state.userInfo)
+            // await getListFriendRequest()
+        },
+
+        [getUserPostListAsync.fulfilled]: (state, action) => {
+            state.postList = action.payload.data
+            console.log(state.postList)
+            // await getListFriendRequest()
+        },
+
+        [getAllPostAsync.fulfilled]: (state, action) => {
+            state.postList = action.payload
+            console.log(state.postList)
             // await getListFriendRequest()
         },
         [registerAsync.fulfilled]: (state, action) => {
@@ -524,5 +627,5 @@ const userSlice = createSlice({
     },
 });
 const { reducer } = userSlice;
-export const { logout } = userSlice.actions;
+export const { logout, deletePostReducer } = userSlice.actions;
 export default reducer;

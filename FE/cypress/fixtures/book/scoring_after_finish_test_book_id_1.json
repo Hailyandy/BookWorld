@@ -1,0 +1,33 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": {
+        "score": 0,
+        "checkQuestionDtos": [
+            {
+                "questionId": "6f48d23d-a9d3-4ed6-93c4-09c689c78c4d",
+                "user_answer": "aaa",
+                "user_answerId": 5,
+                "correct_answer": "aa",
+                "correct_answerId": 4,
+                "status": "Sai"
+            },
+            {
+                "questionId": "6f48d23d-a9d3-4ed6-93c4-09c689c78c4d",
+                "user_answer": "aaaaa",
+                "user_answerId": 7,
+                "correct_answer": "aa",
+                "correct_answerId": 4,
+                "status": "Sai"
+            },
+            {
+                "questionId": "76c1ffcc-dab9-41c8-bb6b-41f37232c9cc",
+                "user_answer": "Ba",
+                "user_answerId": 11,
+                "correct_answer": "Hai ",
+                "correct_answerId": 10,
+                "status": "Sai"
+            }
+        ]
+    }
+}
