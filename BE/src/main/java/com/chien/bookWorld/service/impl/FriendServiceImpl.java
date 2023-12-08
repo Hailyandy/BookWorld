@@ -183,7 +183,7 @@ public class FriendServiceImpl implements FriendService {
         }
 
         List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(userId, userId);
-
+        logger.info("test get friend request: " + friendRequests.toString());
         if (friendRequests.isEmpty()) {
             return new SuccessResponse(null);
         }
