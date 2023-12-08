@@ -490,6 +490,71 @@ export const getUserInformationAsync = createAsyncThunk(
         }
     }
 );
+
+export const updatePostAsync = createAsyncThunk(
+    'post/update',
+
+    async ({ idPost }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updatePost({ idPost });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const deletePostAsync = createAsyncThunk(
+    'post/deletePost',
+
+    async ({ idPost }, { rejectWithValue }) => {
+        try {
+            const data = await userService.deletePost({ idPost });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const updateBookInfoAsync = createAsyncThunk(
+    'user/updateBookInfo',
+
+    async ({ idBook }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updateBookInfo({ idBook });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const updateUserInformationAsync = createAsyncThunk(
+    'user/updateUserInformation',
+
+    async ({ idUser }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updateUserInformation({ idUser });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const statisticAsync = createAsyncThunk(
+    'admin/statistic',
+
+    async ({ year }, { rejectWithValue }) => {
+        try {
+            const data = await userService.statistic({ year });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,
