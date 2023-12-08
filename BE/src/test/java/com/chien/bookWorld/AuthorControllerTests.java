@@ -52,7 +52,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
-@TestInstance(Lifecycle.PER_CLASS)
+//@TestInstance(Lifecycle.PER_CLASS)
 class AuthorControllerTests {
 
   @Autowired
@@ -89,6 +89,7 @@ class AuthorControllerTests {
     SuccessResponse response = mapFromJson(content, SuccessResponse.class);
     JwtResponse jwtResponse = mapper.map(response.getData(), JwtResponse.class);
     userToken = jwtResponse.getToken();
+    Assert.assertNotNull(userToken);
   }
 
   @Test
