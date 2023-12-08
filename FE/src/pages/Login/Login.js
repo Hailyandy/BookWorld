@@ -12,6 +12,7 @@ import tokenService from '~/services/token.service';
 import notyf from '~/helper/notifyDisplay';
 import BSHAREresource from '~/helper/BSHAREresource';
 import { updateLocalHostUrl } from '~/helper/BSHAREresource';
+import { cicd_href } from '~/helper/BSHAREresource';
 // import authService from '~/services/auth.service';
 
 const { Text } = Typography;
@@ -53,7 +54,7 @@ function Login() {
                             console.log(e);
                             console.log('get all friend req erroer')
                         })
-                    window.location = `/${tokenService.getUserRoleName()}`;
+                    window.location = `${cicd_href}/${tokenService.getUserRoleName()}`;
                     return
                     // return navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
                 }

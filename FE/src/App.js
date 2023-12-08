@@ -6,8 +6,8 @@ import tokenService from './services/token.service';
 import { useEffect, useState, } from 'react';
 import {
   createBrowserRouter,
-  createRoutesFromElements,
   createHashRouter,
+  createRoutesFromElements,
   Route,
   RouterProvider
 } from 'react-router-dom'
@@ -54,7 +54,7 @@ function App() {
   const dispatch = useDispatch()
   const userRoleArray = tokenService.getRole()
   /** @type {*} */
-  const router = createBrowserRouter(
+  const router = createHashRouter(
     createRoutesFromElements(
       //Sửa lại để test component tí ấy mà
       <>
@@ -64,7 +64,7 @@ function App() {
           {/* <Route path="select-fav-book" element={<SelectFavouritebook />} /> */}
           {/* <QuizPage /> */}
 
-
+          {/* /login */}
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="otp-confirmation/:username" element={<OtpCode />} />
@@ -74,7 +74,7 @@ function App() {
             */
             tokenService.getRole(BSHAREnum.roles.user) && (
               <>
-                <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
+                <Route path={`${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
                   <Route
                     index
                     element={<UserHomePage />}

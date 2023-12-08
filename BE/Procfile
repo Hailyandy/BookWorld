@@ -1,0 +1,4 @@
+# web:node src/main/java/com/chien/bookWorld/BookWorldApplication.java
+# web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.chien.bookWorld
+# web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
+web: java -Dfile.encoding=UTF-8 -Dserver.port=$PORT -jar target/bookWorld-0.0.1-SNAPSHOT.jar
