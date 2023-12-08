@@ -106,78 +106,9 @@ const BookDetailPage = () => {
             });
 
     };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+
     return (
         <div className="book-detail-containner">
-            <Modal title="Báo cáo file"
-                footer={null}
-                centered
-                open={isModalOpen}
-                onOk={() => setIsModalOpen(false)}
-                onCancel={() => setIsModalOpen(false)}
-            >
-                {/* <p>some contents...</p>
-                <p>some contents...</p>
-                <p>some contents...</p> */}
-                <Form
-                    name="basic"
-                    labelCol={{
-                        span: 8,
-                    }}
-                    wrapperCol={{
-                        span: 16,
-                    }}
-                    style={{
-                        maxWidth: 600,
-                    }}
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={(val) => onFinish(val, data.bookDetail.id)}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                    form={form}
-                    preserve={false}
-                >
-                    <Form.Item
-                        label="Lý do"
-                        name="reason"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Nhập lý do chính!',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Mô tả chi tiết"
-                        name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Nhập mô tả chi tiết lý do',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16,
-                        }}
-                    >
-                        <Button type="primary" htmlType="submit">
-                            Tạo báo cáo
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
             <div className="book-detail-containner--left">
                 <div class="body-post display-flex-column" >
                     <div class="bookjacket-intro">
@@ -251,7 +182,7 @@ const BookDetailPage = () => {
                     <h3>Nhà xuất bản:  <Text >{data.bookDetail.publisher}</Text> </h3>
                     <h3>Tổng số trang: <Text >{data.bookDetail.numberPages} trang</Text> </h3>
                     <h3>Xuất bản: {formatToDate(data.bookDetail.publishDate, "dd/MM/yyyy")} </h3>
-                    <h3>Thể loại: {data.bookDetail.genres.map(genreObject => {
+                    <h3>Thể loại: {data.bookDetail.genres?.map(genreObject => {
                         return genreObject.name
                     }).join(', ')} </h3>
 
@@ -316,7 +247,7 @@ const BookDetailPage = () => {
                                                         remember: true,
                                                     }}
                                                     onFinish={(val) => onFinish(val, item.id)}
-                                                    onFinishFailed={onFinishFailed}
+
                                                     autoComplete="off"
                                                     form={form}
                                                     preserve={false}

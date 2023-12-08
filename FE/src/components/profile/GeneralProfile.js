@@ -4,6 +4,7 @@ import { useLoaderData, useParams } from 'react-router-dom'
 import TheAuthorBookItem from '~/components/author/TheAuthorBookItem';
 import Avartar from "~/components/ui/Avartar/Avartar";
 import ReviewPost from "~/components/form/Review Post/ReviewPost";
+import { useSelector } from 'react-redux';
 const { TextArea } = Input;
 const { Text, Title } = Typography;
 
@@ -14,23 +15,7 @@ const GeneralProfile = () => {
     const dataProfile = useLoaderData()
     const profileInfo = dataProfile.userInfor
     const userPostList = dataProfile.postList
-    let authorDetail = {
-        content: 'hello world',
-        images: 'https://t3.ftcdn.net/jpg/03/13/42/46/360_F_313424630_Uja1TnjdFhdz0bdbFnhMRuBTSIw25TWQ.jpg',
-        authorName: 'Xuân Bách',
-        bornPlace: 'Phú thọ',
-        dateOfBirth: '30/02/2023',
-        typeCompose: 'Hành động, nghệ thuật',
-        authorDescription: 'Korman wrote his first book, , when he was 12 years old, for a coach who suddenly found himself teaching 7th grade English. He later took that episode and created a book out of it, as well, in "The Sixth Grade Nickname Game", wherein Mr. Huge was based on that 7th grade teacher.Korman moved to New York City, where he studied film and film writing. While in New York, he met his future wife; they now live in Long Island with their three children.He has published more than 50 books.',
-    }
-    let userDetail = {
-        images: 'https://t3.ftcdn.net/jpg/03/13/42/46/360_F_313424630_Uja1TnjdFhdz0bdbFnhMRuBTSIw25TWQ.jpg',
-        authorName: 'Xuân Bách',
-        bornPlace: 'Phú thọ',
-        dateOfBirth: '30/02/2023',
-        typeCompose: 'Hành động, nghệ thuật',
-        authorDescription: 'Korman wrote his first book, , when he was 12 years old, for a coach who suddenly found himself teaching 7th grade English. He later took that episode and created a book out of it, as well, in "The Sixth Grade Nickname Game", wherein Mr. Huge was based on that 7th grade teacher.Korman moved to New York City, where he studied film and film writing. While in New York, he met his future wife; they now live in Long Island with their three children.He has published more than 50 books.',
-    }
+    const userStateFormSlice = useSelector(state => state.users);
     return (
         <div className='general-profile--containner'>
             <Card>
@@ -63,20 +48,8 @@ const GeneralProfile = () => {
                 <Title level={2}>Bài đăng của {profileInfo.name}</Title>
                 <div className='line-drawing'></div>
                 <div class="author-book-list">
-                    {/* <TheAuthorBookItem />
-                    <TheAuthorBookItem />
-                    <TheAuthorBookItem />
-                    <TheAuthorBookItem />
-                    <TheAuthorBookItem />
-                    <TheAuthorBookItem />
-                    <TheAuthorBookItem /> */}
-                    {/* <ReviewPost /> */}
-                    {/* <ReviewPost />
-                    <ReviewPost />
-                    <ReviewPost />
-                    <ReviewPost /> */}
                     {
-                        userPostList.map((postItem) => {
+                        userStateFormSlice.postList.map((postItem) => {
                             return <ReviewPost postItem={postItem} />
                         })
                     }

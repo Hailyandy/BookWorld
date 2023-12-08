@@ -9,7 +9,7 @@
         "publishDate": null,
         "introducing": null,
         "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
-        "scoring": null,
+        "scoring": 4.0,
         "authorId": null,
         "authorName": null,
         "genres": [
@@ -18,7 +18,23 @@
                 "name": "Mystery"
             }
         ],
-        "pdfs": [],
+        "pdfs": [
+            {
+                "id": 5,
+                "urlPdf": "https://firebasestorage.googleapis.com/v0/b/bookproject-70431.appspot.com/o/files%2FaacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf?alt=media&token=6eb3a677-76c4-4dc1-a5a4-5819c07ce3c4",
+                "userName": "Chiến Nhật Bản"
+            },
+            {
+                "id": 6,
+                "urlPdf": "https://firebasestorage.googleapis.com/v0/b/bookproject-70431.appspot.com/o/files%2FNh%E1%BA%A5t%20Ph%E1%BA%A9m%20Thi%C3%AAn%20Kim..pdf?alt=media&token=f63f9f8a-cb4d-4ba4-b4e4-231f464bcc76",
+                "userName": "Chiến Nhật Bản"
+            },
+            {
+                "id": 7,
+                "urlPdf": "https://firebasestorage.googleapis.com/v0/b/bookproject-70431.appspot.com/o/files%2FNh%E1%BA%A5t%20Ph%E1%BA%A9m%20Thi%C3%AAn%20Kim..pdf?alt=media&token=3eab4bf9-d302-4925-9724-c03aa5e41bd0",
+                "userName": "Chiến Nhật Bản"
+            }
+        ],
         "statusWithUser": "Đang đọc"
     }
 }
