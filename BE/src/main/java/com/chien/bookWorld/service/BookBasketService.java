@@ -10,4 +10,6 @@ import com.chien.bookWorld.payload.response.SuccessResponse;
 public interface BookBasketService extends
         GeneralService<BookBasket, BookBasket, BookBasketUpdateDto> {
     PageResponse findAll(Pageable pageable);
+
+    SuccessResponse statisticBookBasketStatus(int year);
 }

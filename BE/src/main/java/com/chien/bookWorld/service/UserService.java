@@ -22,4 +22,6 @@ public interface UserService extends
   Map<String, Object> rejectAccount(Collection<Long> ids);
 
   SuccessResponse findByUsersByName(String name);
+
+  SuccessResponse getNewRegistrationsByMonth(int year);
 }
