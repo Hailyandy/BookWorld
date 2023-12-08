@@ -182,8 +182,7 @@ public class FriendServiceImpl implements FriendService {
             throw new AppException(403, 43, "Forbidden! You don't have permission to add friends.");
         }
 
-        List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(
-                FriendshipStatus.ACCEPTED, userId, userId);
+        List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(userId, userId);
 
         if (friendRequests.isEmpty()) {
             return new SuccessResponse(null);

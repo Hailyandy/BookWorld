@@ -147,6 +147,7 @@ public class PostServiceImpl implements PostService {
               .map(post -> {
                 PostDto postDto = mapper.map(post, PostDto.class);
                 postDto.setUserName(post.getUser().getName());
+                postDto.setUserId(post.getUser().getId());
                 postDto.setUrlAvatarUser(post.getUser().getUrlAvatar());
                 postDto.setAuthorName(post.getBook().getUser().getName());
                 postDto.setAuthorId(post.getBook().getUser().getId());

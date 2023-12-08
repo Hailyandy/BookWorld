@@ -26,10 +26,11 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM Friendship WHERE (id_sender = :senderId AND id_receiver = :userId) AND status = 'PENDING'")
     Friendship findFriendRequestsByUsers(@Param("senderId") Long senderId, @Param("userId") Long userId);
 
-    List<Friendship> findByStatusAndSenderIdOrReceiverId(FriendshipStatus status, Long userId, Long receiverId);
+    @Query(nativeQuery = true, value = "SELECT * FROM friendship\n" +
+            "WHERE status = 'ACCEPTED' AND  id_sender = :userId or id_receiver = :receiverId")
+    List<Friendship> findByStatusAndSenderIdOrReceiverId(@Param("userId") Long userId,@Param("receiverId") Long receiverId);
 
     Friendship findBySenderIdAndReceiverIdAndStatus(Long senderId, Long receiverId, FriendshipStatus status);
 
     Friendship findBySenderIdAndReceiverId(Long senderId, Long receiverId);
-
 }
