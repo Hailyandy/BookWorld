@@ -286,7 +286,17 @@ public class FriendServiceImpl implements FriendService {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         Long count = rFriendshipRepository.countPendingInvitation(userDetails.getId());
+        return new SuccessResponse(count);
+    }
 
+    @Override
+    public SuccessResponse getUserSender() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        User sender = userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new AppException(404, 44, "Error: Sender does not exist!"));
+//
+//        UserAndFriendshipDto userAndFriendshipDto = mapper.map(sender, )
         return null;
     }
 

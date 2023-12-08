@@ -8,6 +8,8 @@ import com.chien.bookWorld.dto.BookDto;
 import com.chien.bookWorld.entity.Book;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 
+import java.util.Map;
+
 public interface BookService extends
     GeneralService<BookDto, BookCreationDto, Book> {
 
@@ -22,6 +24,8 @@ public interface BookService extends
   SuccessResponse findTopBook();
 
   PageResponse getBookList(Pageable pageable);
+
+  SuccessResponse updateBook(Long idBook, Map<Object, Object> filed);
 
 
 }

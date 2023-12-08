@@ -45,7 +45,10 @@ public class FriendController {
             @RequestBody AddFriendRequest friendRequest) {
 
         Map<String, Object> result = friendService.addFriend(friendRequest);
-        simpMessagingTemplate.convertAndSendToUser(friendRequest.getReceiverId().toString(), "/queue/friendRequest", result);
+        SuccessResponse countResult = friendService.getTotalFriendRequest();
+        SuccessResponse getUserSender = friendService.getUserSender();
+        simpMessagingTemplate.convertAndSendToUser(friendRequest.getReceiverId().toString(), "/queue/friendRequest", getUserSender);
+        simpMessagingTemplate.convertAndSendToUser(friendRequest.getReceiverId().toString(), "/queue/totalFriendRequest", countResult);
         return ResponseEntity.ok(result);
     }
 
@@ -80,5 +83,6 @@ public class FriendController {
             @RequestBody RejectFriendRequest friendRequest) {
         return ResponseEntity.ok(friendService.removeFriend(friendRequest.getSenderId()));
     }
+
 
 }
