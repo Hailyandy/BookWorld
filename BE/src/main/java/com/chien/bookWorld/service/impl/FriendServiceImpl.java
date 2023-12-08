@@ -282,6 +282,15 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
+    public SuccessResponse getTotalFriendRequest() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        Long count = rFriendshipRepository.countPendingInvitation(userDetails.getId());
+
+        return null;
+    }
+
+    @Override
     public Object create(Object c) {
         // TODO Auto-generated method stub
         return null;

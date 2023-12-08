@@ -42,7 +42,12 @@ public class BookBasket {
 
   private Timestamp timestamp;
 
+  public BookBasket(Long bookId, Long userId){
+    this.id = new BookBasketKey(bookId, userId);
+  }
+
   @PrePersist
+  @PreUpdate
   public void prePerist() {
     this.timestamp = Timestamp.from(Instant.now());
   }
