@@ -247,7 +247,6 @@ public class BookServiceImpl implements BookService {
     if (fieldType == Long.class && value instanceof Integer) {
       return ((Integer) value).longValue();
     }
-
     return value;
   }
 
@@ -319,4 +318,6 @@ public class BookServiceImpl implements BookService {
     }).collect(Collectors.toList());
     return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
+
+
 }
