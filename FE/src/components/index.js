@@ -18,7 +18,7 @@ import CustomUpload from './customUpload/customUpload';
 
 import BarChart from './charts/BarChart';
 import PieChart from './charts/PieChart';
-import LineChart from './charts/LineChart';
+
 
 import Question from './Quiz/Question';
 import QuestionCount from './Quiz/QuestionCount';
@@ -44,7 +44,6 @@ export {
     CustomUpload,
     BarChart,
     PieChart,
-    LineChart,
     Question,
     QuestionCount,
     AnswerOption,

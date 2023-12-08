@@ -4,7 +4,7 @@
 
     .general-profile--containner {
         margin: auto;
-        width: 75%;
+        width: 60%;
     }
 
     .description-containner1 {
@@ -38,13 +38,17 @@
     .author-book-list {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        row-gap: 30px;
     }
 
     .profile-footer--list {
+        display: flex;
         padding-top: 2rem;
-        padding-left: 10%;
         background-color: var(--background-color-white);
-        padding-right: 1rem;
+        flex-direction: column;
+        align-items: center;
     }
 
     .description-containner1 .friend {

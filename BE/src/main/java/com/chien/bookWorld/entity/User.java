@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -64,10 +66,10 @@ public class User {
   private Set<BookBasket> bookBaskets;
 
   @Column(name = "registration_date")
-  private LocalDateTime registrationDate;
+  private Timestamp registrationDate;
 
   @PrePersist
   public void prePerist() {
-    this.registrationDate = LocalDateTime.now();
+      this.registrationDate = Timestamp.from(Instant.now());
   }
 }

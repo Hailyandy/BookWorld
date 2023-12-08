@@ -1,10 +1,10 @@
 import "./avartar.css"
-
-const Avartar = () => {
+import { Avatar } from "antd"
+const Avartar = ({ friendItem }) => {
     return (
         <div class="avartar">
-            <span class="avatar-image"></span>
-            <p class="name">Xuân Bách</p>
+            <Avatar shape='round' src={friendItem.urlAvatar} size={50} />
+            <p class="name">{friendItem.userName}</p>
         </div>
     )
 }

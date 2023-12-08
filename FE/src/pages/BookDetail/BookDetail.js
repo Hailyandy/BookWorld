@@ -34,52 +34,6 @@ const BookDetailPage = () => {
         selectedFile: null,
         selectedFileList: [],
     });
-    const bookItem = {
-        star: 10,
-        numReviews: 2,
-        publisher: 'Đh Quốc gia Hà Nội',
-        pageTotal: 300,
-        publishDate: '20/9/1972',
-        typeBook: 'Trinh Thám'
-    }
-    const onSearch = (value, _e, info) => console.log(info?.source, value);
-    const commentData = [
-        {
-            star: 5,
-            author: 'Han Solo',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
-                    efficiently.
-                </p>
-            ),
-            datetime: (
-                <Tooltip title="2016-11-22 11:22:33">
-                    <span>{moment('2016-11-22 11:22:33').fromNow()}</span>
-                </Tooltip>
-            ),
-        },
-        {
-            star: 5,
-
-            author: 'Han Solo',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
-                    efficiently.
-                </p>
-            ),
-            datetime: (
-                <Tooltip title="2016-11-22 10:22:33">
-                    <span>{moment('2016-11-22 11:22:33').fromNow()}</span>
-                </Tooltip>
-            ),
-        },
-    ];
     const customUpload = async ({ onError, onSuccess, file }) => {
         // firebase upload\
         // firebase upload\
@@ -157,8 +111,75 @@ const BookDetailPage = () => {
     };
     return (
         <div className="book-detail-containner">
+            <Modal title="Báo cáo file"
+                footer={null}
+                centered
+                open={isModalOpen}
+                onOk={() => setIsModalOpen(false)}
+                onCancel={() => setIsModalOpen(false)}
+            >
+                {/* <p>some contents...</p>
+                <p>some contents...</p>
+                <p>some contents...</p> */}
+                <Form
+                    name="basic"
+                    labelCol={{
+                        span: 8,
+                    }}
+                    wrapperCol={{
+                        span: 16,
+                    }}
+                    style={{
+                        maxWidth: 600,
+                    }}
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={(val) => onFinish(val, data.bookDetail.id)}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                    form={form}
+                    preserve={false}
+                >
+                    <Form.Item
+                        label="Lý do"
+                        name="reason"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Nhập lý do chính!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Mô tả chi tiết"
+                        name="description"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Nhập mô tả chi tiết lý do',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        wrapperCol={{
+                            offset: 8,
+                            span: 16,
+                        }}
+                    >
+                        <Button type="primary" htmlType="submit">
+                            Tạo báo cáo
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
             <div className="book-detail-containner--left">
-                <div class="body-post">
+                <div class="body-post display-flex-column" >
                     <div class="bookjacket-intro">
                         <Avatar shape='square' size={200} src={data.bookDetail.urlPoster} alt="https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w600/2023/10/free-images.jpg" />
                         <Space direction='vertical'  >
@@ -177,7 +198,7 @@ const BookDetailPage = () => {
                             </Upload>
                         </Space>
                     </div>
-                    <section className="list-containner" style={{ width: '200px', marginTop: '20px' }}>
+                    <section className="list-containner" style={{ width: '300px', marginTop: '20px' }}>
                         <h3 style={{ textAlign: 'center' }}>Bảng điểm</h3>
                         {data.userTopScore.length > 0 ? (
                             <List >

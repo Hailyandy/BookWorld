@@ -10,9 +10,6 @@ import BSHAREnum from "~/helper/BSHAREenum";
 import { cicd_href } from "~/helper/BSHAREresource";
 const Home = () => {
     const navigate = useNavigate()
-    function goToPage() {
-
-    }
     if (tokenService.getRole("ROLE_USER")) {
         // navigate(`users`, { replace: true });
         window.location.replace(`${BSHAREresource.localHost.url}/${tokenService.getUserRoleName()}`)

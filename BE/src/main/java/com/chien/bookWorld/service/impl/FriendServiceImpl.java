@@ -1,10 +1,13 @@
 package com.chien.bookWorld.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import com.chien.bookWorld.dto.UserAndFriendshipDto;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,7 +146,7 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
 
-        List<User> requestSenders = null;
+        List<User> requestSenders = new ArrayList<>();
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             requestSenders.add(sender);
@@ -153,7 +156,11 @@ public class FriendServiceImpl implements FriendService {
             return new SuccessResponse(null);
         }
         return new SuccessResponse(requestSenders.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(
+                .map(user -> {
+                    UserAndFriendshipDto userAndFriendshipDto = mapper.map(user, UserAndFriendshipDto.class);
+                    userAndFriendshipDto.setFriendship("ACCEPT");
+                    return userAndFriendshipDto;
+                }).collect(
                         Collectors.toList()));
     }
 
@@ -175,14 +182,13 @@ public class FriendServiceImpl implements FriendService {
             throw new AppException(403, 43, "Forbidden! You don't have permission to add friends.");
         }
 
-        List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(
-                FriendshipStatus.ACCEPTED, userId, userId);
-
+        List<Friendship> friendRequests = rFriendshipRepository.findByStatusAndSenderIdOrReceiverId(userId, userId);
+        logger.info("test get friend request: " + friendRequests.toString());
         if (friendRequests.isEmpty()) {
             return new SuccessResponse(null);
         }
 
-        List<User> listFriend = null;
+        List<User> listFriend = new ArrayList<>();
         for (Friendship request : friendRequests) {
             User sender = request.getSender();
             listFriend.add(sender);
@@ -193,8 +199,11 @@ public class FriendServiceImpl implements FriendService {
         }
 
         return new SuccessResponse(listFriend.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(
-                        Collectors.toList()));
+                .map(user -> {
+                    UserAndFriendshipDto userAndFriendshipDto = mapper.map(user, UserAndFriendshipDto.class);
+                    userAndFriendshipDto.setFriendship("ACCEPTED");
+                    return userAndFriendshipDto;
+                } ).collect(Collectors.toList()));
 
     }
 

@@ -3,6 +3,8 @@ package com.chien.bookWorld.repository;
 import com.chien.bookWorld.entity.Role;
 import com.chien.bookWorld.entity.User;
 import jakarta.transaction.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -51,4 +53,24 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 value = "SELECT u.* FROM user u join user_role ur on u.id = ur.user_id join role r on ur.role_id = r.id where r.name = 'ROLE_AUTHOR'"
         )
         List<User> findUserRoleAuthor();
+
+        @Query(nativeQuery = true, value = "SELECT \n" +
+                "    months.month AS thang, \n" +
+                "    IFNULL(COUNT(user.id), 0) AS count\n" +
+                "FROM \n" +
+                "    (SELECT 1 AS month UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12 ) AS months\n" +
+                "LEFT JOIN \n" +
+                "    user ON MONTH(user.registration_date) = months.month AND YEAR(user.registration_date) = :year_\n" +
+                "LEFT JOIN \n" +
+                "    user_role ON user.id = user_role.user_id\n" +
+                "LEFT JOIN \n" +
+                "    role ON user_role.role_id = role.id\n" +
+                "WHERE \n" +
+                "    role.name = 'ROLE_USER' OR user.id IS NULL\n" +
+                "   OR (user.registration_date IS NOT NULL AND YEAR(user.registration_date) = 2023)\n" +
+                "GROUP BY \n" +
+                "    months.month\n" +
+                "ORDER BY \n" +
+                "    months.month;\n")
+        List<Object[]> countNewUserRegistrationsByMonth(@Param("year_") int year);
 }

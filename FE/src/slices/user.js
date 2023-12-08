@@ -466,6 +466,30 @@ export const getUserTopScoreByBookIdAsync = createAsyncThunk(
         }
     }
 );
+
+export const getCurrentUserPostListAsync = createAsyncThunk(
+    'user/getCurrentUserPostList',
+    async (param, { rejectWithValue }) => {
+        try {
+            const data = await userService.getCurrentUserPostList();
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const getUserInformationAsync = createAsyncThunk(
+    'user/getUserInformation',
+    async ({ idUser }, { rejectWithValue }) => {
+        try {
+            const data = await userService.getUserInformation({ idUser });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,

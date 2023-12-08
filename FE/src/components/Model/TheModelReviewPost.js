@@ -24,63 +24,8 @@ let fromItemStyle = {
     marginTop: '12px',
 }
 const ModelReviewPost = () => {
-    const [value1, setValue1] = useState('Muốn đọc');
-    const [items, setItems] = useState(['custom shelf 1', 'custom shelf 2']);
-    const [name, setName] = useState('');
     const dispatch = useDispatch()
     const bookItem = useLoaderData()
-    const inputRef = useRef(null);
-    const onNameChange = (event) => {
-        setName(event.target.value);
-    };
-    const onChange1 = ({ target: { value } }) => {
-        console.log('radio1 checked', value);
-        setValue1(value);
-    };
-    const addItem = (e) => {
-        e.preventDefault();
-        setItems([...items, name || `New item ${index++}`]);
-        setName('');
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
-    };
-    let selectionBox = <Select
-        style={{
-            width: 300,
-        }}
-        placeholder="custom dropdown render"
-        dropdownRender={(menu) => (
-            <>
-                {menu}
-                <Divider
-                    style={{
-                        margin: '8px 0',
-                    }}
-                />
-                <Space
-                    style={{
-                        padding: '0 8px 4px',
-                    }}
-                >
-                    <Input
-                        placeholder="Please enter item"
-                        ref={inputRef}
-                        value={name}
-                        onChange={onNameChange}
-                    />
-                    <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-                        Add item
-                    </Button>
-                </Space>
-            </>
-        )}
-        options={items.map((item) => ({
-            label: item,
-            value: item,
-        }))}
-    />
-    let radioBox = <Radio.Group options={plainOptions} onChange={onChange1} value={value1} />
     const onFinish = (values) => {
         const { scoring,
             bookshelfDefault,
@@ -88,9 +33,6 @@ const ModelReviewPost = () => {
             content,
             read_date
         } = values
-        console.log('Success:', values);
-        console.log(values.read_date[0].format(dateFormat))
-
         dispatch(rateBookOrUploadFileAsync({ bookId: bookItem.id, scoring, content }))
             .unwrap()
             .then(async data => {
@@ -144,13 +86,13 @@ const ModelReviewPost = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your username!',
+                            message: 'Chọn trạng thái sách!',
                         },
                     ]}
                     style={fromItemStyle}
                 >
                     <Select
-                        defaultValue="lucy"
+                        defaultValue="Đã đọc"
                         style={{
                             width: 120,
                         }}
@@ -171,21 +113,6 @@ const ModelReviewPost = () => {
                         ]}
                     />
                 </Form.Item>
-
-                <Form.Item
-                    label="Giá tuỳ chỉnh"
-                    name="bookshelf"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your username!',
-                        },
-                    ]}
-                    style={fromItemStyle}
-                >
-                    {selectionBox}
-                </Form.Item>
-
                 <Form.Item
                     label="Bạn suy nghĩ gì?"
                     name="content"
@@ -199,7 +126,7 @@ const ModelReviewPost = () => {
                 >
                     <TextArea style={commonStyle} rows={4} />
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                     label="Ngày đọc"
                     name="read_date"
                     rules={[
@@ -214,7 +141,7 @@ const ModelReviewPost = () => {
 
                         format={dateFormat}
                     />
-                </Form.Item>
+                </Form.Item> */}
                 <div style={{
                     textAlign: 'right',
                 }}>

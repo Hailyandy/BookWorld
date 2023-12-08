@@ -1,4 +1,4 @@
-import SelectFavouritebook from "./SelectFavouritebook";
+
 import AuthorInformationPage from "./Author";
 import NotFoundPage from "./NotFound/NotFound";
 import GeneralProfile from "~/components/profile/GeneralProfile";
@@ -33,7 +33,7 @@ export {
     BookMarket,
     AnonymousUser,
     SearchUserPage,
-    SelectFavouritebook,
+
     AuthorInformationPage,
     NotFoundPage,
     GeneralProfile,

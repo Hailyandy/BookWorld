@@ -1,0 +1,70 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "totalPage": 1,
+    "pageSize": 20,
+    "totalRecord": 5,
+    "pageNumber": 0,
+    "data": [
+        {
+            "content": "a",
+            "id": "24d249e4-40da-4a09-a30e-08920f3c4b49",
+            "createdOn": "2023-12-01T23:30:38.754708Z",
+            "lastUpdatedOn": "2023-12-01T23:30:38.754708Z",
+            "commentScoring": null,
+            "parentId": null,
+            "userId": 12,
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "userName": "Nguyện giỏi",
+            "postId": 1
+        },
+        {
+            "content": "aaa",
+            "id": "3834c1a6-62f3-4e9c-b042-d7a5314ae7fa",
+            "createdOn": "2023-12-01T23:40:14.858299Z",
+            "lastUpdatedOn": "2023-12-01T23:40:14.858299Z",
+            "commentScoring": null,
+            "parentId": "ae3c918c-8520-4b11-b264-be2b83c8f9fc",
+            "userId": 12,
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "userName": "Nguyện giỏi",
+            "postId": 1
+        },
+        {
+            "content": "test",
+            "id": "7f9d3bb0-41e2-4edd-8ce9-5ca64ce54ef7",
+            "createdOn": "2023-12-01T23:31:01.617558Z",
+            "lastUpdatedOn": "2023-12-01T23:31:01.617558Z",
+            "commentScoring": null,
+            "parentId": null,
+            "userId": 12,
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "userName": "Nguyện giỏi",
+            "postId": 1
+        },
+        {
+            "content": "helllo",
+            "id": "ae3c918c-8520-4b11-b264-be2b83c8f9fc",
+            "createdOn": "2023-11-30T11:49:21.388242Z",
+            "lastUpdatedOn": "2023-11-30T11:49:21.388242Z",
+            "commentScoring": null,
+            "parentId": "ce689053-fb3c-4928-b515-2542d35b7692",
+            "userId": 12,
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "userName": "Nguyện giỏi",
+            "postId": 1
+        },
+        {
+            "content": "aa",
+            "id": "ce689053-fb3c-4928-b515-2542d35b7692",
+            "createdOn": "2023-11-30T11:49:09.235025Z",
+            "lastUpdatedOn": "2023-11-30T11:49:09.235025Z",
+            "commentScoring": null,
+            "parentId": null,
+            "userId": 12,
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "userName": "Nguyện giỏi",
+            "postId": 1
+        }
+    ]
+}

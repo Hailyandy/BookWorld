@@ -1,0 +1,37 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "The Girl with the Dragon Tattoo",
+            "numberPages": null,
+            "publisher": "Hàn Vũ Ký",
+            "publishDate": null,
+            "introducing": null,
+            "urlPoster": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691733246i/61997573.jpg",
+            "scoring": null,
+            "authorId": 12,
+            "authorName": "lehuyhaianh0808@gmail.com",
+            "genres": [
+                {
+                    "id": 1,
+                    "name": "Mystery"
+                }
+            ],
+            "statusWithUser": "Đang đọc"
+        },
+        {
+            "id": 2,
+            "name": "Harry Potter and the Philosopher’s Stone",
+            "numberPages": null,
+            "publisher": "Hàn Vũ Ký",
+            "publishDate": null,
+            "introducing": null,
+            "urlPoster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbSko59ktzE0FJS4usiq58pb7tTjR1UVrHzA&usqp=CAU",
+            "scoring": 3.0,
+            "authorId": 12,
+            "authorName": "lehuyhaianh0808@gmail.com",
+            "genres": [],
+            "statusWithUser": "Muốn đọc"
+        }
+    ]
+}

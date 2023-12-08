@@ -6,6 +6,8 @@ export let localHost = {
 }
 export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
 export const cicd_href = '/BookWorld/#'
+// export const url = { baseUrlBE: "http://localhost:8080/api/" }
+// export const bookworld_hastag = "/BookWorld/#"
 export const updateLocalHostUrl = (updateStringrole) => {
     localHost.url = `/${updateStringrole}/`
     BSHAREresource.localHost.url = `/${updateStringrole}/`
