@@ -104,7 +104,12 @@ public class UserServiceImpl implements UserService {
     if (userDetails.getId() != userUpdateDto.getId()) {
       throw new AppException(404, 44, "id user sai!");
     }
-    mapper.map(userUpdateDto, fromDB);
+    fromDB.setIntroducing(userUpdateDto.getIntroducing());
+    fromDB.setNativePlace(userUpdateDto.getNativePlace());
+    fromDB.setUrlAvatar(userUpdateDto.getUrlAvatar());
+    fromDB.setPhone(userUpdateDto.getPhone());
+    fromDB.setBirthDate(userUpdateDto.getBirthDate());
+    fromDB.setName(userUpdateDto.getName());
     User user = userRepository.save(fromDB);
     return new SuccessResponse(mapper.map(user, UserDto.class));
   }

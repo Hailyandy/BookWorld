@@ -227,7 +227,7 @@ public class BookServiceImpl implements BookService {
     if (fromDB == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
-    if (userDetails.getId() != fromDB.get().getId() && !isAdmin) {
+    if (userDetails.getId() != fromDB.get().getUser().getId() && !isAdmin) {
       throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
     }
     if (fromDB.isPresent()) {
@@ -247,7 +247,6 @@ public class BookServiceImpl implements BookService {
     if (fieldType == Long.class && value instanceof Integer) {
       return ((Integer) value).longValue();
     }
-
     return value;
   }
 
@@ -319,4 +318,6 @@ public class BookServiceImpl implements BookService {
     }).collect(Collectors.toList());
     return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);
   }
+
+
 }
