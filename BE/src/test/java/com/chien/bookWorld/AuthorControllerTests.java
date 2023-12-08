@@ -80,7 +80,7 @@ class AuthorControllerTests {
 
   @Test
   @Order(1)
-  public void setUp() throws Exception {
+  public void testSetUp() throws Exception {
     MvcResult mvcResult = mvc.perform(
         post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
             .content(mapToJson(new LoginRequest("user2@gmail.com", "123456")))).andReturn();
