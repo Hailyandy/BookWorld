@@ -42,7 +42,7 @@ const siderStyle = {
 const FriendRequestSearchPeoplePage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const friendRequestList = useLoaderData()
+    const [friendRequestList, setFriendRequestList] = useState(useLoaderData())
     console.log(friendRequestList)
     const [options, setOptions] = useState([]);
     const changeInputSearch = (e) => {
@@ -115,12 +115,13 @@ const FriendRequestSearchPeoplePage = () => {
             .unwrap()
             .then(async data => {
                 console.log(data)
-                dispatch(getListFriendRequest())
+                let newFriendReq = dispatch(getListFriendRequest()).unwrap().then(async data => {
+                    setFriendRequestList(data ? data : [])
+                })
             })
             .catch(e => {
                 notyf.error(e.message)
             });
-
     }
 
     const handleRejectFriendReq = ({ senderId }) => {
@@ -129,7 +130,9 @@ const FriendRequestSearchPeoplePage = () => {
             .unwrap()
             .then(async data => {
                 console.log(data)
-                dispatch(getListFriendRequest())
+                let newFriendReq = dispatch(newFriendReq()).unwrap().then(async data => {
+                    setFriendRequestList(data ? data : [])
+                })
             })
             .catch(e => {
                 notyf.error(e.message)

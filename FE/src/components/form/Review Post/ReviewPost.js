@@ -2,10 +2,10 @@ import AvartarTime from "~/components/ui/AvartarTime/AvartarTime"
 import "./reviewPost.css"
 import { StarFilled } from '@ant-design/icons';
 import ContentIntro from "../Content Intro/ContentIntro";
-import { Button, Divider } from 'antd';
+import { Button, Divider, Select, Avatar } from 'antd';
 import { Input } from 'antd';
 import { LikeOutlined, MessageOutlined } from '@ant-design/icons';
-import { EditOutlined, EllipsisOutlined, SettingOutlined, SendOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EllipsisOutlined, SettingOutlined, SendOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
@@ -22,6 +22,7 @@ import NestedComments from "~/components/comment/NestedComment";
 import BSHAREnum from "~/helper/BSHAREenum";
 import { createCommentAsync } from "~/slices/user";
 import moment from "moment";
+import tokenService from "~/services/token.service";
 moment.locale('vi');
 // const cho dropdown tất cả các bình luận
 
@@ -36,7 +37,20 @@ const ReviewPost = ({ postItem }) => {
     const handleLikeClick = () => {
         setLikes(likes + 1);
     };
+    const items = [
+        {
+            label: <span ><EditOutlined style={{ width: '32px' }} />Sửa</span>,
+            key: '0',
+        },
+        {
+            label: <span ><DeleteOutlined style={{ width: '32px' }} />Xoá</span>,
+            key: '1',
+        },
+        {
+            type: 'divider',
+        },
 
+    ];
     const handleCommentSubmit = () => {
         dispatch(createCommentAsync({ content: commentText, postId: postItem.id, parentId: null }))
             .unwrap()
@@ -70,17 +84,36 @@ const ReviewPost = ({ postItem }) => {
                 <div class="heading-post">
                     <AvartarTime postItem={postItem}></AvartarTime>
                     {/* <Avatar shape="square" size={64} src={bookItem.urlPoster} alt="Han Solo" /> */}
+                    <div className="heading-post--right">
+                        <ul class="list-star">
+                            <StarRatings
+                                rating={
+                                    postItem.scoring ? postItem.scoring : 0
+                                }
+                                starDimension="12px"
+                                starSpacing="4px"
+                                starRatedColor="rgb(230, 67, 47)"
+                            />
+                        </ul>
+                        {
+                            tokenService.getUser().id == postItem.userId && (
+                                <Dropdown
+                                    menu={{
+                                        items,
+                                    }}
+                                    style={{ height: '30px' }}
+                                >
+                                    <a onClick={(e) => e.preventDefault()}>
+                                        <Space>
+                                            <UnorderedListOutlined />
+                                        </Space>
+                                    </a>
+                                </Dropdown>
+                            )
+                        }
 
-                    <ul class="list-star">
-                        <StarRatings
-                            rating={
-                                postItem.scoring ? postItem.scoring : 0
-                            }
-                            starDimension="12px"
-                            starSpacing="4px"
-                            starRatedColor="rgb(230, 67, 47)"
-                        />
-                    </ul>
+                    </div>
+
                 </div>
 
                 {/* Body Post */}
@@ -113,7 +146,7 @@ const ReviewPost = ({ postItem }) => {
                 </div>
                 <div class="commenting">
                     <div class="avartar" style={{ width: '60px' }}>
-                        <span class="avatar-image"></span>
+                        <Avatar shape='round' src={postItem.urlAvatarUser} size={50} />
                     </div>
                     <Input
                         style={{ backgroundColor: '#d9d9d9', color: 'black' }}
