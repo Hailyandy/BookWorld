@@ -168,15 +168,15 @@ describe('Spec màn hình chính', () => {
             fixture: 'book/search_book_by_text.json',
         }).as('search_book_by_text');
 
-        cy.intercept('GET', '/api/book/search/1', {
-            statusCode: 200,
-            fixture: 'book/search_book_by_id_1.json',
-        }).as('search_book_by_text');
+        // cy.intercept('GET', '/api/book/search/1', {
+        //     statusCode: 200,
+        //     fixture: 'book/search_book_by_id_1.json',
+        // }).as('search_book_by_text');
 
-        cy.intercept('GET', '/api/questions/scoring/top?idBook=1', {
-            statusCode: 200,
-            fixture: 'book/get_top_scoring_book_id_1.json',
-        }).as('search_book_by_text');
-        cy.get('.ant-select-dropdown .ant-select-item-option').first().click()
+        // cy.intercept('GET', '/api/questions/scoring/top?idBook=1', {
+        //     statusCode: 200,
+        //     fixture: 'book/get_top_scoring_book_id_1.json',
+        // }).as('search_book_by_text');
+        cy.get('.ant-input-search-button').first().click()
     });
 });

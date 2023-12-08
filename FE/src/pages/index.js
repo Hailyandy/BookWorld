@@ -26,14 +26,15 @@ import {
     AdminDashBoard,
     AdminPostList,
     AdminReportList,
-    AdminAddBookPage
+    AdminAddBookPage,
+    Admins,
 } from "./admin";
 export {
     AuthorBook,
     BookMarket,
     AnonymousUser,
     SearchUserPage,
-
+    Admins,
     AuthorInformationPage,
     NotFoundPage,
     GeneralProfile,

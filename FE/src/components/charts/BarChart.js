@@ -20,37 +20,36 @@ ChartJS.register(
     Legend
 );
 
-export const options = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: 'top',
-        },
-        title: {
-            display: true,
-            text: 'Chart.js Bar Chart',
-        },
-    },
-};
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: 'Dataset 1',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-        {
-            label: 'Dataset 2',
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        },
-    ],
-};
+const labels = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
 
-export default function BarChart({ option, dataBarChart }) {
-    return <Bar options={options} data={data} />;
+
+
+export default function BarChart({ option, dataBarChart, year }) {
+
+    console.log(dataBarChart)
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Người',
+                data: labels.map((val, index) => dataBarChart[index].registrationCount),
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+        ],
+    };
+    return <Bar options={{
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: `Tài khoản đăng ký theo tháng trong năm ${year}`,
+            },
+        },
+    }
+    } data={data} />;
 }
