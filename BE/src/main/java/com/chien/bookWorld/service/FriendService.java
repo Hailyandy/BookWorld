@@ -23,4 +23,6 @@ public interface FriendService extends GeneralService {
 
     SuccessResponse getTotalFriendRequest();
 
+    SuccessResponse getUserSender();
+
 }
