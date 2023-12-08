@@ -177,7 +177,7 @@ REFERENCES user (id);
 -- Create table `book`
 --
 CREATE TABLE book (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (72),
   name varchar(255) DEFAULT NULL,
   number_pages bigint DEFAULT NULL,
   publish_date datetime(6) DEFAULT NULL,
