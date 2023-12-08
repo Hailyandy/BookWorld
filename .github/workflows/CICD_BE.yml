@@ -53,10 +53,6 @@ jobs:
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: '**/TEST-*.xml'  
-          
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          working-directory: ./BE
 
       - name: Heroku Install
         env:

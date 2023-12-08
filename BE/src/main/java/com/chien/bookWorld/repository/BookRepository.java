@@ -20,9 +20,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
   countQuery = "SELECT COUNT(*) FROM book JOIN user ON book.user_id = `user`.id WHERE book.name LIKE :name OR `user`.name LIKE :name")
   Page<Book> findByTitleOrAuthor(@Param("name") String name, Pageable pageable);
 
-  @Query(value = "SELECT book.* FROM (book JOIN user ON book.user_id = user.id) JOIN book_genre ON book.id = book_genre.book_id WHERE (book.name LIKE :name OR user.name LIKE :name) AND book_genre.genre_id = :genreId ORDER BY user.name, book.name",
+  @Query(value = "SELECT book.* FROM (book JOIN user ON book.user_id = `user`.id) JOIN book_genre ON book.id = book_genre.book_id WHERE (book.name LIKE :name OR `user`.name LIKE :name) AND book_genre.genre_id = :genreId ORDER BY `user`.name, book.name",
           nativeQuery = true,
-          countQuery = "SELECT COUNT(*) FROM (book JOIN user ON book.user_id = user.id) JOIN book_genre ON book.id = book_genre.book_id WHERE (book.name LIKE :name OR user.name LIKE :name) AND book_genre.genre_id = :genreId"
+          countQuery = "SELECT COUNT(*) FROM (book JOIN user ON book.user_id = `user`.id) JOIN book_genre ON book.id = book_genre.book_id WHERE (book.name LIKE :name OR `user`.name LIKE :name) AND book_genre.genre_id = :genreId"
   )
   Page<Book> findByTitleOrAuthorAndGenre(@Param("name") String name,
       @Param("genreId") Long genreId, Pageable pageable);
