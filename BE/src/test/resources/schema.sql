@@ -151,7 +151,7 @@ CREATE TABLE user (
 -- Create table `friendship`
 --
 CREATE TABLE friendship (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL AUTO_INCREMENT (45),
   status enum ('ACCEPTED', 'PENDING', 'REJECTED') DEFAULT NULL,
   id_receiver bigint DEFAULT NULL,
   id_sender bigint DEFAULT NULL,

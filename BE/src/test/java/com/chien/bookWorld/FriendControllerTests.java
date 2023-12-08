@@ -116,4 +116,36 @@ class FriendControllerTests {
 
     Assert.assertEquals("Friend request sent!", response.getMessage());
   }
+
+  @Test
+  @Order(3)
+  public void testGetFriendRequestOfUser() throws Exception {
+
+    MvcResult mvcResult = mvc.perform(
+        get("/api/friend/request").header("Authorization", "Bearer " + chien9pmToken)
+            .contentType(MediaType.APPLICATION_JSON)).andReturn();
+    int status = mvcResult.getResponse().getStatus();
+    Assert.assertEquals(200, status);
+
+    String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    SuccessResponse response = mapFromJson(content, SuccessResponse.class);
+
+    Assert.assertEquals("Thành công!", response.getMessage());
+  }
+
+  @Test
+  @Order(4)
+  public void testGetFriendRequestOfUserForbidden() throws Exception {
+
+    MvcResult mvcResult = mvc.perform(
+        get("/api/friend/request").header("Authorization", "Bearer " + adminToken)
+            .contentType(MediaType.APPLICATION_JSON)).andReturn();
+    int status = mvcResult.getResponse().getStatus();
+    Assert.assertEquals(403, status);
+
+    String content = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+    AppExceptionBody response = mapFromJson(content, AppExceptionBody.class);
+
+    Assert.assertEquals("Forbidden! You don't have permission to add friends.", response.getMessage());
+  }
 }

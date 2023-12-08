@@ -330,7 +330,7 @@ class BookControllerTests {
     MvcResult mvcResult = mvc.perform(
             patch("/api/book/update/6").header("Authorization", "Bearer " + adminToken)
                 .contentType(MediaType.APPLICATION_JSON).content(
-                    "{\"id\":6,\"name\":\"new name\",\"numberPages\":1,\"publisher\":\"1\",\"publishDate\":\"2023-11-27T21:34:44\",\"introducing\":\"2\",\"urlPoster\":\"https://firebasestorage.googleapis.com/v0/b/ha-pj-a27a8.appspot.com/o/files%2FScreenshot%202023-07-22%20103902.png?alt=media&token=6cf55135-ae60-4adf-ac33-04b32e4bf59e\",\"scoring\":null,\"authorId\":null,\"authorName\":null,\"genres\":[{\"id\":1,\"name\":\"Mystery\"}],\"pdfs\":[],\"statusWithUser\":null}"))
+                    "{\"id\":6,\"name\":\"new name\"}"))
         .andReturn();
     int status = mvcResult.getResponse().getStatus();
     Assert.assertEquals(200, status);
@@ -351,7 +351,7 @@ class BookControllerTests {
     MvcResult mvcResult = mvc.perform(
             patch("/api/book/update/6").header("Authorization", "Bearer " + chien9pmToken)
                 .contentType(MediaType.APPLICATION_JSON).content(
-                    "{\"id\":6,\"name\":\"a\",\"numberPages\":1,\"publisher\":\"1\",\"publishDate\":\"2023-11-27T21:34:44\",\"introducing\":\"2\",\"urlPoster\":\"https://firebasestorage.googleapis.com/v0/b/ha-pj-a27a8.appspot.com/o/files%2FScreenshot%202023-07-22%20103902.png?alt=media&token=6cf55135-ae60-4adf-ac33-04b32e4bf59e\",\"scoring\":null,\"authorId\":null,\"authorName\":null,\"genres\":[{\"id\":1,\"name\":\"Mystery\"}],\"pdfs\":[],\"statusWithUser\":null}"))
+                    "{\"id\":6,\"name\":\"new name\"}"))
         .andReturn();
     int status = mvcResult.getResponse().getStatus();
     Assert.assertEquals(404, status);
@@ -372,7 +372,7 @@ class BookControllerTests {
     MvcResult mvcResult = mvc.perform(
             patch("/api/book/update/100").header("Authorization", "Bearer " + chien9pmToken)
                 .contentType(MediaType.APPLICATION_JSON).content(
-                    "{\"id\":100,\"name\":\"a\",\"numberPages\":1,\"publisher\":\"1\",\"publishDate\":\"2023-11-27T21:34:44\",\"introducing\":\"2\",\"urlPoster\":\"https://firebasestorage.googleapis.com/v0/b/ha-pj-a27a8.appspot.com/o/files%2FScreenshot%202023-07-22%20103902.png?alt=media&token=6cf55135-ae60-4adf-ac33-04b32e4bf59e\",\"scoring\":null,\"authorId\":null,\"authorName\":null,\"genres\":[{\"id\":1,\"name\":\"Mystery\"}],\"pdfs\":[],\"statusWithUser\":null}"))
+                    "{\"id\":6,\"name\":\"new name\"}"))
         .andReturn();
     int status = mvcResult.getResponse().getStatus();
     Assert.assertEquals(404, status);
