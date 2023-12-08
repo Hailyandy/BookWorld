@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -33,10 +34,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookBasketServiceImpl implements BookBasketService {
 
+  private static final Logger logger = Logger.getLogger(BookBasketServiceImpl.class.getName());
   @Autowired
   private BookBasketRepository bookBasketRepository;
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private BookRepository bookRepository;
   @Autowired
   private ModelMapper mapper;
 
@@ -100,16 +105,19 @@ public class BookBasketServiceImpl implements BookBasketService {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
 
-    Integer rowCount = bookBasketRepository.update(bookBasketUpdateDto.getBookId(),
-        userDetails.getId(),
-        bookBasketUpdateDto.getStatus());
-    if (rowCount == 0) {
-      bookBasketRepository.create(bookBasketUpdateDto.getBookId(),
-          userDetails.getId(),
-          bookBasketUpdateDto.getStatus());
-      // throw new AppException(404, 44,
-      // "Không tìm thấy bản ghi với id sách là " + bookBasketUpdateDto.getBookId()
-      // + " và id tài khoản là " + userDetails.getId() + "!");
+    BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), bookBasketUpdateDto.getBookId());
+    if (bookBasket != null) {
+        bookBasket.setStatus(bookBasketUpdateDto.getStatus());
+        bookBasketRepository.save(bookBasket);
+    } else {
+        BookBasket bookBasketCreate = new BookBasket(bookBasketUpdateDto.getBookId(), userDetails.getId());
+        bookBasketCreate.setBook(bookRepository.findById(bookBasketUpdateDto.getBookId())
+                .orElseThrow(() -> new AppException(404, 44, "Error: không tìm thấy sách với id!") ));
+        bookBasketCreate.setUser(userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new AppException(404, 44, "Error: Không tìm thấy người dùng!")  ));
+
+        bookBasketCreate.setStatus(bookBasketUpdateDto.getStatus());
+        bookBasketRepository.save(bookBasketCreate);
     }
 
     final Map<String, Object> body = new HashMap<>();
