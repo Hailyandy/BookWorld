@@ -21,7 +21,7 @@ public interface FriendService extends GeneralService {
 
     Map<String, Object> removeFriend(Long friendId);
 
-    SuccessResponse getTotalFriendRequest();
+    SuccessResponse getTotalFriendRequest(Long id);
 
     SuccessResponse getUserSender();
 
