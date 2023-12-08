@@ -40,15 +40,14 @@ public class FriendController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+
     @PostMapping("/add")
     public ResponseEntity<Map<String, Object>> addFriend(
             @RequestBody AddFriendRequest friendRequest) {
 
         Map<String, Object> result = friendService.addFriend(friendRequest);
-        SuccessResponse countResult = friendService.getTotalFriendRequest();
         SuccessResponse getUserSender = friendService.getUserSender();
-        simpMessagingTemplate.convertAndSendToUser(friendRequest.getReceiverId().toString(), "/queue/friendRequest", getUserSender);
-        simpMessagingTemplate.convertAndSendToUser(friendRequest.getReceiverId().toString(), "/queue/totalFriendRequest", countResult);
+
         return ResponseEntity.ok(result);
     }
 
@@ -62,7 +61,6 @@ public class FriendController {
     public ResponseEntity<Map<String, Object>> acceptFriendRequest(
             @RequestBody AcceptFriendRequest friendRequest) {
         Map<String, Object> result = friendService.acceptFriendRequest(friendRequest.getSenderId());
-        simpMessagingTemplate.convertAndSendToUser(friendRequest.getSenderId().toString(), "/queue/friendRequestAccepted", result);
         return ResponseEntity.ok(result);
     }
 
@@ -81,7 +79,10 @@ public class FriendController {
     @DeleteMapping("/unfriend")
     public ResponseEntity<Map<String, Object>> removeFriend(
             @RequestBody RejectFriendRequest friendRequest) {
-        return ResponseEntity.ok(friendService.removeFriend(friendRequest.getSenderId()));
+        Map<String, Object> result = friendService.removeFriend(friendRequest.getSenderId());
+        SuccessResponse getUserSender = friendService.getUserSender();
+        simpMessagingTemplate.convertAndSendToUser(friendRequest.getSenderId().toString(), "/queue/friend/cancel", getUserSender);
+        return ResponseEntity.ok(result);
     }
 
 

@@ -14,9 +14,7 @@ import java.util.List;
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 
-    @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO Friendship (id_sender, id_receiver, status) VALUES (:senderId, :receiverId, 'PENDING')")
-    void addFriend(@Param("senderId") Long senderId, @Param("receiverId") Long receiverId);
+
 
     // // Tìm mối quan hệ bạn bè dựa trên sender và receiver
     // Friendship findBySenderAndReceiver(User sender, User receiver);
