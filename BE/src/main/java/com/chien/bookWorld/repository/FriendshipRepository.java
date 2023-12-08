@@ -33,4 +33,9 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     Friendship findBySenderIdAndReceiverIdAndStatus(Long senderId, Long receiverId, FriendshipStatus status);
 
     Friendship findBySenderIdAndReceiverId(Long senderId, Long receiverId);
+
+    @Query(nativeQuery = true, value = "SELECT COUNT(*) as total_pending_invitations\n" +
+            "FROM friendship\n" +
+            "WHERE status = 'PENDING' AND id_receiver = :receiverId")
+    Long countPendingInvitation(@Param("receiverId") Long receiverId);
 }
