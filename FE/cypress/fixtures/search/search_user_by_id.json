@@ -1,0 +1,15 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": {
+        "id": 9,
+        "userName": "chien9pm@gmail.com",
+        "name": "cho Bach",
+        "email": null,
+        "phone": null,
+        "birthDate": null,
+        "urlAvatar": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/0/18871.jpg?v=1&w=340&h=497",
+        "nativePlace": null,
+        "enabled": true
+    }
+}

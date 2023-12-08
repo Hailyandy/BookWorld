@@ -52,6 +52,7 @@ export const getAPI = async (endpoint, param, config = {}) => {
     // loading.hideLoading()
     if (response.status === 200) {
       // Lấy dữ liệu thành công
+      console.log(response.data)
       return response.data
     } else if (response.status === 201) {
       // Post dữ liệu thành công

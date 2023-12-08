@@ -1,8 +1,10 @@
 .avartar {
-    /* width: 200px; */
+    min-width: 200px;
     height: 46px;
     display: flex;
     flex-direction: row;
+    row-gap: 27px;
+    justify-content: space-between;
 }
 
 .avartar .name {

@@ -123,6 +123,14 @@ class UserService extends BaseService {
         return data
     }
 
+    /**
+     * Api để lấypost của người dùng hiện tại
+     * @returns
+     */
+    async getCurrentUserPostList() {
+        var data = await getAPI(`post/current`)
+        return data
+    }
 
     /**
  * API sử dụng để tạo report về bản pdf
@@ -177,7 +185,7 @@ class UserService extends BaseService {
      * @returns
      */
     async getUserInformation({ idUser }) {
-        var data = await getAPI(`idUser`, { idUser })
+        var data = await getAPI(`users/${idUser}`)
         return data
     }
     /**

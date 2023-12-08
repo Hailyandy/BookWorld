@@ -11,8 +11,8 @@ import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import React, { useState } from 'react';
 import Avartar from "~/components/ui/Avartar/Avartar";
-import CommentPost from "../PostComment/PostComment";
-import PostComment from "../PostComment/PostComment";
+// import CommentPost from "../PostComment/PostComment";
+// import PostComment from "../PostComment/PostComment";
 import StarRatings from "react-star-ratings";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -97,7 +97,7 @@ const ReviewPost = ({ postItem }) => {
                     <Button style={{ border: 'none' }} icon={<LikeOutlined />} onClick={handleLikeClick}>
                         Like ({likes})
                     </Button>
-                    <Button style={{ border: 'none' }} icon={<MessageOutlined />} onClick={() => setVisible(!visible)} >Comment</Button>
+                    <Button id="button-open-comment" style={{ border: 'none' }} icon={<MessageOutlined />} onClick={() => setVisible(!visible)} >Comment</Button>
                 </div>
                 <div>
                     <Divider className="bold-divider" />
@@ -117,7 +117,7 @@ const ReviewPost = ({ postItem }) => {
                     </div>
                     <Input
                         style={{ backgroundColor: '#d9d9d9', color: 'black' }}
-                        placeholder=" Viết bình luận"
+                        placeholder="Viết bình luận"
                         rows={4}
                         onChange={(e) => setCommentText(e.target.value)}
                     />

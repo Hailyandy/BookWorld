@@ -20,21 +20,24 @@ const headerStyle = {
     lineHeight: '48px',
     backgroundColor: '#7dbcea',
 
+
 };
 const contentStyle = {
     padding: '1rem',
     paddingBottom: '0px',
     minHeight: 120,
     lineHeight: '120px',
-    color: '#fff',
-    backgroundColor: '#108ee9',
+    color: 'black',
+    backgroundColor: '#fff',
+
+
 
 };
 const siderStyle = {
-    marginTop: '24px',
-    lineHeight: '120px',
+    lineHeight: '100px',
     color: '#fff',
     backgroundColor: 'white',
+    width: '50% '
 };
 const FriendRequestSearchPeoplePage = () => {
     const dispatch = useDispatch()
@@ -51,7 +54,18 @@ const FriendRequestSearchPeoplePage = () => {
     //chua hoan thanh, can code màn user cá nhân khi người ngoài muốn xem thông tin
     const onSelectSearchItem = (value) => {
         console.log('onSelect', value);
-        navigate(`/books/${value}`, { replace: true });
+        // dispatch(getUserInformationAsync({ idUser: value }))
+        //     .unwrap()
+        //     .then(async data => {
+        //         console.log(data)
+        //         return data ? data.data : [];
+        //     })
+        //     .catch(e => {
+        //         console.log(e);
+        //         return []
+        //     })
+        // return data
+        navigate(`../profileOther/${value}`, { relative: "path" });
     };
 
 
@@ -123,9 +137,9 @@ const FriendRequestSearchPeoplePage = () => {
 
     }
     return <div className="friend-req-search-pple-containner">
-        <Layout style={{ margin: '0px auto' }}>
+        <Layout style={{ margin: '0px auto', width: '80%' }}>
 
-            <Layout >
+            <Layout style={{}} >
                 <Header style={headerStyle}>Bạn có {friendRequestList.length} lời mời</Header>
                 <Content style={contentStyle}>
                     <List
@@ -171,13 +185,14 @@ const FriendRequestSearchPeoplePage = () => {
                 </Content>
 
             </Layout>
-            <Sider style={siderStyle} width={350}>
+            <Sider style={siderStyle} width={300}>
                 <Card
                     title="Tìm kiếm bạn bè"
                     bordered={false}
                     style={{
+                        borderRadius: '0px',
+                        height: '100%'
 
-                        borderRadius: '0px'
                     }}
                 >
                     <AutoComplete
@@ -185,7 +200,7 @@ const FriendRequestSearchPeoplePage = () => {
                         allowClear
                         style={{
                             borderRadius: "16px",
-                            width: 300,
+
                         }}
                         options={options}
                         onSelect={onSelectSearchItem}

@@ -23,7 +23,7 @@ import {
   SearchUserPage,
   FriendRequestSearchPeoplePage,
   UserDeclareInformationPage,
-  UserHomePage, RegisterPage, LoginPage, AuthorsError, HomePage, OtpCode, SearchBookPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf
+  UserHomePage, RegisterPage, LoginPage, AuthorsError, HomePage, OtpCode, SearchBookPage, BookDetailPage, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf
 } from './pages';
 import { ProtectedRoute, ModelReviewPost, TheAutofillItem, RootLayout, AuthorsLayout, GeneralLayout, SearchResultLayout } from './components';
 import { searchBookByNameOrAuthor, getAllGenresBookAsync, } from './slices/book';
@@ -32,7 +32,7 @@ import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllP
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
 import { searchBookByIdAsync } from './slices/book';
-import { getUserTopScoreByBookIdAsync, getListBookOfAuthorAsync, getUserPostListAsync, getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
+import { getUserInformationAsync, getCurrentUserPostListAsync, getUserTopScoreByBookIdAsync, getListBookOfAuthorAsync, getUserPostListAsync, getListFriendRequest, getListFriend, getAllMyBook, get50TopBookAsync, getAllAuthorsAsync, getListQuizByBookIdAsync } from './slices/user';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -59,7 +59,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           {/* HomePage */}
           <Route index element={<HomePage />} />
-          <Route path="select-fav-book" element={<SelectFavouritebook />} />
+          {/* <Route path="select-fav-book" element={<SelectFavouritebook />} /> */}
           {/* <QuizPage /> */}
 
 
@@ -170,10 +170,66 @@ function App() {
                     element={<UserDeclareInformationPage />}
                   // loader={authorDetailsLoader}
                   />
+
+                  <Route
+                    path="profileOther/:idUser"
+                    element={<GeneralProfile />}
+                    // loader={authorDetailsLoader}
+
+                    loader={async ({ params }) => {
+                      let data = { userInfor: '', postList: [] }
+                      data.postList = await dispatch(getUserPostListAsync({ userId: params.idUser }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      data.userInfor = await dispatch(getUserInformationAsync({ idUser: params.idUser }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      return data
+                    }}
+                  />
                   <Route
                     path="profile"
                     element={<GeneralProfile />}
-                  // loader={authorDetailsLoader}
+                    // loader={authorDetailsLoader}
+
+                    loader={async () => {
+                      let data = { userInfor: '', postList: [] }
+                      data.postList = await dispatch(getCurrentUserPostListAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      return data
+                    }}
                   />
                   <Route path="my-bookshelf" element={<GeneralLayout />} >
                     <Route

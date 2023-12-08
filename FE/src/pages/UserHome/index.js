@@ -76,11 +76,11 @@ const UserHomePage = () => {
                     menu={{
                         items,
                     }}>
-                    <a onClick={(e) => e.preventDefault()}>
-                        <Space>Bạn bè
-                            <DownOutlined />
-                        </Space>
-                    </a>
+
+                    <Space>Bạn bè
+                        <DownOutlined />
+                    </Space>
+
                 </Dropdown>
                 <div class="list-post">
                     {
