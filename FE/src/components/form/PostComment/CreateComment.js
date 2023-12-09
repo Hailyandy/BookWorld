@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Comment } from '@ant-design/compatible';
 import { useDispatch } from 'react-redux';
 import { createCommentAsync } from '~/slices/user';
+import { useContext } from "react";
+import { ConfigContext } from "~/context/GlobalContext";
 const { TextArea } = Input;
 const CommentList = ({ comments }) => (
     <List
@@ -25,12 +27,15 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
         </Form.Item>
     </>
 );
-const CreateComment = ({ fatherComment }) => {
+const CreateComment = ({ fatherComment, setVisible, visible }) => {
     const [comments, setComments] = useState([]);
     const [submitting, setSubmitting] = useState(false);
     const [value, setValue] = useState('');
     const dispatch = useDispatch()
+    const contextContent = useContext(ConfigContext);
     console.log(fatherComment)
+
+
     const handleSubmit = () => {
         if (!value) return;
         setSubmitting(true);
@@ -46,7 +51,7 @@ const CreateComment = ({ fatherComment }) => {
             .catch(e => {
                 console.log(e);
             })
-
+        setVisible(false)
     };
     const handleChange = (e) => {
         setValue(e.target.value);
@@ -54,17 +59,20 @@ const CreateComment = ({ fatherComment }) => {
     return (
         <>
             {/* {comments.length > 0 && <CommentList comments={comments} />} */}
-            <Comment
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-                content={
-                    <Editor
-                        onChange={handleChange}
-                        onSubmit={handleSubmit}
-                        submitting={submitting}
-                        value={value}
-                    />
-                }
-            />
+            {visible && (
+                <Comment
+                    avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+                    content={
+                        <Editor
+                            onChange={handleChange}
+                            onSubmit={handleSubmit}
+                            submitting={submitting}
+                            value={value}
+                        />
+                    }
+                />
+            )}
+
         </>
     );
 };
