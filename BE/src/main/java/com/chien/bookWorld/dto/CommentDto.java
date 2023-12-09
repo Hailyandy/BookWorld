@@ -14,8 +14,8 @@ public class CommentDto {
 
     private String content;
     private String id;
-    private ZonedDateTime createdOn;
-    private Timestamp lastUpdatedOn;
+    private Instant createdOn;
+    private Instant lastUpdatedOn;
     private Double commentScoring;
     private UUID parentId;
     private Long userId;

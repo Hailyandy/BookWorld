@@ -40,16 +40,10 @@ public class Comment {
   @Column(name = "introducing", length = 65535)
   private String content;
 
-  private Timestamp createdOn;
-  private Timestamp lastUpdatedOn;
+  @CreationTimestamp(source = SourceType.DB)
+  private Instant createdOn;
+  @UpdateTimestamp(source = SourceType.DB)
+  private Instant lastUpdatedOn;
   private Double commentScoring;
   private UUID parentId;
-
-  @PrePersist
-  public void prePerist() {
-    this.createdOn = Timestamp.from(Instant.now());
-  }
-
-  @PreUpdate
-  public void preUpdate() {this.lastUpdatedOn = Timestamp.from(Instant.now());}
 }
