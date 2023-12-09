@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -73,4 +76,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 "ORDER BY \n" +
                 "    months.month;\n")
         List<Object[]> countNewUserRegistrationsByMonth(@Param("year_") int year);
+
+        @Query(nativeQuery = true, value = "SELECT user.* FROM user\n" +
+                "join user_role on user.id = user_role.user_id\n" +
+                "join role on user_role.role_id = role.id where user.enabled = 0 and role.name = 'ROLE_AUTHOR'")
+        Page<User> getUserAuthorNoEnable(Pageable pageable);
 }

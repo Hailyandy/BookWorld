@@ -62,8 +62,4 @@ public class AuthController {
     return ResponseEntity.ok(authService.otpVerification(otpVerificationDto));
   }
 
-//  public ResponseEntity<SuccessResponse> getListAuthor(
-//  ) {
-//
-//  }
 }
