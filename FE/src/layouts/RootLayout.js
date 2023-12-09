@@ -148,11 +148,11 @@ export default function RootLayout() {
 
 
     function connect() {
-        let Sock = new SockJS('http://localhost:8080/chat');
+        let Sock = new SockJS('https://book-world-0f7cf4c7e1a0.herokuapp.com/chat');
         let headers = {
             "Content-Type": "application/json",
             "Authorization": `${tokenService.getLocalAccessToken()}`,
-            "Access-Control-Allow-Origin": "http://localhost:3000/"
+            "Access-Control-Allow-Origin": "*"
         }
         contextContent.stompClient = Stomp.over(Sock);
         contextContent.stompClient.connect(headers, function (frame) {
