@@ -1,6 +1,10 @@
 package com.chien.bookWorld.service.impl;
 
+import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +96,10 @@ public class CommentServiceImpl implements CommentService {
                     commentDto.setUserName(comment.getUser().getName());
                     commentDto.setUrlAvatarUser(comment.getUser().getUrlAvatar());
                     commentDto.setUserId(comment.getUser().getId());
+                    String timeZone = "Asia/Ho_Chi_Minh";
+                    ZonedDateTime zonedDateTime = timestampToZonedDateTime(comment.getCreatedOn(), timeZone);
+                    commentDto.setCreatedOn(zonedDateTime);
+                    logger.info("test time" + zonedDateTime.toString());
                     return commentDto;
                 }).collect(Collectors.toList());
         return new PageResponse(totalPages, pageSize, totalRecord, numberPage, commentDtos);
@@ -107,8 +115,6 @@ public class CommentServiceImpl implements CommentService {
         logger.info(c.getPostId().toString());
         comment.setPost(postRepository.findById(c.getPostId())
                 .orElseThrow(() -> new AppException(404, 44, "Post not found!")));
-        Instant now = Instant.now();
-        comment.setCreatedOn(now);
         comment.setId(UUID.randomUUID());
         comment.setUser(userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new AppException(404, 44, "User not found!")));
@@ -120,12 +126,20 @@ public class CommentServiceImpl implements CommentService {
         Long totalComment = post.getTotalComment() + 1;
         post.setTotalComment(totalComment);
         postRepository.save(post);
+        String timeZone = "Asia/Ho_Chi_Minh";
+        ZonedDateTime zonedDateTime = timestampToZonedDateTime(comment1.getCreatedOn(), timeZone);
         CommentDto commentDto = mapper.map(comment1, CommentDto.class);
+        commentDto.setCreatedOn(zonedDateTime);
         commentDto.setUserId(comment1.getUser().getId());
         commentDto.setPostId(comment1.getPost().getId());
         commentDto.setUserName(comment1.getUser().getName());
         commentDto.setUrlAvatarUser(comment1.getUser().getUrlAvatar());
         return new SuccessResponse(commentDto);
+    }
+
+    private static ZonedDateTime timestampToZonedDateTime(Timestamp timestamp, String targetTimeZone) {
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        return ZonedDateTime.of(localDateTime, ZoneId.of(targetTimeZone));
     }
 
     @Override
