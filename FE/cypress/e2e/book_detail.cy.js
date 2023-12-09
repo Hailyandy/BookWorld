@@ -73,59 +73,48 @@ describe('Spec màn hình book detail, thêm file pdf và làm bài trắc nghi�
         }).as('search_book_by_text');
         cy.get('.ant-select-dropdown .ant-select-item-option').first().click()
     });
-    //  it('Vào được màn detail của quyển sách có id là 1', () => { });
-    // it('Làm bài trắc nghiệm của quyển sách có id là 1', () => {
-    // cy.intercept('GET', '/api/questions?idBook=1', {
-    //     statusCode: 200,
-    //     fixture: 'book/question_book_id_1.json',
-    // }).as('search_question_book_id_1');
-    // cy.contains('Làm bài trắc nghiệm').first().click()
+    it('Vào được màn detail của quyển sách có id là 1', () => { });
+    it('Làm bài trắc nghiệm của quyển sách có id là 1', () => {
+        cy.intercept('GET', '/api/questions?idBook=1', {
+            statusCode: 200,
+            fixture: 'book/question_book_id_1.json',
+        }).as('search_question_book_id_1');
+        cy.contains('Làm bài trắc nghiệm').first().click()
 
-    // const NUM_CLICKS = 3;
-    // cy.intercept('PUT', '/api/questions', {
-    //     statusCode: 200,
-    //     fixture: 'book/scoring_after_finish_test_book_id_1.json',
-    // }).as('scoring_after_finish_test_book_id_1');
-    // for (let i = 0; i < NUM_CLICKS; i++) {
+        const NUM_CLICKS = 3;
+        cy.intercept('PUT', '/api/questions', {
+            statusCode: 200,
+            fixture: 'book/scoring_after_finish_test_book_id_1.json',
+        }).as('scoring_after_finish_test_book_id_1');
+        for (let i = 0; i < NUM_CLICKS; i++) {
 
-    //     cy.get('.answerOption').first().click()
+            cy.get('.answerOption').first().click()
 
-    //     if (i < NUM_CLICKS - 1) {
-    //         cy.wait(500) // wait 500ms
-    //     }
+            if (i < NUM_CLICKS - 1) {
+                cy.wait(500) // wait 500ms
+            }
 
-    // }
+        }
 
-    // cy.get('.answerOption').first().click()
-    // cy.get('.answerOption').first().click()
-    //   });
+        cy.get('.answerOption').first().click()
+        cy.get('.answerOption').first().click()
+    });
 
-    // it('Upload file pdf', () => {
-    // cy.fixture('aacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf').then(fileContent => {
-    //     cy.get('input[type="file"]').attachFile({
-    //         fileContent: fileContent.toString(),
-    //         fileName: 'aacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf',
-    //         mimeType: 'pdf'
-    //     });
-    // });
-    // cy.intercept('POST', '/api/pdf', {
-    //     statusCode: 200,
-    //     fixture: 'comment/comment_success.json',
-    // }).as('scoring_after_finish_test_book_id_1');
-    //   });
+    it('Upload file pdf', () => {
+        cy.fixture('aacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf').then(fileContent => {
+            cy.get('input[type="file"]').attachFile({
+                fileContent: fileContent.toString(),
+                fileName: 'aacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf',
+                mimeType: 'pdf'
+            });
+        });
+        cy.intercept('POST', '/api/pdf', {
+            statusCode: 200,
+            fixture: 'comment/comment_success.json',
+        }).as('scoring_after_finish_test_book_id_1');
+    });
 
     it('Báo cáo file pdf', () => {
-        // cy.fixture('aacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf').then(fileContent => {
-        //     cy.get('input[type="file"]').attachFile({
-        //         fileContent: fileContent.toString(),
-        //         fileName: 'aacF81H_TsWnBfNR_x7FIg_36299b28fa0c4a5aba836111daad12f1_DAC8-Case-Study-1.pdf',
-        //         mimeType: 'pdf'
-        //     });
-        // });
-        // cy.intercept('POST', '/api/pdf', {
-        //     statusCode: 200,
-        //     fixture: 'comment/comment_success.json',
-        // }).as('scoring_after_finish_test_book_id_1');
         cy.contains('Báo cáo file pdf').first().click()
         cy.get('#basic_reason').first({ force: true }).type('File xau', { force: true })
         cy.get('#basic_description').first({ force: true }).type('Phong Chu xau qua', { force: true })

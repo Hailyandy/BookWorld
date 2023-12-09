@@ -1,0 +1,27 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "totalPage": 1,
+    "pageSize": 20,
+    "totalRecord": 1,
+    "pageNumber": 0,
+    "data": [
+        {
+            "id": 11,
+            "bookId": null,
+            "pdfId": null,
+            "userId": 12,
+            "scoring": 4,
+            "content": "aaaaaa",
+            "totalLike": 0,
+            "totalComment": 0,
+            "createdOn": "2023-12-08T20:28:09.133655Z",
+            "lastUpdatedOn": "2023-12-08T20:28:09.133655Z",
+            "userName": "Nguyện giỏi",
+            "urlAvatarUser": "https://307a0e78.vws.vegacdn.vn/view/v2/image/img.book/0/0/1/42194.jpg?v=1&w=340&h=497",
+            "authorName": null,
+            "authorId": 2,
+            "bookName": "The Girl with the Dragon Tattoo"
+        }
+    ]
+}

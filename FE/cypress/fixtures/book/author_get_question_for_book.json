@@ -1,0 +1,30 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "data": [
+        {
+            "id": "d35a2521-4b82-4755-8747-4747d1b5d050",
+            "idBook": 71,
+            "questionsText": null,
+            "optionDtos": [
+                {
+                    "options_text": "73046a24-fec8-4108-ab38-0c45a31c2f9d",
+                    "id": 1
+                },
+                {
+                    "options_text": "ba1e649b-1d63-4829-be7d-5a103d108d2e",
+                    "id": 2
+                },
+                {
+                    "options_text": "4ad5ff23-ed9d-4836-86a6-10f3f82ec60e",
+                    "id": 3
+                },
+                {
+                    "options_text": "1c5c362d-ad00-46ea-9bde-b72065c0bb32",
+                    "id": 4
+                }
+            ],
+            "scoring": null
+        }
+    ]
+}
