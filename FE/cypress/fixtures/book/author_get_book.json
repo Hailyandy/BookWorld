@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "message": "Thành công!",
+    "totalPage": 1,
+    "pageSize": 20,
+    "totalRecord": 1,
+    "pageNumber": 0,
+    "data": [
+        {
+            "id": 71,
+            "name": "a",
+            "numberPages": 12,
+            "publisher": "a",
+            "publishDate": "2023-12-05T09:50:56",
+            "introducing": "a",
+            "urlPoster": "https://firebasestorage.googleapis.com/v0/b/bookproject-70431.appspot.com/o/files%2FScreenshot%202023-07-22%20095054.png?alt=media&token=a4200ab7-b1cd-4796-9d27-8c46f8204d0e",
+            "scoring": null,
+            "authorId": 13,
+            "authorName": "Chiến Nhật Bản",
+            "genres": [
+                {
+                    "id": 9,
+                    "name": "Nghệ thuật sống"
+                }
+            ],
+            "statusWithUser": null
+        }
+    ]
+}

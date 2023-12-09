@@ -13,14 +13,22 @@ export const updateLocalHostUrl = (updateStringrole) => {
     BSHAREresource.localHost.url = `/${updateStringrole}/`
     BSHAREresource.menuItems = {
         ROLE_AUTHOR_MenuItem: [
+            // {
+            //     key: 'create_test',
+            //     label: (
+            //         <Link to={`${localHost.url}create-test`}>
+            //             Tạo bài test
+            //         </Link>
+            //     ),
+            // },
             {
-                key: 'community',
-                label: 'Cộng đồng'
+                key: 'created_post',
+                label: (
+                    <Link to={`${localHost.url}author-created-book`}>
+                        Sách tác giả
+                    </Link>
+                ),
             },
-            {
-                key: 'book_store',
-                label: 'Kho sách'
-            }
         ],
 
         ROLE_USER_MenuItem: [
@@ -193,14 +201,14 @@ const BSHAREresource = {
 
     menuItems: {
         ROLE_AUTHOR_MenuItem: [
-            {
-                key: 'create_test',
-                label: (
-                    <Link to={`${localHost.url}create-test`}>
-                        Tạo bài test
-                    </Link>
-                ),
-            },
+            // {
+            //     key: 'create_test',
+            //     label: (
+            //         <Link to={`${localHost.url}create-test`}>
+            //             Tạo bài test
+            //         </Link>
+            //     ),
+            // },
             {
                 key: 'created_post',
                 label: (

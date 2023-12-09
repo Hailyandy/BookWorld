@@ -19,6 +19,7 @@ const { Text } = Typography;
 const InputPassword = Input.Password
 function Login() {
     const config = useContext(ConfigContext);
+    console.log(config)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [form] = Form.useForm();
@@ -41,7 +42,7 @@ function Login() {
                 console.log(data)
                 tokenService.setUser(data)
                 updateLocalHostUrl(tokenService.getUserRoleName())
-                await config()
+                await config.reloadAppB
                 if (tokenService.getRole("ROLE_USER")) {
                     console.log('dong 45 ffile login')
                     dispatch(getListFriendRequest('not param'))
@@ -60,7 +61,9 @@ function Login() {
                 }
 
                 // await config()
-                if (tokenService.getRole("ROLE_ADMIN") || tokenService.getRole("ROLE_AUTHOR")) navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
+                if (tokenService.getRole("ROLE_ADMIN") || tokenService.getRole("ROLE_AUTHOR")) {
+                    navigate(`/${tokenService.getUserRoleName()}`, { replace: true });
+                }
                 return;
             })
             .catch(e => {

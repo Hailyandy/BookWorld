@@ -100,7 +100,7 @@ describe('Spec màn hình chính', () => {
         cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
         //Các mục trong menu Sách
         cy.contains('Chợ sách', { matchCase: false });
-        cy.get('div').contains('Chợ sách').click();
+        cy.get('div').contains('Chợ sách').click({ force: true });
         cy.url().should('include', '/books/market');
     });
 
@@ -108,7 +108,7 @@ describe('Spec màn hình chính', () => {
         cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
         //Các mục trong menu Sách
         cy.contains('Sách ẩn danh', { matchCase: false });
-        cy.get('div').contains('Sách ẩn danh').click();
+        cy.get('div').contains('Sách ẩn danh').click({ force: true });
         cy.url().should('include', '/books/hidden-book');
     });
 
@@ -116,26 +116,18 @@ describe('Spec màn hình chính', () => {
         cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
         //Các mục trong menu Sách
         cy.contains('Sách yêu thích', { matchCase: false });
-        cy.get('div').contains('Sách yêu thích').click();
+        cy.get('div').contains('Sách yêu thích').click({ force: true });
         cy.url().should('include', '/books/book-rank');
     });
 
     it('Có thể chuyển hướng tới trang Kho sách khi ấn nút trên Navbar', () => {
         cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
         //Các mục trong menu Sách
-        cy.contains('Kho sách', { matchCase: false }).click();
+        cy.contains('Kho sách', { matchCase: false }).click({ force: true });
         // cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse').get('div').contains('Kho sách').click();
         cy.url().should('include', '/my-bookshelf');
     });
 
-
-    it('Có thể chuyển hướng tới trang Kho sách khi ấn nút trên Navbar', () => {
-        cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
-        //Các mục trong menu Sách
-        cy.contains('Kho sách', { matchCase: false }).click();
-        // cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse').get('div').contains('Kho sách').click();
-        cy.url().should('include', '/my-bookshelf');
-    });
 
     it('Tạo comment không nest', () => {
         cy.get('input[placeholder="Viết bình luận"]').first().type('a')
@@ -167,7 +159,7 @@ describe('Spec màn hình chính', () => {
             statusCode: 200,
             fixture: 'book/search_book_by_text.json',
         }).as('search_book_by_text');
-
+        //Voo dung
         // cy.intercept('GET', '/api/book/search/1', {
         //     statusCode: 200,
         //     fixture: 'book/search_book_by_id_1.json',

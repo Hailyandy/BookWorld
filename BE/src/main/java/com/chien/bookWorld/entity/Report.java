@@ -35,7 +35,7 @@ public class Report {
     private Long id;
 
     private String reason;
-    private ReportStatus status;
+    private String status;
     private String description;
     private Timestamp timestamp;
 

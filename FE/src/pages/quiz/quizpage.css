@@ -2,3 +2,18 @@
     padding: 20px 0;
 
 }
+
+.create-test-containner {
+    font-size: 14px;
+    border: 2px solid #ccc;
+    width: 60%;
+    min-width: 800px;
+    margin: 0rem 20% 1rem 20%;
+    padding: 2rem;
+    background-color: white;
+    border-radius: var(--border-radius-containner);
+}
+
+.father-create-test-containner h2 {
+    text-align: center;
+}

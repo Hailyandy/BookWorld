@@ -6,13 +6,17 @@ import { Breadcrumb, Layout, Space, Card, List, Avatar, Button, Input, Tooltip, 
 import tokenService from "~/services/token.service"
 import BSHAREnum from "~/helper/BSHAREenum"
 import './css/rootlayout.css'
-import { ConfigContext } from "~/context/GlobalContext";
+
 import { BookService } from "~/services/book.service";
 import { useSelector } from 'react-redux';
-import { getListFriendRequest } from "~/slices/user";
+import { getListFriendRequest, receiveFriendRequestFromSocket } from "~/slices/user";
 import { useDispatch } from 'react-redux';
 import { updateLocalHostUrl } from "~/helper/BSHAREresource";
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
+import { ConfigContext } from "~/context/GlobalContext";
 
+// import { connect } from '~/helper/socket';
 const breadcrumbNameMap = {
     //Fatherless route
     '/book-market': 'Chợ sách',
@@ -64,7 +68,11 @@ for (let key of Object.keys(breadcrumbNameMap)) {
     // Add the text before the key and assign the same value
     newBreadcrumbNameMap[`${tokenService.getUserRoleName()}${key}`] = breadcrumbNameMap[key];
 }
+export var stompClient = null;
 export default function RootLayout() {
+    const dispatch = useDispatch()
+    const contextContent = useContext(ConfigContext);
+    const [friendRequestCount, setFriendRequestCount] = useState(0)
     const userStateFormSlice = useSelector(state => state.users);
     // updateLocalHostUrl(tokenService.getUserRoleName())
     // let a = new BookService()
@@ -131,9 +139,39 @@ export default function RootLayout() {
             key: 'home',
         },
     ].concat(extraBreadcrumbItems);
+    useEffect(() => {
+        if (isSignIn) {
+            connect()
+        }
+        console.log('connectsocket')
+    }, [isSignIn])
+
+
+    function connect() {
+        let Sock = new SockJS('http://localhost:8080/chat');
+        let headers = {
+            "Content-Type": "application/json",
+            "Authorization": `${tokenService.getLocalAccessToken()}`,
+            "Access-Control-Allow-Origin": "http://localhost:3000/"
+        }
+        contextContent.stompClient = Stomp.over(Sock);
+        contextContent.stompClient.connect(headers, function (frame) {
+            console.log('Connected: ' + frame);
+            contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/request/total`, onMessageReceived);
+        });
+
+    }
+
+    const onMessageReceived = (payload) => {
+        var payloadData = JSON.parse(payload.body);
+        //1
+        setFriendRequestCount(payloadData.data)
+        // dispatch(receiveFriendRequestFromSocket(payloadData.data))
+
+    }
     return (
         <div className="root-layout" >
-            <Header headerType={isSignIn ? BSHAREnum.headerType.signed_in : BSHAREnum.headerType.not_sign_in} reloadRootLayout={setIsSignIn}></Header>
+            <Header friendRequestCount={friendRequestCount} headerType={isSignIn ? BSHAREnum.headerType.signed_in : BSHAREnum.headerType.not_sign_in} reloadRootLayout={setIsSignIn}></Header>
             {/* <span onClick={() => config('topLeft', 'aaa')}>click me</span> */}
             <div className="center-horizontal" style={{ height: '8%', backgroundColor: 'var(--background-color-white)', padding: '0rem 0px 0rem 5rem' }} >
                 <Breadcrumb items={breadcrumbItems} />
