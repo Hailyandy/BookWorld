@@ -7,6 +7,7 @@ import com.chien.bookWorld.entity.Role;
 import com.chien.bookWorld.entity.User;
 import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.FriendshipRepository;
 import com.chien.bookWorld.repository.UserRepository;
@@ -26,6 +27,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -274,5 +277,49 @@ public class UserServiceImpl implements UserService {
     )).collect(Collectors.toList()));
   }
 
+  @Override
+  public PageResponse getUserAuthorEneble(Pageable pageable) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+    Page<User> users = userRepository.getUserAuthorNoEnable(pageable);
+    int totalPages = users.getTotalPages();
+    int numberPage = users.getNumber();
+    long totalRecord = users.getTotalElements();
+    int pageSize = users.getSize();
+    List<String> roles = userDetails.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority).toList();
+    boolean isAdmin = roles.contains("ROLE_ADMIN");
+    if (!isAdmin) {
+      throw new AppException(401, 41, "Error: Không phải role admin!");
+    }
 
+    List<UserDto> getAuthors = users.stream().map(user -> {
+        UserDto userDto = mapper.map(user, UserDto.class);
+        return userDto;
+    }).collect(Collectors.toList());
+    return new PageResponse(totalPages, pageSize, totalRecord, numberPage, getAuthors);
+  }
+
+  @Override
+  public Map<String, Object> acceptEnable(Long id) {
+    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+    List<String> roles = userDetails.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority).toList();
+    boolean isAdmin = roles.contains("ROLE_ADMIN");
+    if (!isAdmin) {
+      throw new AppException(401, 41, "Error: Không phải role admin!");
+    }
+
+    User user = userRepository.findById(id).orElseThrow(
+            () -> new AppException(404, 44, "Error: Không tìm thấy user!")
+    );
+
+    user.setEnabled(true);
+    userRepository.save(user);
+    final Map<String, Object> body = new HashMap<>();
+    body.put("code", 0);
+    body.put("message", "Enable Successful!");
+    return body;
+  }
 }

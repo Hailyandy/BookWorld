@@ -50,6 +50,7 @@ public class AuthServiceImpl implements AuthService {
   private PasswordEncoder encoder;
   @Autowired
   private RoleRepository roleRepository;
+
   @Autowired
   private EmailService emailService;
   @Value("${app.jwtSecret}")

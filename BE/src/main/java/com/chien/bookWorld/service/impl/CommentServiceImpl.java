@@ -62,6 +62,30 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
+  public Boolean deleteComment(UUID id, Long postId) {
+    Comment comment = commentRepository.findById(id).orElseThrow(
+        () -> new AppException(404, 44, "comment not found!"));
+    Post post = comment.getPost();
+    commentRepository.delete(comment);
+    List<Comment> comments = getRepliesByParentId(id);
+    if (!comments.isEmpty()) {
+      for (Comment reply : comments) {
+        deleteComment(reply.getId(), postId);
+      }
+    }
+    Long totalComment = post.getTotalComment();
+    totalComment = totalComment - 1;
+    post.setTotalComment(totalComment);
+    postRepository.save(post);
+    return true;
+  }
+
+  public List<Comment> getRepliesByParentId(UUID parentId) {
+    List<Comment> comments = commentRepository.findByParentId(parentId);
+    return comments;
+  }
+
+  @Override
   public SuccessResponse findAll() {
     // TODO Auto-generated method stub
     return null;
@@ -121,42 +145,26 @@ public class CommentServiceImpl implements CommentService {
     Long totalComment = post.getTotalComment() + 1;
     post.setTotalComment(totalComment);
     postRepository.save(post);
-    return new SuccessResponse(mapper.map(comment1, CommentDto.class));
-  }
-
-  @Override
-  public Boolean deleteComment(UUID id, Long postId) {
-    Comment comment = commentRepository.findById(id).orElseThrow(
-        () -> new AppException(404, 44, "comment not found!")
-    );
-    Post post = comment.getPost();
-    commentRepository.delete(comment);
-    List<Comment> comments = getRepliesByParentId(id);
-    if (!comments.isEmpty()) {
-      for (Comment reply : comments) {
-        deleteComment(reply.getId(), postId);
-      }
-    }
-    Long totalComment = post.getTotalComment();
-    totalComment = totalComment - 1;
-    post.setTotalComment(totalComment);
-    postRepository.save(post);
-    return true;
-  }
-
-  public List<Comment> getRepliesByParentId(UUID parentId) {
-    List<Comment> comments = commentRepository.findByParentId(parentId);
-    return comments;
+    CommentDto commentDto = mapper.map(comment1, CommentDto.class);
+    commentDto.setUserId(comment1.getUser().getId());
+    commentDto.setPostId(comment1.getPost().getId());
+    commentDto.setUserName(comment1.getUser().getName());
+    commentDto.setUrlAvatarUser(comment1.getUser().getUrlAvatar());
+    return new SuccessResponse(commentDto);
   }
 
   @Override
   public SuccessResponse updateComment(CommentUpdateDto commentUpdateDto) {
     Comment comment = commentRepository.findById(commentUpdateDto.getId()).orElseThrow(
-        () -> new AppException(404, 44, "comment not found!")
-    );
+        () -> new AppException(404, 44, "comment not found!"));
     comment.setContent(commentUpdateDto.getContent());
     Comment commentUpdate = commentRepository.save(comment);
-    return new SuccessResponse(mapper.map(commentUpdate, CommentDto.class));
+    CommentDto commentDto = mapper.map(commentUpdate, CommentDto.class);
+    commentDto.setUserId(commentUpdate.getUser().getId());
+    commentDto.setPostId(commentUpdate.getPost().getId());
+    commentDto.setUserName(commentUpdate.getUser().getName());
+    commentDto.setUrlAvatarUser(commentUpdate.getUser().getUrlAvatar());
+    return new SuccessResponse(commentDto);
   }
 
 }

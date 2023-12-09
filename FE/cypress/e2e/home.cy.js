@@ -140,9 +140,11 @@ describe('Spec màn hình chính', () => {
     });
 
     it('Tạo comment nest', () => {
+        cy.intercept('**/sockjs-node/**', {
+            statusCode: 200
+        }).as('sockjs')
         cy.get('#button-open-comment').first().click()
         cy.get('.ant-comment-actions').first().contains('Phản hồi').click()
-
         cy.get('#input-create-nest-comment').first().click().type('test nest comment')
         cy.intercept('POST', '/api/comment', {
             statusCode: 200,
