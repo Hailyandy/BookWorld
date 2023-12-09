@@ -1,5 +1,5 @@
 
-import { SearchBookPage, BookDetailPage, SelectFavouritebook, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from '~/pages'
+import { SearchBookPage, BookDetailPage, SelectFavouritebook, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf } from '~/pages'
 import {
     RootLayout,
     AuthorsLayout,
