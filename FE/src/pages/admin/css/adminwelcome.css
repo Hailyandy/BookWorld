@@ -1,7 +1,7 @@
 .admins {
     width: 100%;
     height: var(--height-body);
-    background-image: url(https://img.freepik.com/premium-photo/various-colorful-stationery-school-office-pink-background-with-copyspace_127032-1704.jpg?size=626&ext=jpg&ga=GA1.1.1034959876.1697068800&semt=ais);
+    background-image: url('https://img.freepik.com/premium-photo/various-colorful-stationery-school-office-pink-background-with-copyspace_127032-1704.jpg?size=626&ext=jpg&ga=GA1.1.1034959876.1697068800&semt=ais');
     background-size: cover;
     background-attachment: fixed;
     margin: 0;

@@ -18,6 +18,10 @@
 
 .last-form-item {
     margin-bottom: 0px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
 }
 
 .addpost-container .ant-select-selection-item-remove {

@@ -34,6 +34,15 @@ class AdminService extends BaseService {
         return data
     }
 
+    /**
+     * Api để lấy danh sách author đang yêu cầu phê duyệt
+     * @returns
+     */
+    async getAllNeedAcceptAccount() {
+        var data = await getAPI(`users/author/enable`)
+        return data.data
+    }
+
 
     /**
     * API sử dụng để admin thêm sách mới vào hệ thống
@@ -62,6 +71,15 @@ class AdminService extends BaseService {
             genreIds,
 
         })
+        return data
+    }
+    /**
+     * Api để enable tài khoản.
+     * @param {*} param0
+     * @returns
+     */
+    async acceptAccount({ authorId }) {
+        var data = await postAPI(`users/author/${authorId}/enable`)
         return data
     }
 

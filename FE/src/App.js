@@ -28,7 +28,7 @@ import {
 } from './pages';
 import { ProtectedRoute, ModelReviewPost, TheAutofillItem, RootLayout, AuthorsLayout, GeneralLayout, SearchResultLayout } from './components';
 import { searchBookByNameOrAuthor, getAllGenresBookAsync, } from './slices/book';
-import { searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllPostAsync, statisticAsync } from './slices/user';
+import { getAllNeedAcceptAccountAsync, searchUserByName, getAllReportPdfAsync, getAllSuggestBookAsync, getAllPostAsync, statisticAsync } from './slices/user';
 //page mẫu, gọi api luôn khi chạy vào route này, cần tham khảo nên để import ra ngoài
 import Authors from './pages/Author/Authors';
 import { useDispatch } from 'react-redux';
@@ -53,6 +53,38 @@ function App() {
   const [reload, setReload] = useState(0);
   const dispatch = useDispatch()
   const userRoleArray = tokenService.getRole()
+
+  const CommonRoute = () => {
+    return (<Route
+      path="profile"
+      element={<GeneralProfile />}
+      loader={async () => {
+        let data = { userInfor: '', postList: [] }
+        data.postList = await dispatch(getUserPostListAsync({ userId: tokenService.getUser().id }))
+          .unwrap()
+          .then(async data => {
+            console.log(data)
+            return data ? data.data : [];
+          })
+          .catch(e => {
+            console.log(e);
+            return []
+          })
+        data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+          .unwrap()
+          .then(async data => {
+            console.log(data)
+            return data ? data.data : [];
+          })
+          .catch(e => {
+            console.log(e);
+            return []
+          })
+        return data
+      }}
+    />)
+
+  }
   /** @type {*} */
   const router = createHashRouter(
     createRoutesFromElements(
@@ -74,12 +106,66 @@ function App() {
             */
             tokenService.getRole(BSHAREnum.roles.user) && (
               <>
-                <Route path={`${tokenService.getUserRoleName()}`} element={<GeneralLayout />}>
+                <Route path={`/${tokenService.getUserRoleName()}`} element={<GeneralLayout />} loader={async () => {
+                  var data = {}
+
+                  data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+                    .unwrap()
+                    .then(async data => {
+                      console.log(data)
+                      return data ? data.data : [];
+                    })
+                    .catch(e => {
+                      console.log(e);
+                      return []
+                    })
+                  return data
+                }}>
+                  <Route
+                    path="fill-infor"
+                    element={<UserDeclareInformationPage />}
+                    loader={async () => {
+                      var data = { genres: [], authors: [] }
+                      data.genres = await dispatch(getAllGenresBookAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+
+                      data.authors = await dispatch(getAllAuthorsAsync())
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      return data
+                    }}
+                  />
                   <Route
                     index
                     element={<UserHomePage />}
                     loader={async () => {
-                      var data = { listFriendRequest: [], userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
+                      var data = { userInfor: {}, listFriendRequest: [], userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
+
+                      data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
                       data.listFriendRequest = await dispatch(getListFriendRequest('not param'))
                         .unwrap()
                         .then(async data => {
@@ -145,7 +231,35 @@ function App() {
                     }}
                   // errorElement={<AuthorsError />}
                   />
-
+                  <Route
+                    path="profile"
+                    element={<GeneralProfile />}
+                    loader={async () => {
+                      let data = { userInfor: '', postList: [] }
+                      data.postList = await dispatch(getUserPostListAsync({ userId: tokenService.getUser().id }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+                        .unwrap()
+                        .then(async data => {
+                          console.log(data)
+                          return data ? data.data : [];
+                        })
+                        .catch(e => {
+                          console.log(e);
+                          return []
+                        })
+                      return data
+                    }}
+                  />
+                  {/* <CommonRoute /> */}
                   <Route path="user-post-list" element={<UserCreatedPost />}
                     loader={async () => {
                       var data = { userPost: [] }
@@ -177,11 +291,7 @@ function App() {
                         })
 
                     }} />
-                  <Route
-                    path="fill-infor"
-                    element={<UserDeclareInformationPage />}
-                  // loader={authorDetailsLoader}
-                  />
+
 
                   <Route
                     path="profileOther/:idUser"
@@ -419,11 +529,11 @@ function App() {
                   path="list-account-need-accept"
                   element={<AdminGrantAcocunt />}
                   loader={() => {
-                    return dispatch(statisticAsync({ year: 2023 }))
+                    return dispatch(getAllNeedAcceptAccountAsync())
                       .unwrap()
                       .then(async data => {
                         console.log(data)
-                        return data ? data.data : [];
+                        return data ? data : [];
                       })
                       .catch(e => {
                         console.log(e);
@@ -471,6 +581,35 @@ function App() {
                       .then(async data => {
                         console.log(data)
                         return data ? data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+                    return data
+                  }}
+                />
+
+                <Route
+                  path="profile"
+                  element={<GeneralProfile />}
+                  loader={async () => {
+                    let data = { userInfor: '', postList: [] }
+                    data.postList = await dispatch(getUserPostListAsync({ userId: tokenService.getUser().id }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+                    data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
                       })
                       .catch(e => {
                         console.log(e);

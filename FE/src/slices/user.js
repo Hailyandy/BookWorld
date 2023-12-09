@@ -549,6 +549,60 @@ export const statisticAsync = createAsyncThunk(
         }
     }
 );
+
+export const getAllNeedAcceptAccountAsync = createAsyncThunk(
+    'admin/getAllNeedAcceptAccount',
+    async (param, { rejectWithValue }) => {
+        try {
+            const data = await adminService.getAllNeedAcceptAccount();
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const acceptAccountAsync = createAsyncThunk(
+    'admin/getAllNeedAcceptAccount',
+    async ({ authorId }, { rejectWithValue }) => {
+        try {
+            const data = await adminService.acceptAccount({ authorId });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+export const updateUserInforAsync = createAsyncThunk(
+    'user/getAllNeedAcceptAccount',
+    async ({
+        name,
+        phone,
+        nativePlace,
+        birthDate,
+        introducing,
+        urlPoster,
+        userId
+
+    }, { rejectWithValue }) => {
+        try {
+            const data = await userService.updateUserInfor({
+                name,
+                phone,
+                nativePlace,
+                birthDate,
+                introducing,
+                urlPoster,
+                userId
+
+            });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,

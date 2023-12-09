@@ -40,7 +40,7 @@
 .authors {
     width: 100%;
     height: var(--height-body);
-    background-image: url(https://startbootstrap.github.io/startbootstrap-stylish-portfolio/assets/img/bg-masthead.jpg);
+    background-image: url('https://startbootstrap.github.io/startbootstrap-stylish-portfolio/assets/img/bg-masthead.jpg');
     background-size: cover;
     background-attachment: fixed;
     margin: 0;
