@@ -7,12 +7,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.chien.bookWorld.entity.*;
 import com.chien.bookWorld.payload.response.PageResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,6 @@ import com.chien.bookWorld.dto.ReportCreationDto;
 import com.chien.bookWorld.dto.ReportDto;
 import com.chien.bookWorld.dto.ReportDtoMap;
 import com.chien.bookWorld.dto.DtoMap.BookBasketDtoMap;
-import com.chien.bookWorld.entity.Book;
-import com.chien.bookWorld.entity.BookBasket;
-import com.chien.bookWorld.entity.Report;
-import com.chien.bookWorld.entity.ReportStatus;
-import com.chien.bookWorld.entity.UserDetailsImpl;
 import com.chien.bookWorld.exception.AppException;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import com.chien.bookWorld.repository.PdfRepository;
@@ -65,7 +62,7 @@ public class ReportServiceImpl implements ReportService {
         report.setDescription(reportCreationDto.getDescription());
         report.setReason(reportCreationDto.getReason());
         report.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        report.setStatus(ReportStatus.PROCESSED);
+        report.setStatus(ReportStatus.PENDING.toString());
         reportRepository.save(report);
 
         final Map<String, Object> body = new HashMap<>();
@@ -112,14 +109,25 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Map<String, Object> acceptHandLer(ReportStatus status, Long id) {
-        Optional<Report> reportOt = reportRepository.findById(id);
-
-        if (reportOt.isPresent()) {
-            Report report = reportOt.get();
-            report.setStatus(status);
-            reportRepository.save(report);
-        } else {
-            throw new AppException(404, 44, "Error: Does not exist! No report has been created yet!");
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).toList();
+        boolean isAdmin = roles.contains("ROLE_ADMIN");
+        if (!isAdmin) {
+            throw new AppException(404, 44, "Không phải là admin!");
+        }
+        Report reportOt = reportRepository.findById(id).orElseThrow(
+                () -> new AppException(404, 44, "Error: Does not exist! No report has been created yet!")
+        );
+        Pdf pdf = reportOt.getPdf();
+        if (status == ReportStatus.ACCEPT) {
+            reportRepository.delete(reportOt);
+            pdfRepository.delete(pdf);
+        }
+        if (status == ReportStatus.REJECT) {
+            reportOt.setStatus(ReportStatus.REJECTED.toString());
+            reportRepository.save(reportOt);
         }
         final Map<String, Object> body = new HashMap<>();
         body.put("code", 0);

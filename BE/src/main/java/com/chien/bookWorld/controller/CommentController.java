@@ -51,7 +51,7 @@ public class CommentController {
     public ResponseEntity<String> deleteComment(@PathVariable UUID id, @RequestParam Long postId) {
         boolean result = commentService.deleteComment(id, postId);
         if (result == true) {
-            messagingTemplate.convertAndSend("/topic/" + postId + "/comment/delete", "Delete success");
+            messagingTemplate.convertAndSend("/topic/posts/" + postId + "/comment/delete", id);
             return ResponseEntity.ok("Comment deleted successfully");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete comment");
@@ -61,7 +61,7 @@ public class CommentController {
     @PatchMapping("")
     public ResponseEntity<SuccessResponse> updateComment(@RequestBody CommentUpdateDto commentUpdateDto, @RequestParam Long postId) {
         SuccessResponse result = commentService.updateComment(commentUpdateDto);
-        messagingTemplate.convertAndSend("/topic/"+ postId + "/comment/update", result);
+        messagingTemplate.convertAndSend("/topic/posts/"+ postId + "/comment/update", result);
         return ResponseEntity.status(200).body(result);
     }
 

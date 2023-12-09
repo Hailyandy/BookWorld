@@ -24,4 +24,6 @@ public interface UserService extends
   SuccessResponse findByUsersByName(String name);
 
   SuccessResponse getNewRegistrationsByMonth(int year);
+
+
 }

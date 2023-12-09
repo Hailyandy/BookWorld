@@ -47,7 +47,6 @@ public class FriendController {
 
         Map<String, Object> result = friendService.addFriend(friendRequest);
         SuccessResponse getUserSender = friendService.getUserSender();
-
         return ResponseEntity.ok(result);
     }
 
