@@ -106,9 +106,17 @@ export const updateLocalHostUrl = (updateStringrole) => {
 
             },
             {
+                key: 'list-account-need-accept',
+                label: (
+                    < Link to={`${localHost.url}list-account-need-accept`} >
+                        Phê duyệt tài khoản
+                    </Link >)
+
+            },
+            {
                 key: 'dashboard',
                 label: (
-                    < Link to={`${localHost.url}`} >
+                    < Link to={`${localHost.url}statistic-post-list`} >
                         Dashboard
                     </Link >)
 

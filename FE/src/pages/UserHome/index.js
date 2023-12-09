@@ -5,12 +5,14 @@ import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
 import ReviewPost from "~/components/form/Review Post/ReviewPost";
 import Avartar from "~/components/ui/Avartar/Avartar";
-import { useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import NotFoundPage from "../NotFound/NotFound";
 import { useDispatch } from "react-redux";
 // import { connect, onConnected } from '~/slices/socket';
 import { connect } from "~/helper/socket";
 import { useSelector } from 'react-redux';
+import BSHAREnum from "~/helper/BSHAREenum";
+import tokenService from "~/services/token.service";
 const items = [
     {
         label: (
@@ -34,13 +36,21 @@ const items = [
 
 ];
 //{ userPost: [], suggestionBooks: [], currentReadingBooks: [], favouriteBooks: [], friends: [] }
+
 const UserHomePage = () => {
     var dataLoader = useLoaderData()
     console.log(dataLoader)
     const dispatch = useDispatch()
     const userStateFormSlice = useSelector(state => state.users);
+    const navigate = useNavigate()
     console.log(userStateFormSlice.postList)
 
+    if (!dataLoader.userInfor.name) {
+        console.log('navigate to fill infors')
+        //Chuyển hướng an toàn
+        window.location = `/${tokenService.getUserRoleName()}/fill-infor`;
+        return;
+    }
     return (
         <div className="user-home-container">
             {/* List Book */}
@@ -76,7 +86,7 @@ const UserHomePage = () => {
             {/* Post Space */}
 
             <div className="post-space">
-                <Dropdown
+                {/* <Dropdown
                     menu={{
                         items,
                     }}>
@@ -85,7 +95,7 @@ const UserHomePage = () => {
                         <DownOutlined />
                     </Space>
 
-                </Dropdown>
+                </Dropdown> */}
                 <div class="list-post">
                     {
                         userStateFormSlice.postList.length > 0 ?

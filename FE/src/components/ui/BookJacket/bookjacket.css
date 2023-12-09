@@ -3,6 +3,11 @@
     height: 70px;
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+}
+
+.bookjacket:hover {
+    box-shadow: -10px 20px 35px rgba(0, 0, 0, 0.15);
 }
 
 .bookjacket .book-title {

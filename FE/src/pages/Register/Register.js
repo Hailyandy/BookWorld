@@ -37,15 +37,14 @@ function Register() {
     };
     return (
         <div className='register_container'>
-            <img src={img1} alt="img1" />
+            <span class="sprite-bigger_book" > </span>
             <div className='register-form'>
                 <div className="form_title">
                     <img src={img2} alt="img2" />
                     <h1>BOOK WORLD</h1>
                 </div>
                 <div className='form_register'>
-                    <h1>Đăng kí</h1>
-                    <p>Chào mừng bạn đã đến với Book World</p>
+                    <h1>Đăng ký</h1>
                     <Form name="basic" form={form} style={{ display: 'flex', flexDirection: "column" }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Form.Item
                             name="username"

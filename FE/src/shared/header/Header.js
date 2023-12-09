@@ -81,7 +81,10 @@ const HeaderLayout = (props) => {
     const onSearch = (value, _e, info) => {
         console.log(value)
         setSelectedValue(value)
-        debouncedSearch(value)
+        if (value) {
+
+            debouncedSearch(value)
+        }
         // setOptions(value ? searchResult(value) : []);
 
     };
@@ -230,6 +233,10 @@ const HeaderLayout = (props) => {
                         </Badge>}
                     onClick={() => {
                         navigate(`${tokenService.getUserRoleName()}/friend-req-search-people`, { replace: true });
+                        if (window.location.pathname == '/ROLE_USER/friend-req-search-people') {
+                            window.location.reload()
+                        }
+
                     }}
 
                 />

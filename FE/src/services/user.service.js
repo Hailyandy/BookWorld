@@ -10,8 +10,8 @@ class UserService extends BaseService {
         return data
     }
     //role: [] array string
-    async signup({ username, password, role }) {
-        var data = await postAPI('auth/signup', { username, password, role })
+    async signup({ username, password, roles }) {
+        var data = await postAPI('auth/signup', { username, password, role: roles })
         return data
     }
 
@@ -206,6 +206,28 @@ class UserService extends BaseService {
         var data = await getAPI(`statistics/new-registrations-by-month/${year}`)
         return data
     }
+
+    async updateUserInfor({
+        name,
+        phone,
+        nativePlace,
+        birthDate,
+        introducing,
+        urlPoster,
+        userId
+    }) {
+        var data = await patchAPI(`users/update/${userId}`, {
+            id: userId,
+            name,
+            phone,
+            nativePlace,
+            birthDate,
+            introducing,
+            urlAvatar: urlPoster,
+        })
+        return data
+    }
+
 }
 
 export default new UserService()

@@ -13,6 +13,7 @@ import { stompClient } from '~/layouts/RootLayout';
 import tokenService from '~/services/token.service';
 import { ConfigContext } from "~/context/GlobalContext";
 import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 const { Meta } = Card;
 const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
@@ -48,6 +49,7 @@ const FriendRequestSearchPeoplePage = () => {
     const contextContent = useContext(ConfigContext);
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const userStateFormSlice = useSelector(state => state.users);
     const [friendRequestList, setFriendRequestList] = useState(useLoaderData())
     console.log(friendRequestList)
     const [options, setOptions] = useState([]);
@@ -77,8 +79,11 @@ const FriendRequestSearchPeoplePage = () => {
         setFriendRequestList(filterFriendReq)
     }
     useEffect(() => {
-        contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/request`, onFriendRequestReceived);
-        contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/cancel`, onFriendRequestCancel);
+        if (contextContent.stompClient) {
+            contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/request`, onFriendRequestReceived);
+            contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/cancel`, onFriendRequestCancel);
+        }
+
     }, [])
     /**
      * useCallback memoizes functions to avoid unnecessary re-renders and improve performance.
@@ -113,8 +118,10 @@ const FriendRequestSearchPeoplePage = () => {
 
     const onSearch = (value, _e, info) => {
         console.log(value)
+        if (value) {
+            debouncedSearch(value)
+        }
 
-        debouncedSearch(value)
         // setOptions(value ? searchResult(value) : []);
 
     };
@@ -138,7 +145,7 @@ const FriendRequestSearchPeoplePage = () => {
             .unwrap()
             .then(async data => {
                 console.log(data)
-                let newFriendReq = dispatch(newFriendReq()).unwrap().then(async data => {
+                let newFriendReq = dispatch(getListFriendRequest()).unwrap().then(async data => {
                     setFriendRequestList(data ? data : [])
                 })
             })

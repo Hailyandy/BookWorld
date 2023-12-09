@@ -32,7 +32,8 @@ const SearchUserPage = () => {
     };
     const onSearch = (value, _e, info) => {
         console.log(info?.source, value);
-        navigate(`/search-result/search-user/${value}`, { replace: true });
+        //dường dẫn relative path
+        navigate(`../search-user/${value}`, { replace: true });
     }
     return (
         <>
