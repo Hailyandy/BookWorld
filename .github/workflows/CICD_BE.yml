@@ -54,6 +54,8 @@ jobs:
         with:
           report_paths: '**/TEST-*.xml'  
 
+      - uses: mvn surefire-report:report
+
       - name: Heroku Install
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
