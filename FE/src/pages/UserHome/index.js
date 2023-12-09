@@ -45,7 +45,7 @@ const UserHomePage = () => {
     const userStateFormSlice = useSelector(state => state.users);
     const navigate = useNavigate()
     console.log(userStateFormSlice.postList)
-        `${cicd_href}/register`
+
     if (!dataLoader.userInfor.name) {
         console.log('navigate to fill infors')
         //Chuyển hướng an toàn
