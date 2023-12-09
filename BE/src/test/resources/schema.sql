@@ -340,7 +340,7 @@ CREATE TABLE report (
   id bigint NOT NULL AUTO_INCREMENT (3),
   description varchar(255) DEFAULT NULL,
   reason varchar(255) DEFAULT NULL,
-  status tinyint DEFAULT NULL,
+  status varchar(255) DEFAULT NULL,
   timestamp datetime(6) DEFAULT NULL,
   pdf_id bigint DEFAULT NULL,
   user_id bigint DEFAULT NULL,
@@ -799,8 +799,8 @@ INSERT INTO scoring VALUES
 -- Dumping data for table report
 --
 INSERT INTO report VALUES
-(1, 'aa', 'aa', 0, '2023-12-05 15:07:24', 4, 12),
-(2, 'ly do 2', 'ly do 2', 0, '2023-12-05 15:32:13', 4, 12);
+(1, 'aa', 'aa', 'PENDING', '2023-12-05 15:07:24', 4, 12),
+(2, 'ly do 2', 'ly do 2', 'PENDING', '2023-12-05 15:32:13', 4, 12);
 
 -- 
 -- Dumping data for table options
