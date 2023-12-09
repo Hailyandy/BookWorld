@@ -12,6 +12,8 @@ import BSHAREnum from "~/helper/BSHAREenum";
 import { useNavigate } from "react-router-dom";
 import NotFoundPage from "../NotFound/NotFound";
 import tokenService from "~/services/token.service";
+
+import { cicd_href } from "~/helper/BSHAREresource";
 const { Search } = Input;
 const suffix = (
     <AudioOutlined
@@ -38,7 +40,8 @@ const SearchFriendPage = () => {
     const onSearch = (value, _e, info) => {
         console.log(info?.source, value);
         // navigate(`${value}`, { replace: true });
-        window.location = `search-user/${value}`
+        // `${cicd_href}/${tokenService.getUserRoleName()}/search-user/${value}`
+        window.location = `${cicd_href}/${tokenService.getUserRoleName()}/search-user/${value}`
     }
     return (
         <div className="friend-search-container">

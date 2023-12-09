@@ -73,8 +73,9 @@ public class BookBasketServiceImpl implements BookBasketService {
             bookDto.setPublisher(book.getBook().getPublisher());
             bookDto.setScoring(book.getBook().getScoring());
             bookDto.setUrlPoster(book.getBook().getUrlPoster());
-            bookDto.setGenres(book.getBook().getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-                    Collectors.toList()));
+            bookDto.setGenres(
+                    book.getBook().getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+                            Collectors.toList()));
             bookDto.setStatusWithUser(book.getStatus());
             return bookDto;
         }).collect(Collectors.toList());
@@ -93,8 +94,7 @@ public class BookBasketServiceImpl implements BookBasketService {
                         (Integer) row[2],
                         new BigDecimal((long) row[4]),
                         new BigDecimal((long) row[5]),
-                        new BigDecimal((long) row[6])
-                );
+                        new BigDecimal((long) row[6]));
             } else {
                 return new MonthlyStatusBookBasketDto(
                         (Integer) row[0],
@@ -102,8 +102,7 @@ public class BookBasketServiceImpl implements BookBasketService {
                         (Integer) row[2],
                         (BigDecimal) row[4],
                         (BigDecimal) row[5],
-                        (BigDecimal) row[6]
-                );
+                        (BigDecimal) row[6]);
             }
         }).collect(Collectors.toList()));
     }
@@ -119,7 +118,8 @@ public class BookBasketServiceImpl implements BookBasketService {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
 
-        BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), bookBasketUpdateDto.getBookId());
+        BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(),
+                bookBasketUpdateDto.getBookId());
         if (bookBasket != null) {
             bookBasket.setStatus(bookBasketUpdateDto.getStatus());
             bookBasketRepository.save(bookBasket);
@@ -150,6 +150,5 @@ public class BookBasketServiceImpl implements BookBasketService {
         // TODO Auto-generated method stub
         return null;
     }
-
 
 }

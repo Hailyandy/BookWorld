@@ -6,8 +6,43 @@ import { useLoaderData } from 'react-router-dom';
 import { List, Avatar } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import NotFoundPage from '../NotFound/NotFound';
+import { Dispatch } from 'react';
+import { useDispatch } from 'react-redux';
+import { handlePdfReportAdminAsync } from '~/slices/user';
+import { useState } from 'react';
 const AdminReportList = () => {
-    const listReport = useLoaderData()
+    const [listReport, setListReport] = useState(useLoaderData())
+    const dispatch = useDispatch()
+    const handleRejectPdf = (id) => {
+        dispatch(handlePdfReportAdminAsync({ id, status: 'REJECT' }))
+            .unwrap()
+            .then(async data => {
+                console.log(data)
+                let temp = listReport.filter((report) => {
+                    return report.id != id
+                })
+                setListReport(temp)
+            })
+            .catch(e => {
+                console.log(e);
+                return []
+            })
+    }
+    const handleAcceptPdf = (id) => {
+        dispatch(handlePdfReportAdminAsync({ id, status: 'ACCEPT' }))
+            .unwrap()
+            .then(async data => {
+                console.log(data)
+                let temp = listReport.filter((report) => {
+                    return report.id != id
+                })
+                setListReport(temp)
+            })
+            .catch(e => {
+                console.log(e);
+                return []
+            })
+    }
     console.log(listReport)
     return (
         <div className="containner-list">
@@ -22,8 +57,8 @@ const AdminReportList = () => {
                                 itemKey='idddddd'
                             >
                                 {(item, index) => (
-                                    <List.Item key={item.id} actions={[<Button key="list-loadmore-edit" style={{ backgroundColor: 'var(--warning-color)' }}>Xóa file</Button>,
-                                    <Button key="list-loadmore-edit" style={{ backgroundColor: 'var(--button-default-background-color)' }}>Bỏ qua</Button>]}>
+                                    <List.Item key={item.id} actions={[<Button key="list-loadmore-edit" style={{ backgroundColor: 'var(--warning-color)' }} onClick={() => handleRejectPdf(item.id)}>Xóa file</Button>,
+                                    <Button key="list-loadmore-edit" style={{ backgroundColor: 'var(--button-default-background-color)' }} onClick={() => handleAcceptPdf(item.id)}>Bỏ qua</Button>]}>
                                         <List.Item.Meta
                                             avatar={<Avatar shape='round' src={item.urlAvatar} size={70} />}
                                             title={item.reason}

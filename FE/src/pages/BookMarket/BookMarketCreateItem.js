@@ -8,6 +8,8 @@ import { Input, Space, Checkbox } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Tooltip } from 'antd';
 import { Pagination } from 'antd';
+import { cicd_href } from "~/helper/BSHAREresource";
+import tokenService from "~/services/token.service";
 // import BookItem from "~/components/ui/BookItem/BookItem";
 
 const onChange = (e) => {
@@ -68,7 +70,8 @@ const BookMarket = () => {
   const navigate = useNavigate()
   const handleClickSellButton = () => {
     // navigate('/books/create-market-item', { replace: true });
-    window.location = "/books/create-market-item"
+
+    window.location = `${cicd_href}/${tokenService.getUserRoleName()}/books/create-market-item`
   }
   return (
     <>

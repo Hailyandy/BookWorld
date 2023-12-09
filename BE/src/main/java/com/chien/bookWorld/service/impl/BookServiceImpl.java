@@ -82,11 +82,11 @@ public class BookServiceImpl implements BookService {
       BookDetailDto bookDto = mapper.map(book, BookDetailDto.class);
       List<Pdf> pdfs = pdfRepository.findPdfByBook(id);
       List<PdfDto> pdfDtos = pdfs.stream().map(pdf -> {
-          PdfDto pdfDto = new PdfDto();
-          pdfDto.setUrlPdf(pdf.getUrlPdf());
-          pdfDto.setUserName(pdf.getUser().getName());
-          pdfDto.setId(pdf.getId());
-          return pdfDto;
+        PdfDto pdfDto = new PdfDto();
+        pdfDto.setUrlPdf(pdf.getUrlPdf());
+        pdfDto.setUserName(pdf.getUser().getName());
+        pdfDto.setId(pdf.getId());
+        return pdfDto;
 
       }).collect(Collectors.toList());
       bookDto.setPdfs(pdfDtos);
@@ -125,26 +125,27 @@ public class BookServiceImpl implements BookService {
             () -> new AppException(404, 44,
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     Page<Book> bookList = bookRepository.findByTitleOrAuthor(
-            "%" + name + "%", pageable);
+        "%" + name + "%", pageable);
     int totalPages = bookList.getTotalPages();
     int numberPage = bookList.getNumber();
     long totalRecord = bookList.getTotalElements();
     int pageSize = bookList.getSize();
     List<BookDto> bookListDto = bookList.stream().map(book -> {
-          BookDto bookDto = mapper.map(book, BookDto.class);
-          BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
-          bookDto.setAuthorId(book.getUser().getId());
-          bookDto.setAuthorName(book.getUser().getName());
-          if (bookBasket != null) {
-            bookDto.setStatusWithUser(bookBasket.getStatus());
-          } else {
-            bookDto.setStatusWithUser(null);
-          }
-          bookDto.setGenres(
-              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-                  Collectors.toList()));
-          return bookDto;
-        }).collect(Collectors.toList());
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(),
+          book.getId());
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setAuthorName(book.getUser().getName());
+      if (bookBasket != null) {
+        bookDto.setStatusWithUser(bookBasket.getStatus());
+      } else {
+        bookDto.setStatusWithUser(null);
+      }
+      bookDto.setGenres(
+          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+              Collectors.toList()));
+      return bookDto;
+    }).collect(Collectors.toList());
     if (bookListDto.isEmpty()) {
       throw new AppException(404, 44,
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name + "'!");
@@ -162,26 +163,27 @@ public class BookServiceImpl implements BookService {
             () -> new AppException(404, 44,
                 "Không tìm thấy tài khoản với username: " + userDetails.getUsername() + "!"));
     Page<Book> bookList = bookRepository.findByTitleOrAuthorAndGenre(
-                    "%" + name + "%", genreId, pageable);
+        "%" + name + "%", genreId, pageable);
     int totalPages = bookList.getTotalPages();
     int numberPage = bookList.getNumber();
     long totalRecord = bookList.getTotalElements();
     int pageSize = bookList.getSize();
     List<BookDto> bookListDto = bookList.stream().map(book -> {
-          BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(), book.getId());
-          BookDto bookDto = mapper.map(book, BookDto.class);
-          bookDto.setAuthorId(book.getUser().getId());
-          bookDto.setAuthorName(book.getUser().getName());
-          if (bookBasket != null) {
-            bookDto.setStatusWithUser(bookBasket.getStatus());
-          } else {
-            bookDto.setStatusWithUser(null);
-         }
-          bookDto.setGenres(
-              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-                  Collectors.toList()));
-          return bookDto;
-        }).collect(Collectors.toList());
+      BookBasket bookBasket = bookBasketRepository.findByUserAndBook(userDetails.getId(),
+          book.getId());
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setAuthorName(book.getUser().getName());
+      if (bookBasket != null) {
+        bookDto.setStatusWithUser(bookBasket.getStatus());
+      } else {
+        bookDto.setStatusWithUser(null);
+      }
+      bookDto.setGenres(
+          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+              Collectors.toList()));
+      return bookDto;
+    }).collect(Collectors.toList());
     if (bookList.isEmpty()) {
       throw new AppException(404, 44,
           "Không tìm thấy sách với tên sách hoặc tên tác giả chứa '" + name
@@ -202,14 +204,14 @@ public class BookServiceImpl implements BookService {
     long totalRecord = bookList.getTotalElements();
     int pageSize = bookList.getSize();
     List<BookDto> bookListDto = bookList.stream().map(book -> {
-          BookDto bookDto = mapper.map(book, BookDto.class);
-          bookDto.setAuthorId(book.getUser().getId());
-          bookDto.setAuthorName(book.getUser().getName());
-          bookDto.setGenres(
-              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-                  Collectors.toList()));
-          return bookDto;
-        }).collect(Collectors.toList());
+      BookDto bookDto = mapper.map(book, BookDto.class);
+      bookDto.setAuthorId(book.getUser().getId());
+      bookDto.setAuthorName(book.getUser().getName());
+      bookDto.setGenres(
+          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+              Collectors.toList()));
+      return bookDto;
+    }).collect(Collectors.toList());
     if (bookList.isEmpty()) {
       throw new AppException(404, 44,
           "Không có sách gợi ý phù hơp!");
@@ -220,28 +222,25 @@ public class BookServiceImpl implements BookService {
   @Override
   public SuccessResponse updateBook(Long idBook, Map<Object, Object> fields) {
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal();
-    Optional<Book> fromDB = bookRepository.findById(idBook);
+        .getAuthentication().getPrincipal();
+    Book fromDB = bookRepository.findById(idBook).orElse(null);
     List<String> roles = userDetails.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority).toList();
+        .map(GrantedAuthority::getAuthority).toList();
     boolean isAdmin = roles.contains("ROLE_ADMIN");
     if (fromDB == null) {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
-    if (userDetails.getId() != fromDB.get().getUser().getId() && !isAdmin) {
-      throw new AppException(401, 41, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
+    if (userDetails.getId() != fromDB.getUser().getId() && !isAdmin) {
+      throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
     }
-    if (fromDB.isPresent()) {
-      fields.forEach((key, value) -> {
-        Field field = ReflectionUtils.findField(Book.class, (String) key);
-        field.setAccessible(true);
-        Object convertedValue = convertToFieldType(field.getType(), value);
-        ReflectionUtils.setField(field, fromDB.get(), convertedValue);
-      });
-      Book updateBook = bookRepository.save(fromDB.get());
-      return  new SuccessResponse(mapper.map(updateBook, BookDto.class));
-    }
-    return null;
+    fields.forEach((key, value) -> {
+      Field field = ReflectionUtils.findField(Book.class, (String) key);
+      field.setAccessible(true);
+      Object convertedValue = convertToFieldType(field.getType(), value);
+      ReflectionUtils.setField(field, fromDB, convertedValue);
+    });
+    Book updateBook = bookRepository.save(fromDB);
+    return new SuccessResponse(mapper.map(updateBook, BookDto.class));
   }
 
   private Object convertToFieldType(Class<?> fieldType, Object value) {
@@ -313,8 +312,8 @@ public class BookServiceImpl implements BookService {
       bookDto.setAuthorId(book.getUser().getId());
       bookDto.setAuthorName(book.getUser().getName());
       bookDto.setGenres(
-              book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
-                      Collectors.toList()));
+          book.getGenres().stream().map(genre -> mapper.map(genre, GenreDto.class)).collect(
+              Collectors.toList()));
       return bookDto;
     }).collect(Collectors.toList());
     return new PageResponse(totalPages, pageSize, totalRecord, numberPage, bookListDto);

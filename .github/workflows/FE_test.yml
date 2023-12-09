@@ -8,6 +8,7 @@ jobs:
         working-directory: ./FE
     steps:
       - uses: actions/checkout@v4
+      - run: npm install
       - name: Install root dependencies
         run: npm ci
 

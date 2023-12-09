@@ -1,5 +1,6 @@
 package com.chien.bookWorld.entity;
 
+import jakarta.persistence.Column;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -15,7 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.checkerframework.common.aliasing.qual.Unique;
+import jakarta.validation.constraints.NotNull;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +27,7 @@ import lombok.Setter;
 public class Questions {
 
     @Id
+@Column(unique = true, nullable = false)
     private UUID id;
 
     private String questionText;

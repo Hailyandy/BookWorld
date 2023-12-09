@@ -13,7 +13,7 @@ import tokenService from '~/services/token.service';
 import { debounce } from '~/helper/debounce';
 import { NotFoundPage } from '~/pages';
 import { useSelector } from 'react-redux';
-
+import { cicd_href } from '~/helper/BSHAREresource';
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -113,7 +113,7 @@ const HeaderLayout = (props) => {
                  */
                 props.reloadRootLayout(false)
 
-                navigate(`/login`, { replace: true });
+                navigate(`login`, { replace: true });
                 break;
             case BSHAREnum.dropdown_user_menu_key.friendList:
                 navigate(`${tokenService.getUserRoleName()}/search-result/search-friend`, { replace: true });
@@ -189,8 +189,8 @@ const HeaderLayout = (props) => {
                 color: "rgba(17, 17, 17, 1)"
 
             }}
-                onClick={() => { window.location = "/login"; }}
-            >Đăng nhập</Button>
+                onClick={() => { window.location = `${cicd_href}/login`; }}
+            >Đăng nhậpp</Button>
         </>)
     }
 

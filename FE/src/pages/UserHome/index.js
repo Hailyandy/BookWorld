@@ -13,6 +13,7 @@ import { connect } from "~/helper/socket";
 import { useSelector } from 'react-redux';
 import BSHAREnum from "~/helper/BSHAREenum";
 import tokenService from "~/services/token.service";
+import { cicd_href } from "~/helper/BSHAREresource";
 const items = [
     {
         label: (
@@ -48,7 +49,7 @@ const UserHomePage = () => {
     if (!dataLoader.userInfor.name) {
         console.log('navigate to fill infors')
         //Chuyển hướng an toàn
-        window.location = `/${tokenService.getUserRoleName()}/fill-infor`;
+        window.location = `${cicd_href}/${tokenService.getUserRoleName()}/fill-infor`;
         return;
     }
     return (

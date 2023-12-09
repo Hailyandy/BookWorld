@@ -14,8 +14,9 @@ module.exports = defineConfig({
       })
       return config
     },
-    baseUrl: 'http://localhost:3000',
-    chromeWebSecurity: false,
+    // baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://hailyandy.github.io/BookWorld/#/',
+    chromeWebSecurity:false,
     env: {
       FOO: 'bar',
     },

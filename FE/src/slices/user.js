@@ -574,6 +574,18 @@ export const acceptAccountAsync = createAsyncThunk(
     }
 );
 
+export const handlePdfReportAdminAsync = createAsyncThunk(
+    'admin/handlePdfReportAdmin',
+    async ({ id, status }, { rejectWithValue }) => {
+        try {
+            const data = await adminService.handlePdfReportAdmin({ id, status });
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
 export const updateUserInforAsync = createAsyncThunk(
     'user/getAllNeedAcceptAccount',
     async ({

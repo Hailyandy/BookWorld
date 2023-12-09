@@ -82,6 +82,16 @@ class AdminService extends BaseService {
         var data = await postAPI(`users/author/${authorId}/enable`)
         return data
     }
+    /**
+     * Api để chấp nhận hoặc từ chối xử lý report
+     * @param {*} param0
+     * @returns
+     */
+    async handlePdfReportAdmin({ id, status }) {
+        var data = await postAPI(`pdf/report/handler`, { id, status })
+        return data
+    }
+
 
 }
 

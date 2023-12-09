@@ -4,8 +4,10 @@ import tokenService from "~/services/token.service";
 export let localHost = {
     url: `/${tokenService.getUserRoleName()}/`
 }
-export const url = { baseUrlBE: "http://localhost:8080/api/" }
-export const bookworld_hastag = "/BookWorld/#"
+export const url = { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" }
+export const cicd_href = '/BookWorld/#'
+// export const url = { baseUrlBE: "http://localhost:8080/api/" }
+// export const bookworld_hastag = "/BookWorld/#"
 export const updateLocalHostUrl = (updateStringrole) => {
     localHost.url = `/${updateStringrole}/`
     BSHAREresource.localHost.url = `/${updateStringrole}/`
@@ -144,9 +146,9 @@ export const updateLocalHostUrl = (updateStringrole) => {
 }
 const BSHAREresource = {
     localHost: {
-        url: 'http://localhost:3000/'
+        url: 'https://hailyandy.github.io/BookWorld/#/'
     },
-    url: { baseUrlBE: "http://localhost:8080/api/" },
+    url: { baseUrlBE: "https://book-world-0f7cf4c7e1a0.herokuapp.com/api/" },
     notification_message: {
         success: {
             login: 'Đăng nhập thành công',

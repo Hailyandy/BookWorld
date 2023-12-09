@@ -15,7 +15,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SourceType;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import org.checkerframework.common.aliasing.qual.Unique;
+import jakarta.validation.constraints.NotNull;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Comment {
 
   @Id
+@Column(unique = true, nullable = false)
   private UUID id;
 
   @ManyToOne
@@ -38,16 +40,10 @@ public class Comment {
   @Column(name = "introducing", length = 65535)
   private String content;
 
-  private Timestamp createdOn;
-  private Timestamp lastUpdatedOn;
+  @CreationTimestamp(source = SourceType.DB)
+  private Instant createdOn;
+  @UpdateTimestamp(source = SourceType.DB)
+  private Instant lastUpdatedOn;
   private Double commentScoring;
   private UUID parentId;
-
-  @PrePersist
-  public void prePerist() {
-    this.createdOn = Timestamp.from(Instant.now());
-  }
-
-  @PreUpdate
-  public void preUpdate() {this.lastUpdatedOn = Timestamp.from(Instant.now());}
 }

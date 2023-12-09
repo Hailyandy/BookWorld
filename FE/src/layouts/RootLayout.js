@@ -99,7 +99,7 @@ export default function RootLayout() {
      * console.log(location.pathname); // '/en-US/docs/Web/API/Location/pathname'
     */
     /**
-     * http://localhost:3000/ROLE_ADMIN/statistic-report-post => ['',ROLE_ADMIN,statistic-report-post]
+     * https://hailyandy.github.io/BookWorld/ROLE_ADMIN/statistic-report-post => ['',ROLE_ADMIN,statistic-report-post]
      * filter 1: ['',statistic-report-post]
      * filter 2: [statistic-report-post]
      * mapping với các đường dẫn của breadcrumbNameMap nên phải chỉnh lại. Do thêm tokenservice.getRoleUser vào
@@ -129,8 +129,7 @@ export default function RootLayout() {
         return {
             key: url,
             title: <Link to={
-                `/${tokenService.getUserRoleName()}${url}`
-            }>{breadcrumbNameMap[url]}</Link>,
+                `/${tokenService.getUserRoleName()}${url}`}>{breadcrumbNameMap[url]}</Link>,
         };
     });
 
@@ -149,11 +148,11 @@ export default function RootLayout() {
 
 
     function connect() {
-        let Sock = new SockJS('http://localhost:8080/chat');
+        let Sock = new SockJS('https://book-world-0f7cf4c7e1a0.herokuapp.com/chat');
         let headers = {
             "Content-Type": "application/json",
             "Authorization": `${tokenService.getLocalAccessToken()}`,
-            "Access-Control-Allow-Origin": "http://localhost:3000/"
+            "Access-Control-Allow-Origin": "https://hailyandy.github.io"
         }
         contextContent.stompClient = Stomp.over(Sock);
         contextContent.stompClient.connect(headers, function (frame) {
