@@ -13,7 +13,7 @@ import Avartar from "~/components/ui/Avartar/Avartar";
 import StarRatings from "react-star-ratings";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getCommentOfPostAsync, updatePostAsync } from "~/slices/user";
+import { getCommentOfPostAsync, getUserInformationAsync, updatePostAsync } from "~/slices/user";
 import { convertCommentWithParentId } from "~/helper/format";
 import NestedComments from "~/components/comment/NestedComment";
 import BSHAREnum from "~/helper/BSHAREenum";
@@ -34,9 +34,11 @@ const ReviewPost = ({ postItem }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [likes, setLikes] = useState(0);
+    const [userInfo, setUserInfo] = useState('')
     const [comments, setComments] = useState([]);
     const [commentText, setCommentText] = useState('');
     const [commentFormUserIntoPost, setCommentFormUserIntoPost] = useState([]);
+    const [commentBeforeConvertIntoNestData, setCommentBeforeConvertIntoNestData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -92,6 +94,7 @@ const ReviewPost = ({ postItem }) => {
         dispatch(getCommentOfPostAsync({ postId: postItem.id }))
             .unwrap()
             .then(async data => {
+                setCommentBeforeConvertIntoNestData(data.data)
                 console.log(convertCommentWithParentId(data.data))
                 setCommentFormUserIntoPost(convertCommentWithParentId(data.data))
 
@@ -99,13 +102,57 @@ const ReviewPost = ({ postItem }) => {
             .catch(e => {
                 return e.messege
             });
-        contextContent.stompClient.subscribe(`/topic/posts/${postItem.id}/comment`, onMessageReceived);
+
+        dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+            .unwrap()
+            .then(async data => {
+                console.log(data)
+                setUserInfo(data.data)
+            })
+            .catch(e => {
+                console.log(e);
+                setUserInfo({})
+            })
+
     }, [])
 
-    const onMessageReceived = (payload) => {
+    /**
+     * //khi có bình luận mới sẽ có entity Comment gửi tới
+     * @param {*} payload
+     */
+    const onCommentOpenUp = (payload) => {
         var payloadData = JSON.parse(payload.body);
         //1
         console.log(payloadData)
+        //1. Cập nhật lại comment trả về từ BE mà chưa được convert
+        setCommentBeforeConvertIntoNestData([...commentBeforeConvertIntoNestData, payloadData.data])
+
+        //2. Cập nhật lại comment trong post - payloadData.data: object comment; commentBeforeConvertIntoNestData: []
+        setCommentFormUserIntoPost(convertCommentWithParentId([...commentBeforeConvertIntoNestData, payloadData.data]))
+
+    }
+
+    /**
+     * //khi có bình luận được cập nhật - > message Comment mới đã cập nhật
+     * @param {*} payload
+     */
+    const onCommentUpdate = (payload) => {
+        var payloadData = JSON.parse(payload.body);
+        //1
+        console.log(payloadData)
+        // dispatch(receiveFriendRequestFromSocket(payloadData.data))
+    }
+
+    /**
+     * //id comment đã xóa
+     * @param {*} payload
+     */
+    const onCommentDelete = (payload) => {
+        var payloadData = JSON.parse(payload.body);
+        //1
+        console.log(payloadData)
+
+
         // dispatch(receiveFriendRequestFromSocket(payloadData.data))
     }
     const onFinish = (values, idPost) => {
@@ -125,6 +172,16 @@ const ReviewPost = ({ postItem }) => {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+    const handleOpenComment = () => {
+        if (!visible) {
+            if (contextContent.stompClient) {
+                contextContent.stompClient.subscribe(`/topic/posts/${postItem.id}/comment`, onCommentOpenUp);
+                contextContent.stompClient.subscribe(`/topic/posts/${postItem.id}/comment/update`, onCommentUpdate);
+                contextContent.stompClient.subscribe(`/topic/posts/${postItem.id}/comment/delete`, onCommentDelete);
+            }
+        }
+        setVisible(!visible)
+    }
     return (
         <div class="review-post">
             <Modal title="Báo cáo file"
@@ -246,7 +303,7 @@ const ReviewPost = ({ postItem }) => {
                     <Button style={{ border: 'none' }} icon={<LikeOutlined />} onClick={handleLikeClick}>
                         Like ({likes})
                     </Button>
-                    <Button id="button-open-comment" style={{ border: 'none' }} icon={<MessageOutlined />} onClick={() => setVisible(!visible)} >Comment</Button>
+                    <Button id="button-open-comment" style={{ border: 'none' }} icon={<MessageOutlined />} onClick={handleOpenComment} >Comment</Button>
                 </div>
                 <div>
                     <Divider className="bold-divider" />
@@ -262,7 +319,7 @@ const ReviewPost = ({ postItem }) => {
                 </div>
                 <div class="commenting">
                     <div class="avartar" style={{ width: '60px' }}>
-                        <Avatar shape='round' src={postItem.urlAvatarUser} size={50} />
+                        <Avatar shape='round' src={userInfo?.urlAvatar} size={50} />
                     </div>
                     <Input
                         style={{ backgroundColor: '#d9d9d9', color: 'black' }}
@@ -271,8 +328,6 @@ const ReviewPost = ({ postItem }) => {
                         onChange={(e) => setCommentText(e.target.value)}
                     />
                     <SendOutlined style={{ color: 'blue', marginLeft: '10px' }} onClick={handleCommentSubmit} />
-
-
                 </div>
 
 

@@ -101,7 +101,7 @@ const CommentItem = ({ comment, type, children }) => {
 
             >
                 {
-                    visible && <CreateComment fatherComment={comment} />
+                    visible && <CreateComment fatherComment={comment} setVisible={setVisible} visible={visible} />
                 }
 
                 {children}
