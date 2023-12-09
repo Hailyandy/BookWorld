@@ -155,6 +155,7 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public PageResponse findByTitleOrAuthorAndGenre(String name, Long genreId, Pageable pageable) {
+
     UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext()
         .getAuthentication().getPrincipal();
     User user = userRepository.findByUsername(userDetails.getUsername())
