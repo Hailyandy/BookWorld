@@ -28,8 +28,10 @@ import {
     AdminReportList,
     AdminAddBookPage,
     Admins,
+    AdminGrantAcocunt
 } from "./admin";
 export {
+    AdminGrantAcocunt,
     AuthorBook,
     BookMarket,
     AnonymousUser,

@@ -125,10 +125,11 @@ const ReviewPost = ({ postItem }) => {
         //1
         console.log(payloadData)
         //1. Cập nhật lại comment trả về từ BE mà chưa được convert
-        setCommentBeforeConvertIntoNestData([...commentBeforeConvertIntoNestData, payloadData.data])
+        commentBeforeConvertIntoNestData.push(payloadData.data)
+        setCommentBeforeConvertIntoNestData(commentBeforeConvertIntoNestData)
 
         //2. Cập nhật lại comment trong post - payloadData.data: object comment; commentBeforeConvertIntoNestData: []
-        setCommentFormUserIntoPost(convertCommentWithParentId([...commentBeforeConvertIntoNestData, payloadData.data]))
+        setCommentFormUserIntoPost(convertCommentWithParentId(commentBeforeConvertIntoNestData))
 
     }
 
