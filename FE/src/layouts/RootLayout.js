@@ -152,7 +152,7 @@ export default function RootLayout() {
         let headers = {
             "Content-Type": "application/json",
             "Authorization": `${tokenService.getLocalAccessToken()}`,
-            "Access-Control-Allow-Origin": "https://hailyandy.github.io/BookWorld/#/"
+            "Access-Control-Allow-Origin": "https://hailyandy.github.io"
         }
         contextContent.stompClient = Stomp.over(Sock);
         contextContent.stompClient.connect(headers, function (frame) {
