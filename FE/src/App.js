@@ -24,7 +24,7 @@ import {
   SearchUserPage,
   FriendRequestSearchPeoplePage,
   UserDeclareInformationPage,
-  UserHomePage, RegisterPage, LoginPage, AuthorsError, HomePage, OtpCode, SearchBookPage, BookDetailPage, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf
+  UserHomePage, RegisterPage, LoginPage, AuthorsError, HomePage, OtpCode, SearchBookPage, BookDetailPage, AuthorInformationPage, NotFoundPage, GeneralProfile, BookMarketPage, MyBookshelf, AdminGrantAcocunt
 } from './pages';
 import { ProtectedRoute, ModelReviewPost, TheAutofillItem, RootLayout, AuthorsLayout, GeneralLayout, SearchResultLayout } from './components';
 import { searchBookByNameOrAuthor, getAllGenresBookAsync, } from './slices/book';
@@ -400,6 +400,24 @@ function App() {
                 <Route
                   path="statistic-post-list"
                   element={<AdminDashBoard />}
+                  loader={() => {
+                    return dispatch(statisticAsync({ year: 2023 }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+
+                  }}
+                />
+
+                <Route
+                  path="list-account-need-accept"
+                  element={<AdminGrantAcocunt />}
                   loader={() => {
                     return dispatch(statisticAsync({ year: 2023 }))
                       .unwrap()
