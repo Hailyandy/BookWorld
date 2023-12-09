@@ -12,6 +12,8 @@ import BSHAREnum from "~/helper/BSHAREenum";
 import { useNavigate } from "react-router-dom";
 import NotFoundPage from "../NotFound/NotFound";
 import tokenService from "~/services/token.service";
+
+import { cicd_href } from "~/helper/BSHAREresource";
 const { Search } = Input;
 const suffix = (
     <AudioOutlined

@@ -2,11 +2,12 @@ import "./bookjacket.css"
 import { Avatar, Typography } from "antd"
 import { useNavigate } from "react-router-dom";
 import tokenService from "~/services/token.service";
+import { cicd_href } from "~/helper/BSHAREresource";
 const { Title, Text, Paragraph } = Typography;
 const BookJacket = ({ bookItem }) => {
   const navigate = useNavigate()
   const clickBookItem = () => {
-    window.location = `/${tokenService.getUserRoleName()}/books/${bookItem.id}`;
+    window.location = `${cicd_href}/${tokenService.getUserRoleName()}/books/${bookItem.id}`;
   }
   return (
     <div class="bookjacket" onClick={clickBookItem}>

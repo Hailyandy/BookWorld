@@ -13,7 +13,7 @@ import { connect } from "~/helper/socket";
 import { useSelector } from 'react-redux';
 import BSHAREnum from "~/helper/BSHAREenum";
 import tokenService from "~/services/token.service";
-
+import { cicd_href } from "~/helper/BSHAREresource";
 const items = [
     {
         label: (
