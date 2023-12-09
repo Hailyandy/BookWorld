@@ -38,7 +38,8 @@ const SearchFriendPage = () => {
     const onSearch = (value, _e, info) => {
         console.log(info?.source, value);
         // navigate(`${value}`, { replace: true });
-        window.location = `search-user/${value}`
+        `${cicd_href}/${tokenService.getUserRoleName()}/search-user/${value}`
+        window.location = `${cicd_href}/${tokenService.getUserRoleName()}/search-user/${value}`
     }
     return (
         <div className="friend-search-container">

@@ -68,7 +68,8 @@ const BookMarket = () => {
   const navigate = useNavigate()
   const handleClickSellButton = () => {
     // navigate('/books/create-market-item', { replace: true });
-    window.location = "/books/create-market-item"
+
+    window.location = `${cicd_href}/${tokenService.getUserRoleName()}/books/create-market-item`
   }
   return (
     <>
