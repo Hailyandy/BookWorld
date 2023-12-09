@@ -57,7 +57,7 @@ const OtpCode = () => {
     return (
         <div className="opt-code-containner center-horizontal center-vertical flex-column ">
 
-            <h1>Hãy kiểm tra Email của bạn để lấy mã xác nhận nhé</h1>
+            <h1 style={{ margin: '2rem' }}>Hãy kiểm tra Email của bạn để lấy mã xác nhận nhé</h1>
             <Form
                 className="bordered-form"
                 form={form}
@@ -71,7 +71,8 @@ const OtpCode = () => {
                 }}
                 style={{
                     maxWidth: 600,
-                    width: '60%'
+                    width: '60%',
+                    backgroundColor: 'white'
                 }}
                 initialValues={{
                     remember: true,

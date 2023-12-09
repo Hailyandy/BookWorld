@@ -247,8 +247,8 @@ const AdminAddBookPage = () => {
                     } */}
                 </Select>
             </Form.Item>
-            <Form.Item className='last-form-item' label="Button">
-                <Button htmlType="submit">Button</Button>
+            <Form.Item className='last-form-item'>
+                <Button htmlType="submit">Thêm mới sách</Button>
             </Form.Item>
         </Form>
     </div>
