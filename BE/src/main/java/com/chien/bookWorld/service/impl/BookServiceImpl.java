@@ -228,7 +228,7 @@ public class BookServiceImpl implements BookService {
       throw new AppException(404, 44, "Error: Does not exist! Book not found!");
     }
     if (userDetails.getId() != fromDB.get().getUser().getId() && !isAdmin) {
-      throw new AppException(404, 44, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
+      throw new AppException(401, 41, "Không phải tác giả của cuốn sách hoặc bạn ko là admin!");
     }
     if (fromDB.isPresent()) {
       fields.forEach((key, value) -> {

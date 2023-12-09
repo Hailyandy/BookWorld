@@ -120,7 +120,12 @@ public class CommentServiceImpl implements CommentService {
         Long totalComment = post.getTotalComment() + 1;
         post.setTotalComment(totalComment);
         postRepository.save(post);
-        return new SuccessResponse(mapper.map(comment1, CommentDto.class));
+        CommentDto commentDto = mapper.map(comment1, CommentDto.class);
+        commentDto.setUserId(comment1.getUser().getId());
+        commentDto.setPostId(comment1.getPost().getId());
+        commentDto.setUserName(comment1.getUser().getName());
+        commentDto.setUrlAvatarUser(comment1.getUser().getUrlAvatar());
+        return new SuccessResponse(commentDto);
     }
 
     @Override
@@ -155,7 +160,12 @@ public class CommentServiceImpl implements CommentService {
         );
         comment.setContent(commentUpdateDto.getContent());
         Comment commentUpdate = commentRepository.save(comment);
-        return new SuccessResponse(mapper.map(commentUpdate, CommentDto.class));
+        CommentDto commentDto = mapper.map(commentUpdate, CommentDto.class);
+        commentDto.setUserId(commentUpdate.getUser().getId());
+        commentDto.setPostId(commentUpdate.getPost().getId());
+        commentDto.setUserName(commentUpdate.getUser().getName());
+        commentDto.setUrlAvatarUser(commentUpdate.getUser().getUrlAvatar());
+        return new SuccessResponse(commentDto);
     }
 
 }

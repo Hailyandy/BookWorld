@@ -3,9 +3,12 @@ package com.chien.bookWorld.service;
 import com.chien.bookWorld.dto.UserCreationDto;
 import com.chien.bookWorld.dto.UserDto;
 import com.chien.bookWorld.dto.UserUpdateDto;
+import com.chien.bookWorld.payload.response.PageResponse;
 import com.chien.bookWorld.payload.response.SuccessResponse;
 import java.util.Collection;
 import java.util.Map;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends
@@ -26,4 +29,7 @@ public interface UserService extends
   SuccessResponse getNewRegistrationsByMonth(int year);
 
 
+  PageResponse getUserAuthorEneble(Pageable pageable);
+
+  Map<String, Object> acceptEnable(Long id);
 }
