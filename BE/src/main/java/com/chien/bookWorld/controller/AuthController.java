@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +29,9 @@ public class AuthController {
 
   @Autowired
   private AuthService authService;
+
+  @Autowired
+  private SimpMessagingTemplate simpMessagingTemplate;
 
   @Operation(summary = "Signin")
   @PostMapping("/signin")
@@ -57,4 +61,9 @@ public class AuthController {
       @Valid @RequestBody OTPVerificationDto otpVerificationDto) {
     return ResponseEntity.ok(authService.otpVerification(otpVerificationDto));
   }
+
+//  public ResponseEntity<SuccessResponse> getListAuthor(
+//  ) {
+//
+//  }
 }

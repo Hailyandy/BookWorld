@@ -40,7 +40,7 @@ public interface BookBasketRepository extends JpaRepository<BookBasket, Long> {
                 "    COUNT(*) AS soLuongSach,\n" +
                 "    COALESCE(SUM(CASE WHEN status = 'Đang đọc' THEN 1 ELSE 0 END), 0) AS soLuongMuonDoc,\n" +
                 "    COALESCE(SUM(CASE WHEN status = 'Muốn đọc' THEN 1 ELSE 0 END), 0) AS soLuongDangDoc,\n" +
-                "    COALESCE(SUM(CASE WHEN status = 'daDoc' THEN 1 ELSE 0 END),0) AS soLuongDaDoc\n" +
+                "    COALESCE(SUM(CASE WHEN status = 'Đã đọc' THEN 1 ELSE 0 END),0) AS soLuongDaDoc\n" +
                 "FROM\n" +
                 "    month\n" +
                 "LEFT JOIN\n" +
