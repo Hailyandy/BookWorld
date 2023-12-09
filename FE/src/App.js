@@ -213,36 +213,6 @@ function App() {
                       return data
                     }}
                   />
-                  <Route
-                    path="profile"
-                    element={<GeneralProfile />}
-                    // loader={authorDetailsLoader}
-
-                    loader={async () => {
-                      let data = { userInfor: '', postList: [] }
-                      data.postList = await dispatch(getCurrentUserPostListAsync())
-                        .unwrap()
-                        .then(async data => {
-                          console.log(data)
-                          return data ? data.data : [];
-                        })
-                        .catch(e => {
-                          console.log(e);
-                          return []
-                        })
-                      data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
-                        .unwrap()
-                        .then(async data => {
-                          console.log(data)
-                          return data ? data.data : [];
-                        })
-                        .catch(e => {
-                          console.log(e);
-                          return []
-                        })
-                      return data
-                    }}
-                  />
                   <Route path="my-bookshelf" element={<GeneralLayout />} >
                     <Route
                       index
@@ -516,7 +486,7 @@ function App() {
                     })
                 }} />
                 <Route path="author-created-book" element={<AuthorBook />} loader={async () => {
-                  return await dispatch(getListBookOfAuthorAsync())
+                  return dispatch(getListBookOfAuthorAsync())
                     .unwrap()
                     .then(async data => {
                       console.log(data)
@@ -541,7 +511,30 @@ function App() {
                 <Route
                   path="profile"
                   element={<GeneralProfile />}
-                // loader={authorDetailsLoader}
+                  loader={async () => {
+                    let data = { userInfor: '', postList: [] }
+                    data.postList = await dispatch(getUserPostListAsync({ userId: tokenService.getUser().id }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+                    data.userInfor = await dispatch(getUserInformationAsync({ idUser: tokenService.getUser().id }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                        return []
+                      })
+                    return data
+                  }}
                 />
                 <Route path="books">
                   <Route
@@ -571,6 +564,22 @@ function App() {
                   >
                   </Route>
                 </Route >
+                <Route path="user-post-list" element={<UserCreatedPost />}
+                  loader={async () => {
+                    var data = { userPost: [] }
+                    data.userPost = await dispatch(getUserPostListAsync({ userId: tokenService.getUser().id }))
+                      .unwrap()
+                      .then(async data => {
+                        console.log(data)
+                        return data ? data.data : [];
+                      })
+                      .catch(e => {
+                        console.log(e);
+                      })
+                    return data
+
+
+                  }} />
               </Route>
             )
           }
@@ -582,9 +591,13 @@ function App() {
   )
 
   const reloadApp = () => setReload(prev => prev + 1);
+  let valueContext = {
+    reloadAppB: reloadApp,
+    stompClient: null
+  }
   return (
 
-    <ConfigContext.Provider value={reloadApp}>
+    <ConfigContext.Provider value={valueContext}>
       <div id='app'>
 
         {/* <Register /> */}

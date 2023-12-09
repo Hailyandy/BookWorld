@@ -40,11 +40,7 @@ const UserHomePage = () => {
     const dispatch = useDispatch()
     const userStateFormSlice = useSelector(state => state.users);
     console.log(userStateFormSlice.postList)
-    useEffect(() => {
-        // dispatch(connect())
-        // dispatch(onConnected())
-        connect()
-    }, [])
+
     return (
         <div className="user-home-container">
             {/* List Book */}

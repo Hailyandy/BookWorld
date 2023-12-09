@@ -23,10 +23,13 @@ import tokenService from "~/services/token.service";
 import { deletePostAsync } from "~/slices/user";
 import { useNavigate } from "react-router-dom";
 import { deletePostReducer } from '~/slices/user';
+import { useContext } from "react";
+import { ConfigContext } from "~/context/GlobalContext";
 moment.locale('vi');
 // const cho dropdown tất cả các bình luận
 
 const ReviewPost = ({ postItem }) => {
+    const contextContent = useContext(ConfigContext);
     console.log(postItem)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -96,7 +99,15 @@ const ReviewPost = ({ postItem }) => {
             .catch(e => {
                 return e.messege
             });
+        contextContent.stompClient.subscribe(`/topic/posts/${postItem.id}/comment`, onMessageReceived);
     }, [])
+
+    const onMessageReceived = (payload) => {
+        var payloadData = JSON.parse(payload.body);
+        //1
+        console.log(payloadData)
+        // dispatch(receiveFriendRequestFromSocket(payloadData.data))
+    }
     const onFinish = (values, idPost) => {
         console.log('Success:', values);
         let { score, content } = values

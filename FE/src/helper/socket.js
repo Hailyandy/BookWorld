@@ -12,7 +12,7 @@ function connect() {
     stompClient = Stomp.over(Sock);
     stompClient.connect(headers, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/user/12/queue/friendRequest', onMessageReceived);
+        stompClient.subscribe(`/user/12/queue/friend/request`, onMessageReceived);
     });
 
 }
@@ -29,9 +29,13 @@ function disconnect() {
     console.log("Disconnected");
 }
 const onMessageReceived = (payload) => {
+    console.log(payload)
     var payloadData = JSON.parse(payload.body);
     //sample message: {code: 0, message: 'Friend request sent!'}
-    console.log(payloadData)
+    console.log(payloadData.data)
+    return payloadData.data
 }
+
+
 
 export { connect, disconnect, stompClient }

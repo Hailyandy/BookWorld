@@ -566,6 +566,9 @@ const userSlice = createSlice({
                 return postItem.id != action.payload.id
             })
             console.log(state.postList)
+        },
+        receiveFriendRequestFromSocket: (state, action) => {
+            // state.friendReqList.push(action.payload)
         }
     },
     extraReducers: {
@@ -627,5 +630,5 @@ const userSlice = createSlice({
     },
 });
 const { reducer } = userSlice;
-export const { logout, deletePostReducer } = userSlice.actions;
+export const { logout, deletePostReducer, receiveFriendRequestFromSocket } = userSlice.actions;
 export default reducer;

@@ -58,7 +58,7 @@ describe('Spec màn kho sách', () => {
         cy.get('.form_login button').contains('Đăng nhập').click();
         cy.get('.ant-menu-title-content').contains('Sách', { matchCase: false }).realHover('mouse');
         //Các mục trong menu Sách
-        cy.contains('Kho sách', { matchCase: false }).click();
+        cy.contains('Kho sách', { matchCase: false }).click({ force: true });
     });
     it('Tạo bài post', () => {
 

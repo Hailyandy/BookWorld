@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { UserOutlined, UserAddOutlined } from '@ant-design/icons';
 import { TheAutofillItem } from '~/components';
 import NotFoundPage from '../NotFound/NotFound';
@@ -9,6 +9,10 @@ import { debounce } from '~/helper/debounce';
 import { useNavigate, useLoaderData, useParams } from 'react-router-dom';
 import { Breadcrumb, Layout, Space, Card, List, Avatar, Button, Input, Tooltip, AutoComplete } from 'antd';
 import notyf from '~/helper/notifyDisplay';
+import { stompClient } from '~/layouts/RootLayout';
+import tokenService from '~/services/token.service';
+import { ConfigContext } from "~/context/GlobalContext";
+import { useContext } from 'react';
 const { Meta } = Card;
 const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
@@ -40,6 +44,8 @@ const siderStyle = {
     width: '50% '
 };
 const FriendRequestSearchPeoplePage = () => {
+    console.log(stompClient)
+    const contextContent = useContext(ConfigContext);
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [friendRequestList, setFriendRequestList] = useState(useLoaderData())
@@ -57,8 +63,23 @@ const FriendRequestSearchPeoplePage = () => {
 
         navigate(`../profileOther/${value}`, { relative: "path" });
     };
-
-
+    const onFriendRequestReceived = (payload) => {
+        var payloadData = JSON.parse(payload.body);
+        console.log(payloadData.data)
+        setFriendRequestList([...friendRequestList, payloadData.data])
+    }
+    const onFriendRequestCancel = (payload) => {
+        var payloadData = JSON.parse(payload.body);
+        console.log(payloadData.data)
+        let filterFriendReq = friendRequestList.filter((friendReqItem) => {
+            return friendReqItem.id != payloadData.data.id
+        })
+        setFriendRequestList(filterFriendReq)
+    }
+    useEffect(() => {
+        contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/request`, onFriendRequestReceived);
+        contextContent.stompClient.subscribe(`/user/${tokenService.getUser().id}/queue/friend/cancel`, onFriendRequestCancel);
+    }, [])
     /**
      * useCallback memoizes functions to avoid unnecessary re-renders and improve performance.
      */

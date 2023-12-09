@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import TheAutofillItem from '~/components/autoFill/TheAutoFillitem'
 import { Badge, Breadcrumb, Layout, Menu, theme, Input, Button, Dropdown, Space, message, Avatar, AutoComplete, Result, Typography } from 'antd';
 import { DownOutlined, UserOutlined, HomeOutlined, LogoutOutlined, TeamOutlined } from '@ant-design/icons';
@@ -13,6 +13,7 @@ import tokenService from '~/services/token.service';
 import { debounce } from '~/helper/debounce';
 import { NotFoundPage } from '~/pages';
 import { useSelector } from 'react-redux';
+
 const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 
@@ -224,7 +225,7 @@ const HeaderLayout = (props) => {
 
                     style={{ padding: '0px' }}
                     icon={
-                        <Badge count={userStateFormSlice.friendReqList.length}>
+                        <Badge count={props.friendRequestCount}>
                             <Avatar shape="circle" icon={<UserOutlined />} />
                         </Badge>}
                     onClick={() => {
